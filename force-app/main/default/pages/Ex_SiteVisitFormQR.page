@@ -1,0 +1,32 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" docType="html-5.0">
+     <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+            
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+
+    <apex:includeLightning />  
+    <div id="LightningComponentid"/>   
+    <script>
+
+    $Lightning.use("c:Ex_SiteVisitFormApp", function()
+                   {
+                       $Lightning.createComponent("c:ex_SiteVisitForm",
+                                                  { 
+                                                       project: '{!$CurrentPage.parameters.project}',
+                                                     
+                                                  },
+                                                  "LightningComponentid",
+                                                  function(cmp) {
+                                                   
+                                                      //console.log('LWC Componenet added in VF page');
+                                                  });
+                   });
+    </script>
+</apex:page>

@@ -1,0 +1,210 @@
+<template>
+
+    <div if:true={isSpinner} class="spinner-container">
+        <div class="loader"></div>
+        <div class="wait-text">Processing...</div>
+    </div>
+    <div if:true={showSourcePage}>
+        <lightning-modal-header label="Source Details">
+
+        </lightning-modal-header>
+        <lightning-modal-body>
+            <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <lightning-input-field field-name="Lead_Source__c" value={svWrapper.sv.Lead_Source__c} required
+                            disabled={isSourceNotEditable} onchange={handleChange} variant="standard">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <lightning-input-field field-name="Lead_Sub_Source__c" value={svWrapper.sv.Lead_Sub_Source__c}
+                            disabled={isSourceNotEditable} required onchange={handleChange} variant="standard">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form>
+
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                    <template if:false={isSourceNotEditable}>
+                        <template if:true={showChannelPartner}>
+                            <c-ex-_-customlookup-resuable icon-name="standard:account" s-object-api-name="account"
+                                data-name="Account" project-id={projectId} variant="standard"
+                                disabled={isSourceNotEditable} default-record-id={svWrapper.sv.Channel_Partner__c}
+                                onlookupupdate={lookupRecord} placeholder={searchPlaceholder}>
+                            </c-ex-_-customlookup-resuable>
+                        </template>
+                    </template>
+
+                    <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+                        <template if:true={isSourceNotEditable}>
+                            <template if:true={showChannelPartner}>
+                                <lightning-input-field field-name="Channel_Partner__c"
+                                    value={svWrapper.sv.Channel_Partner__c} disabled={isSourceNotEditable}
+                                    variant="standard"></lightning-input-field>
+                              
+                            </template>
+                        </template>
+                    </lightning-record-edit-form>
+
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <template if:true={showReferenceName}>
+                            <label>Referrer Name <span style="color: red;">*</span></label>
+                            <lightning-input type="text" variant="label-hidden" disabled={isSourceNotEditable} required
+                                field-name="Referrer_Name__c" name="Referrer_Name__c"
+                                value={svWrapper.sv.Referrer_Name__c} onchange={handleChange}>
+                            </lightning-input>
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <template if:true={showReferenceName}>
+                            <label>Referrer Mobile <span style="color: red;">*</span></label>
+                            <lightning-input type="text" variant="label-hidden" disabled={isSourceNotEditable} required
+                                field-name="Referrer_Mobile__c" name="Referrer_Mobile__c"
+                                value={svWrapper.sv.Referrer_Mobile__c} onchange={handleChange}>
+                            </lightning-input>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <template if:true={showReferenceName}>
+                            <label>Referrer Address <span style="color: red;">*</span></label>
+                            <lightning-input type="text" variant="label-hidden" disabled={isSourceNotEditable} required
+                                field-name="Referrer_Address__c" name="Referrer_Address__c"
+                                value={svWrapper.sv.Referrer_Address__c} onchange={handleChange}>
+                            </lightning-input>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <lightning-input-field field-name="Gender__c" value={svWrapper.sv.Gender__c} required
+                            onchange={handleChange} variant="standard"></lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <lightning-input-field field-name="GRE__c" value={svWrapper.sv.GRE__c} required
+                            onchange={handleChange} variant="standard"></lightning-input-field>
+
+                    </lightning-layout-item>
+                </lightning-layout>
+
+
+            </lightning-record-edit-form>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+
+            <lightning-button variant="Destructive" label="Cancel" onclick={handleCancel}></lightning-button> &nbsp;
+            <lightning-button variant="brand" label="Submit" onclick={handlesubmit}></lightning-button>
+        </lightning-modal-footer>
+
+    </div>
+</template>
+
+
+    <!-- <div if:true={showAssignmentDetails}>
+        <lightning-modal-header label="SM Assignment">
+        </lightning-modal-header>
+        <lightning-modal-body>
+            <template if:false={IsSMAlreadyAssign}>
+
+                <template if:true={showPrefferedSM}>
+                    <table class="Table1Css">
+                        <tr>
+                            <th colspan="4">
+                                Preffered Sales Manager
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>User</th>
+                            <th>Last Assignment DateTime</th>
+                            <th>Action</th>
+                        </tr>
+                        <template for:each={getPreferredSMArray} for:item="sm" for:index="index">
+                            <tr key={sm.Id}>
+                                <td>{sm.index}</td>
+                                <td>{sm.User__r.Name}</td>
+                                <td>
+                                    <lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
+                                        month="short" day="numeric" hour="2-digit" minute="2-digit"
+                                        time-zone-name="short">
+                                    </lightning-formatted-date-time>
+                                </td>
+                                <td>
+                                    <template if:true={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} title="Assign" label="Assign"
+                                            onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                    <template if:false={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} disabled="true"
+                                            title="Not Available" label="Not Available" onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
+                </template>
+                <br />
+
+                <template if:true={getAllSMData}>
+                    <table class="Table1Css">
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>User</th>
+                            <th>Last Assignment DateTime</th>
+                            <th>Action</th>
+                        </tr>
+                        <template for:each={getAllSMData} for:item="sm" for:index="index">
+                            <tr key={sm.Id}>
+                                <td>{sm.index}</td>
+                                <td>{sm.User__r.Name}</td>
+                                <td>
+                                    <lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
+                                        month="short" day="numeric" hour="2-digit" minute="2-digit"
+                                        time-zone-name="short">
+                                    </lightning-formatted-date-time>
+                                </td>
+                                <td>
+                                    <template if:true={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} title="Assign" label="Assign"
+                                            disabled={disabledAssignButton} onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                    <template if:false={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} disabled="true"
+                                            title="Not Available" label="Not Available" onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
+                </template>
+            </template>
+            <template if:true={IsSMAlreadyAssign}>
+                <div class="slds-align_absolute-center">
+                    <p style="font-size: 18px; color:green;"> &#10003; Sales Manager is Already Assigned !!</p>
+                </div>
+            </template>
+            <template if:true={noSMPresent}>
+                <div class="slds-align_absolute-center">
+                    <p style="font-size: 18px;color:red;"><i>&#9888; {showMsg}</i></p>
+                </div>
+            </template>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button variant="brand" label="Previous" onclick={handleSourcePrevious}></lightning-button> &nbsp;
+            <lightning-button variant="brand" label="Submit" onclick={handlesubmit}></lightning-button>
+
+             <lightning-button variant="Destructive" label="Cancel" onclick={handleCancel}></lightning-button> 
+        </lightning-modal-footer>
+    </div> -->
