@@ -44,8 +44,8 @@ public class Ex_TaskHandlerServices {
         Map<Id, List<Task>> mapRollUpCp = new Map<Id, List<Task>>();
         
         List<Task> taskList = [Select Id, WhoId, WhatId, CreatedDate, CallType, Call_Status__c, CallDurationInSeconds, Description, Subject, RecordTypeId, RecordType.Name,
-                               Stage__c, Sub_Stage__c, Sub_Stage_Reason__c, Next_Follow_Up_Date__c, Proposed_Date_Of_Visit__c/*, Status__c, Next_Meeting_Date__c, Next_Action_Date__c,
-                               Meeting_Status__c, Purpose_of_the_Meeting__c*/ from Task where Id IN: taskId 
+                               Stage__c, Sub_Stage__c, Sub_Stage_Reason__c, Next_Follow_Up_Date__c, Proposed_Date_Of_Visit__c, Date__c, Meeting_Type__c,
+                               Next_Call_Date__c, Next_Meeting_Date__c, Purpose_of_Meeting__c from Task where Id IN: taskId 
                                AND (RecordType.Name = 'Presales Call' OR RecordType.Name = 'Sales Call'OR  RecordType.Name = 'CP Call' OR RecordType.Name = 'CP Meeting')];
         system.debug('taskList: '+taskList);
         
@@ -96,9 +96,9 @@ public class Ex_TaskHandlerServices {
         if(!mapRollUpOpp.isEmpty()) {
             RollUpTaskOpportunityServices(mapRollUpOpp, operation, count);
         }
-        /*if(!mapRollUpCp.isEmpty() && mapRollUpCp != null) {
+        if(!mapRollUpCp.isEmpty() && mapRollUpCp != null) {
             RollUpTaskCPProjectServices(mapRollUpCp);
-        }*/
+        }
     }
     
     public static void RollUpTaskLeadServices(Map<Id, List<Task>> mapRollUpLead, String operation, Boolean count) {
@@ -195,11 +195,11 @@ public class Ex_TaskHandlerServices {
             update updateOppList;
     }
     
-    /*public static void RollUpTaskCPProjectServices(Map<Id, List<Task>> mapRollUpCp) {
+    public static void RollUpTaskCPProjectServices(Map<Id, List<Task>> mapRollUpCp) {
         List<CP_Project__c> updateCPList = new List<CP_Project__c>();
-        List<CP_Project__c> CPList = [SELECT Id, Name, Last_CP_Call_Date__c, Last_CP_Call_Remarks__c, Next_Call_Date__c, Last_CP_Call_Status__c, CP_Call_Comment_History__c,
-                                      Last_CP_Meeting_Date__c, Last_CP_Meeting_Remarks__c, Next_Meeting_Date__c, Purpose_of_the_Meeting__c, Last_CP_Meeting_Status__c,
-                                      CP_Meeting_Comment_History__c, CreatedDate,CP_Call_Count__c, CP_Meeting_Count__c
+        List<CP_Project__c> CPList = [SELECT Id, Name, Last_CP_Call_Date__c, Last_CP_Call_Remarks__c, Next_Call_Date__c, Last_CP_Call_Status__c, Last_Meeting_Call_Remarks__c,
+                                      Last_CP_Meeting_Date__c, Next_Meeting_Date__c, Purpose_of_Meeting__c, Last_CP_Meeting_Status__c,
+                                       CreatedDate,CP_Call_Count__c, CP_Meeting_Count__c, CP_Call_Remark_History__c,CP_Meeting_Remark_History__c
                                       from CP_Project__c where Id =: mapRollUpCp.keySet()];
         system.debug('CPList: '+CPList);
         
@@ -213,31 +213,31 @@ public class Ex_TaskHandlerServices {
             if(!getcpTaskList.isEmpty()) {
                 for(Task t: getcpTaskList) {
                     if(t.RecordType.Name == 'CP Call') {
-                        cp.Last_CP_Call_Date__c = t.CreatedDate;
+                        cp.Last_CP_Call_Date__c = Date.valueof(t.CreatedDate);
                         cp.Last_CP_Call_Remarks__c = t.Description;
-                        cp.Next_Call_Date__c = t.Next_Action_Date__c;
+                        cp.Next_Call_Date__c = t.Next_Call_Date__c;
                         cp.Next_Meeting_Date__c = t.Next_Meeting_Date__c;
                         if(t.Call_Status__c != null)
                             cp.Last_CP_Call_Status__c = t.Call_Status__c; 
                             cp.CP_Call_Count__c = cp.CP_Call_Count__c + 1;
                         if(cp.Last_CP_Call_Remarks__c != null) {
-                            if(cp.CP_Call_Comment_History__c == null)
-                                cp.CP_Call_Comment_History__c = '';
-                            cp.CP_Call_Comment_History__c = String.ValueOf(myDate)+': ' + cp.Last_CP_Call_Remarks__c + '\n' + cp.CP_Call_Comment_History__c ;
+                            if(cp.CP_Call_Remark_History__c == null)
+                                cp.CP_Call_Remark_History__c = '';
+                            cp.CP_Call_Remark_History__c = String.ValueOf(myDate)+': ' + cp.Last_CP_Call_Remarks__c + '\n' + cp.CP_Call_Remark_History__c ;
                         }
                         updateCPList.add(cp);    
                     } else if(t.RecordType.Name == 'CP Meeting') {
-                        cp.Last_CP_Meeting_Date__c = t.CreatedDate;
-                        cp.Last_CP_Meeting_Remarks__c = t.Description;
+                        cp.Last_CP_Meeting_Date__c = Date.valueof(t.CreatedDate);
+                        cp.Last_Meeting_Call_Remarks__c = t.Description;
                         cp.Next_Meeting_Date__c = t.Next_Meeting_Date__c ;
-                        cp.Purpose_of_the_Meeting__c = t.Purpose_of_the_Meeting__c ;
+                        cp.Purpose_of_Meeting__c = t.Purpose_of_Meeting__c ;
                         cp.CP_Meeting_Count__c = cp.CP_Meeting_Count__c + 1;
-                        if(t.Meeting_Status__c != null)
-                            cp.Last_CP_Meeting_Status__c = t.Meeting_Status__c; 
-                        if(cp.Last_CP_Meeting_Remarks__c != null) {
-                            if(cp.CP_Meeting_Comment_History__c == null)
-                                cp.CP_Meeting_Comment_History__c = '';
-                            cp.CP_Meeting_Comment_History__c = String.ValueOf(myDate)+': ' + cp.Last_CP_Meeting_Remarks__c + '\n' + cp.CP_Meeting_Comment_History__c;
+                        if(t.Call_Status__c != null)
+                            cp.Last_CP_Meeting_Status__c = t.Call_Status__c; 
+                        if(cp.Last_Meeting_Call_Remarks__c != null) {
+                            if(cp.CP_Meeting_Remark_History__c == null)
+                                cp.CP_Meeting_Remark_History__c = '';
+                            cp.CP_Meeting_Remark_History__c = String.ValueOf(myDate)+': ' + cp.Last_Meeting_Call_Remarks__c + '\n' + cp.CP_Meeting_Remark_History__c;
                         }
                         updateCPList.add(cp);    
                     }
@@ -247,7 +247,7 @@ public class Ex_TaskHandlerServices {
             if(!updateCPList.isEmpty() && updateCPList != null)
                 update updateCPList;
         }
-    }*/
+    }
     
     public static Map<String, String> getStagesMap() {
         Map<String, String> stageMap = new  Map<String, String>();

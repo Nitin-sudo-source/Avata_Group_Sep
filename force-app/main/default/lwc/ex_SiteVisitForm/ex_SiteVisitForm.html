@@ -226,9 +226,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     <template for:each={accountDataFound} for:item="account" for:index="index">
                                         <tr key={account.Id}>
-                                            <td>{account.FirstName} {account.LastName}</td>
+                                            <td>
+                                               <template if:true={account.FirstName}>
+                                                {account.FirstName} 
+                                               </template>
+                                                <template if:true={account.LastName}>
+                                                {account.LastName}
+                                                </template>
+                                            </td>
                                             
                                         </tr>
                                     </template>

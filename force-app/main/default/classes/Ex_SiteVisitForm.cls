@@ -80,7 +80,6 @@ global without sharing class Ex_SiteVisitForm {
                            BillingPostalCode, BillingCountry, BillingState, BillingCity, Industry__c, Family_Size__c, BillingStreet, Current_Resident_Status__c,  Current_Residence_Configuration__c,
                            City__c, State__c,  Office_Pincode__c, Residential_Address__c, Locality__c,
                            Office_Location__c, Company_Name__c, Employment_Type__c, Annual_Income__c, 
-                           
                            Ethnicity__c, PersonMobilePhone, Phone, PersonEmail, Alternate_Email__c from Account where Id =: accId AND IsPersonAccount = true];
             system.debug('acc:::'+acc);
             if(acc != null){
@@ -144,7 +143,7 @@ global without sharing class Ex_SiteVisitForm {
                 
                 
             }
-            if(oppId != null && (String.isNotBlank(projectId))){
+            if(oppId != null && String.isNotBlank(projectId) && acc.Id != null){
                 Opportunity__c opp = [Select Id, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                       Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Referrer_Address__c,
                                       Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c, Referrer_Mobile__c, 
@@ -152,9 +151,8 @@ global without sharing class Ex_SiteVisitForm {
                                       Area_Sq_Ft__c, Location__c, Actual_budget__c, Referrer_Name__c,
                                       Source_of_Funding__c, Any_Pre_existing_Loans__c, Type_of_Pre_existing_Loan__c,
                                       Current_Outstanding_Amount__c, Sourcing_Manager__c
-                                      
                                       from Opportunity__c 
-                                      where (Id =: oppId)  AND Project__c =: projectId AND Is_Active__c = true limit 1];
+                                      where Id =: oppId AND Project__c =: projectId AND Account__c =: acc.Id AND Is_Active__c = true];
                 System.debug('opp: '+opp);
                 if(opp != null){
                     sv.sv.Lead_Source__c = opp.Source__c;
@@ -322,10 +320,10 @@ global without sharing class Ex_SiteVisitForm {
             if(!accList.isEmpty()) {
                 isAccount = true;
                 oppList = [Select Id, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
-                           Channel_Partner__c, OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
+                           Channel_Partner__c, OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Last_SV_Date__c, Sales_Manager__r.Name,
                            Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
                            Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                           where Account__c =: accList[0].Id AND Is_Active__c = true];
+                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Active__c = true];
                 system.debug('oppList: '+oppList);
                 
                 if(!oppList.isEmpty()) {
@@ -344,10 +342,10 @@ global without sharing class Ex_SiteVisitForm {
                         isAccount = true;
                         
                         oppList = [Select Id, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
-                                   Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
+                                   Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Last_SV_Date__c, Sales_Manager__r.Name,
                                    Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
                                    Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                                   where Account__c =: accList[0].Id ];
+                                   where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Active__c = true];
                         system.debug('oppList: '+oppList);
                         
                         if(!oppList.isEmpty()) {
@@ -533,7 +531,7 @@ global without sharing class Ex_SiteVisitForm {
                 List<Visit_Pre_Registration__c> vprList = new List<Visit_Pre_Registration__c>();
                 vprList = [Select Id, Name, Site_Visit_Date__c, Status__c from Visit_Pre_Registration__c where Id =: vpId];
                 if(vprList != null && !vprList.isEmpty()){
-                    vprList[0].Site_Visit_Date__c = System.today();
+                    vprList[0].Site_Visit_Date__c = DateTime.now();
                     vprList[0].Status__c = 'Completed';
                     updateVPRList.add(vprList[0]);
                 }
@@ -636,7 +634,7 @@ leadList[0].Project__c = pList[0].Id;*/
                     
                     //Tag Site Visit Against Opportunity
                     sv.Opportunity__c = convertedOpp.Id;
-                    sv.Site_Visit_Date__c = system.Today(); //PP
+                    sv.Site_Visit_Date__c = System.today(); //PP
                     sv.Site_Visit_Count__c = 1;
                     
                     insert sv;

@@ -7,7 +7,8 @@
 public class Ex_LeadHandlerServices {
     public static void duplicationCheck(String performRoundRobin, List<Lead__c> leadList) {
         Map<Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheck(leadList);
-        
+        List<Lead__c> leadListForAssignment = new List<Lead__c>();
+
         for(Lead__c l : leadList) {
             String errMsg = '';
             if (duplicateWrapperMap.containsKey(l)) {
@@ -20,73 +21,54 @@ public class Ex_LeadHandlerServices {
                 if (!Test.isRunningTest() && errMsg != '')
                     l.addError(errMsg);
             } else {
-                /*if(l.Apply_Round_Robin__c && l.Project__c != null && performRoundRobin.equalsIgnoreCase('Yes')) {
-                    if(projectLeadMap.containsKey(l.Project__c)) {
-                        projectLeadMap.get(l.Project__c).add(l);
-                    } else {
-                        List<Lead> newList = new List<Lead>();
-                        newList.add(l);
-                        projectLeadMap.put(l.Project__c, newList);
-                    }
-                }*/
+                if(l.Apply_Round_Robin__c && performRoundRobin.equalsIgnoreCase('Yes')) {
+                    leadListForAssignment.add(l);
+                }
             }
+            
+        }
+        if(!leadListForAssignment.isEmpty() && leadListForAssignment != null) {
+            applyRoundRobinLogic(leadListForAssignment);
         }
     }
     
-    /*public static void applyRoundRobinLogic(Map<Id, List<Lead>> projectLeadMap) {
-        Map<Id, List<Team_Members__c>> projectTeamMemberMap = new Map<Id, List<Team_Members__c>>();
-        Map<Id, Team_Members__c> memberMapToUpdate = new Map<Id, Team_Members__c>();
+    public static void applyRoundRobinLogic(List<Lead__c> leadListForAssignment) {
+        List<Team_Member__c> tmList = new List<Team_Member__c>();
+        Map<Id, Team_Member__c> memberMapToUpdate = new Map<Id, Team_Member__c>();
         
-        projectTeamMemberMap = getProjectTeamMemberMap(projectLeadMap.keySet());
-        system.debug('projectTeamMemberMap: '+projectTeamMemberMap);
+        tmList = getTeamMembers();
+        system.debug('tmList: '+tmList);
         
-        for(Id pId: projectLeadMap.keySet()) {
-            List<Lead> leadList = projectLeadMap.get(pId);
-            List<Team_Members__c> tmList = projectTeamMemberMap.get(pId);
-            
-            Integer index = 0;
-            for(Lead l: leadList) {
-                // Pick the next person to be assigned
-                if(tmList != null ) {
-                    Team_Members__c member = tmList.get(Math.mod(index, tmList.size()));
-                    
-                    l.OwnerId = member.User__c;
-                    l.Presales_Executive__c = member.User__c;
-                    DateTime now = DateTime.now();
-                    member.Last_Assignment_Date_Time__c = now;
-                    member.Last_Assignment_Milliseconds__c = now.millisecondGMT();
-                    member.Assignment_Counter__c = member.Assignment_Counter__c + 1;
-                    memberMapToUpdate.put(member.Id, member);
-                    index++;
-                }
+        Integer index = 0;
+        for(Lead__c l: leadListForAssignment) {
+            // Pick the next person to be assigned
+            if(tmList != null) {
+                Team_Member__c member = tmList.get(Math.mod(index, tmList.size()));
+                
+                l.OwnerId = member.User__c;
+
+                DateTime now = DateTime.now();
+                member.Last_Assignment_DateTime__c = now;
+                member.Last_Assignment_Milliseconds__c = now.millisecondGMT();
+                member.Assignment_Counter__c = member.Assignment_Counter__c + 1;
+                memberMapToUpdate.put(member.Id, member);
+                index++;
             }
         }
         if(!memberMapToUpdate.isEmpty() && memberMapToUpdate != null) {
-            List<Team_Members__c> updateTMList = memberMapToUpdate.values();
+            List<Team_Member__c> updateTMList = memberMapToUpdate.values();
             update updateTMList;
         }
     }
     
-    public static Map<Id, List<Team_Members__c>> getProjectTeamMemberMap(Set<Id> pIdSet) {
-        Map<Id, List<Team_Members__c>> projectTeamMemberMap = new Map<Id, List<Team_Members__c>>();
-        List<Team_Members__c> tmList = new List<Team_Members__c>();
+    public static List<Team_Member__c> getTeamMembers() {
+        List<Team_Member__c> tmList = new List<Team_Member__c>();
         
-        tmList = [Select Id, Team__c, Team__r.Project__c, User__c, Last_Assignment_Date_Time__c, Last_Assignment_Milliseconds__c, Assignment_Counter__c from Team_Members__c
-                  where Team__r.Project__c =: pIdSet AND Availability__c = true AND Team__r.Team_Type__c = 'Presales Team' AND User_Active_Status__c = true
-                  ORDER BY Last_Assignment_Date_Time__c, Last_Assignment_Milliseconds__c];
+        tmList = [Select Id, Team__c, Team__r.Project__c, User__c, Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Assignment_Counter__c from Team_Member__c
+                  where Availability__c = true AND Team__r.Team_Type__c = 'Presales Team' AND User_Active_Status__c = true AND DayOff__c = false
+                  ORDER BY Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c];
         system.debug('tmList: '+tmList);
         
-        if(!tmList.isEmpty() && tmList != null) {
-            for(Team_Members__c tm: tmList) {
-                if(projectTeamMemberMap.containsKey(tm.Team__r.Project__c)) {
-                    projectTeamMemberMap.get(tm.Team__r.Project__c).add(tm);
-                } else {
-                    List<Team_Members__c> newList = new List<Team_Members__c>();
-                    newList.add(tm);
-                    projectTeamMemberMap.put(tm.Team__r.Project__c, newList);
-                }
-            }
-        }
-        return projectTeamMemberMap;
-    }*/
+        return tmList;
+    }
 }

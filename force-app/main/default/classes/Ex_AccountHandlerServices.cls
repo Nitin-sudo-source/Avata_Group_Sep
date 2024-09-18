@@ -22,7 +22,7 @@ public class Ex_AccountHandlerServices {
     }
     
     public static void duplicationCheckOnCP(List<Account> accountList) {
-        /*Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>> CPduplicateWrapperMap = new Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
+        Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>> CPduplicateWrapperMap = new Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
         
         CPduplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckCPAcccount(accountList);
         System.debug('CPduplicateWrapperMap::'+CPduplicateWrapperMap);
@@ -34,10 +34,10 @@ public class Ex_AccountHandlerServices {
                         a.addError('Duplicate CP Account Found with Name: '+dw.dupAccount.Name+' Owner Name: '+ dw.dupAccount.Owner.Name +'. Record Id is '+dw.dupAccount.Id);
                 }
             }
-        }*/
+        }
     }
     
-    /*public static void insertDocument(List<Account> accountList) {
+    public static void insertDocument(List<Account> accountList) {
         List<Document__c> cpDocumentList = new List<Document__c>();
         
         for(Account acc : accountList) {
@@ -47,7 +47,7 @@ public class Ex_AccountHandlerServices {
             for(String s : sList) {
                 Document__c cpd = new Document__c();
                 cpd.Document_Type__c = s;
-                cpd.RecordTypeId = Schema.SObjectType.Document__c.getRecordTypeInfosByDeveloperName().get('CP_Documents').getRecordTypeId();
+                cpd.RecordTypeId = Schema.SObjectType.Document__c.getRecordTypeInfosByDeveloperName().get('CP_Document').getRecordTypeId();
                 cpd.CP_Account__c = acc.Id;
                 cpDocumentList.add(cpd);
             }
@@ -81,12 +81,12 @@ public class Ex_AccountHandlerServices {
                     Document__c cpd = new Document__c();
                     cpd.Document_Type__c = s; 
                     cpd.CP_Account__c = a.Id;
-                    cpd.RecordTypeId = Schema.SObjectType.Document__c.getRecordTypeInfosByDeveloperName().get('CP_Documents').getRecordTypeId();
+                    cpd.RecordTypeId = Schema.SObjectType.Document__c.getRecordTypeInfosByDeveloperName().get('CP_Document').getRecordTypeId();
                     cpDocumentList.add(cpd);
                 }
             }
         }
         if(!cpDocumentList.isEmpty() && cpDocumentList != null)
             insert cpDocumentList;
-    }*/
+    }
 }

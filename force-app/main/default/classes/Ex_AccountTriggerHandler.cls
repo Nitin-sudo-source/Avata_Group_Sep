@@ -33,7 +33,7 @@ public class Ex_AccountTriggerHandler {
             { 
                 accList.add(newAccount);
             }
-            if(oldAccount.Phone != null && oldAccount.Phone != newAccount.Phone && Schema.SObjectType.Account.getRecordTypeInfosById().get(newAccount.RecordTypeId).getName() == 'Channel Partner') {
+            if(((oldAccount.Phone != null && oldAccount.Phone != newAccount.Phone) || (oldAccount.PAN_No__c != null && oldAccount.PAN_No__c != newAccount.PAN_No__c) || (oldAccount.MahaRERA_Registration_No__c != null && oldAccount.MahaRERA_Registration_No__c != newAccount.MahaRERA_Registration_No__c)) && Schema.SObjectType.Account.getRecordTypeInfosById().get(newAccount.RecordTypeId).getName() == 'Channel Partner') {
                 cpAccList.add(newAccount); 
             }
         }        
@@ -51,8 +51,8 @@ public class Ex_AccountTriggerHandler {
             if(Schema.SObjectType.Account.getRecordTypeInfosById().get(a.RecordTypeId).getName() == 'Channel Partner')
                 accList.add(a);
         }
-        //if(!accList.isEmpty() && accList != null)
-            //Ex_AccountHandlerServices.insertDocument(accList);
+        if(!accList.isEmpty() && accList != null)
+            Ex_AccountHandlerServices.insertDocument(accList);
     } 
     
     public static void afterUpdate(Map<Id, Account> oldMap, Map<Id, Account> newMap) {
@@ -62,12 +62,12 @@ public class Ex_AccountTriggerHandler {
         for(Account oldAccount: oldMap.values()) {
             Account newAccount = newMap.get(oldAccount.Id);
             
-            /*if(oldAccount.RERA_Available__c != newAccount.RERA_Available__c && newAccount.RERA_Available__c == 'Yes' && Schema.SObjectType.Account.getRecordTypeInfosById().get(newAccount.RecordTypeId).getName() == 'Channel Partner')
+            if(oldAccount.RERA_Available__c != newAccount.RERA_Available__c && newAccount.RERA_Available__c == 'Yes' && Schema.SObjectType.Account.getRecordTypeInfosById().get(newAccount.RecordTypeId).getName() == 'Channel Partner')
             { 
                 accList.add(newAccount);
-            }*/
+            }
         }
-        //if(!accList.isEmpty() && accList != null)
-            //Ex_AccountHandlerServices.updateDocument(accList);
+        if(!accList.isEmpty() && accList != null)
+            Ex_AccountHandlerServices.updateDocument(accList);
     }
 }

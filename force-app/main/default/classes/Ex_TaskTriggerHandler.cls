@@ -30,7 +30,7 @@ public class Ex_TaskTriggerHandler {
         List<Task> enqList = new List<Task>();
         
         for(Task t: taskList) {
-            if(t.Stage__c != null && t.Status.equalsIgnoreCase('Completed') &&
+            if(/*t.Stage__c != null &&*/ t.Status.equalsIgnoreCase('Completed') &&
                (Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'Presales Call' || 
                 Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'Sales Call' ||
                 Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'CP Call' ||
