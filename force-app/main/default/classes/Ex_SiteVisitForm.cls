@@ -498,7 +498,7 @@ global without sharing class Ex_SiteVisitForm {
                     isLeadFound = true;
                 } else {
                     if(email != Null && !String.isBlank(email)) {
-                        leadList = [Select  Id, Office_Location__c, Full_Name__c, Actual_Budget__c, Age_Group__c, Alternate_Email__c,
+                        leadList = [Select  Id,  Office_Location__c, Full_Name__c, Actual_Budget__c, Age_Group__c, Alternate_Email__c,
                                     Budget_Range__c, Buying_Purpose__c, Campaign__c, Campaign_Code__c, Channel_Partner__c,
                                     Configuration_Required__c, Account__c, Opportunity__c, Channel_Partner__r.OwnerId,
                                     Created_Date__c, Current_Residence_Configuration__c, Current_Resident_Status__c, 
@@ -588,6 +588,7 @@ global without sharing class Ex_SiteVisitForm {
                     op.Name = sv.First_Name__c +' '+ sv.Last_Name__c;
                     op.Project__c = projectId;
                     op.Stage__c = 'In Follow-up';
+                    op.Sub_Stage__c = 'Cold';
                     op.Budget_Range__c = sv.Budget_Range__c;
                     op.Buying_Purpose__c = sv.Buying_Purpose__c;
                     op.Configuration_Required__c = sv.Configuration_Required__c;
@@ -622,6 +623,7 @@ global without sharing class Ex_SiteVisitForm {
 leadList[0].Project__c = pList[0].Id;*/
                     leadList[0].Project__c = projectId;
                     leadList[0].Lead_Stage__c = 'Visit Done';
+                    leadList[0].Lead_Sub_Stage__c = 'Visit Done';
                     update leadList[0];
                     
                     Ex_LeadConversionServices.convertLead(leadList);
@@ -703,6 +705,7 @@ leadList[0].Project__c = pList[0].Id;*/
                     
                     // Stage Details
                     l.Lead_Stage__c = 'Visit Done';
+                    l.Lead_Sub_Stage__c = 'Visit Done';
                     
                     if(String.isNotBlank(projectId) && isQRUser){
                         pList = [Select Id, User__c from Project__c where Id =: projectId];
