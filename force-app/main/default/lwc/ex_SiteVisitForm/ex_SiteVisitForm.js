@@ -60,6 +60,7 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
     @track disabledregcode = false;
     @track showValidation = '';
     @track showValidationPopup = false;
+    @track cpLeadId = '';
 
 
     @track showAccountDataFound = false;
@@ -147,8 +148,9 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
 
 
     getSVWrapper() {
+        console.log('cpLeadId: '+this.cpLeadId);
         this.isSpinner = true;
-        getSVWrapper({ projectId: this.projectId, leadId: this.leadId, oppId: this.oppId, accId: this.accId })
+        getSVWrapper({ projectId: this.projectId, leadId: this.leadId, oppId: this.oppId, accId: this.accId, cpLeadId: this.cpLeadId })
             .then((result) => {
                 this.svWrapper = result;
                 this.isSpinner = false;
@@ -421,6 +423,10 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
                         }
                         if(this.showVprDataArray.Lead__c){
                             this.leadId = this.showVprDataArray.Lead__c;
+                            this.getSVWrapper();
+                        }
+                        if(this.showVprDataArray.CP_Lead__c){
+                            this.cpLeadId = this.showVprDataArray.CP_Lead__c;
                             this.getSVWrapper();
                         }
                     }else{

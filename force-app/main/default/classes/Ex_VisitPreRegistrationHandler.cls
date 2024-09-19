@@ -14,18 +14,18 @@ public class Ex_VisitPreRegistrationHandler {
                 if(vpr.Lead__c != null){
                     vprLeadList.add(vpr);
                 }
-                /* if(vpr.CP_Lead__c != null){
-vprCPList.add(vpr);
-}*/
+                if(vpr.CP_Lead__c != null){
+                    vprCPList.add(vpr);
+                }
             }
         }
         
         if(!vprLeadList.isEmpty() && vprLeadList != null){
             Ex_VisitPreRegistrationHandlerServices.createVPRLead(vprLeadList);
         }
-        /* if(!vprCPList.isEmpty() && vprCPList != null){
-Ex_VisitPreRegistrationHandlerServices.createVPRCP(vprCPList);
-}*/
+        if(!vprCPList.isEmpty() && vprCPList != null){
+            Ex_VisitPreRegistrationHandlerServices.createVPRLead(vprCPList);
+        }
     }
     
     

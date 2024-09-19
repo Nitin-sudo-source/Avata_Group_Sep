@@ -1,3 +1,15 @@
+/**
+* @File Name : Ex_CPLeadHandlerServices.cls
+* @Description : for CP Document Upload 
+* @Author : Nitin Choudhary
+* @Last Modified By : Nitin Choudhary
+* @Last Modified On : September 19, 2024
+* @Modification Log :
+*==============================================================================
+* Ver | Date | Author | Modification
+*==============================================================================
+* 1.0 | September 18, 2024 |   | Initial Version
+**/
 public class Ex_CPLeadHandlerServices {
     public static void duplicationCheck(String performRoundRobin, List<CP_Lead__c> leadList) {
         Map<CP_Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckCPLead(leadList);

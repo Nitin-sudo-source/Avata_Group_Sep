@@ -52,7 +52,7 @@ global without sharing class Ex_SiteVisitForm {
         try {
             
             Visit_Pre_Registration__c cpList = [select Id, Visit_Pre_Registration_Code__c, Project__c , Project__r.Name, Customer_Name__c, Budget_Range__c, Configuration__c,
-                                                Mobile_Number__c, Lead__c, Site_Visit_Date__c, Status__c
+                                                Mobile_Number__c, Lead__c, Site_Visit_Date__c, Status__c, CP_Lead__c
                                                 from Visit_Pre_Registration__c 
                                                 where Visit_Pre_Registration_Code__c LIKE :code AND Project__c=:Proj AND Status__c != 'Completed'];
             system.debug('cpList is: '+cpList);
@@ -69,12 +69,14 @@ global without sharing class Ex_SiteVisitForm {
     }
     
     @AuraEnabled
-    global static SVWrapper getSVWrapper(String projectId, Id leadId ,Id oppId, Id accId){
+    global static SVWrapper getSVWrapper(String projectId, Id leadId ,Id oppId, Id accId, String cpLeadId){
         SVWrapper sv = new SVWrapper();
         system.debug('Id projectId::'+projectId);
         system.debug('Id leadId ::'+leadId);
         system.debug('Id oppId::'+oppId);
         system.debug('Id accId::'+accId);
+        List<CP_lead__c> cpLeadList  = new List<CP_Lead__c>();
+        
         if(accId != null ){
             Account acc = [Select Id, Name, Salutation, FirstName, LastName, Age_Group__c, Gender__c, Occupation__c, Marital_Status__c, Designation__c ,
                            BillingPostalCode, BillingCountry, BillingState, BillingCity, Industry__c, Family_Size__c, BillingStreet, Current_Resident_Status__c,  Current_Residence_Configuration__c,
@@ -140,9 +142,8 @@ global without sharing class Ex_SiteVisitForm {
                 if(acc.Annual_Income__c != null)
                     sv.sv.Annual_Income__c = acc.Annual_Income__c;
                 
-                
-                
             }
+            
             if(oppId != null && String.isNotBlank(projectId) && acc.Id != null){
                 Opportunity__c opp = [Select Id, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                       Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Referrer_Address__c,
@@ -210,7 +211,6 @@ global without sharing class Ex_SiteVisitForm {
                         sv.sv.Current_Outstanding_Amount__c = opp.Current_Outstanding_Amount__c;
                     if(opp.Sourcing_Manager__c != null)
                         sv.sv.Sourcing_Manager__c = opp.Sourcing_Manager__c;
-                    
                     
                 }
             }
@@ -292,6 +292,62 @@ global without sharing class Ex_SiteVisitForm {
                 sv.sv.Presales_Manager__c = ld.OwnerId;
             }
         }
+        System.debug('cpLeadId: '+cpLeadId);
+        if(String.isNotBlank(cpLeadId) && String.isNotBlank(projectId)){
+            cpLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Email__c, Channel_Partner_Name__c, CP_Project__r.OwnerId, CP_Project__c,
+                          Age_Group__c, Gender__c, Marital_Status__c, Ethnicity__c, Occupation__c, Industry__c, Current_Resdient_Configuration__c, 
+                          Family_Size__c, Current_Resident_Status__c, Designation__c, Configuration_Required__c, Budget_Range__c, 
+                          Buying_Purpose__c, Location__c, Actual_Budget__c,
+                          Alternate_Email__c, CP_Lead_Call_Comment_History__c, CP_Lead_Call_Count__c, CP_Lead_Next_Follow_up_Date__c, CP_Lead_Stage__c, 
+                          Cp_Lead_Sub_Stage__c, Cp_Lead_Sub_Stage_Reason__c, Last_CP_Lead_Call_Comment__c, Last_CP_Lead_Call_Date__c, Proposed_Visit_Date__c 
+                          from CP_Lead__c where Id=: cpLeadId];
+            System.debug('cpLeadList: '+cpLeadList);
+            if(!cpLeadList.isEmpty() && cpLeadList != null){
+                CP_Lead__c cp = cpLeadList[0];
+                sv.sv.First_Name__c = cp.First_Name__c;
+                sv.sv.Last_Name__c = cp.Last_Name__c;
+                if(cp.Email__c != null){
+                    sv.sv.Email__c = cp.Email__c;
+                }
+                
+                //source Details
+                sv.sv.Lead_Source__c = 'Channel Partner';
+                sv.sv.Lead_Sub_Source__c = 'Channel Partner';
+                
+                sv.sv.Channel_Partner__c = cp.Channel_Partner_Name__c;
+                sv.sv.Sourcing_Manager__c =  cp.CP_Project__r.OwnerId;
+                sv.sv.CP_Lead__c = cp.Id;
+                sv.sv.CP_Project__c = cp.CP_Project__c;
+                
+                
+                //Demographics Details
+                sv.sv.Age_Group__c = cp.Age_Group__c;
+                sv.sv.Gender__c = cp.Gender__c;
+                sv.sv.Marital_Status__c = cp.Marital_Status__c;
+                sv.sv.Ethnicity__c = cp.Ethnicity__c;
+                sv.sv.Occupation__c = cp.Occupation__c;
+                sv.sv.Industry__c = cp.Industry__c;
+                // sv.sv.Office_Location__c = cp.Office_Location__c;
+                // sv.sv.Company_Name__c = cp.Company_Name__c;
+                // sv.sv.Office_Pincode__c = cp.Office_Pincode__c;
+                sv.sv.Current_Residence_Configuration__c = cp.Current_Resdient_Configuration__c;
+                sv.sv.Family_Size__c = cp.Family_Size__c;
+                sv.sv.Current_Resident_Status__c = cp.Current_Resident_Status__c;
+                sv.sv.Designation__c = cp.Designation__c;
+                
+                //Requirement Details
+                sv.sv.Configuration_Required__c = cp.Configuration_Required__c;
+                sv.sv.Budget_Range__c = cp.Budget_Range__c;
+                sv.sv.Buying_Purpose__c = cp.Buying_Purpose__c;
+                // sv.sv.Possession_Timeframe_Required__c = cp.Possession_Timeframe__c;
+                //  sv.sv.Area_Sq_Ft__c = cp.Area_Sq_Ft__c;
+                sv.sv.Location__c = cp.Location__c;
+                sv.sv.Actual_budget__c = Decimal.valueof(cp.Actual_Budget__c);
+                
+            }
+        }
+        
+        
         System.debug('sv: '+sv);
         return sv;
     }
@@ -726,7 +782,9 @@ leadList[0].Project__c = pList[0].Id;*/
                     Lead__c convertedLead = [Select Converted_Account__c, Converted_Opportunity__c from Lead__c where Id = :l.Id ];
                     system.debug('Converted Lead: '+convertedLead);
                     
-                    Opportunity__c convertedOpp = [SELECT Id, Name, SV_Count__c, Fist_SV_Date__c, Last_SV_Date__c, Last_SV_attended_by__c from Opportunity__c where Id =: convertedLead.Converted_Opportunity__c];
+                    Opportunity__c convertedOpp = [SELECT Id, Name, SV_Count__c, Fist_SV_Date__c, Last_SV_Date__c, Last_SV_attended_by__c,
+                                                   Presales_Last_Call_Date__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c,Presales_Call_Comment_History__c,
+                                                   Presales_Next_Follow_Up_Date__c, Presales_Proposed_Visit_Date__c from Opportunity__c where Id =: convertedLead.Converted_Opportunity__c];
                     system.debug('Converted Opportunity: '+convertedOpp);
                     
                     //Tag Site Visit Against Converted Opportunity
@@ -743,6 +801,32 @@ leadList[0].Project__c = pList[0].Id;*/
                     
                     insert sv;
                     
+                    
+                    List<CP_lead__c> cpLeadList  = new List<CP_Lead__c>();
+                    List<CP_lead__c> updateCPLeadList  = new List<CP_Lead__c>();
+                    
+                    if(SVWrapper.sv.CP_Lead__c != null){
+                        cpLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Email__c, Channel_Partner_Name__c, CP_Project__r.OwnerId, CP_Project__c,
+                          Age_Group__c, Gender__c, Marital_Status__c, Ethnicity__c, Occupation__c, Industry__c, Current_Resdient_Configuration__c, 
+                          Family_Size__c, Current_Resident_Status__c, Designation__c, Configuration_Required__c, Budget_Range__c, 
+                          Buying_Purpose__c, Location__c, Actual_Budget__c,
+                          Alternate_Email__c, CP_Lead_Call_Comment_History__c, CP_Lead_Call_Count__c, CP_Lead_Next_Follow_up_Date__c, CP_Lead_Stage__c, 
+                          Cp_Lead_Sub_Stage__c, Cp_Lead_Sub_Stage_Reason__c, Last_CP_Lead_Call_Comment__c, Last_CP_Lead_Call_Date__c, Proposed_Visit_Date__c 
+                          from CP_Lead__c where Id=: SVWrapper.sv.CP_Lead__c];
+                        IF(!cpLeadList.isEmpty() && cpLeadList != null){
+                            CP_Lead__c cp = cpLeadList[0];
+                            cp.CP_Lead_Stage__c = 'Visit Done';
+                            cp.Cp_Lead_Sub_Stage__c = 'Visit Done';
+                            updateCPLeadList.add(cp);
+                            
+                            convertedOpp.Presales_Last_Call_Date__c = cp.Last_CP_Lead_Call_Date__c;
+                            convertedOpp.Presales_Call_Count__c = CP.CP_Lead_Call_Count__c;
+                            convertedOpp.Presales_Last_Call_Comment__c = CP.Last_CP_Lead_Call_Comment__c;
+                            convertedOpp.Presales_Call_Comment_History__c = CP.CP_Lead_Call_Comment_History__c;
+                            convertedOpp.Presales_Next_Follow_Up_Date__c = CP.CP_Lead_Next_Follow_up_Date__c;
+                            convertedOpp.Presales_Proposed_Visit_Date__c = CP.Proposed_Visit_Date__c;
+                        }
+                    }
                     //Update Opportunity
                     convertedOpp.SV_Count__c = 1;
                     convertedOpp.Last_SV_Date__c = system.now();
@@ -753,6 +837,12 @@ leadList[0].Project__c = pList[0].Id;*/
                     message = 'Thank You! Site visit number is '+ lstSV[0].Name;
                     system.debug('Success Message: '+message);
                     resultMap.put(sv.Id,message);
+                    System.debug('updateCPLeadList: '+updateCPLeadList);
+                    if(!updateCPLeadList.isEmpty() && updateCPLeadList != null){
+                        update updateCPLeadList;
+                    }
+                    
+                    
                 } catch(Exception ex) {
                     system.debug('Exception: '+ex);
                     message = 'Error ' +ex.getMessage();    

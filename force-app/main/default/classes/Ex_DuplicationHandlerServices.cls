@@ -639,7 +639,8 @@ public class Ex_DuplicationHandlerServices {
         return accountDuplicateMapAlternateEmail;
     }
     
-    /*-----------------------------------Master Method For CP Account --------------------------------------------*/    
+    /*-----------------------------------Master Method For CP Account Start--------------------------------------------*/
+	// Changes Done by Nitin Choudhary    
     public static Map<Account, List<duplicateWrapper>> duplicationCheckCPAcccount(List<Account> accountList) {
         Map<Account, List<duplicateWrapper>> duplicateWrapperMap = new Map<Account, List<duplicateWrapper>>();
         Map<Account, List<Account>> CPaccountDuplicateMapMobile = new Map<Account, List<Account>>();
@@ -944,19 +945,19 @@ public class Ex_DuplicationHandlerServices {
         incomingLeadIdSet = getCPLeadIdSet(leadList);
         
         if(!incomingLeadMobileMap.isEmpty() && incomingLeadMobileMap != null) {
-            duplicateLeadList = [Select Id, CreatedDate, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
                                  where Mobile__c IN: incomingLeadMobileMap.keySet() AND Id NOT IN: incomingLeadIdSet];
                                 
             system.debug('CPduplicateLeadList: '+duplicateLeadList);
             
             if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
                 for(CP_Lead__c dupCPLead: duplicateLeadList) {
-                    if(!duplicateMapMobileWithProject.containsKey(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c)) {
+                    if(!duplicateMapMobileWithProject.containsKey(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(dupCPLead);
-                        duplicateMapMobileWithProject.put(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c, newLeadList);
+                        duplicateMapMobileWithProject.put(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
                     } else {
-                        duplicateMapMobileWithProject.get(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c).add(dupCPLead);
+                        duplicateMapMobileWithProject.get(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
                     }
                 }
             }
@@ -985,19 +986,19 @@ public class Ex_DuplicationHandlerServices {
         incomingLeadIdSet = getCPLeadIdSet(leadList);
         
         if(!incomingLeadPhoneMap.isEmpty() && incomingLeadPhoneMap != null) {
-            duplicateLeadList = [Select Id, CreatedDate, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
                                  where Phone__c IN: incomingLeadPhoneMap.keySet() AND Id NOT IN: incomingLeadIdSet];
                                 
             system.debug('CPduplicateLeadList: '+duplicateLeadList);
             
             if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
                 for(CP_Lead__c dupCPLead: duplicateLeadList) {
-                    if(!duplicateMapPhoneWithProject.containsKey(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c)) {
+                    if(!duplicateMapPhoneWithProject.containsKey(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(dupCPLead);
-                        duplicateMapPhoneWithProject.put(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c, newLeadList);
+                        duplicateMapPhoneWithProject.put(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
                     } else {
-                        duplicateMapPhoneWithProject.get(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c).add(dupCPLead);
+                        duplicateMapPhoneWithProject.get(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
                     }
                 }
             }
@@ -1026,19 +1027,19 @@ public class Ex_DuplicationHandlerServices {
         incomingLeadIdSet = getCPLeadIdSet(leadList);
         
         if(!incomingLeadEmailMap.isEmpty() && incomingLeadEmailMap != null) {
-            duplicateLeadList = [Select Id, CreatedDate, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
                                  where Email__c IN: incomingLeadEmailMap.keySet() AND Id NOT IN: incomingLeadIdSet];
                                 
             system.debug('CPduplicateLeadList: '+duplicateLeadList);
             
             if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
                 for(CP_Lead__c dupCPLead: duplicateLeadList) {
-                    if(!duplicateMapEmailWithProject.containsKey(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c)) {
+                    if(!duplicateMapEmailWithProject.containsKey(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(dupCPLead);
-                        duplicateMapEmailWithProject.put(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c, newLeadList);
+                        duplicateMapEmailWithProject.put(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
                     } else {
-                        duplicateMapEmailWithProject.get(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c).add(dupCPLead);
+                        duplicateMapEmailWithProject.get(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
                     }
                 }
             }
@@ -1067,19 +1068,19 @@ public class Ex_DuplicationHandlerServices {
         incomingLeadIdSet = getCPLeadIdSet(leadList);
         
         if(!incomingLeadPhoneMap.isEmpty() && incomingLeadPhoneMap != null) {
-            duplicateLeadList = [Select Id, CreatedDate, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
                                  where Alternate_Email__c IN: incomingLeadPhoneMap.keySet() AND Id NOT IN: incomingLeadIdSet];
                                 
             system.debug('CPduplicateLeadList: '+duplicateLeadList);
             
             if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
                 for(CP_Lead__c dupCPLead: duplicateLeadList) {
-                    if(!duplicateMapPhoneWithProject.containsKey(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c)) {
+                    if(!duplicateMapPhoneWithProject.containsKey(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(dupCPLead);
-                        duplicateMapPhoneWithProject.put(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c, newLeadList);
+                        duplicateMapPhoneWithProject.put(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
                     } else {
-                        duplicateMapPhoneWithProject.get(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c).add(dupCPLead);
+                        duplicateMapPhoneWithProject.get(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
                     }
                 }
             }
@@ -1153,21 +1154,21 @@ public class Ex_DuplicationHandlerServices {
         if(Type.equalsIgnoreCase('Mobile') || Type.equalsIgnoreCase('Phone')) {
             for(CP_Lead__c l: leadList) {
                 if(l.Mobile__c != null) {
-                    if(!incomingLeadWithProjectMap.containsKey(l.Mobile__c+'-'+l.Channel_Partner_Name__c)) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Mobile__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(l);
-                        incomingLeadWithProjectMap.put(l.Mobile__c+'-'+l.Channel_Partner_Name__c, newLeadList);
+                        incomingLeadWithProjectMap.put(l.Mobile__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
                     } else {
-                        incomingLeadWithProjectMap.get(l.Mobile__c+'-'+l.Channel_Partner_Name__c).add(l);
+                        incomingLeadWithProjectMap.get(l.Mobile__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
                     }
                 }
                 if(l.Phone__c != null) {
-                    if(!incomingLeadWithProjectMap.containsKey(l.Phone__c+'-'+l.Channel_Partner_Name__c)) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Phone__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(l);
-                        incomingLeadWithProjectMap.put(l.Phone__c+'-'+l.Channel_Partner_Name__c, newLeadList);
+                        incomingLeadWithProjectMap.put(l.Phone__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
                     } else {
-                        incomingLeadWithProjectMap.get(l.Phone__c+'-'+l.Channel_Partner_Name__c).add(l);
+                        incomingLeadWithProjectMap.get(l.Phone__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
                     }
                 }
             }
@@ -1175,21 +1176,21 @@ public class Ex_DuplicationHandlerServices {
         if(Type.equalsIgnoreCase('Email') || Type.equalsIgnoreCase('Alternate Email')) {
             for(CP_Lead__c l: leadList) {
                 if(l.Email__c != null) {
-                    if(!incomingLeadWithProjectMap.containsKey(l.Email__c +'-'+l.Channel_Partner_Name__c)) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Email__c +'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(l);
-                        incomingLeadWithProjectMap.put(l.Email__c+'-'+l.Channel_Partner_Name__c, newLeadList);
+                        incomingLeadWithProjectMap.put(l.Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
                     } else {
-                        incomingLeadWithProjectMap.get(l.Email__c+'-'+l.Channel_Partner_Name__c).add(l);
+                        incomingLeadWithProjectMap.get(l.Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
                     }
                 }
                 if(l.Alternate_Email__c != null) {
-                    if(!incomingLeadWithProjectMap.containsKey(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c)) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
                         List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
                         newLeadList.add(l);
-                        incomingLeadWithProjectMap.put(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c, newLeadList);
+                        incomingLeadWithProjectMap.put(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
                     } else {
-                        incomingLeadWithProjectMap.get(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c).add(l);
+                        incomingLeadWithProjectMap.get(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
                     }
                 }
             }
@@ -1197,6 +1198,8 @@ public class Ex_DuplicationHandlerServices {
         
         return incomingLeadWithProjectMap;
     }
+    
+    /*-----------------------------------Master Method For CP Account End--------------------------------------------*/
 
     
     public static Map<String, List<Lead__c>> getIncomingLeadMap(String Type, List<Lead__c> leadList) {
