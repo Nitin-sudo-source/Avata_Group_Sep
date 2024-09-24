@@ -1,3 +1,184 @@
 <template>
-    
+	<div if:true={isSpinner} class="spinner-container">
+        <div class="loader"></div>
+        <div class="wait-text">Please wait...</div>
+    </div>
+    <div class="box3">
+             <div class="mains">
+                    <header class="header">
+                        <div class="main">
+                            <center>
+                                <lightning-icon size="medium" icon-name="custom:custom24"></lightning-icon>
+                                <label class="head" style="font-size:16px"> INVENTORY MATRIX </label>
+                            </center>
+                        </div>
+                    </header>
+	<div class="combo-box-container">
+        <template if:true={fetchOpp}>
+            <div class="combo-box">
+			<lightning-combobox name="combo-box-4" value={fetchOpp.Project__c} options={projectList} placeholder={fetchOpp.Project__r.Name}
+				onchange={handleProject} disabled={isOppProject}>
+			</lightning-combobox>
+		</div>
+        </template>
+		<!-- <div class="combo-box">
+			<lightning-combobox name="combo-box-4" value={selectedProjectId} options={projectList} placeholder="SELECT PROJECT"
+				onchange={handleProject} disabled={isOppProject}>
+			</lightning-combobox>
+		</div> -->
+		<div class="combo-box">
+			<lightning-combobox name="combo-box-1" value={selectedTowerId} options={towerList} placeholder="Select Tower"
+				onchange={handleTower}>
+			</lightning-combobox>
+		</div>
+	</div><br/><br/>
+	<template if:true={showpanel}>
+		<!-- Display the Status it is Hard Core -->
+		<div style="display: flex; justify-content: center; align-items: center; text-align: center;margin-top: 10px;">
+			<ul class="legend">
+				<li>
+					<label class="checkbox-container">
+                                <button class="button1"> <strong>Total Units :</strong> {unitCount} </button>
+                            </label>
+				</li>
+
+				<li>
+					<label class="Vacant checkbox-container">
+                                <input class="button" type="checkbox" data-name="Unit Status" data-value="Vacant" data-filter="Vacant" checked={isDisabled1} onchange={handleClick}>
+                                Vacant : {vacantCount}
+                            </label>
+				</li>
+				<li>
+					<label class="Booked checkbox-container">
+                                <input class="button" type="checkbox" data-name="Unit Status" data-value="Booked" data-filter="Booked" checked={statuscheckboxBooked} onchange={handleClick}>
+                                Booked : {bookedCount}
+                            </label>
+				</li>
+				<li>
+					<label class="Blocked checkbox-container">
+                                <input class="button" type="checkbox" data-name="Unit Status" data-value="Blocked" data-filter="Blocked" checked={statuscheckboxBlocked} onchange={handleClick}>
+                                Blocked : {blockedCount}
+                            </label>
+				</li>
+				<li>
+					 <label class="BookingInProcess checkbox-container">
+                                <input class="button" type="checkbox" data-name="Unit Status"
+                                    data-value="Booking-In-Process" data-filter="Booking-In-Process"
+                                    checked={statuscheckboxBookingInProcess} onchange={handleClick}>
+                                Booking-In-Process : {bookingInProcessCount}
+                            </label>
+				</li>
+
+				<li>
+					<label class="NotForSale checkbox-container">
+                                <input class="button" type="checkbox" data-name="Unit Status" data-value="Not For Sale" data-filter="Not For Sale" checked={statuscheckboxNotForSale} onchange={handleClick}>
+                                Not For Sale : {notForSaleCount}
+                            </label>
+				</li>
+			</ul>
+		</div>
+        <br/>
+		<!-- Display the Configuration it is project specific -->
+		<div style="display: flex; justify-content: center; align-items: center; text-align: center;margin-top: 10px;">
+			<span class="checkbox-label">
+                        <input class="button" type="checkbox" name="ALL" checked={isAllChecked}
+                        onchange={handleAllCheckboxChange}>
+                        ALL : {unitCount}
+                    </span>
+			<template for:each={unitConfigurationMap} for:item="u">
+				<ul key={u}>
+
+					<li class="checkbox-label">
+						<input class="button" type="checkbox" data-name="Unit Configuration" data-value={u.key} data-filter={u.key} onchange={handleClick}>{u.key}: {u.value}
+                            </li>
+				</ul>
+			</template>
+		</div>
+
+
+
+	<!-- Display the default Data -->
+	<template if:true={defaultdata}>
+		<div class="row" style="margin: 3px;">
+			<template for:each={unitFloorMap} for:item="key">
+				<div key={key.key} style="margin: 0px;">
+					<div class="floor-header" style="float: left;">
+						<h3>{key.key}</h3>
+					</div>
+					<div class="unit-container-scrollable">
+						<div class="unit-container">
+							<div class="unit-row">
+								<template for:each={key.value} for:item="u">
+									<div key={u.Id} class="unit-box" data-unit-status={u.Sales_Status__c}
+										data-value={u.Id}>
+										<span class="unit-info popup-text"><strong>{u.Name}</strong><br/>
+                                                    {u.Configuration_Type__c}  | {u.Sales_Status__c} | {u.Total_carpet_Sq_Ft__c} | {u.primaryapname}
+                                         </span>
+										<div class="unit-buttons">
+											<button class="quotation-button" data-value={u.Id} onclick={handleQuotation}>Quotation</button>
+											<!-- <template if:true={showBlockButton}>
+												<button class="blocked-button" data-value={u.Id} onclick={handleBlock}>Block</button>
+											</template> -->
+										</div>
+										<!-- <div class="unit-block-buttons">
+											<template if:true={u.BlockButton}>
+												<button class="blocked-button" data-value={u.Id} onclick={handleUnBlock}>Unblock</button>
+											</template>
+										</div> -->
+									</div>
+								</template>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</div>
+	</template>
+
+	<template if:true={showSpinner}>
+		<div>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+	</template>
+
+	<!-- Display the filtered Data -->
+	<template if:true={filterdata}>
+		<div class="row" style="margin: 3px;">
+			<template for:each={filteredunitFloorMap} for:item="key">
+				<div key={key.key} style="margin: 0px;">
+					<div class="floor-header" style="float: left;">
+						<h3 class="no-wrap">{key.key}</h3>
+					</div>
+					<div class="unit-container-scrollable">
+						<div class="unit-container">
+							<div class="unit-row">
+								<template for:each={key.value} for:item="u">
+									<div key={u.Id} class="unit-box" data-unit-status={u.Sales_Status__c}
+										data-value={u.Id}>
+										<span class="unit-info popup-text"><strong>{u.Name}</strong><br/>
+                                                    {u.Configuration_Type__c}  | {u.Sales_Status__c} | {u.Total_carpet_Sq_Ft__c} | {u.primaryapname}
+                                                </span>
+
+										<div class="unit-buttons">
+											<button class="quotation-button" data-value={u.Id} onclick={handleQuotation}>Book-Now</button>
+											<!-- <template if:true={showBlockButton}>
+												<button class="blocked-button" data-value={u.Id} onclick={handleBlock}>Block</button>
+											</template> -->
+										</div>
+										<!-- <div class="unit-block-buttons">
+											<template if:true={u.BlockButton}>
+												<button class="blocked-button" onclick={handleUnBlock}>Unblock</button>
+											</template>
+										</div> -->
+									</div>
+								</template>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</div>
+	</template>
+	</template></div>
+    </div>
 </template>
