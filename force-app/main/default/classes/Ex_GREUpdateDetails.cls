@@ -1,3 +1,9 @@
+// -------------------------------------------
+//   Project: Avant Infra 
+//   Created By: Exceller Tech
+//   Created Date: 24-09-2024
+//   Author: Nitin Choudhary    
+// -------------------------------------------
 public class Ex_GREUpdateDetails {
     public class SVWrapper{
         @AuraEnabled 
@@ -68,11 +74,52 @@ public class Ex_GREUpdateDetails {
     @AuraEnabled
     public static void updateSiteVisit(svWrapper svWrapper){
         System.debug('svWrapper: '+svWrapper);
-          List<Site_Visit__c> svList = new List<Site_Visit__c>();
+        List<Site_Visit__c> svList = new List<Site_Visit__c>();
+        Map<String, CP_Project__c> cpProjectMap = new Map<String, CP_Project__c>();
+        Set<Id> channelPartnerIds = new Set<Id>();
+        Set<Id> projectIds = new Set<Id>();
+        List<CP_Project__c> cpProjects = new List<CP_Project__c>();
          /*svList = [Select Id, Name from Site_Visit__c where Id =: svWrapper.sv.Id];
         System.debug('svList: '+svList);*/
         if(svWrapper != null){
             Site_Visit__c sv = svWrapper.sv;
+            if(sv.Lead_Source__c.equalsIgnoreCase('Channel Partner') && sv.Channel_Partner__c != null && sv.Project__c != null){
+                if (sv.Channel_Partner__c != null) {
+                    channelPartnerIds.add(sv.Channel_Partner__c);
+                }
+                if (sv.Project__c != null) {
+                    projectIds.add(sv.Project__c);
+                }
+                
+                if(!channelPartnerIds.isEmpty() && projectIds != null){
+                    cpProjects = [SELECT Id, Channel_Partner__c, Project_Name__c FROM CP_Project__c
+                                  WHERE Channel_Partner__c IN :channelPartnerIds AND Project_Name__c IN :projectIds
+                                 ];
+                }
+                System.debug('cpProjects: '+cpProjects);
+                
+                if(!cpProjects.isEmpty() && cpProjects != null){
+                    for (CP_Project__c cpProject : cpProjects) {
+                        if(!cpProjectMap.containsKey(cpProject.Channel_Partner__c + '-' + cpProject.Project_Name__c)) {
+                            cpProjectMap.put(cpProject.Channel_Partner__c + '-' + cpProject.Project_Name__c, cpProject);
+                        } else {
+                            cpProjectMap.get(cpProject.Channel_Partner__c + '-' + cpProject.Project_Name__c);
+                        }
+                    }
+                }
+                System.debug('cpProjectMap: '+cpProjectMap);
+                if(!cpProjectMap.isEmpty() && cpProjectMap != null){
+                    if(!cpProjects.isEmpty() && cpProjects != null){
+                        for (CP_Project__c cp : cpProjects) {
+                            if(!cpProjectMap.containsKey(cp.Channel_Partner__c + '-' + cp.Project_Name__c)) {
+                                sv.CP_Project__c = cpProjectMap.get(cp.Channel_Partner__c + '-' + cp.Project_Name__c).Id; 
+                            } else {
+                                sv.CP_Project__c = cpProjectMap.get(cp.Channel_Partner__c + '-' + cp.Project_Name__c).Id; 
+                            }
+                        } 
+                    }
+                }
+            }
             if(sv != null){
                 svList.add(sv);
             }
@@ -81,8 +128,5 @@ public class Ex_GREUpdateDetails {
                 update svList;
             }
         }
-        
     }
-    
-
 }

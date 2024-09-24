@@ -42,7 +42,7 @@ public class Ex_LeadHandlerServices {
         Integer index = 0;
         for(Lead__c l: leadListForAssignment) {
             // Pick the next person to be assigned
-            if(tmList != null) {
+            if(!tmList.isEmpty()) {
                 Team_Member__c member = tmList.get(Math.mod(index, tmList.size()));
                 
                 l.OwnerId = member.User__c;

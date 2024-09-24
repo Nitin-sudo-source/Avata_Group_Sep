@@ -47,8 +47,8 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
 
     connectedCallback() {
-       // const urlSearchParams = new URLSearchParams(window.location.search);
-        //this.oppId = urlSearchParams.get("recordId");
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        this.oppId = urlSearchParams.get("recordId");
         //alert('oppId: ' + this.oppId);
         this.handleOppData();
     }

@@ -13,6 +13,9 @@
     <target>lightningCommunity__Page</target>
     <target>lightningCommunity__Default</target>
     <target>lightningSnapin__ChatMessage</target>
+    
+    <target>lightning__RecordAction</target>
+    
     </targets>
     
 </LightningComponentBundle>

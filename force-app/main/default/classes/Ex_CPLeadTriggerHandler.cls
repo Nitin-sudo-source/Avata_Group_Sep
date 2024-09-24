@@ -15,7 +15,7 @@ public class Ex_CPLeadTriggerHandler {
         for(CP_Lead__c oldLead: oldMap.values()) {
             CP_Lead__c newLead = newMap.get(oldLead.Id);
             
-            if(oldLead.Mobile__c != newLead.Mobile__c || oldLead.Phone__c != newLead.Phone__c || oldLead.Email__c != newLead.Email__c || oldLead.Alternate_Email__c != newLead.Alternate_Email__c)
+            if(oldLead.Mobile__c != newLead.Mobile__c || oldLead.Phone__c != newLead.Phone__c || oldLead.Email__c != newLead.Email__c || oldLead.Alternate_Email__c != newLead.Alternate_Email__c || oldLead.Channel_Partner_Name__c != newLead.Channel_Partner_Name__c || oldLead.Project__c != newLead.Project__c)
             {
                 lList.add(newLead);   
             }

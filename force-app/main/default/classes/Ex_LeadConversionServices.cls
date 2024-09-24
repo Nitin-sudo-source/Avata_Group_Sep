@@ -1,3 +1,9 @@
+// -------------------------------------------
+//   Project: Avant Infra 
+//   Created By: Exceller Tech
+//   Created Date: 24-09-2024
+//   Author: Nitin Choudhary    
+// -------------------------------------------
 public class Ex_LeadConversionServices {
      @InvocableMethod
     public static void convertLead(List<Lead__c> leadList) {
@@ -63,6 +69,7 @@ acc.BillingPostalCode = l.PostalCode__c;*/
                 op.Buying_Purpose__c = l.Buying_Purpose__c;
                 op.Configuration_Required__c = l.Configuration_Required__c;
                 op.Possession_Timeframe__c = l.Possession_Timeframe__c;
+                
                 op.Presales_Last_Call_Date__c = l.Presales_Last_Call_Date__c;
                 op.Presales_Call_Count__c = l.Presales_Call_Count__c;
                 op.Presales_Last_Call_Comment__c = l.Presales_Last_Call_Comment__c;
