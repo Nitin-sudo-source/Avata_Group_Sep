@@ -1,3 +1,30 @@
+.icon{
+    background-color:white;
+    color: black;
+    border: 1px solid black;
+}
+.combo-box-container {
+    display: flex; /* Use flexbox to center align horizontally */
+    justify-content: center; /* Center align horizontally */
+    margin: 5px;
+}
+
+.combo-box {
+    margin-right: 10px; /* Add some spacing between combo boxes */
+}
+
+lightning-combobox{
+    font-size: small;
+    width: 250px;
+    color: solid black;
+}
+
+.combo-box-label {
+    margin-right: 10px; /* Add spacing between the label and combo box */
+    flex: 1; /* Allow the label to grow and occupy available space */
+    min-width: 150px; /* Set a minimum width for the label */
+}
+
 .checkbox-container {
     display: flex;
     flex-wrap: wrap;
@@ -7,71 +34,87 @@
     color: solid black;
 }
 
+.button1 {
+    display: inline-block;
+    padding: 0 10px;
+    margin-left: 50px;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #000000;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+  }
+
+  .checkbox-label {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    background-color: #ccc;
+    padding: 5px;
+    border-radius: 15px;
+}
+input{
+    margin-right: 5px;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+    
+}
+
 .box3 {
-    flex: 0 1 99%; 
-    border: 2px solid #c2c2c2;
+    flex: 0 1 99%; /* Adjust width as needed */
+    /* height: auto; */
+    /* Always show scroll bars */
+    /* overflow: none; */
+
+    /* padding: 5px;
+    margin: 10px; */
+     border: 2px solid #c2c2c2;
 }
 
 .box2 {
     flex: 0 1 49%;
-    /* border: 1px solid #c2c2c2; */
+    border: 1px solid #c2c2c2;
     margin: 10px;
 }
 
 .main {
-    /* background-color: #e7eff882; */
-    /* border: 1px solid #c2c2c2; */
+    background-color: #cae4ff;
+    border: 1px solid #c2c2c2;
     padding: 8px;
     border-radius: 2px;
-    color: rgb(10, 9, 9);
-    position: relative;
+    color: whitesmoke;
 }
 
 .mains {
-    /* padding-bottom: 80px;  */
-    /* border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
-    border: 1.5px solid #e2e8eb; */
+    /* border: 1px solid #c2c2c2; */
+    border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
+    /* padding: 8px;
+    background-color: #cfe9fe; */
 }
-
-/* .slds-docked-form-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #f4f6f9;
-    z-index: 1000; 
-}
-
-
-
-
-.slds-docked-form-footer {
-    flex-shrink: 0; 
-    background-color: #f4f6f9; 
-} */
-
 
 .head {
     font-size: 20px;
     font-weight: bold;
-    /* font-family: var(--lwc-fontFamily, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'); */
+    font-family: var(--lwc-fontFamily, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');
     margin: 10px;
     margin-top: 10px;
     margin-left: 10px;
-    color: #0e3aed;
-    text-align: center;
-    position: relative;
-    padding-bottom: 4px;
-    text-decoration: underline;
-    
-    
+    color: #000000;
 }
+
+
 
 table {
     border-collapse: collapse;
     border:1px solid #ddd;
-    font-size: 12px;
-    font-family: var(--lwc-fontFamily, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');
-
+    font-size: 10px;
   }
   
   th,
@@ -79,13 +122,13 @@ table {
     padding-top: 2px;
     padding-bottom: 2px;
     padding: 8px;
-    /* text-align: left; */
-    /* border-bottom: 1px solid #ddd; */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
     /* border-right: 1px solid #ddd; */
     /* border-left: 1px solid #ddd; */
     border: 1px solid #ddd;
     text-align: left;
-    /* background-color: white; */
+    background-color: white;
     /* text-shadow: 2px 2px 3px rgb(128, 125, 125); */
   }
   
@@ -95,20 +138,102 @@ table {
 
   }
   th {
-    /* background-color: rgb(240, 240, 240); */
+    background-color: rgb(240, 240, 240);
     /* width: 100%; */
     color: black;
     border:1px solid #ddd;
-    text-align: left;
-    /* font-weight: bold; */
+    text-align: center;
+    font-weight: bold;
     /* text-shadow: 2px 2px 3px rgb(128, 125, 125); */
   }
 
-  .fixed-image {
-    max-width: 18%;  /* Make sure the image does not exceed the container width */
-    height: auto;     /* Maintain the aspect ratio */
-    display: block;   /* Remove any extra space below the image */
-    margin: 0 auto;   /* Center the image horizontally */
+  .custom-toast-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+}
+.custom-toast-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+}
+
+.custom-toast {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    color: #ffffff; /* Set font color to white */
+    position: relative; /* Allow absolute positioning within */
+}
+
+.slds-scope .slds-icon {
+    width: var(--lwc-squareIconMediumBoundary, 2rem);
+    height: var(--lwc-squareIconMediumBoundary, 2rem);
+    fill: #fafafa !important;
+}
+
+.slds-scope .slds-icon-action-close {
+    background-color: var(--slds-c-icon-color-background, var(--sds-c-icon-color-background, #f43131));
+}
+
+.custom-toast .slds-icon {
+    fill: #ffffff; /* Set icon color to white */
+}
+
+/* Define styles for each variant */
+.slds-theme_success {
+    background-color: #28a745;
+    padding: 1rem;
+    color: #ffffff; /* Set font color to white */
+    position: relative; 
+    margin: 0 auto;/* Allow absolute positioning within */
+     /* Example success color */
+}
+
+.slds-theme_warning {
+    background-color: #ffc107; 
+    padding: 1rem;
+    color: #ffffff; /* Set font color to white */
+    position: relative;
+    margin: 0 auto; /* Allow absolute positioning within *//* Example warning color */
+}
+
+.slds-theme_error {
+    background-color: #dc3545;
+    padding: 1rem;
+    color: #ffffff; /* Set font color to white */
+    position: relative; 
+    margin: 0 auto;/* Allow absolute positioning within */ /* Example error color */
+}
+
+.custom-toast .slds-button_icon {
+    position: absolute;
+    top: 0.5rem; /* Adjust as needed */
+    right: 0.5rem; /* Adjust as needed */
+    color: #ffffff; /* Set button icon color to white */
+    background: transparent; /* Remove default background */
+    border: none; /* Remove default border */
+    padding: 0; /* Remove default padding */
+}
+
+.custom-toast .slds-button_icon:hover {
+    background: rgba(0, 0, 0, 0.2); /* Optional: Add hover effect */
+}
+
+/* Ensure proper padding inside the toast */
+.slds-notify_toast {
+    padding: 1rem;
 }
 
 
@@ -123,15 +248,14 @@ table {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(244, 240, 240, 0.612); 
+    background-color: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(5px); 
     z-index: 9999; 
     
     }
     .loader {
     border: 4px solid #f3f3f3; 
-    border-top: 4px solid #0e3aed;  
-    color: #0e3aed;
+    border-top: 4px solid #c53226;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -141,21 +265,13 @@ table {
     .wait-text {
     margin-top: 10px;
     font-size: 16px;
-    color: #0e3aed;
+    color: #fff;
     }
     
     @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
     }
-
-    .mainDiv {
-        /* Adjust width as needed */
-         margin: 0 auto !important;
-         width: 100%;
-         padding: 5px;
- 
-     }
 
     
   @media (min-width: 768px) {
@@ -173,101 +289,7 @@ table {
     .mainDiv {
         padding: 0; /* Reset padding for smaller screens */
         width: 100%; 
-        /* justify-content: center; */
-        /* align-items: center; */
+        justify-content: center;
+        align-items: center;
     }
 }
-
-.container{
-    display: flex;
-    justify-content: space-between;
-}
-
-@media (max-width: 610px) {
-
-    .container, .container2 {
-      flex-direction: column;
-      max-width: 100%; /* Ensure full width */
-      padding: 0 10px; /* Add padding for spacing */
-      margin: 0 auto; /* Center the container */
-      box-sizing: border-box; 
-      overflow: hidden;
-      position: relative;
-    }
-  
-    .custom-table {
-      display: block;
-      overflow-x: auto;
-    }
-  
-    
-  
-                .custom-table th, .custom-table td {
-                  display: table-cell; /* Ensure cells remain in table layout */
-                  box-sizing: border-box;
-                  padding: 8px; /* Maintain original padding for custom table */
-                  font-size: 12px; /* Maintain original font size for custom table */
-              }
-  
-              .custom-table tr {
-                  display: table-row; /* Ensure rows remain in table layout */
-                  margin-bottom: 0; /* Remove margin for custom table rows */
-              }
-  
-  
-    table:not(.custom-table) {
-      overflow-x: auto;
-      /* Allow horizontal scrolling on smaller screens */
-       width: 100%;
-    }
-  
-  
-  
-    th,
-    td {
-      display: block;
-      /* Display headers and data cells as block elements */
-      box-sizing: border-box;
-      padding: 6px;
-      /* Reduced padding for smaller screens */
-      font-size: 10px;
-      /* Include padding and border in the element's total width */
-    }
-  
-    tr {
-      display: block;
-      /* Make each row a block */
-      margin-bottom: 1em;
-      /* Add some space between rows */
-    }
-  
-    .box,
-    .box2,
-    .box3 {
-      flex: 1 1 100%;
-      /* Full width for boxes on smaller screens */
-      margin: 5px 0;
-      /* Reduce margin on smaller screens */
-    }
-  
-    .head {
-      font-size: 18px;
-      /* Adjust font size for mobile */
-    }
-  
-    .gradient-text {
-      font-size: 32px;
-      /* Adjust text size for mobile */
-    }
-  
-    th,
-    td {
-      font-size: 10px;
-      /* Smaller font size for table on mobile */
-    }
-  
-    .spinner-container {
-      padding: 20px;
-      /* Adjust spinner container padding for mobile */
-    }
-  }
