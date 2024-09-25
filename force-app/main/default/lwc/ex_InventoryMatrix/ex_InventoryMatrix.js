@@ -354,15 +354,15 @@ export default class Ex_InventoryMatrix extends LightningElement {
         this.showSpinner = false;
     }
 
-    // handleQuotation(event) {
-    //     this.selectedUnitId = event.currentTarget.dataset.value;
-    //     var link = document.createElement('a');
-    //     if (this.selectedUnitId) {
-    //         const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId;
-    //         link.href = url;
-    //         link.target = '_blank';
-    //         link.click();
-    //     }
-    // }
+    handleQuotation(event) {
+        this.selectedUnitId = event.currentTarget.dataset.value;
+        var link = document.createElement('a');
+        if (this.selectedUnitId) {
+            const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId;
+            link.href = url;
+            link.target = '_blank';
+            link.click();
+        }
+    }
 
 }
