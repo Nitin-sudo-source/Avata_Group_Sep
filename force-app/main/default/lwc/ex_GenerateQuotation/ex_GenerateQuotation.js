@@ -66,6 +66,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
     @track discountNPVPSF = null;
     @track paymentSchemePremium = null;
     @track originalBaseRate = 0;
+    @track unitdetails = [];
 
     connectedCallback() {
         if (this.oppId) {
@@ -91,6 +92,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
                 if (data) {
                     console.log('unit: ' + JSON.stringify(data));
                     this.unit = data;
+                    this.unitdetails.push(this.unit);
                     if (this.unit.RERA_Carpet_Area_Sq_Ft__c != null) {
                         this.unit.RERA_Carpet_Area_Sq_Ft__c = parseFloat(this.unit.RERA_Carpet_Area_Sq_Ft__c).toFixed(2);
                     }
@@ -213,6 +215,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
         this.selectedPaymentSchemeName = this.paymentSchemeList.find(option => option.value === this.selectedPaymentScheme).label;
         this.isPaymentScheduleEnable = this.paymentSchemeList.find(option => option.value === this.selectedPaymentScheme).isEditable;
         this.getAllPriceMap();
+        this.showPaymentSchedule();
         //this.isSpinner = false;
     }
 
