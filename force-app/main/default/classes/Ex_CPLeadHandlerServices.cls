@@ -12,10 +12,21 @@
 **/
 public class Ex_CPLeadHandlerServices {
     public static void duplicationCheck(String performRoundRobin, List<CP_Lead__c> leadList) {
-        Map<CP_Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckCPLead(leadList);
         List<CP_Lead__c> CPProjectForAssignment = new List<CP_Lead__c>();
-        
-        for(CP_Lead__c l : leadList) {
+         List<CP_Lead__c> getCPList = new List<CP_Lead__c>();
+        if(!leadList.isEmpty() && leadList != null) {
+            for(CP_Lead__c l : leadList) {
+                if (l.Channel_Partner_Name__c != null && l.Project__c != null) {
+                    CPProjectForAssignment.add(l);
+                }
+            }
+            
+        }
+        if(!CPProjectForAssignment.isEmpty() && CPProjectForAssignment != null){
+           getCPList = AssignCPProject(CPProjectForAssignment);
+        }
+        Map<CP_Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckCPLead(getCPList);
+        for(CP_Lead__c l : getCPList) {
             String errMsg = '';
             if (duplicateWrapperMap.containsKey(l)) {
                 for (Ex_DuplicationHandlerServices.duplicateWrapper dw : duplicateWrapperMap.get(l)) {
@@ -28,18 +39,16 @@ public class Ex_CPLeadHandlerServices {
                 if (!Test.isRunningTest() && errMsg != '')
                     l.addError(errMsg);
             } else {
-                if(l.Channel_Partner_Name__c != null && l.Project__c != null/* && performRoundRobin.equalsIgnoreCase('Yes')*/) {
-                    CPProjectForAssignment.add(l);
-                }
+               
             }
             
         }
-        if(!CPProjectForAssignment.isEmpty() && CPProjectForAssignment != null) {
+       /* if(!CPProjectForAssignment.isEmpty() && CPProjectForAssignment != null) {
             AssignCPProject(CPProjectForAssignment);
-        }
+        }*/
     }
     
-    public static void AssignCPProject(List<CP_Lead__c> CPProjectForAssignment) {
+    public static List<CP_Lead__c> AssignCPProject(List<CP_Lead__c> CPProjectForAssignment) {
         Map<String, CP_Project__c> cpProjectMap = new Map<String, CP_Project__c>();
         Set<Id> channelPartnerIds = new Set<Id>();
         Set<Id> projectIds = new Set<Id>();
@@ -81,5 +90,6 @@ public class Ex_CPLeadHandlerServices {
                 }
             }
         }
+        return CPProjectForAssignment;
     } 
 }

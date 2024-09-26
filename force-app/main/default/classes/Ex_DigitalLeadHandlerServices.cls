@@ -234,8 +234,9 @@ public class Ex_DigitalLeadHandlerServices {
                                     update dLeadList[0];
                                 }
                             } else if(dw.objectType.equalsIgnoreCase('Account')) {
-                                oppList = [Select Id, Name, Is_Active__c, Account__c, Account__r.PersonContactId, OwnerId from Opportunity__c 
-                                           Where Project__c =: newLead.Project__c AND Account__c =: dw.dupAccount.Id AND Is_Active__c = true];
+                                oppList = [Select Id, Name, Stage__c, Is_Active__c, Account__c, Account__r.PersonContactId, Is_Booked__c, OwnerId from Opportunity__c 
+                                           Where Project__c =: newLead.Project__c AND Account__c =: dw.dupAccount.Id AND Is_Booked__c = false];
+                                System.debug('oppList: '+oppList);
                                 
                                 try {
                                     task t = new task();
@@ -246,6 +247,10 @@ public class Ex_DigitalLeadHandlerServices {
                                         t.WhatId = oppList[0].Id;
                                         t.WhoId = oppList[0].Account__r.PersonContactId;
                                         t.OwnerId = oppList[0].OwnerId;
+                                        if (oppList[0].Stage__c.equalsIgnoreCase('Lost')) {
+                                            oppList[0].Stage__c = 'Created';
+                                            update oppList;
+                                        }
                                     } else {
                                         t.WhoId = dw.dupAccount.PersonContactId;
                                         t.OwnerId = dw.dupAccount.OwnerId;

@@ -1331,8 +1331,8 @@ public class Ex_DuplicationHandlerServices {
         }
         
         if(!incomingOpportunityAccountMap.isEmpty() && incomingOpportunityAccountMap != null) {
-            duplicateOpportunityList = [Select Id, Name, Account__c, Is_Active__c, Project__c, Project__r.Name, OwnerId, Owner.Name from Opportunity__c
-                                        where Account__c IN: incomingOpportunityAccountMap.keySet() AND Id NOT IN: incomingOpportunityIdSet AND Is_Active__c = true];
+            duplicateOpportunityList = [Select Id, Name,Stage__c, Account__c, Is_Active__c, Project__c, Project__r.Name, Is_Booked__c, OwnerId, Owner.Name from Opportunity__c
+                                        where Account__c IN: incomingOpportunityAccountMap.keySet() AND Id NOT IN: incomingOpportunityIdSet AND Is_Booked__c = false];
             system.debug('duplicateOpportunityList: '+duplicateOpportunityList);
             
             if(!duplicateOpportunityList.isEmpty() && duplicateOpportunityList != null) {

@@ -1,0 +1,183 @@
+<apex:page controller="Ex_PrintQuotationController" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style>
+                @page{
+                margin: 0;
+                /* padding: 5px; */
+                }
+                *{
+                box-sizing: border-box;
+                font-size: 8.5px;
+                }
+                table {
+                width:100%;
+                border-collapse: collapse;
+                margin: 2px 0px;
+                }	
+                th, td {
+                border: 1px solid black;
+                padding: 3px 8px;
+                text-align: left;
+                font-size: 9px;
+                }
+                
+                .highlight {
+                background-color: #e6ffe6;
+                }
+                .note {
+                font-size: 8px;
+                color: #666;
+                }
+                .width-50{
+                width: 45%;
+                }
+                .center{
+                text-align: center;
+                }
+                .bold, th{
+                font-weight: 700;
+                font-family: Helvetica, sans-serif;
+                }
+                .inline-block{
+                display: inline-block;
+                }
+                body{
+                width: 100%;
+                font-family: 'Arial Unicode MS';
+                box-sizing: border-box;
+                }
+                .row{
+                width: 100%;
+                }
+                .col{
+                width: 48%;
+                float: left;
+                padding: 0px 5px;
+                }
+                .width-40{
+                width: 34%;
+                }
+                .width-60{
+                width: 61%;
+                }
+                .align-right{
+                text-align:right;
+                }
+                .bg-yellow{
+                background: #ffff00;   
+                }
+                .total-row{
+                background: #ffff00;
+                font-weight: 600;
+                font-family: Helvetica, sans-serif;
+                }
+                .terms-conditions{
+                font-size: 7px !important;
+                margin: 0;
+                padding: 0;
+                }
+                .logo img{
+                height: 50px;
+                width: auto;
+                }
+                .logo p{
+                margin: 0;
+                padding: 0;
+                }
+                
+            </style>
+        </head>
+        <body>
+            
+            <!-- Flat Details -->
+            <div class="col width-40">
+                <table class="flatDetails">
+                    <tr>
+                        <th style="background:#DCDCDC;" class="center " colspan="2"><div style="font-weight:800;font-size: 9px;">Costing Details</div></th>
+                    </tr>
+                    <tr>
+                        <!-- <td>Date </td>-->
+                        
+                    </tr>
+                    <tr>
+                        <td>Wing </td>
+                        <td> <apex:outputText value="{!flatDetails['Tower__c']}"></apex:outputText> </td>
+                    </tr>
+                    <tr>
+                        <td>Unit No. </td>
+                        <td> <apex:outputText value="{!flatDetails['Flat_No__c']}"></apex:outputText> </td>
+                    </tr>
+                    <tr>
+                        <td>Floor No. </td>
+                        <td> <apex:outputText value="{!flatDetails['Floor__c']}"></apex:outputText> </td>
+                    </tr>
+                    <tr>
+                        <td>Configuration  </td>
+                        <td> <apex:outputText value="{!flatDetails['Configuration_Type__c']}"></apex:outputText> </td>
+                    </tr>
+                    <tr>
+                        <td>Total Carpet Area (Sq.ft.) </td>
+                        <td> <apex:outputText value="{!flatDetails['Total_carpet_Sq_Ft__c']}"></apex:outputText> </td>
+                    </tr>
+                    <tr>
+                        <!--<td>RERA Carpet Area (Sqm.) </td>
+<td> <apex:outputText value="{!flatDetails['RERA_Carpet_Area_SQM__c']}"></apex:outputText> </td>-->
+                    </tr>
+                    <tr>
+                        <td>No. Of Car Park </td>
+                        <td> <apex:outputText value="{!flatDetails['Car_Park_Required_Count__c']}"></apex:outputText> </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Payment Schedule -->
+            <div class="row" style="background:#5da85d; padding-left:2px; margin-top:-10px;">
+                <div class="col" style="width:96%">
+                    <table class="considerationAmount">
+                        <tr>
+                            <th style="padding:5px 10px; font-weight:800; background:#DCDCDC;">Payment Schedule</th>
+                            <th style="text-align:right; padding:5px 10px; font-weight:800; background:#DCDCDC;">%</th>
+                            <!--<th style="text-align:right; padding:5px 10px; font-weight:800; background:#DCDCDC;">Due Date</th>-->
+                            <th style="text-align:right; padding:5px 10px; font-weight:800; background:#DCDCDC;">Flat Cost</th>
+                            <!-- <th style="text-align:right; padding:5px 10px; font-weight:800; background:#DCDCDC;">TDS</th>-->
+                            <th style="text-align:right; padding:5px 10px; font-weight:800; background:#DCDCDC;">GST</th>
+                            <th style="text-align:right; padding:5px 10px; font-weight:800; background:#DCDCDC;">Total </th>
+                        </tr>
+                        
+                        <apex:repeat value="{!paymentSchedule}" var="paymentMilestone">
+                            <tr> 
+                                <td > {!paymentMilestone['Milestone_Name__c']} </td>
+                                <td class="align-right"> {!paymentMilestone['Percentage__c']} </td>
+                                <!--<td class="align-right"> {!paymentMilestone['Due_Date__c']} </td>-->
+                                <td class="align-right"> {!paymentMilestone['Amount__c']} </td>
+                                <!--<td class="align-right"> {!paymentMilestone['TDS_Amount__c']} </td>-->
+                                <td class="align-right"> {!paymentMilestone['Total_Tax__c']} </td>
+                                <td class="align-right"> {!paymentMilestone['Total']} </td>
+                            </tr>
+                        </apex:repeat>
+                        
+                        <tr class="total-row">
+                            <td style="background:#E0E0E0"> Total </td>
+                            <td class="align-right" style="background:#E0E0E0"> <apex:outputText value="{!paymentScheduleTotal['Total_Percentage']}"> </apex:outputText> </td>
+                            <!--<td class="align-right" style="background:#E0E0E0"> <apex:outputText value=" "> </apex:outputText> </td>-->
+                            <td class="align-right" style="background:#E0E0E0"> <apex:outputText value="{!paymentScheduleTotal['Total_Amount']}"> </apex:outputText> </td>
+                            
+                            <!--<td class="align-right" style="background:#E0E0E0"> <apex:outputText value="{!paymentScheduleTotal['Total_TDS']}"> </apex:outputText> </td>-->
+                            <td class="align-right" style="background:#E0E0E0"> <apex:outputText value="{!paymentScheduleTotal['Total_Tax']}"> </apex:outputText> </td>
+                            <td class="align-right" style="background:#E0E0E0"> <apex:outputText value="{!paymentScheduleTotal['Total_Total']}"> </apex:outputText> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+                <div class="col" style="width:96%">
+                    <div><span style="font-weight:800; color:#000000; text-decoration:underline;font-size:9px;">Terms and Conditions* : </span></div>
+                    <apex:outputText value="{!flatDetails['Quotation_Terms_and_Conditions__c']}" escape="false"></apex:outputText>
+                </div>
+            
+            
+        </body>
+    </html>
+</apex:page>
