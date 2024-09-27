@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 09-27-2024
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public class Ex_PrintQuotationController {
     public string qId{get;set;}
     public Quotation__c q{get;set;}
@@ -23,7 +30,35 @@ public class Ex_PrintQuotationController {
     public Decimal grandTotal {get;set;}
     public String grandTotalFormatted {get;set;}
     public Quotation__c quotation {get; set;}
-    
+    public List<chargeDetailWrapper> statutoryChargeList {get;set;}
+    public List<chargeDetailWrapper> otherChargeList {get;set;}
+    public List<chargeDetailWrapper> agreementChargeList {get;set;}
+
+    public Decimal netAgreementValue {get;set;}
+    public Decimal netAgreementTaxValue {get;set;}
+    public Decimal otherChargeValue {get;set;}
+    public Decimal otherChargeTaxValue {get;set;}
+    public Decimal statutoryChargeValue {get;set;}
+    public Decimal statutoryChargeTaxValue{get;set;}
+    public Decimal totalchargeTax {get;set;}
+
+    public String strtotalagreementAmountafterDiscount {get;set;}
+    public String strdiscountAmount{get;set;} 
+    public String strtotalagreementAmountbeforeDiscount{get;set;}
+    public Decimal discountAmount{get;set;}
+    public Decimal totalChargeAmount {get;set;}
+    public Decimal totalagreementAmountbeforeDiscount{get;set;}
+
+    public Decimal chargeBucketAmount {get;set;}
+    public Decimal chargeBucketTax {get;set;}
+    public Decimal otherchargeAmount {get;set;}
+    public Decimal statutoryAmount {get;set;}
+    public Decimal agreementAmount {get;set;}
+    public Decimal chargeAmount {get;set;}
+    public String chargeTotalTax{get;set;}
+    public String strtotalChargeAmount {get;set;}
+    public List<String> termsList { get; set; }
+
     public Ex_PrintQuotationController(){
         qId=ApexPages.currentPage().getParameters().get('qId');
         q=new Quotation__c();
@@ -47,6 +82,33 @@ public class Ex_PrintQuotationController {
         totalAgreementValueFormatted = '';
         grandTotal = 0;
         grandTotalFormatted = '';
+        statutoryChargeList = new List<chargeDetailWrapper>();
+        otherChargeList = new List<chargeDetailWrapper>();
+        agreementChargeList = new List<chargeDetailWrapper>();
+       
+        chargeBucketAmount = 0;
+        chargeBucketTax = 0;
+        chargeAmount = 0;
+        netAgreementValue = 0;
+        netAgreementTaxValue = 0;
+        otherChargeValue = 0;
+        otherChargeTaxValue = 0;
+        statutoryChargeValue = 0;
+        statutoryChargetaxValue = 0;
+        totalchargeTax = 0;
+        agreementAmount = 0;
+        statutoryAmount = 0;
+        otherchargeAmount = 0;
+        totalChargeAmount = 0;
+        totalagreementAmountbeforeDiscount = 0;
+
+        strdiscountAmount = '';
+        strtotalagreementAmountafterDiscount = '';
+        strtotalagreementAmountbeforeDiscount = '';
+        discountAmount = 0;
+        strtotalChargeAmount = '';
+        termsList = new List<String>();
+
         
         List<Quotation__c> quotationList = new List<Quotation__c>();
         quotation = new Quotation__c();
@@ -62,7 +124,20 @@ public class Ex_PrintQuotationController {
                 quotation = quotationList[0];
                 createdDate = String.valueOf(quotation.CreatedDate.format('dd/MM/yyyy'));
                 flatDetails.put('Car_Park_Required_Count__c', quotation.Car_Park_Required_Count__c != null ? String.valueOf(quotation.Car_Park_Required_Count__c) : ' ');
-                flatDetails.put('Quotation_Terms_and_Conditions__c', quotation.Project__r.Quotation_Terms_and_Conditions__c != null ? String.valueOf(quotation.Project__r.Quotation_Terms_and_Conditions__c) : ' ');
+                
+                String terms = [SELECT Project__r.Quotation_Terms_and_Conditions__c FROM Quotation__c WHERE Id = :quotation.Id].Project__r.Quotation_Terms_and_Conditions__c;
+                if (terms != null && terms.contains('<li>')) {
+                    termsList = new List<String>();
+                    for (String term : terms.split('</li>')) {
+        				term = term.replace('<li>', '').trim().replaceAll('\\s+', ' ');
+                        if (String.isNotblank(term)) {
+                            termsList.add(term);
+                        }
+                    }
+                }
+                System.debug('termsList: '+termsList);
+
+                //flatDetails.put('Quotation_Terms_and_Conditions__c', quotation.Project__r.Quotation_Terms_and_Conditions__c != null ? String.valueOf(quotation.Project__r.Quotation_Terms_and_Conditions__c) : ' ');
 
                 
                 paymentMilestoneList = [SELECT Id, Name, Sequence_No__c, Quotation__c, Milestone_Name__c, Due_Date__c,
@@ -163,6 +238,93 @@ public class Ex_PrintQuotationController {
                 flatDetails.put('Total_carpet_Sq_Ft__c', unit.Total_carpet_Sq_Ft__c != null ? String.valueOf(unit.Total_carpet_Sq_Ft__c) : ' ');
             }
         }
+
+        if(qId != null){
+            cdList = getChargeDetailInfo(qId);
+            system.debug('quotationChargeList: '+cdList);
+            
+            if(cdList != null) {
+                for(Charge_Details__c cd: cdList) {
+                    if(cd.Charge_Bucket__c.equalsIgnoreCase('Agreement Value')){
+                        if(cd.Charge_Total_Tax__c != null){
+                            totalchargeTax += cd.Charge_Total_Tax__c;   
+                        } 
+                        if(totalchargeTax != 0){
+                            chargeTotalTax = currencyFormat(Integer.valueOf(totalchargeTax));
+                        }else{
+                            totalchargeTax = 0;
+                        }
+                        if(cd.Charge_Amount__c != null){
+                            agreementAmount += cd.Charge_Amount__c; 
+                        }
+                        if(agreementAmount != 0){
+                            strtotalagreementAmountafterDiscount = currencyFormat(Integer.valueOf(agreementAmount));
+                        }
+                        agreementChargeList.add(new chargeDetailWrapper(cd.Name, currencyFormat(Integer.valueOf(cd.Charge_Amount__c)), cd.Charge_Bucket__c));
+                        
+                    }else if(cd.Charge_Bucket__c.equalsIgnoreCase('Statutory Charges')){
+                        if(cd.Charge_Amount__c != null){
+                            statutoryAmount  += cd.Charge_Amount__c;
+                        }
+                        statutoryChargeList.add(new chargeDetailWrapper(cd.Name, currencyFormat(Integer.valueOf(cd.Charge_Amount__c)), cd.Charge_Bucket__c));
+                        
+                    }else if(cd.Charge_Bucket__c.equalsIgnoreCase('Other Charges')){
+                        if(cd.Charge_Amount__c != null && cd.Charge_Total_Tax__c != null){
+                            chargeAmount = cd.Charge_Amount__c + cd.Charge_Total_Tax__c;
+                        }
+                        if(cd.Charge_Amount__c != null && cd.Charge_Total_Tax__c != null){
+                            otherchargeAmount += cd.Charge_Amount__c + cd.Charge_Total_Tax__c;
+                        }
+                        
+                        otherChargeList.add(new chargeDetailWrapper(cd.Name, currencyFormat(Integer.valueOf(chargeAmount)), cd.Charge_Bucket__c));
+                    }
+                }
+            }
+        }
+        
+        totalagreementAmountbeforeDiscount = agreementAmount + discountAmount ;
+        if(totalagreementAmountbeforeDiscount != 0){
+            strtotalagreementAmountbeforeDiscount = currencyFormat(Integer.valueOf(totalagreementAmountbeforeDiscount));
+        }
+        
+        totalChargeAmount = (agreementAmount + totalchargeTax) + statutoryAmount + otherchargeAmount;
+        if(totalChargeAmount != 0){
+            strtotalChargeAmount = currencyFormat(Integer.valueOf(totalChargeAmount));  
+        }
+        system.debug('agreementAmount:'+agreementAmount +',statutoryAmount:'+statutoryAmount +',otherchargeAmount:'+otherchargeAmount);
+        
+    }
+
+     //we can call below method from Ex_Inventory management services but after batch it get uneditable.
+     public static List<Charge_Details__c> getChargeDetailInfo(Id qId) {
+        List<Charge_Details__c> chargeDetailList = new List<Charge_Details__c>();
+        String[] types = new String[]{'Charge_Details__c'};
+            String queryFields = '';
+        Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
+        
+        for(Schema.DescribeSobjectResult res : results) {
+            String sObjectname = res.getName();
+            Map <String, Schema.SObjectField> fieldMap = res.fields.getMap();
+            
+            for(Schema.SObjectField sfield : fieldMap.Values()) { 
+                schema.describefieldresult dfield = sfield.getDescribe();
+                String fieldLabel = dfield.getLabel();
+                
+                if(queryFields == null || queryFields == '') {
+                    queryFields = dField.getName();
+                } else {
+                    queryFields = queryFields + ', ' + dField.getName();
+                }
+            }
+        }
+        String soqlQuery = 'Select ' + queryFields  + ' from Charge_Details__c Where Quotation__c = \''+qId+'\''; 
+        system.debug(soqlQuery);
+        chargeDetailList = Database.query(soqlQuery);
+        if (chargeDetailList.size() > 0) {
+            return chargeDetailList;
+        } else {
+            return null;
+        }
     }
     
     public String currencyFormat(Decimal amt) {
@@ -180,5 +342,21 @@ public class Ex_PrintQuotationController {
         formattedAmount = (tempAmt.format().contains('.')?tempAmt.format():(tempAmt.format()+'.'+decimalPart));
         return formattedAmount;
     } 
+
+
+    public class chargeDetailWrapper {
+        public String chargeName {get;set;}
+        public String chargeValueString {get;set;}
+        public String chargeTotalTaxString{get;set;}
+        public String chargeBucket {get;set;}
+        
+        public chargeDetailWrapper(String name, String amount, String bucket) {
+            this.chargeName = name;
+            this.chargeValueString = amount;
+            this.chargeBucket = bucket;
+        }
+    }
+
+
     
 }

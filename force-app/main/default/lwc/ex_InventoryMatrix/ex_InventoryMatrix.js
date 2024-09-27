@@ -47,8 +47,10 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
 
     connectedCallback() {
-        const urlSearchParams = new URLSearchParams(window.location.search);
+        if(this.oppId == undefined){
+            const urlSearchParams = new URLSearchParams(window.location.search);
         this.oppId = urlSearchParams.get("recordId");
+        }
         //alert('oppId: ' + this.oppId);
         this.handleOppData();
     }
@@ -364,5 +366,29 @@ export default class Ex_InventoryMatrix extends LightningElement {
             link.click();
         }
     }
+
+    handleBlock(event) {
+        console.log('oppId::: ',this.oppId);
+        console.log('projValue::: ',this.storeProjectId);
+    
+        this.selectedUnitId = event.target.dataset.value;
+        console.log('selectedUnitId:: ',this.selectedUnitId);
+      const compDefinition = {
+          componentDef: "c:blockingDetailPage",
+          attributes: {
+              uniValue: this.selectedUnitId,
+              projValue: this.storeProjectId,
+              oppvalue: this.oppId,
+          },
+
+      }
+      var encodedCompDef = btoa(JSON.stringify(compDefinition));
+      var url = "/one/one.app#" + encodedCompDef;
+      var link = document.createElement('a');
+      link.href = url;
+      link.target = '_self';
+      link.click();
+      //location.reload();
+  }
 
 }

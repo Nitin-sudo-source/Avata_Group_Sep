@@ -151,9 +151,9 @@ global without sharing class Ex_SiteVisitForm {
                                       Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c,
                                       Area_Sq_Ft__c, Location__c, Actual_budget__c, Referrer_Name__c,
                                       Source_of_Funding__c, Any_Pre_existing_Loans__c, Type_of_Pre_existing_Loan__c,
-                                      Current_Outstanding_Amount__c, Sourcing_Manager__c, CP_Project__c, CP_Project__r.OwnerId
+                                      Current_Outstanding_Amount__c, Sourcing_Manager__c, CP_Project__c, CP_Project__r.OwnerId, Is_Booked__c
                                       from Opportunity__c 
-                                      where Id =: oppId AND Project__c =: projectId AND Account__c =: acc.Id AND Is_Active__c = true];
+                                      where Id =: oppId AND Project__c =: projectId AND Account__c =: acc.Id AND Is_Booked__c = false];
                 System.debug('opp: '+opp);
                 if(opp != null){
                     sv.sv.Lead_Source__c = opp.Source__c;
@@ -381,8 +381,8 @@ global without sharing class Ex_SiteVisitForm {
                 oppList = [Select Id, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                            Channel_Partner__c, OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Last_SV_Date__c, Sales_Manager__r.Name,
                            Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Active__c = true];
+                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c from Opportunity__c
+                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Booked__c = false];
                 system.debug('oppList: '+oppList);
                 
                 if(!oppList.isEmpty()) {
@@ -403,8 +403,8 @@ global without sharing class Ex_SiteVisitForm {
                         oppList = [Select Id, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                    Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Last_SV_Date__c, Sales_Manager__r.Name,
                                    Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                                   where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Active__c = true];
+                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c from Opportunity__c
+                                   where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Booked__c = false];
                         system.debug('oppList: '+oppList);
                         
                         if(!oppList.isEmpty()) {
@@ -512,8 +512,8 @@ global without sharing class Ex_SiteVisitForm {
                            CreatedDate, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                            Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
                            Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Active__c = true];
+                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c from Opportunity__c
+                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Booked__c = false];
                 system.debug('oppList: '+oppList);
                 if(!oppList.isEmpty()) {
                     isOppFound = true;
@@ -531,8 +531,8 @@ global without sharing class Ex_SiteVisitForm {
                                    CreatedDate, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                    Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
                                    Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                                   where Account__c =: accList[0].Id AND Project__c =:projectId AND Is_Active__c = true];
+                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c  from Opportunity__c
+                                   where Account__c =: accList[0].Id AND Project__c =:projectId AND Is_Booked__c = false];
                         system.debug('oppList: '+oppList);
                         if(!oppList.isEmpty()) {
                             isOppFound = true;
@@ -614,6 +614,10 @@ global without sharing class Ex_SiteVisitForm {
                             sv.Site_Visit_Count__c = oppList[0].SV_Count__c + 1;
                         }
                         insert sv;
+                        
+                        if(oppList[0].Stage__c != null && oppList[0].Stage__c.equalsIgnoreCase('Lost')){
+                            oppList[0].Stage__c = 'Created';
+                        }
                         
                         //Update Opportunity
                         oppList[0].SV_Count__c = oppList[0].SV_Count__c + 1;
