@@ -18,11 +18,14 @@ public class Ex_BookingFormController {
     }
     @AuraEnabled(cacheable=false)
     public static BookWrapper getBookingWrapper(String oppId){
-        Opportunity__c opp = [Select Id, Project__c,Project__r.CRM_Head__c from Opportunity__c Where Id =: oppId];
+        Opportunity__c opp = [Select Id, Project__c,Project__r.CRM_Head__c, Project__r.CRM_Head__r.ManagerId from Opportunity__c Where Id =: oppId];
         BookWrapper bk = new BookWrapper();
         bk.bk.Booking_Date__c = System.today();
         if(opp.Project__r.CRM_Head__c != null){
-          bk.bk.CRM_Head__c = opp.Project__r.CRM_Head__c;
+           bk.bk.CRM_Head__c = opp.Project__r.CRM_Head__c;
+           bk.bk.Level_1_Approver__c = opp.Project__r.CRM_Head__c;
+           if(opp.Project__r.CRM_Head__r.ManagerId != null) 
+           bk.bk.Level_2_Approver__c = opp.Project__r.CRM_Head__r.ManagerId;  
         }
         
         return bk;
@@ -205,6 +208,12 @@ public class Ex_BookingFormController {
         }
         if(bkWrapper.bk.CRM_Head__c != null){
             booking.CRM_Head__c = bkWrapper.bk.CRM_Head__c;
+        }
+        if(bkWrapper.bk.Level_1_Approver__c != null){
+            booking.Level_1_Approver__c = bkWrapper.bk.Level_1_Approver__c;
+        }
+        if(bkWrapper.bk.Level_2_Approver__c != null){
+           booking.Level_2_Approver__c =  bkWrapper.bk.Level_2_Approver__c;
         }
         if (bkWrapper.bk.Remarks__c != null) {
             booking.Remarks__c = bkWrapper.bk.Remarks__c;

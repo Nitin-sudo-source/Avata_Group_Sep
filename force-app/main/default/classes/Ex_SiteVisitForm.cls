@@ -508,7 +508,7 @@ global without sharing class Ex_SiteVisitForm {
             
             if(!accList.isEmpty()) {
                 isAccountFound = true;
-                oppList = [Select Id, Name , SV_Count__c, Last_SV_Date__c,
+                oppList = [Select Id, Name , SV_Count__c, Last_SV_Date__c,  Sub_Stage__c, Sub_Stage_Reason__c,
                            CreatedDate, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                            Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
                            Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
@@ -527,7 +527,7 @@ global without sharing class Ex_SiteVisitForm {
                     system.debug('accList: '+accList);
                     if(!accList.isEmpty()) {
                         isAccountFound = true;
-                        oppList = [Select Id, Name , SV_Count__c, Last_SV_Date__c,
+                        oppList = [Select Id, Name , SV_Count__c, Last_SV_Date__c,  Sub_Stage__c, Sub_Stage_Reason__c,
                                    CreatedDate, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                    Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
                                    Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
@@ -614,9 +614,13 @@ global without sharing class Ex_SiteVisitForm {
                             sv.Site_Visit_Count__c = oppList[0].SV_Count__c + 1;
                         }
                         insert sv;
-                        
+                       
                         if(oppList[0].Stage__c != null && oppList[0].Stage__c.equalsIgnoreCase('Lost')){
                             oppList[0].Stage__c = 'Created';
+                             oppList[0].Sub_Stage__c = '';
+                             oppList[0].Sub_Stage_Reason__c = '';
+                            
+                            
                         }
                         
                         //Update Opportunity

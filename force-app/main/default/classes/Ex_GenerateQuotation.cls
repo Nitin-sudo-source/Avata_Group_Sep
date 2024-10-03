@@ -43,11 +43,39 @@ public class Ex_GenerateQuotation {
         return priceListGroupMap;
     }
     
+    @AuraEnabled(cacheable=false)
+    public static List<Project__c> getProjectList(Id pId) {
+        try {
+            List<Project__c> pList = [SELECT Id, Name, Discount_Maintain_At__c, Car_Park_Maintain_At__c FROM Project__c Where Id =: pId];
+            System.debug('Project List .: ' + pList);
+            if (!pList.isEmpty()) {
+                return pList;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.debug('An error occurred: ' + e.getMessage());
+            return null;
+        }
+    }
+
+    
     @AuraEnabled(Cacheable= false)
     public static  Map<String, List<Discount__c>>  getDiscountGroupMapDetails(Id pId, Id tId) {
         Map<String, List<Discount__c>> discountGroupMap = new Map<String, List<Discount__c>>();
         List<Discount__c> discountList = new List<Discount__c>();
-       /* if(System.Label.Discount_Maintain_At.equalsIgnoreCase('Tower')) {
+        List<Project__c> plist = new List<Project__c>();
+        plist = getProjectList(pId);
+        if(plist != null && !plist.isEmpty()){
+            if(plist[0].Discount_Maintain_At__c != null && plist[0].Discount_Maintain_At__c.equalsIgnoreCase('Tower')) {
+                discountList = Ex_InventoryPriceManagementServices.getTowerLevelDiscountInfo(pId, tId);
+            }else if(plist[0].Discount_Maintain_At__c != null && plist[0].Discount_Maintain_At__c.equalsIgnoreCase('Project')) {
+                discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(pId);
+            }
+        }
+        
+        System.debug('discountList: '+discountList);
+        /*if(System.Label.Discount_Maintain_At.equalsIgnoreCase('Tower')) {
             discountList = Ex_InventoryPriceManagementServices.getTowerLevelDiscountInfo(pId, tId);
         } else if(System.Label.Discount_Maintain_At.equalsIgnoreCase('Project')) {
             discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(pId);
@@ -236,6 +264,16 @@ public class Ex_GenerateQuotation {
                                 q.Total_Credit_Note_Amount__c = 0;
                             q.Total_Credit_Note_Amount__c += d.Total__c;
                         }
+                    }
+                }
+            }
+            
+            if(carParkList != null && !carParkList.isEmpty()) {
+                for(Ex_InventoryPriceManagementServices.CarParkWrapper cp: carParkList) {
+                    if(cp.carParkRequiredCount > 0) {
+                        if(q.Car_Park_Required_Count__c == null)
+                            q.Car_Park_Required_Count__c = 0;
+                        q.Car_Park_Required_Count__c += cp.carParkRequiredCount;
                     }
                 }
             }

@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 09-27-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <div class="">
         <div if:true={isSpinner} class="spinner-container">
@@ -774,6 +781,12 @@
                             value={svWrapper.sv.Possession_Timeframe_Required__c} required onchange={handleChange}
                             variant="standard"></lightning-input-field>
                     </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <lightning-input-field field-name="Current_Resident_Status__c"
+                            value={svWrapper.sv.Current_Resident_Status__c} required onchange={handleChange}
+                            variant="standard"></lightning-input-field>
+                    </lightning-layout-item>
+                    
                 </lightning-layout><br /><br /><br />
 
             </form>
