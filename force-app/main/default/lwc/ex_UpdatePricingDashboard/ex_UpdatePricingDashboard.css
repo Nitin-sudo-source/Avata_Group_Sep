@@ -1,0 +1,48 @@
+.header {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    background: #1C4E80;
+    color: whitesmoke;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 12px;
+    margin: 0;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+  }
+  
+  .Table1Css {
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 1px solid #0e0d0d;
+    font-size:12px;
+    width:100%;
+
+    
+  
+  }
+  .Table1Css th {
+    border: 0.5px solid #0e0d0d;
+    padding: 8px;
+    text-align: left;
+    background-color:  #cae2df ;
+    font-weight: bold;
+    color:#0e0e0e;
+    text-shadow: 2px 2px 3px rgb(128, 125, 125);
+    font-size:12px;
+  }
+  
+  .Table1Css td {
+    border: 0.5px solid #0e0e0e;
+    padding: 8px;
+    text-align: left;
+    font-weight: bold;
+    text-shadow: 2px 2px 3px rgb(176, 175, 175);
+    font-size:12px;
+
+  }

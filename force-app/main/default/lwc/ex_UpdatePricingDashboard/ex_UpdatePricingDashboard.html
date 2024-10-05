@@ -1,0 +1,148 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-05-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card>
+    <p class="header">Update AV Details</p>
+    <p if:true={isError} style="color:red;font-size:14px;text-align:center"><i><b>  &nbsp; &#9888; {isErrormsg}</b></i></p><br/>
+    <!-- <template if:false={isError}> -->
+        <lightning-record-edit-form object-api-name="Booking__c">
+            <div style="Padding:10px;">
+            <table class="Table1Css">
+                <tr>
+                    <th>
+                        Agreement Value
+                    </th>
+                        <td>
+                            <lightning-input name="Updated_Agreement_Value__c"
+                            field-name="Updated_Agreement_Value__c" variant="label-hidden"
+                            value={avDetails.getAvvalue} 
+                            data-id="Updated_Agreement_Value__c"   formatter="currency"
+                            max-length="20"
+                            onchange={handleUpdatedAv}></lightning-input>
+                        </td>
+                </tr>
+                <tr>
+                    <th>
+                         Stamp Duty(%) :
+                    </th>
+                    <td>
+                        <lightning-input name="Stamp_Duty__c"
+                        field-name="Stamp_Duty__c" variant="label-hidden"
+                        data-id="Stamp_Duty__c" value={avDetails.getStampvalue} 
+                        onchange={handleUpdatedStamp}></lightning-input>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                         GST(%) :
+                    </th>
+                    <td>
+                        <lightning-input name="GST__c"
+                        field-name="GST__c" variant="label-hidden"
+                        data-id="GST__c"  value={avDetails.getTaxalue} 
+                        onchange={handleUpdatedGST}></lightning-input>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Remarks
+                    </th>
+                    <td>
+                        <lightning-input-field name="Remarks__c"
+                                field-name="Remarks__c" variant="label-hidden"
+                                data-id="Remarks__c"
+                                onchange={handleRemarks}></lightning-input-field>
+                        
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </lightning-record-edit-form>
+            
+        <div style="Padding:10px;">
+             <table class="Table1Css">
+            <tr>
+                <th>
+
+                </th>
+                <th style="text-align:center">
+Orginal Value
+                </th>
+                <th style="text-align:center">
+                    Modified Value
+
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Agreement Value
+                </th>
+                <td if:true={avDetails.getAvvalue} style="text-align:right !important">
+                    {avDetails.getAvvalue}
+                </td>
+                <td if:true={getModifiedData.getAvvalue} style="text-align:right !important">
+                  <p style="color:red !important;" if:true={getModifiedData.getAvvalue}>  {getModifiedData.getAvvalue}</p>
+                </td>
+                <td if:false={getModifiedData.getAvvalue} style="text-align:right !important">
+                    {avDetails.getAvvalue}
+               </td>
+            </tr>
+            <tr>
+                <th>
+                    Stamp Duty
+                </th>
+                <td if:true={avDetails.getOrginalStampValue} style="text-align:right !important">
+                    {avDetails.getOrginalStampValue}
+                </td>
+                <td if:true={getModifiedData.getStampvalue} style="text-align:right !important">
+                    <p style="color:red !important;" if:true={getModifiedData.getStampvalue}>  {getModifiedData.getStampvalue}</p>
+                </td>
+                <td if:false={getModifiedData.getStampvalue} style="text-align:right !important">
+                    {avDetails.getOrginalStampValue}
+               </td>
+            </tr>
+            <tr>
+                <th>
+                    Tax
+                </th>
+                <td if:true={avDetails.getOrginalGstValue} style="text-align:right !important">
+                    {avDetails.getOrginalGstValue}
+                </td>
+                <td if:true={getModifiedData.getTaxalue} style="text-align:right !important">
+                    <p style="color:red !important;" if:true={getModifiedData.getTaxalue}>  {getModifiedData.getTaxalue}</p>
+                </td>
+                <td if:false={getModifiedData.getTaxalue} style="text-align:right !important">
+                    {avDetails.getOrginalGstValue}
+               </td>
+            </tr>
+            <tr>
+                <th>
+                    Total
+                </th>
+                <td if:true={avDetails.getValueTotal} style="text-align:right !important">
+                    {avDetails.getValueTotal}
+                </td>
+                <td if:true={getModifiedData.getValueTotal} style="text-align:right !important">
+                    <p style="color:red !important;" if:true={getModifiedData.getTaxalue}>  {getModifiedData.getValueTotal}</p>
+                </td>
+                <td if:false={getModifiedData.getValueTotal} style="text-align:right !important">
+                    {avDetails.getValueTotal}
+               </td>
+            </tr>
+          </table>
+        </div>
+        <!-- </template> -->
+        <template if:false={isError}>
+        <div class="slds-align_absolute-center" style="font-size: 20px;">
+            <lightning-button variant="success" label="Save" onclick={handleSave}></lightning-button>
+        </div>
+    </template>
+    </lightning-card>
+</template>
