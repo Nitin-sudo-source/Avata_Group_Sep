@@ -1,363 +1,250 @@
 <apex:page controller="Ex_PrintBookingPDF" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+
     <html>
         <head>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <style type="text/css" media="print">
                 @page {
-                font-family: Times, sans-serif; 
-                size: A4;
-                margin-top: 1.5in;
-                padding: 2px;
-                /*border: 1px solid black;*/
-                @top-left {
-                content: element(header);
-                }
-                /* @bottom-left {
-                content: "Page " counter(page) ;
-                }*/
-                @bottom-left {
-                content: element(footer);
-                }
+                    font-family: Times, sans-serif; 
+                    size: A4;
+                    margin-top: 1.5in;
+                    padding: 2px;
+                    @top-left {
+                        content: element(header);
+                    }
+                    @bottom-left {
+                        content: element(footer);
+                    }
                 }
                 .header {
-                position: running(header);
-                font-size: 10px;
-                text-align: left;
-                padding-left: 5px;
-                margin-top: 5mm;
+                    position: running(header);
+                    font-size: 10px;
+                    text-align: left;
+                    padding-left: 5px;
+                    margin-top: 5mm;
                 }
-                div.footer {
-                display: block;
-                text-align: left;
-                position: running(footer);
-                padding:8px;
-                 
+                .footer {
+                    display: block;
+                    text-align: left;
+                    position: running(footer);
+                    padding: 8px;
                 }
                 * {
-                box-sizing: border-box;
-                font-size: 8.5px;
+                    box-sizing: border-box;
+                    font-size: 8.5px;
                 }
                 body { 
-                 font-family: 'Arial Unicode MS'; 
-
-                margin: 0; 
-                padding: 0; 
+                    font-family: 'Arial Unicode MS'; 
+                    margin: 0; 
+                    padding: 0; 
                 }
-                .logo img{
-                height: 150px;
-                width:350px;
-               
+                .logo img {
+                    height: 150px;
+                    width: 350px;
                 }
-                .logo p{
-                margin: 0;
-                padding: 0;
-                }
-                .applicantDetails{
-                font-size:12px;
-                font-family: 'Arial Unicode MS'; 
-                }
-                
                 hr {
-                border: none;
-                height: 1px;
-                /* Set the hr color */
-                color: #333;  /* old IE */
-                background-color: #333; 
-                /* Modern Browsers */
+                    border: none;
+                    height: 1px;
+                    color: #333;
+                    background-color: #333;
                 }
-
+                .applicantDetails {
+                    font-size: 12px;
+                    font-family: 'Arial Unicode MS'; 
+                }
+                table {
+                    font-size: 12px;
+                    width: 100%;
+                }
+                th, td {
+                    padding: 5px;
+                    text-align: left;
+                }
             </style>
-            <!--Page 1-->
+        </head>
+        <body>
+            <!-- Page 1 -->
             <div>
                 <p style="text-align:center;font-size:24px;font-weight:bold;padding:8px;padding-top:20px;color:#484848; margin-top: 1in;">
                     WEH-JVLR JUNCTION <br/> ANDHERI (E)
                 </p>
-                
                 <p style="text-align:center;font-size:24px;font-weight:bold;padding:8px;color:#000000;">
                     | APPLICATION FORM &amp; |<br/> ALLOTMENT 
                 </p>
             </div>
-            
+
             <div class="logo" style="text-align:center;padding-left:20px; width:100%; display:inline-block; padding:0px 0px 5px 0px;margin:0px;">
                 <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
             </div>
-        
-             <p style="text-align:center;font-size:32px;font-weight:bold;padding:8px;padding-top:20px;color:#003300;text-transform:uppercase;">
-                    Congratulations <br/> On Your NEW Home
-             </p>
-            
+
+            <p style="text-align:center;font-size:32px;font-weight:bold;padding:8px;padding-top:20px;color:#003300;text-transform:uppercase;">
+                Congratulations <br/> On Your NEW Home
+            </p>
+
             <div class="footer">
                 <p align="Justify;" style="font-size:10px;">
                     Codename Your Glory is registered in MahaRera as Avant Heritage - V is registered under MahaRERA Registration No.: P51800053527 &amp; is available on
                     website of maharera.mahaonline.gov.in. All the images used in this are for representation purpose only. T&amp;C apply.
-                <br/><br/></p>
+                    <br/><br/>
+                </p>
             </div>
-            
-            <!--Page 2-->
+
+            <!-- Page 2 -->
             <div style="page-break-before: always;">
                 <div class="header">
                     <div class="logo" style="text-align:right; width:100%; display:inline-block; padding:0px 0px 5px 0px;margin:0px;">
                         <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
                     </div>
                 </div>
+
                 <div class="applicantDetails">
-                    <table style="font-size:12px;">
+                    <table>
                         <tr>
                             <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
-                                A) Applicant Details 
+                                A) Applicant Details
                             </th>
                             <td></td>
                         </tr>
                         <tr>
-                        <td style="font-size:12px;">Name of Applicant</td>
-                       
-                            <td>
-                                <table style="font-size:12px;">
+                            <td style="font-size:12px;width: 30%;">Name of Applicant</td>
+                            <td style="width: 70%;">
+                                <table style="font-size:12px;width: 100%;">
                                     <apex:variable value="{!1}" var="count" />
                                     <apex:repeat value="{!ApplicantWrapperList}" var="ap">
                                         <tr>
-                                            <th>
-                                                
-                                            </th>
-                                            <td style="font-size:14px;width:70%!IMPORTANT;">
+                                            <td style="font-size:14px;width:100%!IMPORTANT;">
                                                 {!count}) 
                                                 <apex:variable value="{!count+1}" var="count" /> 
-                                                Title  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-                                                &#9745; {!ap.apTitle} <hr/>
-                                                <p style="font-size:14px;"> First Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; Middle Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Last Name
-                                                    
+                                                Title: 
+                                                &#9744; Mr. &nbsp;&nbsp; 
+                                                &#9744; Mrs. &nbsp;&nbsp; 
+                                                &#9744; Ms. &nbsp;&nbsp; 
+                                                &#9744; M/S
+                                                <hr/>
+                                                <p style="font-size:14px;">
+                                                    First Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {!ap.apFirstName}
+                                                </p>
+                                                <p style="font-size:14px;">
+                                                    Middle Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {!ap.apMiddleName}
+                                                </p>
+                                                <p style="font-size:14px;">
+                                                    Last Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {!ap.apLastName}
                                                 </p>
                                             </td>
                                         </tr>
-                                       
                                     </apex:repeat>
                                 </table>
                             </td>
                         </tr>
                     </table>
+
                     <label style="line-height: 2.5;">
                         Residence Address: 
-                            <hr/> 
+                        <hr/> 
                     </label>
-                    <label style="line-height: 2.5;">
-                        
-                            <hr/> 
-                    </label>
-                    <label>
-                        Occupation 
-                    </label>
-                    <label>
-                    Details:  Organization:
-                    </label>
-                     <label>
-                    Office address: 
-                    </label>
-                    <label>
-                    Contact details: Mobile: _______________________________ Residence: _____________________
-                    </label>
-                    <label>       Office:_______________________________ E-mail id:_______________________________
-                    </label>
-                   <label>
-                       Residential Status:   Indian Resident Non Resident[NRI/PIO/OCI]
-                    </label>
-                    <label>
-                    If Non Resident,which country ___________________ Contact No.   ________________________________________               
-                    </label>
-                    <label>
-                     Local(India)Contact no. _____________________________________
-                    </label>
-                    <label>
-                     Local contact person (with contact no.): _____________________________________
-                    </label>
-  
-        <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-                <td style="background-color: black; color: white; padding: 10px;" colspan="5">
-                    &nbsp; <!-- Empty space for the black box -->
-                </td>
-            </tr>
-            <tr>
-                <th>   </th>
-                <th>Relation with 1st applicant</th> 
-                <th>Birth date</th>
-                <th>Anniversary date</th>
-                <th>PAN No.</th>
-                <th>Aadhar No.</th>
-            </tr>
-            <tr>
-                <td>Applicant 1</td>
-                <td>AVBCJD</td>
-                <td>1990-01-01</td>
-                <td>2015-01-01</td>
-                <td>ABCDE1234F</td>
-                <td>1234-5678-9012</td>
-            </tr>
-            <tr>
-                <td>Applicant 2</td>
-                <td> hjgkjhkhsk</td>
-                <td>1992-05-12</td>
-                <td>2017-06-20</td>
-                <td>XYZAB5678G</td>
-                <td>2345-6789-0123</td>
-            </tr>
-            <tr>
-                <td>Applicant 3</td>
-                <td>hjjhj</td>
-                <td>2010-03-15</td>
-                <td>N/A</td>
-                <td>LMNOP3456H</td>
-                <td>3456-7890-1234</td>
-            </tr>
-        </table>
 
-                    
-                    
-                    
-                    
-                    
+                    <!-- Other applicant details -->
                     <label>
-                        B)DETAILS OF FLAT ALOTTED
+                        Occupation Details: Organization:
                     </label>
                     <label>
-                     Project name:Avant Heritage V:_____ Flat no.:________Configuration____________BHK
+                        Office address: 
                     </label>
                     <label>
-                     RERA carpet area_____________Sq Ft.along with_________________________Car Park
-                    </label>     
-                    <label>
-                     Agreement value:Rs.___________________________________(Rupees___________________only)  
+                        Contact details: Mobile: _______________________________ Residence: _____________________
                     </label>
                     <label>
-                     End use:  Self                    Investment 
-                    </label> 
-                        
-                    
-                    
-                    
-                    <label>
-                     C)PAYMENT SCHEDULE 
+                        Office:_______________________________ E-mail id:_______________________________
                     </label>
                     <label>
-                     As per the cost sheet attached.
+                        Residential Status: Indian Resident Non Resident[NRI/PIO/OCI]
                     </label>
                     <label>
-                        Signature of applicant/(s):____________________________________________________________
+                        If Non Resident, which country ___________________ Contact No.   ________________________________________               
+                    </label>
+
+                    <label>
+                        Local(India)Contact no. _____________________________________
+                    </label>
+                    <label>
+                        Local contact person (with contact no.): _____________________________________
+                    </label>
+
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="background-color: black; color: white; padding: 10px;" colspan="5">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Applicant</th>
+                            <th>Relation with 1st applicant</th> 
+                            <th>Birth date</th>
+                            <th>Anniversary date</th>
+                            <th>PAN No.</th>
+                            <th>Aadhar No.</th>
+                        </tr>
+                        <tr>
+                            <td>Applicant 1</td>
+                            <td>Relation 1</td>
+                            <td>1990-01-01</td>
+                            <td>2015-01-01</td>
+                            <td>ABCDE1234F</td>
+                            <td>1234-5678-9012</td>
+                        </tr>
+                        <tr>
+                            <td>Applicant 2</td>
+                            <td>Relation 2</td>
+                            <td>1992-05-12</td>
+                            <td>2017-06-20</td>
+                            <td>XYZAB5678G</td>
+                            <td>2345-6789-0123</td>
+                        </tr>
+                    </table>
+
+                    <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                        B) Details of Flat Allotted 
+                    </th>
+                    <label>
+                        Project name: Avant Heritage V:_____ Flat no.:________ Configuration:____________BHK
+                    </label>
+                    <label>
+                        RERA carpet area_____________Sq Ft.along with_________________________Car Park
+                    </label>
+                    <label>
+                        Agreement value: Rs.___________________________________(Rupees___________________only)  
+                    </label>
+                    <label>
+                        End use:  Self                    Investment 
+                    </label>
+
+                    <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                        C) Payment Schedule
+                    </th>
+                    <label>
+                        As per the cost sheet attached.
+                    </label>
+                    <label>
+                        Signature of applicant(s):____________________________________________________________
                     </label>
                     <label>
                         Remarks:___________________________________________________________________
                     </label>
+
+                    <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                        D) Source of Funding
+                    </th>
                     <label>
-                        Signature of appplicant/(s):_____________________________________________________   
-                    </label>
-                    
-                    <label>
-                     D)SOURCE OF FUNDING
-                    </label>
-                    <label>
-                     Have you opted for a loan?  Yes   No   Not yet decided
+                        Have you opted for a loan?  Yes   No   Not yet decided
                     </label>
                     <label>
-                     If yes,do you have a sanction letter?  Yes  No Name of bank/FI:  
+                        If yes, do you have a sanction letter?  Yes  No Name of bank/FI:  
                     </label>
-                    <label>
-                     Name and contact no. of bank/FI person:   
-                    </label>
-                    <label>
-                      Own contribution amount  %     Home loan amount  %  
-                    </label>
-                    
-                    
-                    <label>
-                     E) SOURCE OF APPLICATION
-                    </label>
-                    <label>
-                    How did you come to know about the project?   
-                    </label>
-                    <label>
-                     Newspaper  Hoardings / Kiosks  E-mailers  SMS  Channel partner
-                    </label>
-                    <label>
-                     Reference  Website  Online campaign  Social media  Existing customer  
-                    </label>
-                    
-                    <label>
-                    F) REAL ESTATE ASSOCIATE DETAILS (IF NOT APPLICABLE STRIKE OFF)  YES  NO   
-                    </label>
-                    <label>
-                    Name of the real estate associate:_________________________________________________
-                    </label>
-                    <label>
-                    Contact person/proprietor:___________ Mobile no:_____________________Landline no:_____________
-                    </label>
-                    <label>
-                    Email Id:________________Remarks:_________________
-                    </label>
-                    <label>
-                     RERA Reg. no:___________________GST no: ________________
-                    </label>
-                  
-                    
-                    <label>
-                       G) APPLICATION PAYMENT DETAILS:
-                    </label>
-                     <label>
-                       Cheque/Draft/UTR-NEFT no:__________________Dated________Rs._______                   
-                    </label>
-                    
-                     <label>
-                         (Rupees_________________only)
-                    </label>
-                    <label>
-                      Drawn on__________Bank______________Branch__________________ 
-                    </label>
-                    
-                    <label>
-                                             OR
-                    </label>
-                    <label>
-                      Google Pay/PAYTM reference no:_______Rs:____________or Swipe card no:_________
-                    </label>
-                    
-                    <label>
-                      Card issuer name:_________________RR no.______________UPI________________________
-                    </label>
-                    
-                    <label>
-                        I/we, the undersigned intend to book a flat and request you to allot me/us as per the company’s/firm's terms and 
-                        conditions, which i/we has/have read, understood and agree to abide by the same as stipulated by your 
-                        company/firm
-                    </label>
-                    
-                    <label>
-                       I/we agree to pay further installments of consideration amount along with taxes as stipulated/called by the 
-                       company/firm and the other charges as and when called for. I/we further agree to sign and execute any necessary 
-                       standard agreement for sale as and when instructed by the company/firm on the company's/firm’s standard 
-                       format. I/we have in the meantime signed terms and conditions of allotment/sale attached to this application 
-                       form.
-                    </label>
-                    
-                    <label>
-                      In case of cancellation of the application, either by applicants or by the company/firm, I/we agree and confirm 
-                      that company/firm shall be entitled to forfeit the earnest amount of 10%, being the “Liquidated damages/
-                      Administrative charges” and GST if applicable as per the terms and conditions of allotment attached to this 
-                      application form.  
-                    </label>
-                    
-                    <label>
-                     I/we undersigned do hereby declare/confirm that the above-mentioned particulars/information given by me/us 
-                     is true and correct and nothing has been canceled there from   
-                    </label>
-                    
-                    <label>
-                        Photograph and signature of all the applicant/s:
-                    </label>
-                    
                 </div>
             </div>
-           
-        
-            
-        </head>
+
+
+        </body>
     </html>
 </apex:page>

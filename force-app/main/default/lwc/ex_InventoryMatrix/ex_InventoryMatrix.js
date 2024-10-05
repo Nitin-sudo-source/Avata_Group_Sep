@@ -48,7 +48,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
     connectedCallback() {
         if(this.oppId == undefined){
-            const urlSearchParams = new URLSearchParams(window.location.search);
+        const urlSearchParams = new URLSearchParams(window.location.search);
         this.oppId = urlSearchParams.get("recordId");
         }
         //alert('oppId: ' + this.oppId);
@@ -57,7 +57,8 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
     handleOppData(){
         this.showSpinner = true;
-        getOppDetails({ oppId: this.oppId})
+        if(this.oppId !== undefined){
+            getOppDetails({ oppId: this.oppId})
             .then(result => {
                 console.log('result ',result);
                 this.fetchOpp = result;
@@ -73,6 +74,12 @@ export default class Ex_InventoryMatrix extends LightningElement {
                 this.error = error;
                 this.fetchOpp = undefined;
             })
+        }else{
+            this.handleProjectData();
+            this.showSpinner = false;
+        }
+       
+        
     }
 
     handleProjectData(){

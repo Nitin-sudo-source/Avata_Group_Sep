@@ -67,6 +67,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
     @track paymentSchemePremium = null;
     @track originalBaseRate = 0;
     @track unitdetails = [];
+    @track showAllIn = [];
 
     connectedCallback() {
         if (this.oppId) {
@@ -610,11 +611,13 @@ export default class Ex_GenerateQuotation extends LightningElement {
                         //console.log('chargeBucket: '+chargeBucket);
 
                         const chargeList = this.priceListGroupMap[chargeBucket];
-                        //console.log('chargeList: '+chargeList);
+                        
+                        console.log('chargeList: '+chargeList);
 
                         var chargeValues = [];
+                        var getAllInPrice = [];
                         chargeList.forEach(element => {
-                            //console.log('element: '+element);
+                            console.log('element: '+element);
 
                             var isChange;
                             if (this.allPriceOriginalInfoFormattedMap[element] !== this.allPriceInfoFormattedMap[element]) {
@@ -631,6 +634,10 @@ export default class Ex_GenerateQuotation extends LightningElement {
                                 isChange: isChange,
                                 isTotal: false
                             });
+                            console.log('chargeValues: '+JSON.stringify(chargeValues));
+                            getAllInPrice.push({
+                                'All In Price': this.allPriceInfoFormattedMap[element] + this.allPriceInfoFormattedMap[element + ' TAX']
+                            })
                         });
 
                         var isChange;
@@ -648,13 +655,16 @@ export default class Ex_GenerateQuotation extends LightningElement {
                             isChange: isChange,
                             isTotal: true
                         });
-                        //console.log('chargeValues: '+JSON.stringify(chargeValues));
+                        console.log('chargeValues: '+JSON.stringify(chargeValues));
 
                         if (chargeBucket !== 'Other Charges') {
                             this.allPriceDetailMap.push({ value: chargeValues, key: chargeBucket, isOtherCharge: false });
                         } else {
                             this.allPriceDetailMap.push({ value: chargeValues, key: chargeBucket, isOtherCharge: true });
                         }
+
+                        this.showAllIn.push(getAllInPrice);
+                        console.log('All: '+JSON.stringify(this.showAllIn));
                     }
                     this.totalCarParkAmountString = this.allPriceInfoFormattedMap['Total Car Park Price'];
                     this.totalDiscountAmountString = this.allPriceInfoFormattedMap['Total Discount Price'];

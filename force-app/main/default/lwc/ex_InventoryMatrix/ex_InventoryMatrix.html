@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-04-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
 	<div if:true={isSpinner} class="spinner-container">
         <div class="loader"></div>
@@ -161,9 +168,9 @@
 
 										<div class="unit-buttons">
 											<button class="quotation-button" data-value={u.Id} onclick={handleQuotation}>Quotation</button>
-											<template if:true={showBlockButton}>
+											<!-- <template if:true={showBlockButton}> -->
 												<button class="blocked-button" data-value={u.Id} onclick={handleBlock}>Block</button>
-											</template>
+											<!-- </template> -->
 										</div>
 										<!-- <div class="unit-block-buttons">
 											<template if:true={u.BlockButton}>
