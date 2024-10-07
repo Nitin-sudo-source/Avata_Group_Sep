@@ -61,38 +61,54 @@
   padding: 5px;
   }
   
-  
   table {
+    width: 100%;
     border-collapse: collapse;
-    border:1px solid #ddd;
-  }
-  
-  th,
-  td {
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding: 8px;
+    border: 1px solid #ddd;
+    table-layout: auto; /* Auto adjust width */
+}
+
+th, td {
+    padding: 8px; /* Consistent padding */
     text-align: left;
     border-bottom: 1px solid #ddd;
-    /* border-right: 1px solid #ddd; */
-    /* border-left: 1px solid #ddd; */
     border: 1px solid #ddd;
-    /* text-shadow: 2px 2px 3px rgb(128, 125, 125); */
-  }
-  
-  td {
+    font-size: 12px; /* Slightly smaller font for better responsiveness */
+}
+
+td {
     padding-top: 3px;
     padding-bottom: 3px;
-  }
-  th {
+}
+
+th {
     background-color: rgb(240, 240, 240);
-    /* width: 100%; */
     color: black;
-    border:1px solid #ddd;
     text-align: center;
     font-weight: bold;
-    /* text-shadow: 2px 2px 3px rgb(128, 125, 125); */
-  }
+}
+
+
+/* Responsive for medium devices (tablets) */
+/* @media (min-width: 769px) and (max-width: 1024px) {
+    th, td {
+        font-size: 11px;
+        padding: 6px;
+    }
+} */
+
+/* Styling for smaller input fields inside the table */
+input[type="number"] {
+    width: 100%; /* Make inputs take full width */
+    padding: 4px; /* Small padding for better responsiveness */
+    box-sizing: border-box; /* Ensure padding and border don't affect total width */
+}
+
+/* Make sure inputs inside cells are responsive */
+td input {
+    max-width: 100%;
+}
+
   
   .selectpayment {
     background-color: #49a09d;
@@ -207,6 +223,83 @@
   background-color: #f5f5f5;
   
   }
+
+  .discount-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.discount-table th, .discount-table td {
+    padding: 5px;
+    border: 1px solid #ddd;
+    font-size: 10px;
+    text-align: left;
+}
+
+.discount-table th {
+    background-color: #cae2df;
+    color: black;
+}
+
+.discount-table td {
+    font-weight: bold;
+}
+
+.total-cell {
+    text-align: left;
+    font-size: 12px;
+    padding: 10px 5px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/* Specific column widths for better alignment */
+.discount-table th:nth-child(1),
+.discount-table td:nth-child(1) {
+    width: 20%;
+}
+
+.discount-table th:nth-child(2),
+.discount-table td:nth-child(2) {
+    width: 20%;
+}
+
+.discount-table th:nth-child(3),
+.discount-table td:nth-child(3) {
+    width: 15%;
+    text-align: right;
+}
+
+.discount-table th:nth-child(4), 
+.discount-table td:nth-child(4) {
+    width: 15%;
+    text-align: right;
+    word-wrap: break-word; /* Ensures long values wrap within the cell */
+}
+
+.discount-table th:nth-child(5),
+.discount-table td:nth-child(5) {
+    width: 15%;
+    text-align: right;
+}
+
+.discount-table th:nth-child(6),
+.discount-table td:nth-child(6) {
+    width: 15%;
+    text-align: center;
+}
+
+/* Ensuring inputs in the table are consistent */
+.discount-table input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
   .spinner-container {
   position: fixed;
   top: 0;
@@ -265,10 +358,12 @@
   color: rgb(24, 22, 22);
   text-shadow: 2px 2px 4px rgba(7, 84, 167, 0.5);
   }
+  
   .title {
   overflow-y: auto;
-  table-layout: fixed; /* make the table scrollable if height is more than 200 px  */
+  /* table-layout: fixed;  */
   }
+
   .title thead td{
   position: sticky; /* make the table heads sticky */
   top: 0px;
@@ -308,3 +403,22 @@
     flex: 0 1 100%; /* Make each box take full width */
   }
   }
+
+  .payment-button {
+    float: right;
+    margin-left: 10px; /* Adds consistent spacing between buttons */
+}
+
+.update-button {
+    background-color: #f3f4f6; /* Different background color for update buttons */
+    border: 1px solid #ccc; /* Optional: styling for the border */
+    color: #333; /* Text color for update buttons */
+}
+
+.payment-button:hover {
+    background-color: #e2e3e5; /* Slightly darker shade on hover for better UX */
+}
+
+.update-button:hover {
+    background-color: #d1d2d4; /* Different hover effect for update buttons */
+}

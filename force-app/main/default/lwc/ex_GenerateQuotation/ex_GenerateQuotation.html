@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-04-2024
+  @last modified on  : 10-07-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -87,6 +87,16 @@
 									<td style="text-align:left; font-size: 10px;" class="property">Carpet Area</td>
 									<td style="text-align:left; font-size: 10px;">{u.Total_carpet_Sq_Ft__c}</td>
 								</tr>
+								<tr>
+									<td style="text-align:left; font-size: 10px;" class="property">All Inc. Value</td>
+									<template if:true={getAllInValueChangeStatus}>
+										<td style="text-align:left; font-size: 10px; color:red;"><b>{getAllInValue}</b></td>
+									</template>
+									<template if:false={getAllInValueChangeStatus}>
+										<td style="text-align:left; font-size: 10px;"><b>{getAllInValue}</b></td>
+									</template>
+	
+								</tr>
 								<!-- <tr>
 									<td style="text-align:left; font-size: 10px;" class="property">Saleable Area</td>
 									<td style="text-align:left; font-size: 10px;">{u.Saleable_Area__c}</td>
@@ -142,15 +152,16 @@
 						</tbody>
 					</table>
 				</div>
-
 			</div>
-			<div class="box">
+
+
+			<div class="box" style="flex: 0 1 75%!important;">
 				<div class="mains">
 					<div class="main">
 						<lightning-icon size="small" icon-name="standard:volume_discounts"></lightning-icon>
 						<label class="head" style="font-size:14px">Discounts</label>
 					</div>
-					<table class="discount-table">
+					<table>
 						<tr>
 							<th
 								style="padding-top: 2px;padding-bottom: 2px; background-color: #cae2df ;color:black; font-size: 10px;">
@@ -218,13 +229,15 @@
 												</template>
 											</template>
 										</td>
-										<td
+										<!-- <td
 											style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
 											<template if:true={d.isPSF}>
 												<template if:true={d.Editable__c}>
 													<template if:true={editPaymentScheduleMode}>
-														<lightning-formatted-number data-index={index}
-															value={d.PSF_Amount__c}></lightning-formatted-number>
+														<lightning-input type="number" data-index={index}
+															value={d.PSF_Amount__c}
+															format-style="currency"
+															></lightning-input>
 													</template>
 													<template if:false={editPaymentScheduleMode}>
 														<lightning-input type="number" data-value-id={key.key}
@@ -234,11 +247,33 @@
 													</template>
 												</template>
 												<template if:false={d.Editable__c}>
-													<lightning-formatted-number data-index={index}
-														value={d.PSF_Amount__c}></lightning-formatted-number>
+													<lightning-formatted-text data-index={index}
+														value={d.PSF_Amount__c}></lightning-formatted-text>
 												</template>
 											</template>
-										</td>
+										</td> -->
+										<td
+                                            style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+                                            <template if:true={d.isPSF}>
+                                                <template if:true={d.Editable__c}>
+                                                    <template if:true={editPaymentScheduleMode}>
+                                                        <lightning-formatted-number data-index={index}
+                                                            value={d.PSF_Amount__c}></lightning-formatted-number>
+                                                    </template>
+                                                    <template if:false={editPaymentScheduleMode}>
+                                                        <lightning-input type="number" data-value-id={key.key}
+                                                            data-index={index} value={d.PSF_Amount__c}
+                                                            name="PSF_Amount__c" step="0.01" onblur={handleChange}>
+                                                        </lightning-input>
+                                                    </template>
+                                                </template>
+                                                <template if:false={d.Editable__c}>
+                                                    <lightning-formatted-number data-index={index}
+                                                        value={d.PSF_Amount__c}></lightning-formatted-number>
+                                                </template>
+                                            </template>
+                                        </td>
+
 										<td
 											style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
 											<template if:true={d.isPercentage}>
@@ -284,7 +319,8 @@
 					</table>
 				</div>
 				<br/>
-				<template if:true={discountVisibleCheckbox}>
+				
+
 					<div class="mains">
 						<div class="main">
 							<lightning-icon size="small" icon-name="standard:discounts"></lightning-icon>
@@ -318,7 +354,8 @@
 							</tbody>
 						</table>
 					</div>
-				</template>
+
+				
 			</div>
 		</div>
         </template>
@@ -475,7 +512,7 @@
 
 
 
-			<div class="box2">
+			<div class="box2" style="flex: 0 1 65%!important;">
 				<div class="mains">
 					<template for:each={allPriceDetailMap} for:item="group">
 						<div class="main" if:true={group.isOtherCharge} key={group.key}>
@@ -574,7 +611,7 @@
 				</div>
 			</div>
 
-			<div class="box2">
+			<!-- <div class="box2">
 				<div class="mains">
 					<table>
 
@@ -613,7 +650,7 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 	</template>
@@ -621,13 +658,13 @@
 
 
 
-	<div class="container">
+	<div class="container" style="position:relative !important;">
 		<div class="box3">
 			<template if:true={showPaymentScheduleData}>
-				<div class="table-container" style="border: 1px solid #ddd;">
+				<div class="" style="border: 1px solid #ddd;">
 					<div class="mains">
 
-						<div class="main">
+						<!-- <div class="main">
 							<lightning-icon size="medium" icon-name="standard:form"></lightning-icon>
 							<label class="head" style="font-size:14px !important;">Payment Schedule</label>
 							<template if:true={isPaymentScheduleEnable}>
@@ -644,11 +681,54 @@
 									style="float: right;" label="Cancel Schedule" onclick={cancelPaymentSchedule}
 									variant="brand"></lightning-button>
 							</template>
+						</div> -->
+
+						<div class="main">
+							<lightning-icon size="medium" icon-name="standard:form"></lightning-icon>
+							<label class="head" style="font-size:14px !important;">Payment Schedule</label>
+							<template if:true={isPaymentScheduleEnable}>
+								<lightning-button 
+									class="payment-button"
+									icon-name="utility:breadcrumbs" 
+									if:false={editPaymentScheduleMode}
+									label="Edit Schedule" 
+									onclick={editPaymentSchedule}
+									variant="brand">
+								</lightning-button>
+								
+								<lightning-button 
+									class="payment-button update-button"
+									icon-name="utility:breadcrumbs" 
+									if:true={editPaymentScheduleMode}
+									label="Update Schedule" 
+									onclick={updatePaymentSchedule}
+									variant="brand">
+								</lightning-button>
+								
+								<lightning-button 
+									class="payment-button update-button"
+									icon-name="utility:breadcrumbs" 
+									if:true={editPaymentScheduleMode}
+									label="Confirm Schedule" 
+									onclick={confirmPaymentSchedule}
+									variant="brand">
+								</lightning-button>
+								
+								<lightning-button 
+									class="payment-button"
+									icon-name="utility:breadcrumbs" 
+									if:true={editPaymentScheduleMode}
+									label="Cancel Schedule" 
+									onclick={cancelPaymentSchedule}
+									variant="brand">
+								</lightning-button>
+							</template>
 						</div>
+						
 
 						<div class="panel-collapse collapse in" style="overflow-x:auto;">
 							<div class="panel-body table-responsive">
-								<table class="table table-bordered table-hover">
+								<table class="">
 									<template if:false={editPaymentScheduleMode}>
 										<thead>
 											<tr>

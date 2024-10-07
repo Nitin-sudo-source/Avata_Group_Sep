@@ -35,7 +35,7 @@
                 }
                 * {
                 box-sizing: border-box;
-                font-size: 8.5px;
+                font-size: 10px;
                 }
                 body { 
                 font-family: Times, sans-serif; 
@@ -52,7 +52,7 @@
                 border: 0.5px solid black;
                 padding: 4px;
                 text-align: left;
-                font-size: 8px;
+                font-size: 10px;
                 page-break-inside: avoid;
                 }
                 
@@ -145,17 +145,22 @@
                                 <td>&nbsp;</td>
                                 <td Style =""><b>{!strtotalagreementAmountbeforeDiscount}</b></td>
                             </tr>
-                            <apex:outputPanel rendered="{!discountAmount != 0}">
-                                <tr>
+                            <tr>
+                              <!--  <apex:outputPanel rendered="{!discountAmount != 0}">-->
                                     <td Style =""><b>Discount</b></td>
                                     <td>&nbsp;</td>
                                     <td Style =""><b>{!strdiscountAmount}</b></td>
-                                </tr>
-                            </apex:outputPanel>
+                               <!-- </apex:outputPanel>-->
+                            </tr>
                             <tr>
-                                <td Style =""><b> Net Consideration Value </b></td>
-                                <td>&nbsp;</td>
-                                <td Style =""><b>{!strtotalagreementAmountafterDiscount}</b></td>
+                                <th Style =""><b> Net Consideration Value </b></th>
+                                <th>(A)</th>
+                                <th Style =""><b>{!strtotalagreementAmountafterDiscount}</b></th>
+                            </tr>
+                             <tr>
+                                 <td>&nbsp;</td>
+                                 <td>&nbsp;</td>
+                                 <td>&nbsp;</td>
                             </tr>
                             <!--<apex:outputPanel rendered="{!totalchargeTax != 0}">
 <tr>
@@ -164,39 +169,78 @@
 <td Style="">{!chargeTotalTax}</td>
 </tr>
 </apex:outputPanel>-->
-                            <apex:repeat value="{!agreementChargeList}" var="a" >
+                            <!--<apex:repeat value="{!agreementChargeList}" var="a" >
                                 <tr>
                                     <td Style =""><apex:outputText value="{!a.chargeName}"/></td>
                                     <td>&nbsp;</td>
                                     <td Style =""><apex:outputText value="{!a.chargeValueString}"/></td>
                                 </tr>
-                            </apex:repeat>
+                            </apex:repeat>-->
+                            
+                           
                             <apex:repeat value="{!statutoryChargeList}" var="s" >
                                 <tr>
                                     <td Style =""><apex:outputText value="{!s.chargeName}"/></td>
-                                    <td>&nbsp;(B)</td>
+                                    <td>&nbsp;</td>
                                     <td Style =""><apex:outputText value="{!s.chargeValueString}"/></td>
                                 </tr>
                             </apex:repeat>
+                         
+                                <tr>
+                                    <td Style="">GST</td>
+                                    <td>&nbsp;</td>
+                                    <td Style="">{!chargeTotalTax}</td>
+                                </tr>
+                          
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th> Total (SD, Regn Charges &amp; Taxes)  </th>
+                                <th>(B)</th>
+                                <th>{!ShowsectionBTotal}</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                           
                             <apex:repeat value="{!otherChargeList}" var="o" >
                                 <tr>
                                     <td Style =""><apex:outputText value="{!o.chargeName}"/></td>
-                                    <td>&nbsp;(C)</td>
+                                    <td>&nbsp;</td>
                                     <td Style =""><apex:outputText value="{!o.chargeValueString}"/></td>
                                 </tr>
                             </apex:repeat>
+                             <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th> Total Other Charges  </th>
+                                <th>(C)</th>
+                                <th>{!showotherchargeAmount}</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
                             <!--<tr>
                                 <td Style ="">All In Price</td>
                                 <td>&nbsp;</td>
                                 <td Style =""><b>{!strtotalChargeAmount}</b></td>
                             </tr>-->
                             <tr>
-                                <th Style ="">Grand Total(A+B+c)</th>
+                                <th Style ="">Grand Total (A + B + C)</th>
                                 <th>&nbsp;</th>
                                 <th Style =""><b>{!strtotalChargeAmount}</b></th>
                             </tr>
                         </table>
-                        
                     </td>
                     
         <td style="border:none;width:49%!important; vertical-align:top;">
@@ -207,25 +251,28 @@
                             <tr>
                                 <th>PARTICULARS</th>
                                 <th class="align-right">%</th>
-                                <th class="align-right">Flat Cost</th>
                                 <th class="align-right">GST</th>
-                                <th class="align-right">Total</th>
+                                <th class="align-right">Flat Cost</th>
+
+                                <!--<th class="align-right">Total</th>-->
                             </tr>
                             <apex:repeat value="{!paymentSchedule}" var="paymentMilestone">
                                 <tr>
                                     <td>{!paymentMilestone['Milestone_Name__c']}</td>
                                     <td class="align-right">{!paymentMilestone['Percentage__c']}</td>
-                                    <td class="align-right">{!paymentMilestone['Amount__c']}</td>
                                     <td class="align-right">{!paymentMilestone['Total_Tax__c']}</td>
-                                    <td class="align-right">{!paymentMilestone['Total']}</td>
+                                    <td class="align-right">{!paymentMilestone['Amount__c']}</td>
+
+                                    <!--<td class="align-right">{!paymentMilestone['Total']}</td>-->
                                 </tr>
                             </apex:repeat>
                             <tr class="total-row">
                                 <td>Total</td>
                                 <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Percentage']}"/></td>
-                                <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Amount']}"/></td>
                                 <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Tax']}"/></td>
-                                <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Total']}"/></td>
+                                <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Amount']}"/></td>
+
+                                <!--<td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Total']}"/></td>-->
                             </tr>
                         </table>
                     </td>
@@ -234,31 +281,27 @@
             
             <!-- Terms and Conditions -->
             <apex:outputPanel rendered="{!NOT(ISNULL(termsList)) && termsList.size > 0}">
-            <table style="width:100%;">
-                <tr>
-                <th colspan="2">Terms &amp; Condition</th>
-                </tr>
-                <apex:variable value="{!1}" var="count" />
-                <apex:repeat value="{!termsList}" var="term">
-                  
-                    <tr rendered="{OR(!NOT(ISBLANK(term)), term != '')}">
-						<td style="width:2%;">{!count} 
-                            <apex:variable value="{!count+1}" var="count" /> 
-                        </td>                        
-                        <td>
-                            <apex:outputText value="{!term}" escape="false"/>
-                        </td>
+                <table style="width:100%; page-break-before:always;">
+                    <tr>
+                        <th colspan="2">Terms &amp; Condition</th>
                     </tr>
-                   
-                </apex:repeat>
-            </table>
+                    <apex:variable value="{!1}" var="count" />
+                    <apex:repeat value="{!termsList}" var="term">
+                        <tr rendered="{!OR(NOT(ISBLANK(term)), term != '')}">
+                            <td style="font-size:12px !important;">
+                                <apex:outputText value="{!term}" style="font-size:12px !important;" escape="false"/>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                </table>
             </apex:outputPanel>
+
             
             
             
             <!-- Banking Details for AV & GST -->
             
-            <table style="border:none!important;">
+            <!--<table style="border:none!important;">
                 <tr>
                     <td style="border:none!important;">
                         <table>
@@ -295,14 +338,14 @@
                         </table>
                     </td>
                 </tr>
-            </table>
+            </table>-->
             
             
             <!-- Banking Details for AV -->
             
             
             <!-- Cheque Details -->
-            <table>
+            <!--<table>
                 <tr>
                     <td>
                         Cheque Favouring for Stamp Duty &amp; Registration: "Mumbai Housing Redevelopment Private Limited"
@@ -322,7 +365,7 @@
                         <div>Branch: ANDHERI EAST, MUMBAI ANDHERI East</div>
                     </td>
                 </tr>
-            </table>
+            </table>-->
            
             
             

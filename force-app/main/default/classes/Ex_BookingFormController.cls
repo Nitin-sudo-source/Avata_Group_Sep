@@ -5,11 +5,35 @@ public class Ex_BookingFormController {
     @AuraEnabled
     public static Quotation__c getQuotationDetails(String qId){
         List<Quotation__c> qList = new List<Quotation__c>();
+         String[] types = new String[]{'Quotation__c'};
+            string queryFields = '';
+        Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
+        
+        for(Schema.DescribeSobjectResult res : results) {
+            string sObjectname = res.getName();
+            Map <String, Schema.SObjectField> fieldMap = res.fields.getMap();
+            
+            for(Schema.SObjectField sfield : fieldMap.Values()) { 
+                schema.describefieldresult dfield = sfield.getDescribe();
+                String fieldLabel = dfield.getLabel();
+                
+                if(queryFields == null || queryFields == '') {
+                    queryFields = dField.getName();
+                } else {
+                    queryFields = queryFields + ', ' + dField.getName();
+                }
+            }
+        }
+        String soqlQuery = 'Select ' + queryFields  + ', Opportunity__r.Name, Project__r.Name, Tower__r.Name, Opportunity__r.Source__c, Opportunity__r.Sub_Source__c, Opportunity__r.Channel_Partner__c, Opportunity__r.CP_Project__c, Opportunity__r.OwnerId, Unit__r.Name, Unit__r.Floor__c, Unit__r.Total_carpet_Sq_Ft__c from Quotation__c Where Id = \''+qId+'\''; 
+        system.debug(soqlQuery);
+        qList = Database.query(soqlQuery);
+        
+       /* List<Quotation__c> qList = new List<Quotation__c>();
         qList = [Select Id, Name, Opportunity__c, Opportunity__r.Name,
-                 Project__r.Name, Project__c, Tower__r.Name, Opportunity__r.Source__c, Opportunity__r.Sub_Source__c, Opportunity__r.Channel_Partner__c, Opportunity__r.CP_Project__c, Opportunity__r.OwnerId,
-                 Tower__c, Unit__c, Unit__r.Name, Unit__r.Floor__c, Unit__r.Total_carpet_Sq_Ft__c
+                 Project__r.Name, Tower__r.Name, Opportunity__r.Source__c, Opportunity__r.Sub_Source__c, Opportunity__r.Channel_Partner__c, Opportunity__r.CP_Project__c, Opportunity__r.OwnerId,
+                 Tower__c, Unit__c, Unit__r.Name, Unit__r.Floor__c, Unit__r.Total_carpet_Sq_Ft__c, Quotation_Status__c
                  from Quotation__c Where Id =: qId];
-        System.debug('qList: '+qList);
+        System.debug('qList: '+qList);*/
         if(!qList.isEmpty() && qList != null){
             return qList[0];
         }else{
@@ -164,10 +188,10 @@ public class Ex_BookingFormController {
     
     @AuraEnabled
     public static Id createBookingRecord(BookWrapper bkWrapper, String applicantData, Quotation__c quotationDetails, String receiptData){
-        Decimal agreementValue;
-        Decimal agreementValueTax;
-        Decimal SDRValue;
-        Decimal SDRTax;
+        Decimal agreementValue = 0;
+        Decimal agreementValueTax = 0;
+        Decimal SDRValue = 0;
+        Decimal SDRTax = 0;
         List<Object> applicantDataList = (List<Object>) JSON.deserializeUntyped(applicantData); 
         List<Object> receiptList = (List<Object>) JSON.deserializeUntyped(receiptData);
         List<Receipt__c> InsertReceipt = new List<Receipt__c>();
@@ -177,6 +201,19 @@ public class Ex_BookingFormController {
         quotation = getQuotationDetails(quotation.Id);
         System.debug('bkWrapper: '+bkWrapper);
         system.debug('quotation: '+quotation);
+        
+        if(String.isNotBlank(quotation.Quotation_Status__c) && (quotation.Quotation_Status__c.equalsIgnoreCase('Valid') || quotation.Quotation_Status__c.equalsIgnoreCase('Approved'))) {
+            for(Integer i = 1; i <= 3; i++) {
+                if(String.isNotBlank((String)quotation.get('Charge_Bucket_'+i+'__c')) && ((String)quotation.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
+                    agreementValue = (Decimal)quotation.get('Charge_Bucket_'+i+'_Amount__c');
+                    agreementValueTax = (Decimal)quotation.get('Charge_Bucket_'+i+'_Total_Tax__c');
+                }
+                if(String.isNotBlank((String)quotation.get('Charge_Bucket_'+i+'__c')) && ((String)quotation.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Statutory Charges')) {
+                    SDRValue = (Decimal)quotation.get('Charge_Bucket_'+i+'_Amount__c');
+                    SDRTax = (Decimal)quotation.get('Charge_Bucket_'+i+'_Total_Tax__c');
+                }
+            }
+        }
         
         Booking__c booking = new Booking__c();
         if (quotation.Id != null) {
@@ -194,9 +231,7 @@ public class Ex_BookingFormController {
         if (quotation.Opportunity__c != null) {
             booking.Opportunity__c = quotation.Opportunity__c;
         }
-       // if (quotation.Modified_AV_Value__c != null) {
-        //    booking.Agreement_Value__c = quotation.Modified_AV_Value__c;
-        //}
+        
         if (bkWrapper.bk.Any_Other_Offers__c != null) {
             booking.Any_Other_Offers__c = bkWrapper.bk.Any_Other_Offers__c;
         }
@@ -218,21 +253,12 @@ public class Ex_BookingFormController {
         if (bkWrapper.bk.Remarks__c != null) {
             booking.Remarks__c = bkWrapper.bk.Remarks__c;
         }
-        /*if (bkWrapper.bk.Name_Of_Bank__c != null) {
-            booking.Name_Of_Bank__c = bkWrapper.bk.Name_Of_Bank__c;
-        }
-        if (bkWrapper.bk.Name_of_Contact_Person_at_Bank__c != null) {
-            booking.Name_of_Contact_Person_at_Bank__c = bkWrapper.bk.Name_of_Contact_Person_at_Bank__c;
-        }
-        if (bkWrapper.bk.Contact_No_of_Contact_Person_at_Bank__c != null) {
-            booking.Contact_No_of_Contact_Person_at_Bank__c = bkWrapper.bk.Contact_No_of_Contact_Person_at_Bank__c;
-        }
-        if (bkWrapper.bk.Own_Contribution_Amount__c != null) {
-            booking.Own_Contribution_Amount__c = bkWrapper.bk.Own_Contribution_Amount__c;
-        }
-        if (bkWrapper.bk.Home_Loan_Amount__c != null) {
-            booking.Home_Loan_Amount__c = bkWrapper.bk.Home_Loan_Amount__c;
-        }*/
+        booking.Agreement_Value__c = agreementValue;
+        booking.Agreement_Value_Tax__c = agreementValueTax;
+        booking.SDR_Value__c = SDRValue;
+        booking.SDR_Tax__c = SDRTax;
+        booking.Updated_Agreement_Value__c = agreementValue;
+
         booking.Booking_Stage__c = 'Booking In-Process';
         try {
             insert booking;

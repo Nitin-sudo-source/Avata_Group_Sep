@@ -52,12 +52,14 @@ public class Ex_PrintQuotationController {
     public Decimal chargeBucketAmount {get;set;}
     public Decimal chargeBucketTax {get;set;}
     public Decimal otherchargeAmount {get;set;}
+    public String showotherchargeAmount {get;set;}
     public Decimal statutoryAmount {get;set;}
     public Decimal agreementAmount {get;set;}
     public Decimal chargeAmount {get;set;}
     public String chargeTotalTax{get;set;}
     public String strtotalChargeAmount {get;set;}
     public List<String> termsList { get; set; }
+    public String ShowsectionBTotal {get;set;}
 
     public Ex_PrintQuotationController(){
         qId=ApexPages.currentPage().getParameters().get('qId');
@@ -85,7 +87,7 @@ public class Ex_PrintQuotationController {
         statutoryChargeList = new List<chargeDetailWrapper>();
         otherChargeList = new List<chargeDetailWrapper>();
         agreementChargeList = new List<chargeDetailWrapper>();
-       
+       	showotherchargeAmount = '';
         chargeBucketAmount = 0;
         chargeBucketTax = 0;
         chargeAmount = 0;
@@ -108,6 +110,7 @@ public class Ex_PrintQuotationController {
         discountAmount = 0;
         strtotalChargeAmount = '';
         termsList = new List<String>();
+        ShowsectionBTotal = '';
 
         
         List<Quotation__c> quotationList = new List<Quotation__c>();
@@ -117,7 +120,7 @@ public class Ex_PrintQuotationController {
         if (qId != null) {
             quotationList = [SELECT Id, Name, CreatedDate, Car_Park_Required_Count__c, Project__r.Quotation_Terms_and_Conditions__c,
                              Unit__c, Unit__r.Floor__c, Unit__r.Configuration_Type__c, Unit__r.RERA_Carpet_Area_Sq_Ft__c, Unit__r.RERA_Carpet_Area_Sq_Mtr__c,
-                             Project__c, Project__r.Project_Logo__c
+                             Project__c, Project__r.Project_Logo__c, Total_Discount__c
                              FROM Quotation__c WHERE Id = :qId
                             ];
             if (quotationList != null && !quotationList.isEmpty()) {
@@ -126,7 +129,8 @@ public class Ex_PrintQuotationController {
                 flatDetails.put('Car_Park_Required_Count__c', quotation.Car_Park_Required_Count__c != null ? String.valueOf(quotation.Car_Park_Required_Count__c) : ' ');
                 
                 String terms = [SELECT Project__r.Quotation_Terms_and_Conditions__c FROM Quotation__c WHERE Id = :quotation.Id].Project__r.Quotation_Terms_and_Conditions__c;
-                if (terms != null && terms.contains('<li>')) {
+                termsList.add(terms);
+               /* if (terms != null && terms.contains('<li>')) {
                     termsList = new List<String>();
                     for (String term : terms.split('</li>')) {
         				term = term.replace('<li>', '').trim().replaceAll('\\s+', ' ');
@@ -134,7 +138,7 @@ public class Ex_PrintQuotationController {
                             termsList.add(term);
                         }
                     }
-                }
+                }*/
                 System.debug('termsList: '+termsList);
 
                 //flatDetails.put('Quotation_Terms_and_Conditions__c', quotation.Project__r.Quotation_Terms_and_Conditions__c != null ? String.valueOf(quotation.Project__r.Quotation_Terms_and_Conditions__c) : ' ');
@@ -275,17 +279,31 @@ public class Ex_PrintQuotationController {
                         if(cd.Charge_Amount__c != null && cd.Charge_Total_Tax__c != null){
                             otherchargeAmount += cd.Charge_Amount__c + cd.Charge_Total_Tax__c;
                         }
+                        if(otherchargeAmount > 0){
+                          showotherchargeAmount =   currencyFormat(otherchargeAmount);
+                        }
                         
                         otherChargeList.add(new chargeDetailWrapper(cd.Name, currencyFormat(Integer.valueOf(chargeAmount)), cd.Charge_Bucket__c));
                     }
+                     
+                     ShowsectionBTotal = currencyFormat(Integer.valueOf(totalchargeTax + statutoryAmount));
+                    // showsectioncTotal = otherchargeAmount;
+
                 }
             }
         }
+        if(quotation.Total_Discount__c > 0){
+            discountAmount = quotation.Total_Discount__c;
+            strdiscountAmount = currencyFormat(discountAmount);
+        }
+        
         
         totalagreementAmountbeforeDiscount = agreementAmount + discountAmount ;
         if(totalagreementAmountbeforeDiscount != 0){
             strtotalagreementAmountbeforeDiscount = currencyFormat(Integer.valueOf(totalagreementAmountbeforeDiscount));
         }
+        
+        
         
         totalChargeAmount = (agreementAmount + totalchargeTax) + statutoryAmount + otherchargeAmount;
         if(totalChargeAmount != 0){

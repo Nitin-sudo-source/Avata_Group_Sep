@@ -67,7 +67,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
     @track paymentSchemePremium = null;
     @track originalBaseRate = 0;
     @track unitdetails = [];
-    @track showAllIn = [];
+    @track allInValue = 0.0;
 
     connectedCallback() {
         if (this.oppId) {
@@ -207,6 +207,11 @@ export default class Ex_GenerateQuotation extends LightningElement {
                     console.error('Error In getDiscountGroupMap: ', error);
                 }
             })
+    }
+
+    get getAllInValueChangeStatus(){
+        var isAllInValueChanged = this.allPriceDetailMap.flatMap(chargeBucket => chargeBucket.value).reduce((isChanged, current) => ((current['isTotal'] && current['isChange']) || isChanged), false);
+        return isAllInValueChanged;
     }
 
     handlePaymentSchemeChange(event) {
@@ -575,6 +580,49 @@ export default class Ex_GenerateQuotation extends LightningElement {
         console.log('totalDiscountAmount: ' + this.totalDiscountAmount);
     }
 
+    // applyDiscount() {
+    //     this.totalDiscountAmount = 0;
+    //     this.appliedDiscountList = [];
+
+    //     for (let discountGroup in this.updatedDiscountGroupMap) {
+    //         const discountList = this.updatedDiscountGroupMap[discountGroup];
+
+    //         for (let d in discountList) {
+    //             if (discountList[d].Applied__c) {
+    //                 if (discountList[d].Discount_Type__c === 'Lumpsum') {
+    //                     discountList[d].Total__c = discountList[d].Amount__c;
+    //                     console.log('Lumpsum Discount Total: ' + discountList[d].Total__c);
+    //                     if (discountList[d].Discount_Category__c === 'Discount') {
+    //                         this.totalDiscountAmount += discountList[d].Total__c;
+    //                     }
+    //                     this.appliedDiscountList.push(discountList[d]);
+    //                 } else if (discountList[d].Discount_Type__c === 'PSF') {
+    //                     discountList[d].Total__c = (discountList[d].PSF_Amount__c * this.unit.Saleable_Area__c);
+    //                     console.log('PSF Discount Total: ' + discountList[d].Total__c);
+    //                     if (discountList[d].Discount_Category__c === 'Discount') {
+    //                         this.totalDiscountAmount += discountList[d].Total__c;
+    //                     }
+    //                     this.appliedDiscountList.push(discountList[d]);
+    //                 } else if (discountList[d].Discount_Type__c === 'Percentage') {
+    //                     if(discountList[d].Deduct_From__c === 'Basic Charge') {
+    //                         discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value Without Car Park']) / 100);
+    //                     } else if(discountList[d].Deduct_From__c === 'Floor Rise') {
+    //                         discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Floor Rise']) / 100);
+    //                     }
+    //                     console.log('Percentage Discount Total: ' + discountList[d].Total__c);
+    //                     if (discountList[d].Discount_Category__c === 'Discount') {
+    //                         this.totalDiscountAmount += discountList[d].Total__c;
+    //                     }
+    //                     this.appliedDiscountList.push(discountList[d]);
+
+    //                 }                    
+    //             }
+    //         }
+    //     }
+    //     console.log('totalDiscountAmount: ' + this.totalDiscountAmount);
+    // }
+
+    
     getAllPriceMap() {
         getAllPriceMapDetails({ uId: this.unit.Id, priceListGroupMap: this.priceListGroupMap, priceListMap: this.priceListMap, carParkAmount: this.totalCarParkAmount, discountAmount: this.totalDiscountAmount })
             .then(data => {
@@ -615,7 +663,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
                         console.log('chargeList: '+chargeList);
 
                         var chargeValues = [];
-                        var getAllInPrice = [];
+                       // var getAllInPrice = [];
                         chargeList.forEach(element => {
                             console.log('element: '+element);
 
@@ -635,9 +683,9 @@ export default class Ex_GenerateQuotation extends LightningElement {
                                 isTotal: false
                             });
                             console.log('chargeValues: '+JSON.stringify(chargeValues));
-                            getAllInPrice.push({
-                                'All In Price': this.allPriceInfoFormattedMap[element] + this.allPriceInfoFormattedMap[element + ' TAX']
-                            })
+                            // getAllInPrice.push({
+                            //     'All In Price': this.allPriceInfoFormattedMap[element] + this.allPriceInfoFormattedMap[element + ' TAX']
+                            // })
                         });
 
                         var isChange;
@@ -663,8 +711,8 @@ export default class Ex_GenerateQuotation extends LightningElement {
                             this.allPriceDetailMap.push({ value: chargeValues, key: chargeBucket, isOtherCharge: true });
                         }
 
-                        this.showAllIn.push(getAllInPrice);
-                        console.log('All: '+JSON.stringify(this.showAllIn));
+                        //this.showAllIn.push(getAllInPrice);
+                        //console.log('All: '+JSON.stringify(this.showAllIn));
                     }
                     this.totalCarParkAmountString = this.allPriceInfoFormattedMap['Total Car Park Price'];
                     this.totalDiscountAmountString = this.allPriceInfoFormattedMap['Total Discount Price'];
@@ -674,6 +722,37 @@ export default class Ex_GenerateQuotation extends LightningElement {
                 }
             })
     }
+
+
+    get getAllInValue(){
+        var updatedAllInValue = 0.0;
+        this.allPriceDetailMap.map(chargeBucket => {
+            if(chargeBucket.key === 'Agreement Value' || chargeBucket.key === 'Statutory Charges' || chargeBucket.key === 'Other Charges'){
+                console.log("cb : " + JSON.stringify(chargeBucket));
+                console.log("cb key : " + chargeBucket.key);
+                var modifiedAmountString = chargeBucket.value.filter(value => value.chargeName === 'Total')[0].modifiedAmountString;
+                modifiedAmountString = modifiedAmountString.replace(/,/g, '').replace('/-', '');
+                const modifiedAmount = parseFloat(modifiedAmountString);
+                updatedAllInValue += modifiedAmount;
+                console.log("modifiedAmountString : " + modifiedAmountString);
+                console.log("modifiedAmount : " + modifiedAmount);
+                console.log("updatedAllInValue : " + updatedAllInValue);
+            }
+        })
+
+        const formattedAllInValue = updatedAllInValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "/-";
+        this.allInValue = formattedAllInValue;
+        return this.allInValue;
+    }
+
+    // getFormattedCurrencyValue(value){
+    //     return value?.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "/-" || "";
+    // }
+    // convertFormattedCurrencyToFloat(value){
+    //     return parseFloat(value?.replace(/,/g, '').replace('/-', '')) || 0;
+    // }
+
+
 
     getPaymentSchedule() {
         this.paymentMilestoneWrapperList = [];

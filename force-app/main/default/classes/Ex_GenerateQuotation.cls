@@ -58,7 +58,7 @@ public class Ex_GenerateQuotation {
             return null;
         }
     }
-
+    
     
     @AuraEnabled(Cacheable= false)
     public static  Map<String, List<Discount__c>>  getDiscountGroupMapDetails(Id pId, Id tId) {
@@ -76,10 +76,10 @@ public class Ex_GenerateQuotation {
         
         System.debug('discountList: '+discountList);
         /*if(System.Label.Discount_Maintain_At.equalsIgnoreCase('Tower')) {
-            discountList = Ex_InventoryPriceManagementServices.getTowerLevelDiscountInfo(pId, tId);
-        } else if(System.Label.Discount_Maintain_At.equalsIgnoreCase('Project')) {
-            discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(pId);
-        }*/
+discountList = Ex_InventoryPriceManagementServices.getTowerLevelDiscountInfo(pId, tId);
+} else if(System.Label.Discount_Maintain_At.equalsIgnoreCase('Project')) {
+discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(pId);
+}*/
         
         if(discountList != null) {
             for(Discount__c d: discountList) {
@@ -199,7 +199,16 @@ public class Ex_GenerateQuotation {
     
     @AuraEnabled
     public static Id saveQuotationDetails(Unit__c u, Id oppId, Id selectedSchemeId, Map<String, List<String>> priceListGroupMap,Map<String, Pricing_List__c> priceListMap, Map<String, Decimal> allPriceOriginalInfoMap, Map<String, Decimal> allPriceInfoMap, List<Discount__c> appliedDiscountList, List<Ex_InventoryPriceManagementServices.CarParkWrapper> carParkList, List<Ex_InventoryPriceManagementServices.PaymentMilestoneWrapper> paymentMilestoneWrapperList) {
+        string level1Approver = '';
+        string siteHeadApprover = '';
+        string managementApprover = '';
+        Decimal modifiedBaseRate = 0;
+        Decimal modifiedstampduty = 0;
+        List<Team__c> tList = new List<Team__c>();
+        List<Team_Member__c> siteHeadTmList = new List<Team_Member__c>();
+        List<Team_Member__c> managementTmList = new List<Team_Member__c>();
         try {
+            
             
             Quotation__c q = new Quotation__c();
             q.Unit__c = u.Id;
@@ -319,6 +328,115 @@ public class Ex_GenerateQuotation {
                         }
                     }
                 }
+                
+                if(!chargeDetailsList.isEmpty() && chargeDetailsList != null){
+                    
+                    
+                    for (Charge_Details__c chDetail : chargeDetailsList) {
+                        if (chDetail.Charge_Bucket__c != null && chDetail.Charge_Bucket__c.equalsIgnoreCase('Agreement Value')) {
+                            system.debug('Inside chDetail:: ');
+                            modifiedBaseRate += chDetail.Charge_Rate__c != null ? chDetail.Charge_Rate__c : 0;
+                        }
+                    }
+                }
+                
+                
+                Quotation__c quo = [SELECT Id, Opportunity__c, Opportunity__r.OwnerId FROM Quotation__c WHERE Id = :qId];
+                System.debug('Quotation quo : '+ quo);
+                
+                Id oppOwnerId = quo.Opportunity__r.OwnerId;
+                system.debug('oppOwnerId is::'+oppOwnerId);
+                
+                if(string.isNotBlank(oppOwnerId) && oppOwnerId != null){
+                    List<User> uList = [Select Id,ManagerId from User Where Id=:oppOwnerId];
+                    system.debug('uList is::'+uList);
+                    level1Approver = uList[0].ManagerId;
+                    System.debug(':: Manager Id ->' + uList[0].ManagerId);
+                }
+                
+                
+                
+                tList = [Select Id,Name,Team_Type__c from Team__c Where Team_Type__c=:'Quotation Approval Team'];
+                System.debug('tList is::'+tList);
+                
+                if(!tList.isEmpty() && tList != null){
+                    siteHeadTmList = [Select Id,Team__c, User__c, Position__c,User_Active_Status__c From Team_Member__c 
+                                      WHERE Team__c=:tList[0].Id AND Position__c=:'Site Head Approver' AND User_Active_Status__c = True];
+                    system.debug('siteHeadTmList is::'+siteHeadTmList);
+                    
+                    managementTmList = [Select Id,Team__c,User__c,Position__c,User_Active_Status__c From Team_Member__c 
+                                        WHERE Team__c=:tList[0].Id AND Position__c=:'Management Approver' AND User_Active_Status__c = True];
+                    system.debug('managementTmList is::'+managementTmList);
+                }
+                if(!siteHeadTmList.isEmpty() && siteHeadTmList != null){
+                    siteHeadApprover = siteHeadTmList[0].User__c;
+                }
+                if(!managementTmList.isEmpty() && managementTmList != null){
+                    managementApprover = managementTmList[0].User__c;
+                }
+                
+                if(u.SM_Threshold__c != null && q.Modified_Base_Rate__c != null && u.TL_Threshold__c != null){
+                    //if(u.SM_Threshold__c < q.Modified_Base_Rate__c && q.Modified_Base_Rate__c < u.TL_Threshold__c) {
+                    if (q.Modified_Base_Rate__c >= u.TL_Threshold__c && q.Modified_Base_Rate__c < u.SM_Threshold__c) {
+                        if(String.isNotBlank(level1Approver) && level1Approver != null){
+                            q.Level_1_Approver__c = level1Approver; 
+                            q.Level_1_Approval_Status__c = 'Pending for Approval';
+                            q.Quotation_Status__c = 'Pending For Approval';
+                            
+                        }   
+                    }
+                    if(u.TL_Threshold__c != null && q.Modified_Base_Rate__c != null && u.Site_Head_Threshold__c != null){
+                        //if(u.TL_Threshold__c < q.Modified_Base_Rate__c && q.Modified_Base_Rate__c < u.Site_Head_Threshold__c) {
+                        if (q.Modified_Base_Rate__c >= u.Site_Head_Threshold__c && q.Modified_Base_Rate__c < u.TL_Threshold__c) {
+                            if(String.isNotBlank(level1Approver) && level1Approver != null){
+                                q.Level_1_Approver__c = level1Approver; 
+                                q.Level_1_Approval_Status__c = 'Pending for Approval';
+                            }
+                            if(String.isNotBlank(siteHeadApprover) && siteHeadApprover != null){
+                                q.Level_2_Approver__c = siteHeadApprover;   
+                                q.Level_2_Approval_Status__c = 'Pending for Approval';
+                                q.Quotation_Status__c = 'Pending For Approval';
+                            }
+                        }
+                    }
+                    if(u.Site_Head_Threshold__c != null && q.Modified_Base_Rate__c != null && u.Management_Threshold__c != null){
+                        if (q.Modified_Base_Rate__c >= u.Management_Threshold__c && q.Modified_Base_Rate__c < u.Site_Head_Threshold__c) {
+                            if(String.isNotBlank(level1Approver) && level1Approver != null){
+                                q.Level_1_Approver__c = level1Approver; 
+                                q.Level_1_Approval_Status__c = 'Pending for Approval';
+                            }
+                            if(String.isNotBlank(siteHeadApprover) && siteHeadApprover != null){
+                                q.Level_2_Approver__c = siteHeadApprover;   
+                                q.Level_2_Approval_Status__c = 'Pending for Approval';
+                            }
+                            if(String.isNotBlank(managementApprover) && managementApprover != null){
+                                q.Level_3_Approver__c = managementApprover;   
+                                q.Level_3_Approval_Status__c = 'Pending for Approval';
+                                q.Quotation_Status__c = 'Pending For Approval';
+                            }     
+                        }
+                    }
+                    
+                    if(q.Level_1_Approver__c == null && q.Level_2_Approver__c == null && q.Level_3_Approver__c == null){
+                        q.Quotation_Status__c = 'Approved';
+                    } 
+                    
+                    if(q.Modified_Base_Rate__c != null && u.Management_Threshold__c != null){
+                        if (q.Modified_Base_Rate__c < u.Management_Threshold__c) {
+                            q.Quotation_Status__c = 'Invalid';
+                        }   
+                    }
+                }
+                
+                update q;
+                system.debug('Modified_Base_Rate__c ' +q.Modified_Base_Rate__c);
+                system.debug('Approver quotation approval:'+q);
+                system.debug('Approval status : ' + q.Quotation_Status__c);
+                system.debug('L1 Approval status : ' + q.Level_1_Approval_Status__c);
+                system.debug('L2 Approval status : ' + q.Level_2_Approval_Status__c);
+                system.debug('L3 Approval status : ' + q.Level_3_Approval_Status__c);
+                
+                
                 
                 if(appliedDiscountList != null && !appliedDiscountList.isEmpty()) {
                     for(Discount__c d : appliedDiscountList) {
