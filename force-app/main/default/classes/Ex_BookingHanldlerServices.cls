@@ -186,6 +186,8 @@ public class Ex_BookingHanldlerServices {
         List<Booking__c> updateBookingList = new List<Booking__c>();
         List<Quotation__c> updateQuotationList = new List<Quotation__c>();
         List<Payment_Milestone__c> updatePaymentMilestoneList = new List<Payment_Milestone__c>();
+        Set<Id> chargeSet = new Set<Id>();
+        List<Charge_Details__c> updateChargeDetails = new List<Charge_Details__c>();
         
         for(Booking__c b: bList) {
             bIdSet.add(b.Id);
@@ -275,22 +277,40 @@ public class Ex_BookingHanldlerServices {
                             }
                             
                             if(isSDRChange) {
+                                Decimal amount = 0;
+                                Decimal sgst = 0;
+                                Decimal cgst = 0;
+                                
                                 if(!chargeDetailsMap.isEmpty() && chargeDetailsMap != null) {
                                     if(chargeDetailsMap.containsKey(q.Id)) {
                                         Map<String, List<Charge_Details__c>> chargeBucketMap = chargeDetailsMap.get(q.Id);
                                         
-                                        if(chargeBucketMap.containsKey('Statutory Charges')) {
-                                            for(Charge_Details__c ch: chargeBucketMap.get('Statutory Charges')) {
-                                                if(ch.Charge_Type__c.equalsIgnoreCase('Percentage')) {
-                                                    
-                                                } else {
-                                                    
+                                        for(Integer i = 1; i <= 3; i++) {
+                                            if(String.isNotBlank((String)q.get('Charge_Bucket_' + i + '__c'))) {
+                                                if(chargeBucketMap.containsKey('Statutory Charges')) {
+                                                    for(Charge_Details__c ch: chargeBucketMap.get('Statutory Charges')) {
+                                                         if(ch.Name.equalsIgnoreCase('Stamp Duty') && ch.Charge_Bucket__c != null){
+                                                            amount = b.Updated_Agreement_Value__c;
+                                                            amount += ((Decimal)q.get('Charge_Bucket_' + i + '_Amount__c') );
+                                                            sgst = (((amount / 100) * b.Stamp_Duty__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                                            cgst = (((amount / 100) * b.Stamp_Duty__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                                            
+                                                            q.put('Charge_Bucket_' + i + '_SGST__c', sgst);
+                                                            q.put('Charge_Bucket_' + i + '_CGST__c', cgst);
+                                                            q.put('Charge_Bucket_' + i + '_Total_Tax__c', sgst + cgst);
+                                                            ch.Charge_Amount__c = amount;
+                                                            ch.Charge_Percentage__c = b.Stamp_Duty__c;
+                                                            chargeSet.add(ch.Id);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                            
+                              
                             
                             if(!paymentMilestoneMap.isEmpty() && paymentMilestoneMap != null) {
                                 if(paymentMilestoneMap.containsKey(q.Id)) {
@@ -329,6 +349,12 @@ public class Ex_BookingHanldlerServices {
                 }
                 updateBookingList.add(b);
             }
+        }
+        
+        updateChargeDetails = [Select Id, Name from Charge_Details__c where Name =: 'Stamp Duty' AND Id In: chargeSet];
+        
+        if(!updateChargeDetails.isEmpty() && updateChargeDetails != null){
+            update updateChargeDetails;
         }
         if(!updateBookingList.isEmpty() && updateBookingList != null)
             update updateBookingList;

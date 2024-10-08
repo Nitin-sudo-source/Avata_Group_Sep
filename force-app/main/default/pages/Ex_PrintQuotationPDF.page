@@ -280,21 +280,24 @@
             </table>
             
             <!-- Terms and Conditions -->
-            <apex:outputPanel rendered="{!NOT(ISNULL(termsList)) && termsList.size > 0}">
-                <table style="width:100%; page-break-before:always;">
-                    <tr>
-                        <th colspan="2">Terms &amp; Condition</th>
-                    </tr>
-                    <apex:variable value="{!1}" var="count" />
-                    <apex:repeat value="{!termsList}" var="term">
-                        <tr rendered="{!OR(NOT(ISBLANK(term)), term != '')}">
-                            <td style="font-size:12px !important;">
-                                <apex:outputText value="{!term}" style="font-size:12px !important;" escape="false"/>
-                            </td>
+            <div style="font-size:14px !important;">
+                <apex:outputPanel rendered="{!NOT(ISNULL(termsList)) && termsList.size > 0}">
+                    <table style="width:100%; page-break-before:always;">
+                        <tr>
+                            <th colspan="2">Terms &amp; Condition</th>
                         </tr>
-                    </apex:repeat>
-                </table>
-            </apex:outputPanel>
+                        <apex:variable value="{!1}" var="count" />
+                        <apex:repeat value="{!termsList}" var="term">
+                            <tr rendered="{!OR(NOT(ISBLANK(term)), term != '')}">
+                                <td>
+                                    <apex:outputText value="{!term}"  escape="false"/>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </apex:outputPanel>
+            </div>
+            
 
             
             
