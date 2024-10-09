@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Source__c</fullName>
+    <label>Sub-Source</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Lead_Source__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Sub_Source</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Affiliate</controllingFieldValue>
+            <valueName>Mindicator</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Affiliate</controllingFieldValue>
+            <valueName>Timesjob</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Affiliate</controllingFieldValue>
+            <valueName>SMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Affiliate</controllingFieldValue>
+            <valueName>Whatsapp</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Affiliate</controllingFieldValue>
+            <valueName>Call Verified</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Native</controllingFieldValue>
+            <valueName>One Native</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Native</controllingFieldValue>
+            <valueName>Taboola</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Native</controllingFieldValue>
+            <valueName>Times Colombia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Native</controllingFieldValue>
+            <valueName>Yahoo Native</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregator</controllingFieldValue>
+            <valueName>Quikr</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregator</controllingFieldValue>
+            <valueName>99Acres</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregator</controllingFieldValue>
+            <valueName>Housing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregator</controllingFieldValue>
+            <valueName>Magicbricks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregator</controllingFieldValue>
+            <valueName>NoBroker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Google Search</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Google Display</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Youtube LG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Youtube Bumper Ads</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Discovery Ads</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Facebook</controllingFieldValue>
+            <valueName>Lead Gen</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Facebook</controllingFieldValue>
+            <valueName>Lead Gen Insta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Facebook</controllingFieldValue>
+            <valueName>Web Conversion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>LinkedIn</controllingFieldValue>
+            <valueName>Lead Generation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>LinkedIn</controllingFieldValue>
+            <valueName>InMail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organic</controllingFieldValue>
+            <valueName>Chat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organic</controllingFieldValue>
+            <valueName>Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organic</controllingFieldValue>
+            <valueName>ORM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organic</controllingFieldValue>
+            <valueName>Social Media</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Club Activation</controllingFieldValue>
+            <valueName>User</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

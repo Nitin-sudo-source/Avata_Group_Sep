@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Mindicator</fullName>
+        <default>false</default>
+        <label>Mindicator</label>
+    </customValue>
+    <customValue>
+        <fullName>Timesjob</fullName>
+        <default>false</default>
+        <label>Timesjob</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS</fullName>
+        <default>false</default>
+        <label>SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Whatsapp</fullName>
+        <default>false</default>
+        <label>Whatsapp</label>
+    </customValue>
+    <customValue>
+        <fullName>Call Verified</fullName>
+        <default>false</default>
+        <label>Call Verified</label>
+    </customValue>
+    <customValue>
+        <fullName>One Native</fullName>
+        <default>false</default>
+        <label>One Native</label>
+    </customValue>
+    <customValue>
+        <fullName>Taboola</fullName>
+        <default>false</default>
+        <label>Taboola</label>
+    </customValue>
+    <customValue>
+        <fullName>Times Colombia</fullName>
+        <default>false</default>
+        <label>Times Colombia</label>
+    </customValue>
+    <customValue>
+        <fullName>Yahoo Native</fullName>
+        <default>false</default>
+        <label>Yahoo Native</label>
+    </customValue>
+    <customValue>
+        <fullName>Quikr</fullName>
+        <default>false</default>
+        <label>Quikr</label>
+    </customValue>
+    <customValue>
+        <fullName>99Acres</fullName>
+        <default>false</default>
+        <label>99Acres</label>
+    </customValue>
+    <customValue>
+        <fullName>Housing</fullName>
+        <default>false</default>
+        <label>Housing</label>
+    </customValue>
+    <customValue>
+        <fullName>Magicbricks</fullName>
+        <default>false</default>
+        <label>Magicbricks</label>
+    </customValue>
+    <customValue>
+        <fullName>NoBroker</fullName>
+        <default>false</default>
+        <label>NoBroker</label>
+    </customValue>
+    <customValue>
+        <fullName>Google Search</fullName>
+        <default>false</default>
+        <label>Google Search</label>
+    </customValue>
+    <customValue>
+        <fullName>Google Display</fullName>
+        <default>false</default>
+        <label>Google Display</label>
+    </customValue>
+    <customValue>
+        <fullName>Youtube LG</fullName>
+        <default>false</default>
+        <label>Youtube LG</label>
+    </customValue>
+    <customValue>
+        <fullName>Youtube Bumper Ads</fullName>
+        <default>false</default>
+        <label>Youtube Bumper Ads</label>
+    </customValue>
+    <customValue>
+        <fullName>Discovery Ads</fullName>
+        <default>false</default>
+        <label>Discovery Ads</label>
+    </customValue>
+    <customValue>
+        <fullName>Lead Gen</fullName>
+        <default>false</default>
+        <label>Lead Gen</label>
+    </customValue>
+    <customValue>
+        <fullName>Lead Gen Insta</fullName>
+        <default>false</default>
+        <label>Lead Gen Insta</label>
+    </customValue>
+    <customValue>
+        <fullName>Web Conversion</fullName>
+        <default>false</default>
+        <label>Web Conversion</label>
+    </customValue>
+    <customValue>
+        <fullName>Lead Generation</fullName>
+        <default>false</default>
+        <label>Lead Generation</label>
+    </customValue>
+    <customValue>
+        <fullName>InMail</fullName>
+        <default>false</default>
+        <label>InMail</label>
+    </customValue>
+    <customValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </customValue>
+    <customValue>
+        <fullName>Website</fullName>
+        <default>false</default>
+        <label>Website</label>
+    </customValue>
+    <customValue>
+        <fullName>ORM</fullName>
+        <default>false</default>
+        <label>ORM</label>
+    </customValue>
+    <customValue>
+        <fullName>Social Media</fullName>
+        <default>false</default>
+        <label>Social Media</label>
+    </customValue>
+    <customValue>
+        <fullName>User</fullName>
+        <default>false</default>
+        <label>User</label>
+    </customValue>
+    <masterLabel>Sub-Source</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>In_follow_up_Opportunities</fullName>
+    <columns>CREATED_DATE</columns>
+    <columns>Opportunity_Id__c</columns>
+    <columns>NAME</columns>
+    <columns>Project__c</columns>
+    <columns>Stage__c</columns>
+    <columns>Master_Source__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>Sales_Next_Follow_up_Date__c</columns>
+    <columns>Sales_Proposed_Visit_Date__c</columns>
+    <columns>Site_Visit_Count__c</columns>
+    <columns>Last_SV_attended_by__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Stage__c</field>
+        <operation>equals</operation>
+        <value>In Follow-up</value>
+    </filters>
+    <label>In follow-up Opportunities</label>
+</ListView>

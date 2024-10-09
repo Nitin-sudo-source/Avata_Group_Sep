@@ -81,6 +81,7 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
         .then((result) => {
           console.log('result: '+ result);
           if(result == true){
+            this.showToast('success', 'AV Changes Successfully', 'success', 'dismissible');
             window.location.href = '/'+this.recordId ;
           }else{
             this.showToast('Error', 'Something Went Wrong Please Contact System Administrator', 'error', 'sticky');

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Stage__c</fullName>
+    <label>Sub-Stage</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Open</fullName>
+                <default>false</default>
+                <label>Open</label>
+            </value>
+            <value>
+                <fullName>Not Answering</fullName>
+                <default>false</default>
+                <label>Not Answering</label>
+            </value>
+            <value>
+                <fullName>SNP</fullName>
+                <default>false</default>
+                <label>SNP</label>
+            </value>
+            <value>
+                <fullName>In Follow-up (Cold)</fullName>
+                <default>false</default>
+                <label>In Follow-up (Cold)</label>
+            </value>
+            <value>
+                <fullName>In Follow-up (Warm)</fullName>
+                <default>false</default>
+                <label>In Follow-up (Warm)</label>
+            </value>
+            <value>
+                <fullName>Visit proposed (Hot)</fullName>
+                <default>false</default>
+                <label>Visit proposed (Hot)</label>
+            </value>
+            <value>
+                <fullName>Visit confirmed</fullName>
+                <default>false</default>
+                <label>Visit confirmed</label>
+            </value>
+            <value>
+                <fullName>Visit Done</fullName>
+                <default>false</default>
+                <label>Visit Done</label>
+            </value>
+            <value>
+                <fullName>Budget does not match</fullName>
+                <default>false</default>
+                <label>Budget does not match</label>
+            </value>
+            <value>
+                <fullName>Location mismatch</fullName>
+                <default>false</default>
+                <label>Location mismatch</label>
+            </value>
+            <value>
+                <fullName>Area/Configuration Mismatch</fullName>
+                <default>false</default>
+                <label>Area/Configuration Mismatch</label>
+            </value>
+            <value>
+                <fullName>Possession does not match</fullName>
+                <default>false</default>
+                <label>Possession does not match</label>
+            </value>
+            <value>
+                <fullName>Booked with someone else</fullName>
+                <default>false</default>
+                <label>Booked with someone else</label>
+            </value>
+            <value>
+                <fullName>Not answering / responding</fullName>
+                <default>false</default>
+                <label>Not answering / responding</label>
+            </value>
+            <value>
+                <fullName>General Enquiry</fullName>
+                <default>false</default>
+                <label>General Enquiry</label>
+            </value>
+            <value>
+                <fullName>Residential Property Enquiry</fullName>
+                <default>false</default>
+                <label>Residential Property Enquiry</label>
+            </value>
+            <value>
+                <fullName>DND</fullName>
+                <default>false</default>
+                <label>DND</label>
+            </value>
+            <value>
+                <fullName>Commercial Property Enquiry</fullName>
+                <default>false</default>
+                <label>Commercial Property Enquiry</label>
+            </value>
+            <value>
+                <fullName>Junk</fullName>
+                <default>false</default>
+                <label>Junk</label>
+            </value>
+            <value>
+                <fullName>Loan Issues</fullName>
+                <default>false</default>
+                <label>Loan Issues</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Incoming</controllingFieldValue>
+            <valueName>Open</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Incoming</controllingFieldValue>
+            <valueName>Not Answering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SNP</controllingFieldValue>
+            <valueName>SNP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prospect</controllingFieldValue>
+            <valueName>In Follow-up (Cold)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prospect</controllingFieldValue>
+            <valueName>In Follow-up (Warm)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prospect</controllingFieldValue>
+            <valueName>Visit proposed (Hot)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Visit Confirmed</controllingFieldValue>
+            <valueName>Visit confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Visit Done</controllingFieldValue>
+            <valueName>Visit Done</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Budget does not match</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Location mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Area/Configuration Mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Possession does not match</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Booked with someone else</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Not answering / responding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>General Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Residential Property Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>DND</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Commercial Property Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Junk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Loan Issues</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

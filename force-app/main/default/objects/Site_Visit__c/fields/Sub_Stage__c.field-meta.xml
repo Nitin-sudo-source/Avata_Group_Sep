@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Stage__c</fullName>
+    <label>Sub-Stage</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Opportunity_Stage__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hot</fullName>
+                <default>false</default>
+                <label>Hot</label>
+            </value>
+            <value>
+                <fullName>Warm</fullName>
+                <default>false</default>
+                <label>Warm</label>
+            </value>
+            <value>
+                <fullName>Cold</fullName>
+                <default>false</default>
+                <label>Cold</label>
+            </value>
+            <value>
+                <fullName>Spot Booking</fullName>
+                <default>false</default>
+                <label>Spot Booking</label>
+            </value>
+            <value>
+                <fullName>Normal Booking</fullName>
+                <default>false</default>
+                <label>Normal Booking</label>
+            </value>
+            <value>
+                <fullName>Before Registration</fullName>
+                <default>false</default>
+                <label>Before Registration</label>
+            </value>
+            <value>
+                <fullName>After Registration</fullName>
+                <default>false</default>
+                <label>After Registration</label>
+            </value>
+            <value>
+                <fullName>Did not like layout of the flat</fullName>
+                <default>false</default>
+                <label>Did not like layout of the flat</label>
+            </value>
+            <value>
+                <fullName>Location Mismatch</fullName>
+                <default>false</default>
+                <label>Location Mismatch</label>
+            </value>
+            <value>
+                <fullName>Booked in other project</fullName>
+                <default>false</default>
+                <label>Booked in other project</label>
+            </value>
+            <value>
+                <fullName>Booked in resale</fullName>
+                <default>false</default>
+                <label>Booked in resale</label>
+            </value>
+            <value>
+                <fullName>Plan to buy home is Postponed / cancelled</fullName>
+                <default>false</default>
+                <label>Plan to buy home is Postponed / cancelled</label>
+            </value>
+            <value>
+                <fullName>Not Answering. Pre-sales to follow-up</fullName>
+                <default>false</default>
+                <label>Not Answering. Pre-sales to follow-up</label>
+            </value>
+            <value>
+                <fullName>Not Vastu compliant</fullName>
+                <default>false</default>
+                <label>Not Vastu compliant</label>
+            </value>
+            <value>
+                <fullName>Budget does not match</fullName>
+                <default>false</default>
+                <label>Budget does not match</label>
+            </value>
+            <value>
+                <fullName>Area/Configuration Mismatch</fullName>
+                <default>false</default>
+                <label>Area/Configuration Mismatch</label>
+            </value>
+            <value>
+                <fullName>Possession does not match</fullName>
+                <default>false</default>
+                <label>Possession does not match</label>
+            </value>
+            <value>
+                <fullName>General Enquiry</fullName>
+                <default>false</default>
+                <label>General Enquiry</label>
+            </value>
+            <value>
+                <fullName>Loan Issues</fullName>
+                <default>false</default>
+                <label>Loan Issues</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>Negotiation</fullName>
+                <default>false</default>
+                <label>Negotiation</label>
+            </value>
+            <value>
+                <fullName>Choice of Unit</fullName>
+                <default>false</default>
+                <label>Choice of Unit</label>
+            </value>
+            <value>
+                <fullName>Conditional sale</fullName>
+                <default>false</default>
+                <label>Conditional sale</label>
+            </value>
+            <value>
+                <fullName>Residential Property Enquiry</fullName>
+                <default>false</default>
+                <label>Residential Property Enquiry</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>In Follow-up</controllingFieldValue>
+            <valueName>Hot</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>In Follow-up</controllingFieldValue>
+            <valueName>Warm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>In Follow-up</controllingFieldValue>
+            <valueName>Cold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Did not like layout of the flat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Location Mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Booked in other project</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Booked in resale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Plan to buy home is Postponed / cancelled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Not Answering. Pre-sales to follow-up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Not Vastu compliant</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Budget does not match</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Area/Configuration Mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Possession does not match</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>General Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Loan Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Others</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

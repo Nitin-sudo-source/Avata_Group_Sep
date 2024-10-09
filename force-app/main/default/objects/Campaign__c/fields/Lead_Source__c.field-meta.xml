@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Source__c</fullName>
+    <label>Lead Source</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Master_Source__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Lead_Source</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Referral and Loyalty Programme</controllingFieldValue>
+            <valueName>Existing Clients</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referral and Loyalty Programme</controllingFieldValue>
+            <valueName>Existing Tenants</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referral and Loyalty Programme</controllingFieldValue>
+            <valueName>NonSales Staff</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referral and Loyalty Programme</controllingFieldValue>
+            <valueName>Sales Staff</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referral and Loyalty Programme</controllingFieldValue>
+            <valueName>Vendor Reference</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Affiliate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Native</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Aggregator</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Google</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Facebook</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>LinkedIn</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Organic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Billboard</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Bus Shelter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Kiosk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Cantilever</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Gantry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Mobile Van</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Way Boards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Railway Station Boards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Bus Panels</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Intrain Branding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoardings</controllingFieldValue>
+            <valueName>Standee</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recommended by Friends/Relatives</controllingFieldValue>
+            <valueName>Customers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recommended by Friends/Relatives</controllingFieldValue>
+            <valueName>Employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recommended by Friends/Relatives</controllingFieldValue>
+            <valueName>Management</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

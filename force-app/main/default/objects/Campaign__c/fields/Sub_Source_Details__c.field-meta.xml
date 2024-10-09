@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Source_Details__c</fullName>
+    <label>Sub-Source Details</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Sub_Source__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Sub_Source_Details</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Property Interest</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Recently Married</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Open &amp; Submit LA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Website LA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Investor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>High Value Goods</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web Conversion</controllingFieldValue>
+            <controllingFieldValue>Lead Gen</controllingFieldValue>
+            <controllingFieldValue>Lead Gen Insta</controllingFieldValue>
+            <valueName>Visit LA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lead Generation</controllingFieldValue>
+            <valueName>Lead Generation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>InMail</controllingFieldValue>
+            <valueName>InMail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>Chat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Website</controllingFieldValue>
+            <valueName>Corporate Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>ORM</controllingFieldValue>
+            <valueName>ORM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Social Media</controllingFieldValue>
+            <valueName>YT/FB/Insta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quikr</controllingFieldValue>
+            <valueName>Call Verified Leads</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>99Acres</controllingFieldValue>
+            <valueName>99Acres</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Housing</controllingFieldValue>
+            <valueName>Housing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Magicbricks</controllingFieldValue>
+            <valueName>Magicbricks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NoBroker</controllingFieldValue>
+            <valueName>NoBroker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Search</controllingFieldValue>
+            <valueName>Brand</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Search</controllingFieldValue>
+            <valueName>Offer Specific</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Search</controllingFieldValue>
+            <valueName>Generic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Search</controllingFieldValue>
+            <valueName>Competition</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Display</controllingFieldValue>
+            <valueName>SDC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Display</controllingFieldValue>
+            <valueName>GDN-Intent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Display</controllingFieldValue>
+            <valueName>GDN-Inmarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Display</controllingFieldValue>
+            <valueName>GDN-Affinity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google Display</controllingFieldValue>
+            <valueName>GSP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Youtube LG</controllingFieldValue>
+            <controllingFieldValue>Youtube Bumper Ads</controllingFieldValue>
+            <valueName>YT-Intent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Youtube LG</controllingFieldValue>
+            <controllingFieldValue>Youtube Bumper Ads</controllingFieldValue>
+            <valueName>YT-Inmarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Youtube LG</controllingFieldValue>
+            <controllingFieldValue>Youtube Bumper Ads</controllingFieldValue>
+            <valueName>YT-Affinity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Youtube LG</controllingFieldValue>
+            <controllingFieldValue>Youtube Bumper Ads</controllingFieldValue>
+            <controllingFieldValue>Discovery Ads</controllingFieldValue>
+            <valueName>Remarketing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Discovery Ads</controllingFieldValue>
+            <valueName>Discovery-Intent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Discovery Ads</controllingFieldValue>
+            <valueName>Discovery-Inmarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Discovery Ads</controllingFieldValue>
+            <valueName>Discovery-Affinity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mindicator</controllingFieldValue>
+            <valueName>Mindicator Exit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mindicator</controllingFieldValue>
+            <valueName>Mindicator Push</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Timesjob</controllingFieldValue>
+            <valueName>Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Timesjob</controllingFieldValue>
+            <valueName>SMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Timesjob</controllingFieldValue>
+            <valueName>Whatsapp</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Timesjob</controllingFieldValue>
+            <valueName>Native</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SMS</controllingFieldValue>
+            <valueName>Polyvalent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SMS</controllingFieldValue>
+            <valueName>Adcounty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Whatsapp</controllingFieldValue>
+            <valueName>Brandex</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Call Verified</controllingFieldValue>
+            <valueName>PivotRoots</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Call Verified</controllingFieldValue>
+            <valueName>FirstEconomy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Call Verified</controllingFieldValue>
+            <valueName>OLX</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Call Verified</controllingFieldValue>
+            <valueName>No Broker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>One Native</controllingFieldValue>
+            <valueName>One Native</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Taboola</controllingFieldValue>
+            <valueName>Taboola</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Times Colombia</controllingFieldValue>
+            <valueName>Times Colombia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Yahoo Native</controllingFieldValue>
+            <valueName>Yahoo Native</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Affiliate</fullName>
+        <default>false</default>
+        <label>Affiliate</label>
+    </customValue>
+    <customValue>
+        <fullName>Native</fullName>
+        <default>false</default>
+        <label>Native</label>
+    </customValue>
+    <customValue>
+        <fullName>Aggregator</fullName>
+        <default>false</default>
+        <label>Aggregator</label>
+    </customValue>
+    <customValue>
+        <fullName>Google</fullName>
+        <default>false</default>
+        <label>Google</label>
+    </customValue>
+    <customValue>
+        <fullName>Facebook</fullName>
+        <default>false</default>
+        <label>Facebook</label>
+    </customValue>
+    <customValue>
+        <fullName>LinkedIn</fullName>
+        <default>false</default>
+        <label>LinkedIn</label>
+    </customValue>
+    <customValue>
+        <fullName>Organic</fullName>
+        <default>false</default>
+        <label>Organic</label>
+    </customValue>
+    <customValue>
+        <fullName>Jacket</fullName>
+        <default>false</default>
+        <label>Jacket</label>
+    </customValue>
+    <customValue>
+        <fullName>Power Jacket</fullName>
+        <default>false</default>
+        <label>Power Jacket</label>
+    </customValue>
+    <customValue>
+        <fullName>Full Page</fullName>
+        <default>false</default>
+        <label>Full Page</label>
+    </customValue>
+    <customValue>
+        <fullName>Half Page</fullName>
+        <default>false</default>
+        <label>Half Page</label>
+    </customValue>
+    <customValue>
+        <fullName>Media Net</fullName>
+        <default>false</default>
+        <label>Media Net</label>
+    </customValue>
+    <customValue>
+        <fullName>Advertorial</fullName>
+        <default>false</default>
+        <label>Advertorial</label>
+    </customValue>
+    <customValue>
+        <fullName>Spots</fullName>
+        <default>false</default>
+        <label>Spots</label>
+    </customValue>
+    <customValue>
+        <fullName>RJ Mentions</fullName>
+        <default>false</default>
+        <label>RJ Mentions</label>
+    </customValue>
+    <customValue>
+        <fullName>Show Sponsorship</fullName>
+        <default>false</default>
+        <label>Show Sponsorship</label>
+    </customValue>
+    <customValue>
+        <fullName>Radio Interview</fullName>
+        <default>false</default>
+        <label>Radio Interview</label>
+    </customValue>
+    <customValue>
+        <fullName>Integration</fullName>
+        <default>false</default>
+        <label>Integration</label>
+    </customValue>
+    <customValue>
+        <fullName>Aston Band</fullName>
+        <default>false</default>
+        <label>Aston Band</label>
+    </customValue>
+    <customValue>
+        <fullName>Vignette</fullName>
+        <default>false</default>
+        <label>Vignette</label>
+    </customValue>
+    <customValue>
+        <fullName>Billboard</fullName>
+        <default>false</default>
+        <label>Billboard</label>
+    </customValue>
+    <customValue>
+        <fullName>Bus Shelter</fullName>
+        <default>false</default>
+        <label>Bus Shelter</label>
+    </customValue>
+    <customValue>
+        <fullName>Kiosk</fullName>
+        <default>false</default>
+        <label>Kiosk</label>
+    </customValue>
+    <customValue>
+        <fullName>Cantilever</fullName>
+        <default>false</default>
+        <label>Cantilever</label>
+    </customValue>
+    <customValue>
+        <fullName>Gantry</fullName>
+        <default>false</default>
+        <label>Gantry</label>
+    </customValue>
+    <customValue>
+        <fullName>Mobile Van</fullName>
+        <default>false</default>
+        <label>Mobile Van</label>
+    </customValue>
+    <customValue>
+        <fullName>Way Boards</fullName>
+        <default>false</default>
+        <label>Way Boards</label>
+    </customValue>
+    <customValue>
+        <fullName>Railway Station Boards</fullName>
+        <default>false</default>
+        <label>Railway Station Boards</label>
+    </customValue>
+    <customValue>
+        <fullName>Bus Panels</fullName>
+        <default>false</default>
+        <label>Bus Panels</label>
+    </customValue>
+    <customValue>
+        <fullName>Intrain Branding</fullName>
+        <default>false</default>
+        <label>Intrain Branding</label>
+    </customValue>
+    <customValue>
+        <fullName>Standee</fullName>
+        <default>false</default>
+        <label>Standee</label>
+    </customValue>
+    <customValue>
+        <fullName>Internal SMS</fullName>
+        <default>false</default>
+        <label>Internal SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>External SMS</fullName>
+        <default>false</default>
+        <label>External SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Internal Email</fullName>
+        <default>false</default>
+        <label>Internal Email</label>
+    </customValue>
+    <customValue>
+        <fullName>External Email</fullName>
+        <default>false</default>
+        <label>External Email</label>
+    </customValue>
+    <customValue>
+        <fullName>Exhibition</fullName>
+        <default>false</default>
+        <label>Exhibition</label>
+    </customValue>
+    <customValue>
+        <fullName>Multiplex Branding</fullName>
+        <default>false</default>
+        <label>Multiplex Branding</label>
+    </customValue>
+    <customValue>
+        <fullName>Ad Films</fullName>
+        <default>false</default>
+        <label>Ad Films</label>
+    </customValue>
+    <customValue>
+        <fullName>Multiplex Activation</fullName>
+        <default>false</default>
+        <label>Multiplex Activation</label>
+    </customValue>
+    <customValue>
+        <fullName>Society Activation</fullName>
+        <default>false</default>
+        <label>Society Activation</label>
+    </customValue>
+    <customValue>
+        <fullName>Club Activation</fullName>
+        <default>false</default>
+        <label>Club Activation</label>
+    </customValue>
+    <customValue>
+        <fullName>Mall Activation</fullName>
+        <default>false</default>
+        <label>Mall Activation</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate Park Activation</fullName>
+        <default>false</default>
+        <label>Corporate Park Activation</label>
+    </customValue>
+    <customValue>
+        <fullName>Customers</fullName>
+        <default>false</default>
+        <label>Customers</label>
+    </customValue>
+    <customValue>
+        <fullName>Employees</fullName>
+        <default>false</default>
+        <label>Employees</label>
+    </customValue>
+    <customValue>
+        <fullName>Management</fullName>
+        <default>false</default>
+        <label>Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Clients</fullName>
+        <default>false</default>
+        <label>Existing Clients</label>
+    </customValue>
+    <customValue>
+        <fullName>Existing Tenants</fullName>
+        <default>false</default>
+        <label>Existing Tenants</label>
+    </customValue>
+    <customValue>
+        <fullName>NonSales Staff</fullName>
+        <default>false</default>
+        <label>NonSales Staff</label>
+    </customValue>
+    <customValue>
+        <fullName>Sales Staff</fullName>
+        <default>false</default>
+        <label>Sales Staff</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendor Reference</fullName>
+        <default>false</default>
+        <label>Vendor Reference</label>
+    </customValue>
+    <customValue>
+        <fullName>Others</fullName>
+        <default>false</default>
+        <label>Others</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Walk In</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Direct Walk In</label>
+    </customValue>
+    <masterLabel>Lead Source</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

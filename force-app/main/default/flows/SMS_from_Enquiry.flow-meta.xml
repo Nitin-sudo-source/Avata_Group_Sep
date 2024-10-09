@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <environments>Default</environments>
+    <formulas>
+        <name>Name</name>
+        <dataType>String</dataType>
+        <expression>&apos;SMS from&apos;+&apos; &apos; +{!$Record.Mobile__c}</expression>
+    </formulas>
+    <formulas>
+        <name>TemplateId</name>
+        <dataType>String</dataType>
+        <expression>&apos;1707168777419800236&apos;</expression>
+    </formulas>
+    <interviewLabel>SMS from Enquiry {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SMS from Enquiry</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>createsms</name>
+        <label>createsms</label>
+        <locationX>507</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>messagebody</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sender_Mobile_No__c</field>
+            <value>
+                <elementReference>$Record.Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Template_Id__c</field>
+            <value>
+                <elementReference>TemplateId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SMS__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>490</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>createsms</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.DeveloperName}==&apos;Enquiry&apos;</filterFormula>
+        <object>Task</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>messagebody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Thank you for your inquiry. we will respond as soon as possible {!$Record.Project__r.Contact_No__c}
+NDREAL.</text>
+    </textTemplates>
+</Flow>

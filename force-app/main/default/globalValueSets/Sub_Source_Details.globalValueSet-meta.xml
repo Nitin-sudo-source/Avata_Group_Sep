@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Mindicator Exit</fullName>
+        <default>false</default>
+        <label>Mindicator Exit</label>
+    </customValue>
+    <customValue>
+        <fullName>Mindicator Push</fullName>
+        <default>false</default>
+        <label>Mindicator Push</label>
+    </customValue>
+    <customValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS</fullName>
+        <default>false</default>
+        <label>SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Whatsapp</fullName>
+        <default>false</default>
+        <label>Whatsapp</label>
+    </customValue>
+    <customValue>
+        <fullName>Native</fullName>
+        <default>false</default>
+        <label>Native</label>
+    </customValue>
+    <customValue>
+        <fullName>Polyvalent</fullName>
+        <default>false</default>
+        <label>Polyvalent</label>
+    </customValue>
+    <customValue>
+        <fullName>Adcounty</fullName>
+        <default>false</default>
+        <label>Adcounty</label>
+    </customValue>
+    <customValue>
+        <fullName>Brandex</fullName>
+        <default>false</default>
+        <label>Brandex</label>
+    </customValue>
+    <customValue>
+        <fullName>PivotRoots</fullName>
+        <default>false</default>
+        <label>PivotRoots</label>
+    </customValue>
+    <customValue>
+        <fullName>FirstEconomy</fullName>
+        <default>false</default>
+        <label>FirstEconomy</label>
+    </customValue>
+    <customValue>
+        <fullName>OLX</fullName>
+        <default>false</default>
+        <label>OLX</label>
+    </customValue>
+    <customValue>
+        <fullName>No Broker</fullName>
+        <default>false</default>
+        <label>No Broker</label>
+    </customValue>
+    <customValue>
+        <fullName>One Native</fullName>
+        <default>false</default>
+        <label>One Native</label>
+    </customValue>
+    <customValue>
+        <fullName>Taboola</fullName>
+        <default>false</default>
+        <label>Taboola</label>
+    </customValue>
+    <customValue>
+        <fullName>Times Colombia</fullName>
+        <default>false</default>
+        <label>Times Colombia</label>
+    </customValue>
+    <customValue>
+        <fullName>Yahoo Native</fullName>
+        <default>false</default>
+        <label>Yahoo Native</label>
+    </customValue>
+    <customValue>
+        <fullName>Call Verified Leads</fullName>
+        <default>false</default>
+        <label>Call Verified Leads</label>
+    </customValue>
+    <customValue>
+        <fullName>99Acres</fullName>
+        <default>false</default>
+        <label>99Acres</label>
+    </customValue>
+    <customValue>
+        <fullName>Housing</fullName>
+        <default>false</default>
+        <label>Housing</label>
+    </customValue>
+    <customValue>
+        <fullName>Magicbricks</fullName>
+        <default>false</default>
+        <label>Magicbricks</label>
+    </customValue>
+    <customValue>
+        <fullName>NoBroker</fullName>
+        <default>false</default>
+        <label>NoBroker</label>
+    </customValue>
+    <customValue>
+        <fullName>Brand</fullName>
+        <default>false</default>
+        <label>Brand</label>
+    </customValue>
+    <customValue>
+        <fullName>Offer Specific</fullName>
+        <default>false</default>
+        <label>Offer Specific</label>
+    </customValue>
+    <customValue>
+        <fullName>Generic</fullName>
+        <default>false</default>
+        <label>Generic</label>
+    </customValue>
+    <customValue>
+        <fullName>Competition</fullName>
+        <default>false</default>
+        <label>Competition</label>
+    </customValue>
+    <customValue>
+        <fullName>SDC</fullName>
+        <default>false</default>
+        <label>SDC</label>
+    </customValue>
+    <customValue>
+        <fullName>GDN-Intent</fullName>
+        <default>false</default>
+        <label>GDN-Intent</label>
+    </customValue>
+    <customValue>
+        <fullName>GDN-Inmarket</fullName>
+        <default>false</default>
+        <label>GDN-Inmarket</label>
+    </customValue>
+    <customValue>
+        <fullName>GDN-Affinity</fullName>
+        <default>false</default>
+        <label>GDN-Affinity</label>
+    </customValue>
+    <customValue>
+        <fullName>GSP</fullName>
+        <default>false</default>
+        <label>GSP</label>
+    </customValue>
+    <customValue>
+        <fullName>YT-Intent</fullName>
+        <default>false</default>
+        <label>YT-Intent</label>
+    </customValue>
+    <customValue>
+        <fullName>YT-Inmarket</fullName>
+        <default>false</default>
+        <label>YT-Inmarket</label>
+    </customValue>
+    <customValue>
+        <fullName>YT-Affinity</fullName>
+        <default>false</default>
+        <label>YT-Affinity</label>
+    </customValue>
+    <customValue>
+        <fullName>Remarketing</fullName>
+        <default>false</default>
+        <label>Remarketing</label>
+    </customValue>
+    <customValue>
+        <fullName>Discovery-Intent</fullName>
+        <default>false</default>
+        <label>Discovery-Intent</label>
+    </customValue>
+    <customValue>
+        <fullName>Discovery-Inmarket</fullName>
+        <default>false</default>
+        <label>Discovery-Inmarket</label>
+    </customValue>
+    <customValue>
+        <fullName>Discovery-Affinity</fullName>
+        <default>false</default>
+        <label>Discovery-Affinity</label>
+    </customValue>
+    <customValue>
+        <fullName>Property Interest</fullName>
+        <default>false</default>
+        <label>Property Interest</label>
+    </customValue>
+    <customValue>
+        <fullName>Recently Married</fullName>
+        <default>false</default>
+        <label>Recently Married</label>
+    </customValue>
+    <customValue>
+        <fullName>Open &amp; Submit LA</fullName>
+        <default>false</default>
+        <label>Open &amp; Submit LA</label>
+    </customValue>
+    <customValue>
+        <fullName>Competitor</fullName>
+        <default>false</default>
+        <label>Competitor</label>
+    </customValue>
+    <customValue>
+        <fullName>Website LA</fullName>
+        <default>false</default>
+        <label>Website LA</label>
+    </customValue>
+    <customValue>
+        <fullName>Investor</fullName>
+        <default>false</default>
+        <label>Investor</label>
+    </customValue>
+    <customValue>
+        <fullName>High Value Goods</fullName>
+        <default>false</default>
+        <label>High Value Goods</label>
+    </customValue>
+    <customValue>
+        <fullName>Visit LA</fullName>
+        <default>false</default>
+        <label>Visit LA</label>
+    </customValue>
+    <customValue>
+        <fullName>Lead Generation</fullName>
+        <default>false</default>
+        <label>Lead Generation</label>
+    </customValue>
+    <customValue>
+        <fullName>InMail</fullName>
+        <default>false</default>
+        <label>InMail</label>
+    </customValue>
+    <customValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate Website</fullName>
+        <default>false</default>
+        <label>Corporate Website</label>
+    </customValue>
+    <customValue>
+        <fullName>ORM</fullName>
+        <default>false</default>
+        <label>ORM</label>
+    </customValue>
+    <customValue>
+        <fullName>YT/FB/Insta</fullName>
+        <default>false</default>
+        <label>YT/FB/Insta</label>
+    </customValue>
+    <masterLabel>Sub-Source Details</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
