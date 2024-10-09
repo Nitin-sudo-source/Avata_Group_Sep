@@ -299,6 +299,7 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                 if(priceListGroupMap != null && !priceListGroupMap.isEmpty()) {
                     for(String bucket: priceListGroupMap.keySet()) {
                         for(String priceName: priceListGroupMap.get(bucket)) {
+                            System.debug('priceName: '+priceName);
                             Decimal chargeAmount = allPriceInfoMap.get(priceName);
                             if(chargeAmount > 0) {
                                 Charge_Details__c chDetail = new Charge_Details__c();
@@ -309,16 +310,20 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                                 chDetail.Charge_CGST__c = allPriceInfoMap.get(priceName+' CGST');
                                 chDetail.Charge_Total_Tax__c = allPriceInfoMap.get(priceName+' TAX');
                                 
+                                
                                 if(priceListMap != null && !priceListMap.isEmpty()) {
                                     if(priceListMap.containsKey(priceName)) {
                                         if(priceListMap.get(priceName).Charge_Type__c.equalsIgnoreCase('PSF')) {
                                             if(priceListMap.get(priceName).Calculation_Area_Type__c.equalsIgnoreCase('Carpet Area')) {
                                                 chDetail.Charge_Rate__c = (allPriceInfoMap.get(priceName) / u.Total_carpet_Sq_Ft__c).setscale(2, RoundingMode.HALF_UP);
+                                                chDetail.Charge_Type__c = priceListMap.get(priceName).Charge_Type__c;
                                             } else {
                                                 chDetail.Charge_Rate__c = (allPriceInfoMap.get(priceName) / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
+                                                chDetail.Charge_Type__c = priceListMap.get(priceName).Charge_Type__c;
                                             }
                                         } else {
                                             chDetail.Charge_Rate__c = (allPriceInfoMap.get(priceName) / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
+                                            chDetail.Charge_Type__c = priceListMap.get(priceName).Charge_Type__c;
                                         }
                                     }
                                 }                            

@@ -8,7 +8,7 @@
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
-    <masterLabel>Marketing App  UtilityBar</masterLabel>
+    <masterLabel>Marketing App UtilityBar</masterLabel>
     <template>
         <name>one:utilityBarTemplateDesktop</name>
         <properties>

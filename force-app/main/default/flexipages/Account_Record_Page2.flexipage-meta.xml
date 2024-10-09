@@ -21,7 +21,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>6</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -51,7 +51,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Leads1__r</value>
+                    <value>CP_Projects__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -69,7 +69,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-f2181956-f36b-443a-ab3e-e1fcc1e17276</name>
+        <name>Facet-901cc8a7-94c9-4686-a913-aac5c85d905a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -81,7 +81,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Opportunity_c__r</value>
+                    <value>CP_Leads__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -99,7 +99,7 @@
                 <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-bs7sbh3kvmu</name>
+        <name>Facet-4ckk9j0fp4o</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -111,7 +111,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Site_Visits1__r</value>
+                    <value>ActivityHistories</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -129,7 +129,7 @@
                 <identifier>force_relatedListSingleContainer3</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-1611c9b9-6724-46a2-bf4b-94c3763d63b5</name>
+        <name>Facet-2aee2e26-939a-48f8-82e6-88408b38719a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -141,7 +141,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Digital_Leads__r</value>
+                    <value>Documents__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -159,16 +159,12 @@
                 <identifier>force_relatedListSingleContainer4</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-430b87c1-a407-4949-8b21-dd6e7dc9c4a6</name>
+        <name>Facet-ec3dbb44-732d-4451-aa47-f349b447b181</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>detailTabContent</value>
@@ -185,11 +181,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-f2181956-f36b-443a-ab3e-e1fcc1e17276</value>
+                    <value>Facet-901cc8a7-94c9-4686-a913-aac5c85d905a</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Lead (Channel Partner)</value>
+                    <value>CP Project</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
@@ -199,11 +195,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-bs7sbh3kvmu</value>
+                    <value>Facet-4ckk9j0fp4o</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Opportunity_c (Channel Partner)</value>
+                    <value>CP Lead</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab2</identifier>
@@ -213,11 +209,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-1611c9b9-6724-46a2-bf4b-94c3763d63b5</value>
+                    <value>Facet-2aee2e26-939a-48f8-82e6-88408b38719a</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Site Visit (Channel Partner)</value>
+                    <value>CP History</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab3</identifier>
@@ -227,11 +223,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-430b87c1-a407-4949-8b21-dd6e7dc9c4a6</value>
+                    <value>Facet-ec3dbb44-732d-4451-aa47-f349b447b181</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Digital Leads</value>
+                    <value>CP Documents</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab4</identifier>
@@ -259,75 +255,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>showLegacyActivityComposer</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_activities:activityPanel</componentName>
-                <identifier>runtime_sales_activities_activityPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <mode>Replace</mode>
-        <name>activityTabContent</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceChatter:recordFeedContainer</componentName>
-                <identifier>forceChatter_recordFeedContainer</identifier>
-            </componentInstance>
-        </itemInstances>
-        <mode>Replace</mode>
-        <name>feedTabContent</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>activityTabContent</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.activity</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>activityTab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>feedTabContent</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.collaborate</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>collaborateTab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <mode>Replace</mode>
-        <name>sidebartabs</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>tabs</name>
-                    <value>sidebartabs</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset2</identifier>
+                <componentName>ex_CPDocumentUpload</componentName>
+                <identifier>c_ex_CPDocumentUpload</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

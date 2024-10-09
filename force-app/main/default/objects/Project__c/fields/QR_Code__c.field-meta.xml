@@ -2,7 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>QR_Code__c</fullName>
     <externalId>false</externalId>
-    <formula>IMAGE(&apos;https://image-charts.com/chart?chs=100x100&amp;cht=qr&amp;chl=https://nandivardhanconstructionsed.my.salesforce-sites.com/?project=&apos;+Id+&apos;QR=true&apos; ,&apos;Scan QR code to open record in mobile.&apos;)</formula>
+    <formula>IMAGE(
+&quot;https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=&quot; &amp;
+&quot;https://velocity-innovation-745--avantsb.sandbox.my.salesforce-sites.com/SearchPage?project=&quot;&amp;CASESAFEID(Id),
+&quot;QR Code&quot;
+)</formula>
     <label>QR Code</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

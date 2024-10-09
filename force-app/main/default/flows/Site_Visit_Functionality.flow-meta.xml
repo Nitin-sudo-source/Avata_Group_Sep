@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <decisions>
-        <name>Is_Sales_Manager_Comments_Filled</name>
-        <label>Is Sales Manager Comments Filled</label>
-        <locationX>654</locationX>
-        <locationY>479</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Sales_Manager_Comments_Filled</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Comment__c</leftValueReference>
-                <operator>IsChanged</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Comment__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Account_Details</targetReference>
-            </connector>
-            <label>Sales Manager Comments Filled</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_SalesManager_Assigned</name>
-        <label>Is SalesManager Assigned</label>
-        <locationX>456</locationX>
-        <locationY>371</locationY>
-        <defaultConnector>
-            <targetReference>Is_Sales_Manager_Comments_Filled</targetReference>
-        </defaultConnector>
+        <name>IsSVComment</name>
+        <label>Is SV Comment</label>
+        <locationX>571</locationX>
+        <locationY>302</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Sales_Manager_Assigned</name>
@@ -63,10 +31,46 @@
                     <numberValue>1.0</numberValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.SM_Assignment_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Update_Opportunity_Sales_Manager</targetReference>
+                <targetReference>Update_SalesManager</targetReference>
             </connector>
             <label>Sales Manager Assigned</label>
+        </rules>
+        <rules>
+            <name>Is_SV_Comment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Comments__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Comments__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Sales_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_on_SV_creation</targetReference>
+            </connector>
+            <label>Is SV Comment</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -92,12 +96,12 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Update_Account_Details</name>
-        <label>Update Account Details</label>
-        <locationX>522</locationX>
-        <locationY>587</locationY>
+        <name>update_Account</name>
+        <label>update Account</label>
+        <locationX>739</locationX>
+        <locationY>153</locationY>
         <connector>
-            <targetReference>Update_Opportunity_Details</targetReference>
+            <targetReference>IsSVComment</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -108,21 +112,21 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Age__c</field>
+            <field>Age_Group__c</field>
             <value>
-                <elementReference>$Record.Age__c</elementReference>
+                <elementReference>$Record.Age_Group__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Annual_Income__c</field>
+            <value>
+                <elementReference>$Record.Annual_Income__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingCity</field>
             <value>
                 <elementReference>$Record.City__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BillingCountry</field>
-            <value>
-                <elementReference>$Record.Country__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -140,13 +144,7 @@
         <inputAssignments>
             <field>BillingStreet</field>
             <value>
-                <elementReference>$Record.Street_1__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Building__c</field>
-            <value>
-                <elementReference>$Record.Building__c</elementReference>
+                <elementReference>$Record.Residential_Address__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -162,9 +160,33 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Current_Resident_Status__c</field>
+            <value>
+                <elementReference>$Record.Current_Resident_Status__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Designation__c</field>
             <value>
                 <elementReference>$Record.Designation__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employment_Type__c</field>
+            <value>
+                <elementReference>$Record.Employment_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ethnicity__c</field>
+            <value>
+                <elementReference>$Record.Ethnicity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Family_Size__c</field>
+            <value>
+                <elementReference>$Record.Family_Size__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -174,9 +196,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>House_No__c</field>
+            <field>Industry__c</field>
             <value>
-                <elementReference>$Record.House_No__c</elementReference>
+                <elementReference>$Record.Industry__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -186,30 +208,36 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Martial_Status__c</field>
+            <field>Marital_Status__c</field>
             <value>
-                <elementReference>$Record.Martial_Status__c</elementReference>
+                <elementReference>$Record.Marital_Status__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Occupation__c</field>
+            <field>Office_Location__c</field>
             <value>
-                <elementReference>$Record.Occupation__c</elementReference>
+                <elementReference>$Record.Office_Location__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Other_Occupation__c</field>
+            <field>Office_Pincode__c</field>
             <value>
-                <elementReference>$Record.Other_Occupation__c</elementReference>
+                <elementReference>$Record.Office_Pincode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Residential_Address__c</field>
+            <value>
+                <elementReference>$Record.Residential_Address__c</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Opportunity_Details</name>
-        <label>Update Opportunity Details</label>
-        <locationX>522</locationX>
-        <locationY>695</locationY>
+        <name>Update_Opportunity_on_SV_creation</name>
+        <label>Update Opportunity on SV creation</label>
+        <locationX>800</locationX>
+        <locationY>377</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -219,15 +247,45 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Budget__c</field>
+            <field>Actual_Budget__c</field>
             <value>
-                <elementReference>$Record.Budget__c</elementReference>
+                <elementReference>$Record.Actual_Budget__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Any_Pre_existing_Loans__c</field>
+            <value>
+                <elementReference>$Record.Any_Pre_existing_Loans__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Area_Sq_ft__c</field>
+            <value>
+                <elementReference>$Record.Area_Sq_Ft__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Budget_Range__c</field>
+            <value>
+                <elementReference>$Record.Budget_Range__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Buying_Purpose__c</field>
             <value>
                 <elementReference>$Record.Buying_Purpose__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CP_Lead__c</field>
+            <value>
+                <elementReference>$Record.CP_Lead__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CP_Project__c</field>
+            <value>
+                <elementReference>$Record.CP_Project__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -243,49 +301,61 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Current_Residence_Configuration__c</field>
+            <field>Current_Outstanding_Amount__c</field>
             <value>
-                <elementReference>$Record.Current_Residence_Configuration__c</elementReference>
+                <elementReference>$Record.Current_Outstanding_Amount__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Is_Customer_With_Family__c</field>
+            <field>Last_SV_Attended_By__c</field>
             <value>
-                <elementReference>$Record.Is_Customer_with_Family__c</elementReference>
+                <elementReference>$Record.OwnerId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Last_SV_Comment__c</field>
             <value>
-                <elementReference>$Record.Comment__c</elementReference>
+                <elementReference>$Record.Comments__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Last_SV_attended_by__c</field>
+            <field>Location__c</field>
             <value>
-                <elementReference>$Record.Sales_Manager__c</elementReference>
+                <elementReference>$Record.Location__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Master_Source__c</field>
-            <value>
-                <elementReference>$Record.Master_Source__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Possession_Timeframe_Required__c</field>
+            <field>Possession_Timeframe__c</field>
             <value>
                 <elementReference>$Record.Possession_Timeframe_Required__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Project_Type__c</field>
+            <field>Presales_Manager__c</field>
             <value>
-                <elementReference>$Record.Project_Type__c</elementReference>
+                <elementReference>$Record.Presales_Manager__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Sales_Next_Follow_up_Date__c</field>
+            <field>Referrer_Address__c</field>
+            <value>
+                <elementReference>$Record.Referrer_Address__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Referrer_Mobile__c</field>
+            <value>
+                <elementReference>$Record.Referrer_Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Referrer_Name__c</field>
+            <value>
+                <elementReference>$Record.Referrer_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sales_Next_Follow_Up_Date__c</field>
             <value>
                 <elementReference>$Record.Next_Follow_up_Date__c</elementReference>
             </value>
@@ -293,25 +363,43 @@
         <inputAssignments>
             <field>Sales_Proposed_Visit_Date__c</field>
             <value>
-                <elementReference>$Record.Proposed_Revisit_Date__c</elementReference>
+                <elementReference>$Record.Proposed_Re_visit_Date__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Source_of_Finance_Source_of_Finance__c</field>
+            <field>Source_Description__c</field>
             <value>
-                <elementReference>$Record.Source_of_Finance__c</elementReference>
+                <elementReference>$Record.Source_Description__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Sourcing_Managers__c</field>
+            <field>Source__c</field>
             <value>
-                <elementReference>$Record.Sourcing_Managers__c</elementReference>
+                <elementReference>$Record.Lead_Source__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Source_of_Funding__c</field>
+            <value>
+                <elementReference>$Record.Source_of_Funding__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sourcing_Manager__c</field>
+            <value>
+                <elementReference>$Record.Sourcing_Manager__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Stage__c</field>
             <value>
-                <elementReference>$Record.Opportunity_Stage__c</elementReference>
+                <elementReference>$Record.Stage__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sub_Source__c</field>
+            <value>
+                <elementReference>$Record.Lead_Sub_Source__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -326,13 +414,19 @@
                 <elementReference>$Record.Sub_Stage__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type_of_Pre_existing_Loan__c</field>
+            <value>
+                <elementReference>$Record.Type_of_Pre_existing_Loan__c</elementReference>
+            </value>
+        </inputAssignments>
         <object>Opportunity__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Opportunity_Sales_Manager</name>
-        <label>Update Opportunity Sales Manager</label>
-        <locationX>258</locationX>
-        <locationY>479</locationY>
+        <name>Update_SalesManager</name>
+        <label>Update SalesManager</label>
+        <locationX>317</locationX>
+        <locationY>439</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -342,12 +436,18 @@
             </value>
         </filters>
         <filters>
-            <field>Site_Visit_Count__c</field>
+            <field>SV_Count__c</field>
             <operator>EqualTo</operator>
             <value>
                 <numberValue>1.0</numberValue>
             </value>
         </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.Sales_Manager__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Sales_Manager__c</field>
             <value>
@@ -357,14 +457,50 @@
         <object>Opportunity__c</object>
     </recordUpdates>
     <start>
-        <locationX>330</locationX>
-        <locationY>48</locationY>
+        <locationX>168</locationX>
+        <locationY>25</locationY>
         <connector>
-            <targetReference>Is_SalesManager_Assigned</targetReference>
+            <targetReference>update_Account</targetReference>
         </connector>
+        <filterLogic>(1 AND 2 AND 3 ) OR (3 AND 4 AND 5)</filterLogic>
+        <filters>
+            <field>Comments__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Comments__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Sales_Manager__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Sales_Manager__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Site_Visit_Count__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </filters>
         <object>Site_Visit__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>

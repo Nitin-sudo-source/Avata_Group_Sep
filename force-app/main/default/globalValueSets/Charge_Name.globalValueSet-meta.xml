@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Basic Charge</fullName>
+        <default>false</default>
+        <label>Basic Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Floor Rise</fullName>
+        <default>false</default>
+        <label>Floor Rise</label>
+    </customValue>
+    <customValue>
+        <fullName>PLC</fullName>
+        <default>false</default>
+        <label>PLC</label>
+    </customValue>
+    <customValue>
+        <fullName>Stamp Duty</fullName>
+        <default>false</default>
+        <label>Stamp Duty</label>
+    </customValue>
+    <customValue>
+        <fullName>Registration Charges</fullName>
+        <default>false</default>
+        <label>Registration Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Development Charge</fullName>
+        <default>false</default>
+        <label>Development Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance Charges For Parking</fullName>
+        <default>false</default>
+        <label>Maintenance Charges For Parking</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal Charge</fullName>
+        <default>false</default>
+        <label>Legal Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>MSEB &amp; Water Charge</fullName>
+        <default>false</default>
+        <label>MSEB &amp; Water Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal &amp; MSEB</fullName>
+        <default>false</default>
+        <label>Legal &amp; MSEB</label>
+    </customValue>
+    <customValue>
+        <fullName>Processing Fees</fullName>
+        <default>false</default>
+        <label>Processing Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Share Money</fullName>
+        <default>false</default>
+        <label>Share Money</label>
+    </customValue>
+    <customValue>
+        <fullName>Society Administration Fees</fullName>
+        <default>false</default>
+        <label>Society Administration Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance Charges</fullName>
+        <default>false</default>
+        <label>Maintenance Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Club Charges</fullName>
+        <default>false</default>
+        <label>Club Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>West Facing</fullName>
+        <default>false</default>
+        <label>West Facing</label>
+    </customValue>
+    <customValue>
+        <fullName>Scaning charges</fullName>
+        <default>false</default>
+        <label>Scaning charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Other charges</fullName>
+        <default>false</default>
+        <label>Other charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Entrance fees and share Capital (Non Refundable)</fullName>
+        <default>false</default>
+        <label>Entrance fees and share Capital (Non Refundable)</label>
+    </customValue>
+    <customValue>
+        <fullName>Installation of Electricity meter, water meter and Electric sub</fullName>
+        <default>false</default>
+        <label>Installation of Electricity meter, water meter and Electric sub</label>
+    </customValue>
+    <customValue>
+        <fullName>station in layout</fullName>
+        <default>false</default>
+        <label>station in layout</label>
+    </customValue>
+    <customValue>
+        <fullName>Society registration charges</fullName>
+        <default>false</default>
+        <label>Society registration charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal Charges &amp; Other charges towards formation of society</fullName>
+        <default>false</default>
+        <label>Legal Charges &amp; Other charges towards formation of society</label>
+    </customValue>
+    <customValue>
+        <fullName>Infrastructure Charges</fullName>
+        <default>false</default>
+        <label>Infrastructure Charges</label>
+    </customValue>
+    <masterLabel>Charge Name</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

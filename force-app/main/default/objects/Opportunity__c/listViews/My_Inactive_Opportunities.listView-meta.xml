@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Inactive_Opportunities</fullName>
+    <columns>NAME</columns>
+    <columns>Stage__c</columns>
+    <columns>Sub_Stage__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Is_Active__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>My Inactive Opportunities</label>
+</ListView>

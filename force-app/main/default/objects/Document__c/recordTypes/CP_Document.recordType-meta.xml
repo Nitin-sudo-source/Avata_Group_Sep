@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_Document</fullName>
+    <active>true</active>
+    <label>CP Document</label>
+    <picklistValues>
+        <picklist>Document_Type__c</picklist>
+        <values>
+            <fullName>Aadhaar Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GST Registration Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pan Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RERA Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RERA Competency Certificate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Residential_Status__c</picklist>
+        <values>
+            <fullName>For Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gujarat Resident</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Gujarat Resident</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Resident Indian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership Firm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Applicant__c</picklist>
+        <values>
+            <fullName>Corporate Buyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individual Buyer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

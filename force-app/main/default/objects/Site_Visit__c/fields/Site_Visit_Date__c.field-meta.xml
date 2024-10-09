@@ -3,7 +3,7 @@
     <fullName>Site_Visit_Date__c</fullName>
     <label>Site Visit Date</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

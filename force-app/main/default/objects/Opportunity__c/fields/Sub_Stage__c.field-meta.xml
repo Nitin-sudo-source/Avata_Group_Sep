@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sub_Stage__c</fullName>
-    <label>Sub-Stage</label>
+    <label>Sub Stage</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <controllingField>Stage__c</controllingField>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -31,9 +32,9 @@
                 <label>Spot Booking</label>
             </value>
             <value>
-                <fullName>Normal Booking</fullName>
+                <fullName>Revisit Booking</fullName>
                 <default>false</default>
-                <label>Normal Booking</label>
+                <label>Revisit Booking</label>
             </value>
             <value>
                 <fullName>Before Registration</fullName>
@@ -126,9 +127,9 @@
                 <label>Conditional sale</label>
             </value>
             <value>
-                <fullName>Residential Property Enquiry</fullName>
+                <fullName>Commercial Property Enquiry</fullName>
                 <default>false</default>
-                <label>Residential Property Enquiry</label>
+                <label>Commercial Property Enquiry</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -149,7 +150,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booked</controllingFieldValue>
-            <valueName>Normal Booking</valueName>
+            <valueName>Revisit Booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking Cancelled</controllingFieldValue>
@@ -160,72 +161,72 @@
             <valueName>After Registration</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Did not like layout of the flat</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Location Mismatch</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Booked in other project</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Booked in resale</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Plan to buy home is Postponed / cancelled</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Not Answering. Pre-sales to follow-up</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Not Vastu compliant</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Budget does not match</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Area/Configuration Mismatch</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Possession does not match</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>General Enquiry</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Loan Issues</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Negotiation</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Choice of Unit</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Lost</controllingFieldValue>
             <valueName>Conditional sale</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Residential Property Enquiry</valueName>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Commercial Property Enquiry</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

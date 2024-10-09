@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Discount</fullName>
+        <default>false</default>
+        <label>Discount</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit Note</fullName>
+        <default>false</default>
+        <label>Credit Note</label>
+    </customValue>
+    <masterLabel>Discount Category</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -3,21 +3,32 @@
     <fullName>Stage__c</fullName>
     <label>Stage</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
+            <value>
+                <fullName>Created</fullName>
+                <default>false</default>
+                <label>Created</label>
+            </value>
             <value>
                 <fullName>In Follow-up</fullName>
                 <default>true</default>
                 <label>In Follow-up</label>
             </value>
             <value>
-                <fullName>Booked</fullName>
+                <fullName>Lost</fullName>
                 <default>false</default>
-                <label>Booked</label>
+                <label>Lost</label>
+            </value>
+            <value>
+                <fullName>Booking In-Process</fullName>
+                <default>false</default>
+                <label>Booking In-Process</label>
             </value>
             <value>
                 <fullName>Booking Cancelled</fullName>
@@ -25,9 +36,9 @@
                 <label>Booking Cancelled</label>
             </value>
             <value>
-                <fullName>Closed Lost</fullName>
+                <fullName>Booked</fullName>
                 <default>false</default>
-                <label>Closed Lost</label>
+                <label>Booked</label>
             </value>
         </valueSetDefinition>
     </valueSet>

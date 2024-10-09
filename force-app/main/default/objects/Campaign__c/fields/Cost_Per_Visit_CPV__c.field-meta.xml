@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Cost_Per_Visit_CPV__c</fullName>
-    <externalId>false</externalId>
-    <formula>Actual_Cost__c  / Site_Visit_Count__c</formula>
+    <fullName>Cost_per_Visit_CPV__c</fullName>
+    <formula>Actual_Cost__c / Actual_Visits__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Cost Per Visit (CPV)</label>
+    <label>Cost per Visit (CPV)</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>2</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>false</unique>
+    <type>Currency</type>
 </CustomField>

@@ -22,7 +22,8 @@
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
-                <emptySpace>true</emptySpace>
+                <emptySpace>false</emptySpace>
+                <field>TaskSubtype</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>

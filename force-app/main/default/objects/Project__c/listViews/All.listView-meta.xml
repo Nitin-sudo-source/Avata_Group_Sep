@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
-    <columns>NAME</columns>
-    <columns>QR_Code__c</columns>
-    <columns>Project_Head__c</columns>
-    <columns>Project_Head_2__c</columns>
-    <columns>Default_Owner_For_CP__c</columns>
-    <columns>Site_Visit_QR_Assignment__c</columns>
-    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

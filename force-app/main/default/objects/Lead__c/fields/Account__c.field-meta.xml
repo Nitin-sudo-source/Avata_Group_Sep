@@ -5,7 +5,7 @@
     <label>Account</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Leads (Account)</relationshipLabel>
-    <relationshipName>Leads2</relationshipName>
+    <relationshipName>Leads1</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

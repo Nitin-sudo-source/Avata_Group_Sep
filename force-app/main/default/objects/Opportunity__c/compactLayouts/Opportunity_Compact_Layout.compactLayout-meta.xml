@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Opportunity_Compact_Layout</fullName>
-    <fields>Opportunity_Id__c</fields>
     <fields>Name</fields>
-    <fields>Account__c</fields>
-    <fields>Mobile__c</fields>
-    <fields>Email__c</fields>
     <fields>Project__c</fields>
-    <fields>Sales_Next_Follow_up_Date__c</fields>
-    <fields>OwnerId</fields>
+    <fields>Is_Active__c</fields>
+    <fields>Is_Serviced__c</fields>
+    <fields>Stage__c</fields>
+    <fields>Source__c</fields>
+    <fields>Fist_SV_Date__c</fields>
+    <fields>Last_SV_Date__c</fields>
+    <fields>Sales_Proposed_Visit_Date__c</fields>
+    <fields>Close_Date__c</fields>
     <label>Opportunity Compact Layout</label>
 </CompactLayout>

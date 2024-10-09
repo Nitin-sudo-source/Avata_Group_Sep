@@ -2,12 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Campaign__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <label>Campaign_c</label>
+    <label>Campaign</label>
     <referenceTo>Campaign__c</referenceTo>
     <relationshipLabel>Campaign Performances</relationshipLabel>
     <relationshipName>Campaign_Performances</relationshipName>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

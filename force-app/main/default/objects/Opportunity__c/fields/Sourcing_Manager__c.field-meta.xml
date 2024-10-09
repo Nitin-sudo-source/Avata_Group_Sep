@@ -4,9 +4,9 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Sourcing Manager</label>
     <referenceTo>User</referenceTo>
-    <relationshipName>Opportunity1</relationshipName>
+    <relationshipName>Opportunities1</relationshipName>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

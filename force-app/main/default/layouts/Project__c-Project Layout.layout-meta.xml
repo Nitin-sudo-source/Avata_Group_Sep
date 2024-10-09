@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>AssignRecordLabel</excludeButtons>
+    <excludeButtons>ChangeOwnerOne</excludeButtons>
+    <excludeButtons>ChangeRecordType</excludeButtons>
+    <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>PrintableView</excludeButtons>
+    <excludeButtons>RecordShareHierarchy</excludeButtons>
+    <excludeButtons>Share</excludeButtons>
+    <excludeButtons>Submit</excludeButtons>
     <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
+        <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
-        <label>Project Detail</label>
+        <label>Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -12,11 +20,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Site_Visit_QR_Assignment__c</field>
+                <field>Car_Park_Maintain_At__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>QR_Code__c</field>
+                <field>NPV__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Car_Park_On__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Discount_Maintain_At__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Project_Image__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -26,35 +46,38 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Default_Owner_For_CP__c</field>
+                <field>Architect_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Project_Address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Public_Link__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TAT_Days_for_Walkin__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Project Heads</label>
+        <label>QR Details</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Project_Head__c</field>
+                <behavior>Required</behavior>
+                <field>User__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Project_Head_2__c</field>
+                <behavior>Readonly</behavior>
+                <field>QR_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -63,25 +86,31 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Sales Managers</label>
+        <label>Booking Approver Details</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SM1__c</field>
+                <field>CRM_Head__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>RERA Details</label>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SM3__c</field>
+                <field>Project_RERA_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SM2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SM4__c</field>
+                <field>Project_End_Date_As_Per_RERA__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -89,6 +118,104 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Threshold Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Threshold_Amount__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Threshold_Percentage__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Booking Cancellation Approver Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Booking_Cancellation_Approver__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Campaign Approver Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Campaign_Approver__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Legal Entity Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legal_Entity__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Terms &amp; Conditions</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Quotation_Terms_and_Conditions__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Booking_Terms_and_Conditions_2__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Booking_Terms_and_Conditions__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Project Logo Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Project_Logo__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
@@ -103,15 +230,6 @@
                 <field>LastModifiedById</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>true</editHeading>
-        <label>System Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -138,64 +256,77 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
+        <fields>NAME</fields>
+        <relatedList>Lead__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Mobile__c</fields>
-        <fields>Master_Source__c</fields>
-        <fields>Channel_Partner__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>Last_SV_Date__c</fields>
-        <fields>Last_SV_Comment__c</fields>
-        <fields>Stage__c</fields>
-        <fields>Last_SV_attended_by__c</fields>
-        <fields>Comments__c</fields>
         <relatedList>Opportunity__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Team__c.Project__c</relatedList>
+        <relatedList>Campaign__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>First_Name__c</fields>
-        <fields>Comment__c</fields>
-        <fields>Mobile__c</fields>
-        <fields>Site_Visit_Date__c</fields>
-        <fields>Opportunity_Stage__c</fields>
-        <fields>Current_Project_Name__c</fields>
-        <fields>Is_Sales_Manager_Assigned__c</fields>
-        <fields>Channel_Partner__c</fields>
         <relatedList>Site_Visit__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Campaign_Code__c</fields>
+        <fields>Team_Type__c</fields>
         <fields>CREATED_DATE</fields>
-        <fields>End_Date__c</fields>
-        <fields>Lead_Count__c</fields>
-        <fields>Active__c</fields>
-        <fields>Status__c</fields>
-        <fields>Performance_measure_on__c</fields>
-        <fields>OBJECT_ID</fields>
-        <fields>Budgeted_Cost__c</fields>
-        <relatedList>Campaign__c.Project__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>ACCOUNT.ADDRESS1_CITY</fields>
-        <fields>ACCOUNT.PHONE1</fields>
-        <relatedList>Account.Project__c</relatedList>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Team__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Mobile__c</fields>
-        <fields>Stage__c</fields>
-        <fields>Channel_Partner__c</fields>
-        <fields>Comments__c</fields>
-        <fields>CREATED_DATE</fields>
-        <relatedList>Lead__c.Project__c</relatedList>
+        <relatedList>Visit_Pre_Registration__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>CP_Lead__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Booking__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Car_Park_Number__c</fields>
+        <fields>Car_Park_Type__c</fields>
+        <fields>Tower__c</fields>
+        <fields>Status__c</fields>
+        <fields>Floor__c</fields>
+        <fields>Amount__c</fields>
+        <fields>Booking__c</fields>
+        <relatedList>Car_Park__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>No_of_Saleable_Units__c</fields>
+        <fields>No_of_Floors__c</fields>
+        <relatedList>Tower__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Tower__c</fields>
+        <fields>Total_carpet_Sq_Ft__c</fields>
+        <fields>Saleable_Area__c</fields>
+        <fields>Unit_Status_Inventory__c</fields>
+        <fields>Unit_Blocked_Time_Stamp__c</fields>
+        <relatedList>Unit__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Grouping__c</fields>
+        <fields>Discount_Category__c</fields>
+        <fields>Discount_Type__c</fields>
+        <fields>Total__c</fields>
+        <relatedList>Discount__c.Project__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -203,7 +334,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5i00000Hel1v</masterLabel>
+        <masterLabel>00hH3000001Nd4A</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

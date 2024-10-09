@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>2</fullName>
+        <default>false</default>
+        <label>2</label>
+    </customValue>
+    <customValue>
+        <fullName>3</fullName>
+        <default>false</default>
+        <label>3</label>
+    </customValue>
+    <customValue>
+        <fullName>4</fullName>
+        <default>false</default>
+        <label>4</label>
+    </customValue>
+    <customValue>
+        <fullName>5-6</fullName>
+        <default>false</default>
+        <label>5-6</label>
+    </customValue>
+    <customValue>
+        <fullName>&gt;6</fullName>
+        <default>false</default>
+        <label>&gt;6</label>
+    </customValue>
+    <customValue>
+        <fullName>Siblings Living Together</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Siblings Living Together</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuclear Family with Elders</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Nuclear Family with Elders</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuclear Family without Elders</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Nuclear Family without Elders</label>
+    </customValue>
+    <customValue>
+        <fullName>Joint Family</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Joint Family</label>
+    </customValue>
+    <customValue>
+        <fullName>Singles/Friends Living Together</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Singles/Friends Living Together</label>
+    </customValue>
+    <masterLabel>Family Size</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

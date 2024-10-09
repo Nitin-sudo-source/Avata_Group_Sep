@@ -2,24 +2,20 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>My_Lost_Leads</fullName>
     <columns>NAME</columns>
-    <columns>Mobile__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Last_Name__c</columns>
     <columns>Project__c</columns>
-    <columns>Stage__c</columns>
-    <columns>Master_Source__c</columns>
-    <columns>Presale_Next_Follow_up_Date__c</columns>
-    <columns>OWNER.FIRST_NAME</columns>
-    <columns>OWNER.LAST_NAME</columns>
-    <columns>CREATED_DATE</columns>
+    <columns>Is_Serviced__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Lead_Stage__c</columns>
+    <columns>Presales_Last_Call_Status__c</columns>
+    <columns>Presales_Last_Call_Date__c</columns>
+    <columns>Created_Date__c</columns>
     <filterScope>Mine</filterScope>
     <filters>
-        <field>Stage__c</field>
+        <field>Lead_Stage__c</field>
         <operation>equals</operation>
         <value>Lost</value>
-    </filters>
-    <filters>
-        <field>IsConverted__c</field>
-        <operation>equals</operation>
-        <value>0</value>
     </filters>
     <label>My Lost Leads</label>
 </ListView>

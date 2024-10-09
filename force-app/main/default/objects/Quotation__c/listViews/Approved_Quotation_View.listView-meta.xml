@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approved_Quotation_View</fullName>
+    <columns>NAME</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Project__c</columns>
+    <columns>Tower__c</columns>
+    <columns>Unit__c</columns>
+    <columns>Payment_Scheme__c</columns>
+    <columns>Basic_Charge_Amount__c</columns>
+    <columns>Total_Approved_Discount__c</columns>
+    <columns>Car_Park_Required_Count__c</columns>
+    <columns>Quotation_Status__c</columns>
+    <columns>Booking__c</columns>
+    <columns>Quotation_PDF_URL__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Quotation_Status__c</field>
+        <operation>equals</operation>
+        <value>Valid,Approved</value>
+    </filters>
+    <label>Approved Quotation View</label>
+</ListView>

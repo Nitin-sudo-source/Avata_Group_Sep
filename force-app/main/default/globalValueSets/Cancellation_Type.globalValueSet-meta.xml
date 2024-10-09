@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Unit Cancellation</fullName>
+        <default>false</default>
+        <label>Unit Cancellation</label>
+    </customValue>
+    <customValue>
+        <fullName>Unit Transfer</fullName>
+        <default>false</default>
+        <label>Unit Transfer</label>
+    </customValue>
+    <masterLabel>Cancellation Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

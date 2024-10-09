@@ -49,7 +49,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>CombinedAttachments</value>
+                    <value>Histories</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -67,7 +67,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-9b70542a-b993-489e-b139-57dc32d3ed52</name>
+        <name>Facet-2009c60b-66b3-4616-bd97-7fb9b02de8e5</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -93,11 +93,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-9b70542a-b993-489e-b139-57dc32d3ed52</value>
+                    <value>Facet-2009c60b-66b3-4616-bd97-7fb9b02de8e5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Notes and Attachments</value>
+                    <value>Team Member History</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>

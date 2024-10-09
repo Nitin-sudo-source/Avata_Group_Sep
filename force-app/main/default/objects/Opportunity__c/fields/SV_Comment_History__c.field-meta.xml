@@ -3,7 +3,7 @@
     <fullName>SV_Comment_History__c</fullName>
     <label>SV Comment History</label>
     <length>131072</length>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

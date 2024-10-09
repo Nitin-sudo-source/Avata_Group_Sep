@@ -4,9 +4,10 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Project</label>
     <referenceTo>Project__c</referenceTo>
-    <relationshipName>Campaigns1</relationshipName>
+    <relationshipLabel>Campaigns</relationshipLabel>
+    <relationshipName>Campaigns</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

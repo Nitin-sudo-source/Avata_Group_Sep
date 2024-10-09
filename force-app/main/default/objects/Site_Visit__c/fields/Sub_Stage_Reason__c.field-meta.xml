@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sub_Stage_Reason__c</fullName>
-    <label>Sub-Stage Reason</label>
+    <label>Sub Stage Reason</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <controllingField>Sub_Stage__c</controllingField>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -56,11 +57,6 @@
                 <label>Looking at other options</label>
             </value>
             <value>
-                <fullName>Others</fullName>
-                <default>false</default>
-                <label>Others</label>
-            </value>
-            <value>
                 <fullName>Looking for Smaller configuration/area</fullName>
                 <default>false</default>
                 <label>Looking for Smaller configuration/area</label>
@@ -85,7 +81,62 @@
                 <default>false</default>
                 <label>Sale of existing property</label>
             </value>
+            <value>
+                <fullName>Expectation and requirement matched fixing date of booking</fullName>
+                <default>false</default>
+                <label>Expectation and requirement matched fixing date of booking</label>
+            </value>
+            <value>
+                <fullName>Queries and doubts resolved completely client will confirm next meeting</fullName>
+                <default>false</default>
+                <label>Queries and doubts resolved completely client will confirm next meeting</label>
+            </value>
+            <value>
+                <fullName>Without sale of property can not take  a call</fullName>
+                <default>false</default>
+                <label>Without sale of property can not take  a call</label>
+            </value>
+            <value>
+                <fullName>Interested but no fund availability</fullName>
+                <default>false</default>
+                <label>Interested but no fund availability</label>
+            </value>
+            <value>
+                <fullName>Due to offer / carpet area</fullName>
+                <default>false</default>
+                <label>Due to offer / carpet area</label>
+            </value>
+            <value>
+                <fullName>Specific reason for cancellation need to be filled by sales person</fullName>
+                <default>false</default>
+                <label>Specific reason for cancellation need to be filled by sales person</label>
+            </value>
+            <value>
+                <fullName>Sales head and CRM head call</fullName>
+                <default>false</default>
+                <label>Sales head and CRM head call</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Conditional sale</controllingFieldValue>
+            <valueName>Sale of existing property</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for Smaller configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for bigger configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for RTMI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for early possession</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Hot</controllingFieldValue>
             <valueName>All Good Expected Closure</valueName>
@@ -100,9 +151,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Hot</controllingFieldValue>
-            <controllingFieldValue>Warm</controllingFieldValue>
-            <controllingFieldValue>Cold</controllingFieldValue>
-            <valueName>Others</valueName>
+            <valueName>Expectation and requirement matched fixing date of booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Warm</controllingFieldValue>
@@ -117,6 +166,10 @@
             <valueName>Project liked. But no commitment. To follow-up</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Warm</controllingFieldValue>
+            <valueName>Queries and doubts resolved completely client will confirm next meeting</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Cold</controllingFieldValue>
             <valueName>General Enquiry</valueName>
         </valueSettings>
@@ -127,6 +180,26 @@
         <valueSettings>
             <controllingFieldValue>Cold</controllingFieldValue>
             <valueName>Looking at other options</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cold</controllingFieldValue>
+            <valueName>Without sale of property can not take  a call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cold</controllingFieldValue>
+            <valueName>Interested but no fund availability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Spot Booking</controllingFieldValue>
+            <valueName>Due to offer / carpet area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Before Registration</controllingFieldValue>
+            <valueName>Specific reason for cancellation need to be filled by sales person</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>After Registration</controllingFieldValue>
+            <valueName>Sales head and CRM head call</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

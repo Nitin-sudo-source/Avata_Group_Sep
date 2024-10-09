@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Sub_Stage_Reason__c</fullName>
+    <label>Lead Sub Stage Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Lead_Sub_Stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Looking for Smaller configuration/area</fullName>
+                <default>false</default>
+                <label>Looking for Smaller configuration/area</label>
+            </value>
+            <value>
+                <fullName>Looking for bigger configuration/area</fullName>
+                <default>false</default>
+                <label>Looking for bigger configuration/area</label>
+            </value>
+            <value>
+                <fullName>Looking for RTMI</fullName>
+                <default>false</default>
+                <label>Looking for RTMI</label>
+            </value>
+            <value>
+                <fullName>Looking for early possession</fullName>
+                <default>false</default>
+                <label>Looking for early possession</label>
+            </value>
+            <value>
+                <fullName>After Pitched</fullName>
+                <default>false</default>
+                <label>After Pitched</label>
+            </value>
+            <value>
+                <fullName>Before Pitched</fullName>
+                <default>false</default>
+                <label>Before Pitched</label>
+            </value>
+            <value>
+                <fullName>Switched off, not reachable, not answering</fullName>
+                <default>false</default>
+                <label>Switched off, not reachable, not answering</label>
+            </value>
+            <value>
+                <fullName>Invalid customer contact number</fullName>
+                <default>false</default>
+                <label>Invalid customer contact number</label>
+            </value>
+            <value>
+                <fullName>Invalid Enquiry</fullName>
+                <default>false</default>
+                <label>Invalid Enquiry</label>
+            </value>
+            <value>
+                <fullName>False Enquiry</fullName>
+                <default>false</default>
+                <label>False Enquiry</label>
+            </value>
+            <value>
+                <fullName>Not looking for the property</fullName>
+                <default>false</default>
+                <label>Not looking for the property</label>
+            </value>
+            <value>
+                <fullName>Abusive Clients</fullName>
+                <default>false</default>
+                <label>Abusive Clients</label>
+            </value>
+            <value>
+                <fullName>Channel Partner</fullName>
+                <default>false</default>
+                <label>Channel Partner</label>
+            </value>
+            <value>
+                <fullName>Booked Customers</fullName>
+                <default>false</default>
+                <label>Booked Customers</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for Smaller configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for bigger configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for RTMI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for early possession</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booked with someone else</controllingFieldValue>
+            <valueName>After Pitched</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booked with someone else</controllingFieldValue>
+            <valueName>Before Pitched</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not answering / responding</controllingFieldValue>
+            <valueName>Switched off, not reachable, not answering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Invalid customer contact number</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Invalid Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>False Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Not looking for the property</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Abusive Clients</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Channel Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Booked Customers</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

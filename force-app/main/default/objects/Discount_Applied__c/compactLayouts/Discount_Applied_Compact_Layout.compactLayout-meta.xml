@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discount_Applied_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>Discount_Category__c</fields>
+    <fields>Discount_Type__c</fields>
+    <fields>Discount__c</fields>
+    <fields>Quotation__c</fields>
+    <fields>Total__c</fields>
+    <fields>Category__c</fields>
+    <label>Discount Applied Compact Layout</label>
+</CompactLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Project</fullName>
+        <default>true</default>
+        <label>Project</label>
+    </customValue>
+    <customValue>
+        <fullName>Tower</fullName>
+        <default>false</default>
+        <label>Tower</label>
+    </customValue>
+    <masterLabel>Car Park Maintain At</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
