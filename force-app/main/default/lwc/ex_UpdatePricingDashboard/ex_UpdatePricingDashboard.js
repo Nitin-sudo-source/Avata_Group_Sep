@@ -35,7 +35,15 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     handleUpdatedAv(event){
         this.getUpdatedValue = event.detail.value;
         console.log('You selected an handleUpdatedAv: ' + this.getUpdatedValue);
-        this.handlemodified();
+        getUpdatedValue.trim(); 
+        const positiveIntegerPattern = /^[1-9]\d*$/;
+        if (!positiveIntegerPattern.test(getUpdatedValue)) {
+            inputField.setCustomValidity('Please enter a positive integer value.');
+        } else {
+            inputField.setCustomValidity(''); // Clears the error
+            this.handlemodified();
+        }
+        inputField.reportValidity();
     }
     handleUpdatedStamp(event){
         this.getUpdatedStampValue = event.detail.value;
