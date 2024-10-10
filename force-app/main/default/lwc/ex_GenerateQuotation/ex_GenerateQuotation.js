@@ -176,37 +176,37 @@ export default class Ex_GenerateQuotation extends LightningElement {
     }
 
     getDiscountGroupMap() {
-        getDiscountGroupMapDetails({ pId: this.unit.Tower__r.Project__c, tId: this.unit.Tower__c })
-            .then(data => {
-                if (data) {
-                    console.log('discountGroupMap: ' + JSON.stringify(data));
-                    this.updatedDiscountGroupMap = data;
-                    this.originalDiscountGroupMap = this.updatedDiscountGroupMap;
+        getDiscountGroupMapDetails({ pId: this.unit.Tower__r.Project__c, tId: this.unit.Tower__c})
+        .then(data => {
+            if (data != null) {
+                // Make a deep copy of the original data
+                this.originalDiscountGroupMap = JSON.parse(JSON.stringify(data));
+                this.updatedDiscountGroupMap = JSON.parse(JSON.stringify(data));
 
-                    for (let group in data) {
-                        //console.log('group: '+group);
+                this.discountGroupMap = []; // Clear the discountGroupMap before populating it
 
-                        const discountList = data[group];
-                        //console.log('discountList: '+discountList);
+                for (let group in this.updatedDiscountGroupMap) {
+                    const discountList = this.updatedDiscountGroupMap[group];
+                    const updatedDiscountList = [];
 
-                        const updatedDiscountList = [];
-                        discountList.forEach(element => {
-                            //console.log('element: '+element);
-
-                            updatedDiscountList.push({
-                                ...element,
-                                isPSF: element.Discount_Type__c === 'PSF',
-                                isLumpsum: element.Discount_Type__c === 'Lumpsum',
-                                isPercentage: element.Discount_Type__c === 'Percentage'
-                            });
+                    discountList.forEach(element => {
+                        updatedDiscountList.push({
+                            ...element,
+                            isPSF: element.Discount_Type__c === 'PSF',
+                            isLumpsum: element.Discount_Type__c === 'Lumpsum',
+                            isPercentage: element.Discount_Type__c === 'Percentage'
                         });
-                        this.discountGroupMap.push({ key: group, value: updatedDiscountList });
-                    }
-                    //console.log('discountGroupMap: '+JSON.stringify(this.discountGroupMap));
-                } else if (error) {
-                    console.error('Error In getDiscountGroupMap: ', error);
+                    });
+
+                    this.discountGroupMap.push({ key: group, value: updatedDiscountList });
                 }
-            })
+            // } else if (error) {
+            //     console.log('Error In getDiscountGroupMap: ', error);
+            }
+        })
+        .catch(error => {
+            console.log('Error In getDiscountGroupMap: ', error);
+        });
     }
 
     get getAllInValueChangeStatus(){
@@ -525,70 +525,18 @@ export default class Ex_GenerateQuotation extends LightningElement {
         }
     }
 
-    applyDiscount() {
-        this.totalDiscountAmount = 0;
-        this.appliedDiscountList = [];
-
-        for (let discountGroup in this.updatedDiscountGroupMap) {
-            const discountList = this.updatedDiscountGroupMap[discountGroup];
-            //console.log('discountList: '+JSON.stringify(discountList));
-
-            for (let d in discountList) {
-                //console.log('d['+d+']: '+JSON.stringify(discountList[d]));
-                if (discountList[d].Applied__c) {
-                    //console.log('Applied Discount: '+JSON.stringify(discountList[d]));
-                    if (discountList[d].Discount_Type__c === 'Lumpsum') {
-                        discountList[d].Total__c = discountList[d].Amount__c;
-                        console.log('Lumpsum Discount Total: ' + discountList[d].Total__c);
-                        if (discountList[d].Discount_Category__c === 'Discount') {
-                            this.totalDiscountAmount += discountList[d].Total__c;
-                        }
-                        this.appliedDiscountList.push(discountList[d]);
-                    } else if (discountList[d].Discount_Type__c === 'PSF') {
-                        discountList[d].Total__c = (discountList[d].PSF_Amount__c * this.unit.Saleable_Area__c);
-                        console.log('PSF Discount Total: ' + discountList[d].Total__c);
-                        if (discountList[d].Discount_Category__c === 'Discount') {
-                            this.totalDiscountAmount += discountList[d].Total__c;
-                        }
-                        this.appliedDiscountList.push(discountList[d]);
-                    }
-                    //console.log('this.appliedDiscountList: '+JSON.stringify(this.appliedDiscountList));
-                }
-            }
-        }
-
-        for (let discountGroup in this.updatedDiscountGroupMap) {
-            const discountList = this.updatedDiscountGroupMap[discountGroup];
-            //console.log('discountList: '+JSON.stringify(discountList));
-
-            for (let d in discountList) {
-                //console.log('d['+d+']: '+JSON.stringify(discountList[d]));
-                if (discountList[d].Applied__c) {
-                    //console.log('Applied Discount: '+JSON.stringify(discountList[d]));
-                    if (discountList[d].Discount_Type__c === 'Percentage') {
-                        discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value']) / 100);
-                        console.log('Percentage Discount Total: ' + discountList[d].Total__c);
-                        if (discountList[d].Discount_Category__c === 'Discount') {
-                            this.totalDiscountAmount += discountList[d].Total__c;
-                        }
-                        this.appliedDiscountList.push(discountList[d]);
-                    }
-                    //console.log('this.appliedDiscountList: '+JSON.stringify(this.appliedDiscountList));
-                }
-            }
-        }
-        console.log('totalDiscountAmount: ' + this.totalDiscountAmount);
-    }
-
     // applyDiscount() {
     //     this.totalDiscountAmount = 0;
     //     this.appliedDiscountList = [];
 
     //     for (let discountGroup in this.updatedDiscountGroupMap) {
     //         const discountList = this.updatedDiscountGroupMap[discountGroup];
+    //         //console.log('discountList: '+JSON.stringify(discountList));
 
     //         for (let d in discountList) {
+    //             //console.log('d['+d+']: '+JSON.stringify(discountList[d]));
     //             if (discountList[d].Applied__c) {
+    //                 //console.log('Applied Discount: '+JSON.stringify(discountList[d]));
     //                 if (discountList[d].Discount_Type__c === 'Lumpsum') {
     //                     discountList[d].Total__c = discountList[d].Amount__c;
     //                     console.log('Lumpsum Discount Total: ' + discountList[d].Total__c);
@@ -603,24 +551,76 @@ export default class Ex_GenerateQuotation extends LightningElement {
     //                         this.totalDiscountAmount += discountList[d].Total__c;
     //                     }
     //                     this.appliedDiscountList.push(discountList[d]);
-    //                 } else if (discountList[d].Discount_Type__c === 'Percentage') {
-    //                     if(discountList[d].Deduct_From__c === 'Basic Charge') {
-    //                         discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value Without Car Park']) / 100);
-    //                     } else if(discountList[d].Deduct_From__c === 'Floor Rise') {
-    //                         discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Floor Rise']) / 100);
-    //                     }
+    //                 }
+    //                 //console.log('this.appliedDiscountList: '+JSON.stringify(this.appliedDiscountList));
+    //             }
+    //         }
+    //     }
+
+    //     for (let discountGroup in this.updatedDiscountGroupMap) {
+    //         const discountList = this.updatedDiscountGroupMap[discountGroup];
+    //         //console.log('discountList: '+JSON.stringify(discountList));
+
+    //         for (let d in discountList) {
+    //             //console.log('d['+d+']: '+JSON.stringify(discountList[d]));
+    //             if (discountList[d].Applied__c) {
+    //                 //console.log('Applied Discount: '+JSON.stringify(discountList[d]));
+    //                 if (discountList[d].Discount_Type__c === 'Percentage') {
+    //                     discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value']) / 100);
     //                     console.log('Percentage Discount Total: ' + discountList[d].Total__c);
     //                     if (discountList[d].Discount_Category__c === 'Discount') {
     //                         this.totalDiscountAmount += discountList[d].Total__c;
     //                     }
     //                     this.appliedDiscountList.push(discountList[d]);
-
-    //                 }                    
+    //                 }
+    //                 //console.log('this.appliedDiscountList: '+JSON.stringify(this.appliedDiscountList));
     //             }
     //         }
     //     }
     //     console.log('totalDiscountAmount: ' + this.totalDiscountAmount);
     // }
+
+    applyDiscount() {
+        this.totalDiscountAmount = 0;
+        this.appliedDiscountList = [];
+
+        for (let discountGroup in this.updatedDiscountGroupMap) {
+            const discountList = this.updatedDiscountGroupMap[discountGroup];
+
+            for (let d in discountList) {
+                if (discountList[d].Applied__c) {
+                    if (discountList[d].Discount_Type__c === 'Lumpsum') {
+                        discountList[d].Total__c = discountList[d].Amount__c;
+                        console.log('Lumpsum Discount Total: ' + discountList[d].Total__c);
+                        if (discountList[d].Discount_Category__c === 'Discount') {
+                            this.totalDiscountAmount += discountList[d].Total__c;
+                        }
+                        this.appliedDiscountList.push(discountList[d]);
+                    } else if (discountList[d].Discount_Type__c === 'PSF') {
+                        discountList[d].Total__c = (discountList[d].PSF_Amount__c * this.unit.Saleable_Area__c);
+                        console.log('PSF Discount Total: ' + discountList[d].Total__c);
+                        if (discountList[d].Discount_Category__c === 'Discount') {
+                            this.totalDiscountAmount += discountList[d].Total__c;
+                        }
+                        this.appliedDiscountList.push(discountList[d]);
+                    } else if (discountList[d].Discount_Type__c === 'Percentage') {
+                        if(discountList[d].Deduct_From__c === 'Basic Charge') {
+                            discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value Without Car Park']) / 100);
+                        } else if(discountList[d].Deduct_From__c === 'Floor Rise') {
+                            discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Floor Rise']) / 100);
+                        }
+                        console.log('Percentage Discount Total: ' + discountList[d].Total__c);
+                        if (discountList[d].Discount_Category__c === 'Discount') {
+                            this.totalDiscountAmount += discountList[d].Total__c;
+                        }
+                        this.appliedDiscountList.push(discountList[d]);
+
+                    }                    
+                }
+            }
+        }
+        console.log('totalDiscountAmount: ' + this.totalDiscountAmount);
+    }
 
     
     getAllPriceMap() {

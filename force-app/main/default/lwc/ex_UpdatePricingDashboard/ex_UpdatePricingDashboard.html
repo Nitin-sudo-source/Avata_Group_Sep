@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-08-2024
+  @last modified on  : 10-09-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -24,6 +24,7 @@
                             </th>
                             <td>
                                 <lightning-input name="Updated_Agreement_Value__c"
+                                   
                                     field-name="Updated_Agreement_Value__c" variant="label-hidden"
                                     value={avDetails.getAvvalue} data-id="Updated_Agreement_Value__c"
                                     formatter="currency" max-length="20" onchange={handleUpdatedAv}></lightning-input>
@@ -35,6 +36,7 @@
                             </th>
                             <td>
                                 <lightning-input name="Stamp_Duty__c" field-name="Stamp_Duty__c" variant="label-hidden"
+                                    
                                     data-id="Stamp_Duty__c" value={avDetails.getStampvalue}
                                     onchange={handleUpdatedStamp}></lightning-input>
 
@@ -46,6 +48,7 @@
                             </th>
                             <td>
                                 <lightning-input name="GST__c" field-name="GST__c" variant="label-hidden"
+                                
                                     data-id="GST__c" value={avDetails.getTaxalue}
                                     onchange={handleUpdatedGST}></lightning-input>
 
