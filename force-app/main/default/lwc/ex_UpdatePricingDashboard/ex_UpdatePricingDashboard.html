@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-09-2024
+  @last modified on  : 10-10-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -18,7 +18,7 @@
             <lightning-record-edit-form object-api-name="Booking__c">
                 <div class="box3">
                     <table class="">
-                        <tr>
+                        <!-- <tr>
                             <th>
                                 Agreement Value
                             </th>
@@ -53,7 +53,62 @@
                                     onchange={handleUpdatedGST}></lightning-input>
 
                             </td>
+                        </tr> -->
+                        <tr>
+                            <th>
+                                Agreement Value
+                            </th>
+                            <td>
+                                <lightning-input
+                                    type="number"  
+                                    step="1"      
+                                    name="Updated_Agreement_Value__c"
+                                    field-name="Updated_Agreement_Value__c"
+                                    variant="label-hidden"
+                                    value={avDetails.getAvvalue}
+                                    data-id="Updated_Agreement_Value__c"
+                                    max-length="20"
+                                    onchange={handleUpdatedAv}>
+                                </lightning-input>
+                            </td>
                         </tr>
+                        <tr>
+                            <th>
+                                Stamp Duty(%) :
+                            </th>
+                            <td>
+                                <lightning-input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    name="Stamp_Duty__c"
+                                    field-name="Stamp_Duty__c"
+                                    variant="label-hidden"
+                                    data-id="Stamp_Duty__c"
+                                    value={avDetails.getStampvalue}
+                                    onchange={handleUpdatedStamp}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                GST(%) :
+                            </th>
+                            <td>
+                                <lightning-input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    name="GST__c"
+                                    field-name="GST__c"
+                                    variant="label-hidden"
+                                    data-id="GST__c"
+                                    value={avDetails.getTaxalue}
+                                    onchange={handleUpdatedGST}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                        
                         <tr>
                             <th>
                                 Remarks

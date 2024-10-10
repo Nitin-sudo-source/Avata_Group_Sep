@@ -34,8 +34,8 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
 
     handleUpdatedAv(event){
         this.getUpdatedValue = event.detail.value;
+        //event.detail.value = this.avDetails.getAvvalue;
         console.log('You selected an handleUpdatedAv: ' + this.getUpdatedValue);
-        
         this.handlemodified();
     }
     handleUpdatedStamp(event){
@@ -75,7 +75,11 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     handleSave(){
     if(this.getRemarks == undefined){
         this.showToast('Error', 'Please Enter Remarks', 'error', 'dismissible');
-    }else{
+    // }if(!this.getUpdatedStampValue){
+    //     this.showToast('Error', 'Please Enter Valid Stamp Duty', 'error', 'dismissible');
+    // }if(!this.getUpdatedGST){
+    //     this.showToast('Error', 'Please Enter Valid GST %', 'error', 'dismissible');
+     }else{
         saveAV({recordId: this.recordId, updatedAVvalue: this.getModifiedData.getAvvalue,
             gstValue: this.getUpdatedGST, stampValue: this.getUpdatedStampValue,
              remarks:  this.getRemarks })
