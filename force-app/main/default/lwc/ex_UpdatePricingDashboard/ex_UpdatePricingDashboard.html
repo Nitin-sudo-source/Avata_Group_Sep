@@ -8,7 +8,7 @@
 <template>
 
 
-
+<lightning-card>
     <div class="box3">
         <div class="mains">
             <div class="main">
@@ -61,7 +61,7 @@
                             <td>
                                 <lightning-input
                                     type="number"  
-                                    step="1"      
+                                    step="0"      
                                     name="Updated_Agreement_Value__c"
                                     field-name="Updated_Agreement_Value__c"
                                     variant="label-hidden"
@@ -71,8 +71,7 @@
                                     onchange={handleUpdatedAv}>
                                 </lightning-input>
                             </td>
-                        </tr>
-                        <tr>
+                        
                             <th>
                                 Stamp Duty(%) :
                             </th>
@@ -86,6 +85,7 @@
                                     variant="label-hidden"
                                     data-id="Stamp_Duty__c"
                                     value={avDetails.getStampvalue}
+                                    disabled="true"
                                     onchange={handleUpdatedStamp}>
                                 </lightning-input>
                             </td>
@@ -107,11 +107,9 @@
                                     onchange={handleUpdatedGST}>
                                 </lightning-input>
                             </td>
-                        </tr>
                         
-                        <tr>
                             <th>
-                                Remarks
+                                Remarks 
                             </th>
                             <td>
                                 <lightning-input-field name="Remarks__c" field-name="Remarks__c" variant="label-hidden"
@@ -458,4 +456,6 @@
             </template>
         </div>
     </div>
+</lightning-card>
+
 </template>

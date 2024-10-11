@@ -40,6 +40,8 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     @track totalCarParkAmount = 0;
     @track totalDiscountAmount = 0;
 
+    @track isLoaded = false;
+
 
 
 
@@ -57,42 +59,86 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     }
 
     connectedCallback() {
-            const urlSearchParams = new URLSearchParams(window.location.search);
-            this.recordId = urlSearchParams.get("recordId");
-            if (this.recordId) {
-                this.getBookingInfo();
-            }
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        this.recordId = urlSearchParams.get("recordId");
+        if (this.recordId) {
+            this.getBookingInfo();
+        }
     }
 
-    getBookingInfo() {
-        getBookingInfo({ recordId: this.recordId })
+    async getBookingInfo() {
+        await getBookingInfo({ recordId: this.recordId })
             .then(data => {
                 console.log('getBookingInfo: ' + JSON.stringify(data));
                 if (data) {
                     this.booking = data;
-                    this.getPriceListMap();
-                    this.getPriceListGroupMap();
-                   
                 }
                 console.log('getBookingInfo: ' + JSON.stringify(this.booking));
-                
-            })
 
+            })
+        await this.getPriceListMap();
+        await this.getPriceListGroupMap();
+        await this.getAllPriceMap();
+
+    }
+
+    renderedCallback() {
+        if (this.isLoaded)
+            return;
+        const STYLE = document.createElement("style");
+        STYLE.innerText = `.uiModal--medium .modal-container{
+width: 100% !important;
+max-width: 95%;
+min-width: 480px;
+max-height:100%;
+min-height:480px;
+};`
+        this.template.querySelector('lightning-card').appendChild(STYLE);
+        this.isLoaded = true;
     }
 
     handleUpdatedAv(event) {
-        this.getUpdatedValue = event.detail.value;
-        //event.detail.value = this.avDetails.getAvvalue;
-        console.log('You selected an handleUpdatedAv: ' + this.getUpdatedValue);
-        this.handlemodified();
+        const value = event.target.value;
+        const decimalValue = parseFloat(value); // Converts the input to a float
+    
+        if (!isNaN(decimalValue)) {
+            this.getUpdatedValue = decimalValue; 
+            this.isQuotationModified = true;
+            this.handlemodified();
+        } else {
+            this.updatedAV = 0; // Or handle the error as needed
+        }
     }
-    handleUpdatedStamp(event) {
-        this.getUpdatedStampValue = event.detail.value;
-        console.log('You selected an getUpdatedStampValue: ' + this.getUpdatedStampValue);
-        this.handlemodified();
+    
+
+
+    // handleUpdatedAv(event) {
+    //     this.getUpdatedValue = event.detail.value;
+    //     // this.avDetails.getAvvalue = this.getUpdatedValue;
+    //     //event.detail.value = this.avDetails.getAvvalue;
+    //     console.log('You selected an handleUpdatedAv: ' + this.getUpdatedValue);
+       
+        
+    // }
+
+    handleUpdatedAv(event) {
+        const value = event.target.value;
+        const decimalValue = parseFloat(value); // Converts the input to a float
+    
+        if (!isNaN(decimalValue)) {
+            this.getUpdatedStampValue = decimalValue; 
+            this.isQuotationModified = true;
+            this.handlemodified();
+        } else {
+            this.getUpdatedStampValue = 0; // Or handle the error as needed
+        }
     }
+
+   
     handleUpdatedGST(event) {
         this.getUpdatedGST = event.detail.value;
+       // this.isQuotationModified = true;
+        // this.avDetails.getTaxalue = this.getUpdatedGST;
         console.log('You selected an handleUpdatedAv: ' + this.getUpdatedGST);
         this.handlemodified();
     }
@@ -102,27 +148,28 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     }
 
     handlemodified() {
+        //this.isQuotationModified = true;
         this.getAllPriceMap();
-       /* updateAVChangeDetails({ recordId: this.recordId, updatedAVvalue: this.getUpdatedValue, getUpdatedStampValue: this.getUpdatedStampValue, getUpdatedGST: this.getUpdatedGST })
-            .then((result) => {
-                console.log('result: ' + JSON.stringify(result));
-                if (result) {
-                    this.getModifiedData = result;
-                    if (this.getModifiedData.errorMsg !== null && this.getModifiedData.errorMsg !== '') {
-                        this.isError = true;
-                        this.isErrormsg = 'Please Check the default value for Stamp Duty & GST value on ' + this.avDetails.bookingName + ' OR Please Contact System Administrator';
-                    } else {
-                        this.getModifiedData = result;
-                    }
-                }
-            })
-            .catch((error) => {
-                this.error = error;
-            });*/
+        /* updateAVChangeDetails({ recordId: this.recordId, updatedAVvalue: this.getUpdatedValue, getUpdatedStampValue: this.getUpdatedStampValue, getUpdatedGST: this.getUpdatedGST })
+             .then((result) => {
+                 console.log('result: ' + JSON.stringify(result));
+                 if (result) {
+                     this.getModifiedData = result;
+                     if (this.getModifiedData.errorMsg !== null && this.getModifiedData.errorMsg !== '') {
+                         this.isError = true;
+                         this.isErrormsg = 'Please Check the default value for Stamp Duty & GST value on ' + this.avDetails.bookingName + ' OR Please Contact System Administrator';
+                     } else {
+                         this.getModifiedData = result;
+                     }
+                 }
+             })
+             .catch((error) => {
+                 this.error = error;
+             });*/
     }
 
-    getPriceListGroupMap() {
-        getPriceListGroupMapDetails({ uId: this.booking.Quotation__c })
+    async getPriceListGroupMap() {
+        await getPriceListGroupMapDetails({ uId: this.booking.Quotation__c })
             .then(data => {
                 console.log('getPriceListGroupMap: ' + JSON.stringify(data));
                 if (data) {
@@ -132,9 +179,9 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
             })
     }
 
-    getPriceListMap() {
-        alert('this.booking.Unit__c: '+this.booking.Quotation__c);
-        getPriceListMapDetails({ uId: this.booking.Quotation__c })
+    async getPriceListMap() {
+        //alert('this.booking.Unit__c: ' + this.booking.Quotation__c);
+        await getPriceListMapDetails({ uId: this.booking.Quotation__c })
             .then(data => {
                 if (data) {
                     console.log('priceListMap: ' + JSON.stringify(data));
@@ -152,16 +199,19 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
         if (this.priceListGroupMap && this.priceListMap) {
             console.log('this.priceListGroupMap: ' + JSON.stringify(this.priceListGroupMap));
             console.log('priceListMap ' + JSON.stringify(this.priceListMap));
-    
+
             try {
                 const data = await getAllPriceMapDetails({
                     uId: this.booking.Quotation__c,
+                    updatedAV: this.getUpdatedValue,
+                    updatedSDR: this.getUpdatedStampValue,
+                    updatedGST: this.getUpdatedGST,
                     priceListGroupMap: this.priceListGroupMap,
                     priceListMap: this.priceListMap,
                     carParkAmount: this.totalCarParkAmount,
                     discountAmount: this.totalDiscountAmount
                 });
-    
+
                 if (data) {
                     console.log('allPriceInfoMap: ' + JSON.stringify(data));
                     if (!this.isQuotationModified) {
@@ -174,14 +224,14 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
                     //this.getPaymentSchedule();
                 }
             } catch (error) {
-                console.log('error: '+JSON.stringify(error));
+                console.log('error: ' + JSON.stringify(error));
                 console.error('Error In getAllPriceMap: ', error);
             }
         } else {
             console.warn('priceListGroupMap or priceListMap is null. getAllPriceMap() will not be called.');
         }
     }
-    
+
 
     getAllPriceFormattedMap() {
         getAllPriceInfoFormattedMap({ allPriceInfoMap: this.allPriceInfoMap })
@@ -275,7 +325,8 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
             saveAV({
                 recordId: this.recordId, updatedAVvalue: this.getModifiedData.getAvvalue,
                 gstValue: this.getUpdatedGST, stampValue: this.getUpdatedStampValue,
-                remarks: this.getRemarks
+                remarks: this.getRemarks, priceListGroupMap: this.priceListGroupMap, priceListMap: this.priceListMap, 
+                allPriceOriginalInfoMap: this.allPriceOriginalInfoMap, allPriceInfoMap: this.allPriceInfoMap
             })
                 .then((result) => {
                     console.log('result: ' + result);
