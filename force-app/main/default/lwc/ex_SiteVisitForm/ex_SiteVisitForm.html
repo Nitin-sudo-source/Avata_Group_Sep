@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-04-2024
+  @last modified on  : 10-10-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -10,6 +10,9 @@
         <div class="loader"></div>
         <div class="wait-text">Please wait...</div>
     </div>
+
+
+    
     <div class="body slds-align_absolute-center">
         <!-- Start first page -->
         <template if:true={showFirstPage}>
@@ -17,7 +20,7 @@
                 <h1 class="form-title">Site Visit Form </h1>
 
 
-                <form class="slds-p-around_medium" style="position: relative;">
+                <form class="slds-p-around_medium">
                     <lightning-layout multiple-rows>
                         <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" style="width: 95%!important ;">
                             <label class="required-label">Select Project</label>
@@ -89,7 +92,7 @@
                     <section if:true={showValidationPopup} aria-describedby="dialog-body-id-4"
                         aria-labelledby="dialog-heading-id-2"
                         class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-                        style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+                        style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
                         <button
                             class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                             title="Close dialog">
@@ -147,7 +150,7 @@
                         <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
                             aria-labelledby="dialog-heading-id-3"
                             class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-                            style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+                            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
                             <button
                                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                                 title="Close dialog">
@@ -393,7 +396,7 @@
 
         <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
             class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
             <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">
@@ -541,7 +544,7 @@
             <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
                 aria-labelledby="dialog-heading-id-3" class="slds-popover slds-popover_error slds-nubbin_bottom-left"
                 role="dialog"
-                style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+                style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
                 <button
                     class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                     title="Close dialog">
@@ -711,7 +714,7 @@
 
         <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
             class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
             <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">
@@ -856,7 +859,7 @@
 
         <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
             class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
             <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">
@@ -1037,7 +1040,7 @@
 
         <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
             class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
             <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">

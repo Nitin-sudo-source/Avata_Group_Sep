@@ -731,9 +731,12 @@ export default class Ex_GenerateQuotation extends LightningElement {
                 console.log("cb : " + JSON.stringify(chargeBucket));
                 console.log("cb key : " + chargeBucket.key);
                 var modifiedAmountString = chargeBucket.value.filter(value => value.chargeName === 'Total')[0].modifiedAmountString;
+                var modifiedTaxString = chargeBucket.value.filter(value => value.chargeName === 'Total')[0].modifiedTaxString;
+                modifiedTaxString = modifiedTaxString.replace(/,/g, '').replace('/-', '');
                 modifiedAmountString = modifiedAmountString.replace(/,/g, '').replace('/-', '');
                 const modifiedAmount = parseFloat(modifiedAmountString);
-                updatedAllInValue += modifiedAmount;
+                const modifiedTax = parseFloat(modifiedTaxString);
+                updatedAllInValue += (modifiedAmount + modifiedTax);
                 console.log("modifiedAmountString : " + modifiedAmountString);
                 console.log("modifiedAmount : " + modifiedAmount);
                 console.log("updatedAllInValue : " + updatedAllInValue);
@@ -945,7 +948,8 @@ export default class Ex_GenerateQuotation extends LightningElement {
         if (validationErrorList.length === 0) {
             validateUpdatedPaymentScheduleDetails({ agSeqNumber: this.agSeqNumber, allPriceInfoMap: this.allPriceInfoMap, updatedPaymentMilestoneWrapperList: this.updatedPaymentMilestoneWrapperList })
                 .then(data => {
-                    if (data) {
+                    console.log('validationData: '+data);
+                    if (data != null) {
                         for (let i = 0; i < data.length; i++) {
                             validationErrorList.push(data[i]);
                         }
@@ -962,8 +966,14 @@ export default class Ex_GenerateQuotation extends LightningElement {
                             this.showErrorMessage('Error', errorMessage);
                             this.isSpinner = false;
                         }
-                    } else if (error) {
-                        console.error('Error In validatePaymentSchedule: ', error);
+                    // } else if (error) {
+                    //     console.log('error: '+JSON.stringify(error));
+                    //     console.error('Error In validatePaymentSchedule: ', error);
+                    }else{
+                        var successMsg = '';
+                        successMsg = 'Payment Schedule Updated Successfully';
+                        this.showErrorMessage('Error', successMsg);
+                        this.isSpinner = false;
                     }
                 })
         } else {
@@ -1077,6 +1087,9 @@ export default class Ex_GenerateQuotation extends LightningElement {
     showErrorMessage(type, message) {
         if (type === 'Error') {
             this.isValidationError = true;
+        }
+        if(type === 'success'){
+            this.isValidationError = false;
         }
         this.isSpinner = false;
         this.template.querySelector('c-custom-toast').showToast(type, message, 'utility:warning', 10000);

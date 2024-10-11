@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-07-2024
+  @last modified on  : 10-11-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -285,6 +285,8 @@
 													</template>
 													<template if:false={editPaymentScheduleMode}>
 														<lightning-input type="number" data-value-id={key.key}
+															 step="0.01"
+                                                             min="0"
 															data-index={index} value={d.Percentage_of_AV__c}
 															name="Percentage_of_AV__c" onblur={handleChange}>
 														</lightning-input>
@@ -607,7 +609,6 @@
 							</tbody>
 						</table>
 					</template>
-
 				</div>
 			</div>
 

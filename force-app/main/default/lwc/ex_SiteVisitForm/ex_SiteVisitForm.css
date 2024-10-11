@@ -68,7 +68,6 @@
   padding: 0px !important;
   /* background-image: url('/resource/svbg/SVbackground.jpg'); */
   /* display: flex; */
-  /* height: 130vh; */
   /* justify-content: center; */
   /* align-items: center; */
   /* background-color: #ececec; */
@@ -105,6 +104,9 @@
   margin: 0px 28px;
   border-radius: 10px;
   box-shadow: 5px 5px 10px grey;
+  position: relative;
+  height: 100vh;
+
 }
 
 
@@ -354,3 +356,27 @@ lightning-input-field{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
     }
+
+    /* Responsive styles for smaller mobile devices (up to 480px width) */
+@media screen and (max-width: 480px) {
+  .user-input-box label {
+    font-size: 12px; /* Smaller font size for very small screens */
+    margin: 3px; /* Reduce margin for better spacing */
+  }
+}
+
+/* Responsive styles for medium-sized mobile devices (up to 768px width) */
+@media screen and (max-width: 768px) {
+  .user-input-box label {
+    font-size: 13px; /* Slightly larger font size */
+    margin: 4px; /* Adjusted margin */
+  }
+}
+
+/* Responsive styles for larger mobile devices and small tablets (up to 1024px width) */
+@media screen and (max-width: 1024px) {
+  .user-input-box label {
+    font-size: 14px; /* Default font size */
+    margin: 5px; /* Default margin */
+  }
+}
