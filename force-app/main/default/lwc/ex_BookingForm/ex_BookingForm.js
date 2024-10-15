@@ -5,10 +5,13 @@ import getBookingWrapper from '@salesforce/apex/Ex_BookingFormController.getBook
 import ApplicantdocumentDetails from '@salesforce/apex/Ex_BookingFormController.ApplicantdocumentDetails';
 import createBookingRecord from '@salesforce/apex/Ex_BookingFormController.createBookingRecord';
 import getReceipts from '@salesforce/apex/Ex_BookingFormController.getReceipts';
+import getLegalEntityDetails from '@salesforce/apex/Ex_BookingFormController.getLegalEntityDetails';
+
 export default class Ex_BookingForm extends LightningElement {
 
 
     @track getReceiptData = [];
+    @track getLegalData = [];
 
     @api uId;
     @api oppId;
@@ -40,11 +43,32 @@ export default class Ex_BookingForm extends LightningElement {
         const urlSearchParams = new URLSearchParams(window.location.search);
         this.qId = urlSearchParams.get("recordId");
         this.getQuotationDetailsCall();
-       // this.getApplicantDoc();
+        this.getLegalEntityDetails();
         this.getReceiptWrapperMethod();
 
         //this.showCustomToast('success', 'This is a success message!', 5000000); // Shows for 5 seconds\
     }
+
+    getLegalEntityDetails() {
+        getLegalEntityDetails({ qId: this.qId })
+            .then(result => {
+                console.log('result: ' + JSON.stringify(result));
+                if (result != null) {
+                    this.getLegalData = result;
+                    console.log('Detail-1' + JSON.stringify(this.getLegalEntityDetails));
+                    this.error = undefined;
+                } else {
+                    this.error = error;
+                    this.getLegalEntityDetails = undefined;
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                this.quote = undefined;
+            })
+    }
+
+
 
 
     getApplicantDoc() {
@@ -114,7 +138,7 @@ export default class Ex_BookingForm extends LightningElement {
             .then(result => {
                 console.log('result: ' + JSON.stringify(result));
                 this.quote = result;
-                if(this.quote.Opportunity__c !== undefined){
+                if (this.quote.Opportunity__c !== undefined) {
                     this.oppId = this.quote.Opportunity__c;
                 }
                 this.getApplicantDoc();
@@ -140,25 +164,25 @@ export default class Ex_BookingForm extends LightningElement {
             });
     }
 
-   getReceiptWrapperMethod() {
-    getReceipts({})
-        .then((result) => {
-             if (result && result.length > 0) {
-                this.getReceiptData = result.map((item, index) => ({
-                    key: `Receipt ${index + 1}`,  // Unique key for each receipt
-                    rc: item                      // The receipt data from the result
-                }));
-            }
-        })
-        .catch((error) => {
-            console.error('Error fetching receipt data: ', error);
-        });
-}
+    getReceiptWrapperMethod() {
+        getReceipts({})
+            .then((result) => {
+                if (result && result.length > 0) {
+                    this.getReceiptData = result.map((item, index) => ({
+                        key: `Receipt ${index + 1}`,  // Unique key for each receipt
+                        rc: item                      // The receipt data from the result
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching receipt data: ', error);
+            });
+    }
 
-//    @wire(getReceipts)
-//     wiredReceipts({ error, data }) {
-        
-//     }
+    //    @wire(getReceipts)
+    //     wiredReceipts({ error, data }) {
+
+    //     }
     addReceipt() {
         console.log('Active tab value:', this.activeTabValue);
         const newReceipt = {
@@ -176,23 +200,23 @@ export default class Ex_BookingForm extends LightningElement {
 
         if (key === 'Receipt 1') {
             alert('Receipt 1 Cannot be Removed.');
-            return ;
-        }else{
+            return;
+        } else {
             for (var i = 0; i < this.getReceiptData.length; i++) {
-            if (this.getReceiptData[i].key == key) {
-                //alert('FOund')
-                this.getReceiptData.splice(tabIndexToRemove, 1);
-                this.getReceiptData.forEach((receipt, index) => {
-                    receipt.key = `Receipt ${index + 1}`;
-                    receipt.rc = {}
-                });
-                this.getReceiptData = [...this.getReceiptData];
-                console.log(JSON.stringify(this.getReceiptData));
+                if (this.getReceiptData[i].key == key) {
+                    //alert('FOund')
+                    this.getReceiptData.splice(tabIndexToRemove, 1);
+                    this.getReceiptData.forEach((receipt, index) => {
+                        receipt.key = `Receipt ${index + 1}`;
+                        receipt.rc = {}
+                    });
+                    this.getReceiptData = [...this.getReceiptData];
+                    console.log(JSON.stringify(this.getReceiptData));
+                }
             }
-        }
 
         }
-        
+
     }
 
     handleReceiptInfo(event) {
@@ -205,7 +229,7 @@ export default class Ex_BookingForm extends LightningElement {
             }
             return item;
         });
-        console.log('getReceiptData: '+JSON.stringify(this.getReceiptData));
+        console.log('getReceiptData: ' + JSON.stringify(this.getReceiptData));
     }
 
     handleBookingInfo(event) {
@@ -312,24 +336,24 @@ export default class Ex_BookingForm extends LightningElement {
             const tabKey = event.currentTarget.dataset.key;
             const fieldApiName = event.target.fieldName;
             const fieldValue = event.target.value;
-            
-          //  console.log('fieldApiName::'+fieldApiName +' fieldValue:: '+ fieldValue);
+
+            //  console.log('fieldApiName::'+fieldApiName +' fieldValue:: '+ fieldValue);
             const applicantIndex = this.getApplicantData.findIndex(item => item.key === tabKey);
             if (applicantIndex !== -1) {
                 const updatedApplicant = { ...this.getApplicantData[applicantIndex] };
                 updatedApplicant.ap = { ...updatedApplicant.ap, [fieldApiName]: fieldValue };
-                 console.log('updatedApplicant::'+JSON.stringify(updatedApplicant));
+                console.log('updatedApplicant::' + JSON.stringify(updatedApplicant));
                 if (updatedApplicant.ap.Mailing_Address_Same_as_PermanentAddress__c === true) {
-                     
+
                     updatedApplicant.ap.Mailing_Address__c = updatedApplicant.ap.Permanent_Address__c;
-                    updatedApplicant.ap.Mailing_Country__c= updatedApplicant.ap.Country__c ;
+                    updatedApplicant.ap.Mailing_Country__c = updatedApplicant.ap.Country__c;
                     updatedApplicant.ap.Mailing_State__c = updatedApplicant.ap.State__c;
                     updatedApplicant.ap.Mailing_City__c = updatedApplicant.ap.City__c;
                     updatedApplicant.ap.Mailing_Pincode__c = updatedApplicant.ap.PIN__c;
                 }
                 this.getApplicantData.splice(applicantIndex, 1, updatedApplicant);
             }
-            console.log('Applicant Data::'+JSON.stringify(this.getApplicantData));
+            console.log('Applicant Data::' + JSON.stringify(this.getApplicantData));
             if (fieldValue && fieldApiName === 'Document_Upload_Required__c') {
                 this.callDocument(tabKey, fieldValue);
             } else if (fieldApiName === 'PAN_Number__c') {
@@ -611,8 +635,8 @@ export default class Ex_BookingForm extends LightningElement {
             this.showCustomToast('error', 'Please Enter Mobile Number');
             return;
         } //else if (!this.isDOBValid()) {
-           // this.showCustomToast('error', 'Please Enter Date of Birth');
-            //return;
+        // this.showCustomToast('error', 'Please Enter Date of Birth');
+        //return;
         //} 
         else if (!this.isTypeOfApplicantValid()) {
             this.showCustomToast('error', 'Please Enter Type of Applicant');
@@ -629,34 +653,35 @@ export default class Ex_BookingForm extends LightningElement {
         } else if (this.bkWrapper.bk.Booking_Date__c == null) {
             this.showCustomToast('error', 'Please Enter Booking Date');
             return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Mode_Of_Payment__c == null) {
-        //     this.showCustomToast('error', 'Please Select Payment Mode');
-        //     return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Payment_Type__c == null) {
-        //     this.showCustomToast('error', 'Please Select Payment Type');
-        //     return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Payment_Status__c == null) {
-        //     this.showCustomToast('error', 'Please Select Payment Status');
-        //     return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Receipt_Type__c == null) {
-        //     this.showCustomToast('error', 'Please Select Receipt Type');
-        //     return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Transaction_ID__c == null) {
-        //     this.showCustomToast('error', 'Please Enter Transaction ID');
-        //     return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Receipt_Date__c == null) {
-        //     this.showCustomToast('error', 'Please Enter Receipt Date');
-        //     return;
-        // } else if (this.rcWrapper && this.rcWrapper.rc.Amount__c == null) {
-        //     this.showCustomToast('error', 'Please Enter Receipt Amount');
-        //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Mode_Of_Payment__c == null) {
+            //     this.showCustomToast('error', 'Please Select Payment Mode');
+            //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Payment_Type__c == null) {
+            //     this.showCustomToast('error', 'Please Select Payment Type');
+            //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Payment_Status__c == null) {
+            //     this.showCustomToast('error', 'Please Select Payment Status');
+            //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Receipt_Type__c == null) {
+            //     this.showCustomToast('error', 'Please Select Receipt Type');
+            //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Transaction_ID__c == null) {
+            //     this.showCustomToast('error', 'Please Enter Transaction ID');
+            //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Receipt_Date__c == null) {
+            //     this.showCustomToast('error', 'Please Enter Receipt Date');
+            //     return;
+            // } else if (this.rcWrapper && this.rcWrapper.rc.Amount__c == null) {
+            //     this.showCustomToast('error', 'Please Enter Receipt Amount');
+            //     return;
         } else {
             this.isSpinner = true;
             createBookingRecord({
                 bkWrapper: this.bkWrapper,
                 applicantData: JSON.stringify(this.getApplicantData),
                 quotationDetails: this.quote,
-                receiptData: JSON.stringify(this.getReceiptData)
+                receiptData: JSON.stringify(this.getReceiptData),
+                bookingAccount: this.getLegalEntityDetails,
             })
                 .then(result => {
                     console.log('Booking: ', result);

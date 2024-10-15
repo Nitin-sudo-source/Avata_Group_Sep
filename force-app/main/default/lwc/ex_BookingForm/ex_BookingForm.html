@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-15-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <div if:true={isSpinner} class="spinner-container">
         <div class="loader"></div>
@@ -194,6 +201,68 @@
                         </table>
                     </lightning-record-edit-form>
                 </template>
+
+                <table class="Table1Css" style="font-size:10px;">
+                    <template for:each={getLegalData} for:item="le">
+                        <tr key={le.Id}>
+    
+                            <th colspan="4" style="">
+                                Bank Account Details
+                            </th>
+                        </tr>
+                        <tr key={le.Id}>
+                            <th style="text-align:left;">Account Name (Flat Cost)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Account_Name_Flat_Cost__c}></lightning-formatted-text>
+                            </td>
+                            <th style="text-align:left;">Account Name (Tax)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Account_Name_Tax__c}></lightning-formatted-text>
+                            </td>
+                        </tr>
+                        <tr key={le.Id}>
+                            <th style="text-align:left;">Account Number(Flat Cost) </th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Account_Number_Flat_Cost__c}></lightning-formatted-text>
+                            </td>
+                            <th style="text-align:left;">Account Number(Tax)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Account_Number_Tax__c}></lightning-formatted-text>
+                            </td>
+                        </tr>
+                        <tr key={le.Id}>
+                            <th style="text-align:left;">Bank Name(Flat Cost)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Bank_Name_Flat_Cost__c}></lightning-formatted-text>
+                            </td>
+                            <th style="text-align:left;">Bank Name(Tax)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Bank_Name_Tax__c}></lightning-formatted-text>
+                            </td>
+                        </tr>
+                        <tr key={le.Id}>
+                            <th style="text-align:left;">IFSC Code(Flat Cost)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.IFSC_Code_Flat_Cost__c}></lightning-formatted-text>
+                            </td>
+                            <th style="text-align:left;">IFSC Code(Tax)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.IFSC_Code_Tax__c}></lightning-formatted-text>
+                            </td>
+                        </tr>
+                        <tr key={le.Id}>
+                            <th style="text-align:left;">Branch Name (Flat Cost)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Branch_Name_Flat_Cost__c}></lightning-formatted-text>
+                            </td>
+                            <th style="text-align:left;">Branch Name (Tax)</th>
+                            <td style="text-align:left;">
+                                <lightning-formatted-text value={le.Branch_Name_Tax__c}></lightning-formatted-text>
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+    
 
                 <table class="Table1Css">
                     <tr>
