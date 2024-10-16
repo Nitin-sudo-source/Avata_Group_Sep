@@ -40,7 +40,27 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
     @track emailArray = [];
     @track allArray = [];
     changes = {};
+
+    @track agreementValue;
+    @track agreementValueTax;
+    @track agreementTotal; // New variable for the sum of amount and tax
+
+    @track SDRValue;
+    @track SDRTax;
+    @track SDRTotal; // New variable for the sum of amount and tax
+
+    @track OCValue;
+    @track OCTax;
+    @track OCTotal; 
+
+    @track totalPrice = 0;
+    @track totalPriceFormatted = '';
+
     
+    
+
+
+
     // @api showError = false;
 
     @wire(getApplicants, { recId: '$recordId' })
@@ -49,44 +69,136 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
             this.applicants = data.map((applicant, index) => {
                 return { ...applicant, displayIndex: index + 1 };
             });
-            console.log('this.applicants::'+JSON.stringify(this.applicants));
+            console.log('this.applicants::' + JSON.stringify(this.applicants));
         } else if (error) {
             this.error = error;
             console.log('this.error is::' + JSON.stringify(this.error));
         }
     }
 
-    viewDocument(event){
+    viewDocument(event) {
         const appId = event.target.dataset.id;
-        console.log('appId is::'+JSON.stringify(appId));
-        const docType = event.target.dataset.docType;   
+        console.log('appId is::' + JSON.stringify(appId));
+        const docType = event.target.dataset.docType;
         console.log('docType is::' + JSON.stringify(docType));
 
-        if(appId != null){
-            getApplicantDocuments({appId : appId})
-            .then((data)=>{
-                this.docData = data;
-                console.log('this.docData::'+JSON.stringify(this.docData));
-                const filteredDocs = this.docData.filter(docWrapper => docWrapper.documentType === docType);
-                
-                if (filteredDocs && filteredDocs.length > 0) {
-                    filteredDocs.forEach((docWrapper, index) => {
-                        setTimeout(() => {
-                            window.open(`/servlet/servlet.FileDownload?file=${docWrapper.attachment.Id}`, '_blank');
-                        }); //index * 500); // Adding a 500ms delay between each document opening
-                    });
-                } else {
-                    console.error('No attachments found for the document type');
-                }
-            })
-            .catch((error)=>{
-                this.error = error;
-                console.log('this.error in document is::'+JSON.stringify(this.error));
-            })
+        if (appId != null) {
+            getApplicantDocuments({ appId: appId })
+                .then((data) => {
+                    this.docData = data;
+                    console.log('this.docData::' + JSON.stringify(this.docData));
+                    const filteredDocs = this.docData.filter(docWrapper => docWrapper.documentType === docType);
+
+                    if (filteredDocs && filteredDocs.length > 0) {
+                        filteredDocs.forEach((docWrapper, index) => {
+                            setTimeout(() => {
+                                window.open(`/servlet/servlet.FileDownload?file=${docWrapper.attachment.Id}`, '_blank');
+                            }); //index * 500); // Adding a 500ms delay between each document opening
+                        });
+                    } else {
+                        console.error('No attachments found for the document type');
+                    }
+                })
+                .catch((error) => {
+                    this.error = error;
+                    console.log('this.error in document is::' + JSON.stringify(this.error));
+                })
         }
-        
+
     }
 
+
+    // @wire(getQuotationDetails, { recId: '$recordId' })
+    // getQuotationData({ data, error }) {
+    //     if (data) {
+    //         console.log('data is::' + JSON.stringify(data));
+    //         this.paymentScheme = data[0].Payment_Scheme__r.Name;
+    //         this.paymentSchemeId = data[0].Payment_Scheme__c;
+    //         this.tower = data[0].Tower__r.Name;
+    //         this.unit = data[0].Unit__r.Name;
+
+    //         if(String.isNotBlank(quote.Quotation_Status__c) && (quote.Quotation_Status__c.equalsIgnoreCase('Valid') || quote.Quotation_Status__c.equalsIgnoreCase('Approved'))) {
+    //             for(Integer i = 1; i <= 3; i++) {
+    //                 if(String.isNotBlank((String)quote.get('Charge_Bucket_'+i+'__c')) && ((String)quote.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
+    //                     agreementValue = (Decimal)quote.get('Charge_Bucket_'+i+'_Amount__c');
+    //                     agreementValueTax = (Decimal)quote.get('Charge_Bucket_'+i+'_Total_Tax__c');
+    //                 }
+    //                 if(String.isNotBlank((String)quote.get('Charge_Bucket_'+i+'__c')) && ((String)quote.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Statutory Charges')) {
+    //                     SDRValue = (Decimal)quote.get('Charge_Bucket_'+i+'_Amount__c');
+    //                     SDRTax = (Decimal)quote.get('Charge_Bucket_'+i+'_Total_Tax__c');
+    //                 }
+    //                  if(String.isNotBlank((String)quote.get('Charge_Bucket_'+i+'__c')) && ((String)quote.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Other Charges')) {
+    //                     OCValue = (Decimal)quote.get('Charge_Bucket_'+i+'_Amount__c');
+    //                     OCTax = (Decimal)quote.get('Charge_Bucket_'+i+'_Total_Tax__c');
+    //                 }
+    //             }
+    //         }
+
+    //         this.agrValue1 = data[0].Agreement_Value1__c;
+    //         if(this.agrValue1 != null || this.agrValue1 != undefined){
+    //             this.agrValue = this.agrValue1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.sdrValue1 = data[0].SDR__c;
+    //         if(this.sdrValue1 != null || this.sdrValue1 != undefined){
+    //             this.sdrValue = this.sdrValue1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.otherCharges1 = data[0].Other_Charges__c;
+    //         if(this.otherCharges1 != null || this.otherCharges1 != undefined){
+    //             this.otherCharges = this.otherCharges1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.agrGstValue1 = data[0].GST_on_Agreement_Value__c;
+    //         if(this.agrGstValue1 != null || this.agrGstValue1 != undefined){
+    //             this.agrGstValue = this.agrGstValue1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.totalAgrValue1 = data[0].Total_Agreement_Value__c;
+    //         if(this.totalAgrValue1 != null || this.totalAgrValue1 != undefined){
+    //             this.totalAgrValue = this.totalAgrValue1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.otherGstValue1 = data[0].GST_on_Other_Charges__c;
+    //         if(this.otherGstValue1 != null || this.otherGstValue1 != undefined){
+    //             this.otherGstValue = this.otherGstValue1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.totalOtherValue1 = data[0].Total_Other_Charges__c;
+    //         if(this.totalOtherValue1 != null || this.totalOtherValue1 != undefined){
+    //             this.totalOtherValue = this.totalOtherValue1.toLocaleString('en-IN') + '/-';
+    //         }
+
+    //         this.carPark1 = data[0].Total_Car_Park_Amount__c;
+    //         if(this.carPark1 != null || this.carPark1 != undefined){
+    //             this.carPark = this.carPark1.toLocaleString('en-IN') + '/-';
+    //         }
+
+
+    //         this.deviation = data[0].Payment_Schedule_Deviation__c;
+    //         this.carpet = data[0].Unit__r.Carpet_Area__c;
+    //         this.saleable = data[0].Unit__r.Saleable_Area__c;
+    //         console.log('this.unit is::' + this.unit);
+    //         if (data[0].Total_Cost_of_Unit__c != null) {
+    //             this.unitVal = data[0].Total_Cost_of_Unit__c;
+    //             this.unitValue = this.unitVal.toLocaleString('en-IN') + '/-';
+    //         } else {
+    //             this.unitValue = 0;
+    //         }
+    //         console.log('this.unitValue is::' + this.unitValue);
+    //         if (data[0].Booking__r.Agreement_Value__c != null) {
+    //             this.agrVal = data[0].Booking__r.Agreement_Value__c;
+    //             this.agreementValue = this.agrVal.toLocaleString('en-IN') + '/-';
+    //         } else {
+    //             this.agreementValue = 0;
+    //         }
+    //         console.log('this.agreementValue is::' + this.agreementValue);
+
+    //     } else if (error) {
+    //         this.error = error;
+    //         console.log('this.error is::' + JSON.stringify(this.error));
+    //     }
+    // }
 
     @wire(getQuotationDetails, { recId: '$recordId' })
     getQuotationData({ data, error }) {
@@ -96,76 +208,91 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
             this.paymentSchemeId = data[0].Payment_Scheme__c;
             this.tower = data[0].Tower__r.Name;
             this.unit = data[0].Unit__r.Name;
-            
-            this.agrValue1 = data[0].Agreement_Value1__c;
-            if(this.agrValue1 != null || this.agrValue1 != undefined){
-                this.agrValue = this.agrValue1.toLocaleString('en-IN') + '/-';
-            }
-            
-            this.sdrValue1 = data[0].SDR__c;
-            if(this.sdrValue1 != null || this.sdrValue1 != undefined){
-                this.sdrValue = this.sdrValue1.toLocaleString('en-IN') + '/-';
-            }
-            
-            this.otherCharges1 = data[0].Other_Charges__c;
-            if(this.otherCharges1 != null || this.otherCharges1 != undefined){
-                this.otherCharges = this.otherCharges1.toLocaleString('en-IN') + '/-';
-            }
-            
-            this.agrGstValue1 = data[0].GST_on_Agreement_Value__c;
-            if(this.agrGstValue1 != null || this.agrGstValue1 != undefined){
-                this.agrGstValue = this.agrGstValue1.toLocaleString('en-IN') + '/-';
-            }
-            
-            this.totalAgrValue1 = data[0].Total_Agreement_Value__c;
-            if(this.totalAgrValue1 != null || this.totalAgrValue1 != undefined){
-                this.totalAgrValue = this.totalAgrValue1.toLocaleString('en-IN') + '/-';
-            }
-            
-            this.otherGstValue1 = data[0].GST_on_Other_Charges__c;
-            if(this.otherGstValue1 != null || this.otherGstValue1 != undefined){
-                this.otherGstValue = this.otherGstValue1.toLocaleString('en-IN') + '/-';
-            }
-            
-            this.totalOtherValue1 = data[0].Total_Other_Charges__c;
-            if(this.totalOtherValue1 != null || this.totalOtherValue1 != undefined){
-                this.totalOtherValue = this.totalOtherValue1.toLocaleString('en-IN') + '/-';
-            }
 
-            this.carPark1 = data[0].Total_Car_Park_Amount__c;
-            if(this.carPark1 != null || this.carPark1 != undefined){
-                this.carPark = this.carPark1.toLocaleString('en-IN') + '/-';
-            }
-            
+           // Handle quotation status
+if (data[0].Quotation_Status__c && 
+    (data[0].Quotation_Status__c.toLowerCase() === 'valid' || 
+    data[0].Quotation_Status__c.toLowerCase() === 'approved')) {
+    
+    for (let i = 1; i <= 3; i++) {
+        const chargeBucket = data[0][`Charge_Bucket_${i}__c`];
+        const chargeAmount = data[0][`Charge_Bucket_${i}_Amount__c`];
+        const totalTax = data[0][`Charge_Bucket_${i}_Total_Tax__c`];
 
-            this.deviation = data[0].Payment_Schedule_Deviation__c;
-            this.carpet = data[0].Unit__r.Carpet_Area__c;
+        console.log(`Processing Charge_Bucket_${i}:`, chargeBucket);
+        console.log(`Charge Amount for Charge_Bucket_${i}:`, chargeAmount);
+        console.log(`Total Tax for Charge_Bucket_${i}:`, totalTax);
+
+        if (chargeBucket) {
+            if (chargeBucket.toLowerCase() === 'agreement value') {
+                this.agreementValue = chargeAmount ? chargeAmount.toLocaleString('en-IN') + '/-' : '0/-';
+                this.agreementValueTax = totalTax ? totalTax.toLocaleString('en-IN') + '/-' : '0/-';
+                this.agreementTotal = chargeAmount ? 
+                                      (chargeAmount + totalTax).toLocaleString('en-IN') + '/-' : '0/-';
+                                      totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
+
+                console.log(`Formatted Agreement Value:`, this.agreementValue);
+                console.log(`Formatted Agreement Value Tax:`, this.agreementValueTax);
+                console.log(`Formatted Agreement Total:`, this.agreementTotal);
+            } else if (chargeBucket.toLowerCase() === 'statutory charges') {
+                this.SDRValue = chargeAmount ? chargeAmount.toLocaleString('en-IN') + '/-' : '0/-';
+                this.SDRTax = totalTax ? totalTax.toLocaleString('en-IN') + '/-' : '0/-';
+                this.SDRTotal = chargeAmount? 
+                                (chargeAmount + totalTax).toLocaleString('en-IN') + '/-' : '0/-';
+                                totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
+
+                console.log(`Formatted SDR Value:`, this.SDRValue);
+                console.log(`Formatted SDR Tax:`, this.SDRTax);
+                console.log(`Formatted SDR Total:`, this.SDRTotal);
+            } else if (chargeBucket.toLowerCase() === 'other charges') {
+                this.OCValue = chargeAmount ? chargeAmount.toLocaleString('en-IN') + '/-' : '0/-';
+                this.OCTax = totalTax ? totalTax.toLocaleString('en-IN') + '/-' : '0/-';
+                this.OCTotal = chargeAmount  ? 
+                               (chargeAmount + totalTax).toLocaleString('en-IN') + '/-' : '0/-';
+                               totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
+
+                console.log(`Formatted Other Charges Value:`, this.OCValue);
+                console.log(`Formatted Other Charges Tax:`, this.OCTax);
+                console.log(`Formatted Other Charges Total:`, this.OCTotal);
+            }
+        }
+    }
+}
+
+this.totalPriceFormatted = totalPrice ? totalPrice.toLocaleString('en-IN') + '/-' : '0/-';
+console.log(`Total Price of all Charges:`, this.totalPriceFormatted);
+
+
+this.carPark1 = data[0].Car_Park_Required_Count__c;
+        if(this.carPark1 != null || this.carPark1 != undefined){
+            this.carPark = this.carPark1.toLocaleString('en-IN') + '/-';
+        }
+
+
+
+
+
+            //this.deviation = data[0].Payment_Schedule_Deviation__c;
+            this.carpet = data[0].Unit__r.Total_carpet_Sq_Ft__c;
             this.saleable = data[0].Unit__r.Saleable_Area__c;
-            console.log('this.unit is::' + this.unit);
-            if (data[0].Total_Cost_of_Unit__c != null) {
-                this.unitVal = data[0].Total_Cost_of_Unit__c;
-                this.unitValue = this.unitVal.toLocaleString('en-IN') + '/-';
-            } else {
-                this.unitValue = 0;
-            }
-            console.log('this.unitValue is::' + this.unitValue);
-            if (data[0].Booking__r.Agreement_Value__c != null) {
-                this.agrVal = data[0].Booking__r.Agreement_Value__c;
-                this.agreementValue = this.agrVal.toLocaleString('en-IN') + '/-';
-            } else {
-                this.agreementValue = 0;
-            }
-            console.log('this.agreementValue is::' + this.agreementValue);
 
+            console.log('this.unit is::' + this.unit);
+            console.log('this.unitValue is::' + this.unitValue);
+            console.log('this.agreementValue is::' + this.agreementValue);
         } else if (error) {
             this.error = error;
             console.log('this.error is::' + JSON.stringify(this.error));
         }
     }
 
+    getFieldValue(data, field) {
+        return field.split('.').reduce((o, key) => (o || {})[key], data);
+    }
+
+
     @wire(getTokenAmount, ({ recId: '$recordId' })) getToken({ data, error }) {
         if (data) {
-            console.log('receipt data : ',data);
+            console.log('receipt data : ', data);
             this.tkamt = data;
             this.token = this.tkamt.toLocaleString('en-IN') + '/-';
             console.log('this.token is::' + this.token);
@@ -178,11 +305,11 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
     @wire(getSourceDetails, ({ recId: '$recordId' })) getSource({ data, error }) {
         if (data) {
             console.log('source data is::' + JSON.stringify(data));
-            this.sourceDetails = data[0].Master_Source__c;
+            this.sourceDetails = data[0].Source__c;
             console.log('this.sourceDetails is::' + this.sourceDetails);
-            this.isConflict = data[0].Is_CP_Conflict__c;
-            
-            if (this.sourceDetails == 'Channel Partner' && this.isConflict == false) {
+           // this.isConflict = data[0].Is_CP_Conflict__c;
+
+            if (this.sourceDetails == 'Channel Partner') {
                 if (data[0].First_CP__r.Name != null || data[0].First_CP__r.Name != undefined || data[0].First_CP__r.Name != '') {
                     this.cp1 = data[0].First_CP__r.Name;
                     console.log('this.cp1 is::' + this.cp1);
@@ -191,7 +318,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
                 this.showConflict = false;
                 this.showReference = false;
                 this.showSource = false;
-            }else if(this.sourceDetails == 'Channel Partner' && this.isConflict == true){
+            } else if (this.sourceDetails == 'Channel Partner') {
                 if (data[0].Is_CP_Conflict__c != null || data[0].Is_CP_Conflict__c != undefined || data[0].Is_CP_Conflict__c != '') {
                     this.isConflict = data[0].Is_CP_Conflict__c;
                     console.log('this.isConflict is::' + this.isConflict);
@@ -205,27 +332,27 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
                 //     console.log('this.cp2 is::' + this.cp2);
                 // }
                 if (data[0].Second_CP__r && data[0].Second_CP__r.Name) {
-                this.cp2 = data[0].Second_CP__r.Name;
-                console.log('this.cp2 is::' + this.cp2);
+                    this.cp2 = data[0].Second_CP__r.Name;
+                    console.log('this.cp2 is::' + this.cp2);
                 }
                 this.showConflict = true;
                 this.showCP = false;
                 this.showReference = false;
                 this.showSource = false;
-            }else if(this.sourceDetails == 'Reference'){
+            } else if (this.sourceDetails == 'Reference') {
                 // if (data[0].Referrer_Name__r.Name != null || data[0].Referrer_Name__r.Name != undefined || data[0].Referrer_Name__r.Name != '')  {
                 //     this.refer = data[0].Referrer_Name__r.Name;
                 //     console.log('this.refer is::' + this.refer);
                 // }
                 if (data[0].Referrer_Name__r && data[0].Referrer_Name__r.Name) {
-                this.refer = data[0].Referrer_Name__r.Name;
-                console.log('this.cp2 is::' + this.cp2);
+                    this.refer = data[0].Referrer_Name__r.Name;
+                    console.log('this.cp2 is::' + this.cp2);
                 }
                 this.showReference = true;
                 this.showCP = false;
                 this.showConflict = false;
                 this.showSource = false;
-            }else{
+            } else {
                 this.showSource = true;
                 this.showReference = false;
                 this.showCP = false;
@@ -234,7 +361,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
         }
     }
 
-    @wire(getRejectedChecklist, ({ recId: '$recordId' })) 
+    @wire(getRejectedChecklist, ({ recId: '$recordId' }))
     getRejectedChecklistData({ data, error }) {
         if (data) {
             console.log('getRejectedChecklist : ', JSON.stringify(data));
@@ -253,8 +380,8 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
                     sectionName: section,
                     items: groupedData[section]
                 }));
-                console.log('this.groupedRejectedChecklist : ',JSON.stringify(this.groupedRejectedChecklist));
-                
+                console.log('this.groupedRejectedChecklist : ', JSON.stringify(this.groupedRejectedChecklist));
+
                 this.showRejectedChecklist = true;
                 //this.showError = false; 
             } else {
@@ -293,9 +420,9 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
         let record = this.newList.find(data => data.Id === checklistId);
         // console.log('record found .: ', JSON.stringify(record));
 
-        if(record){
+        if (record) {
             record.Action__c = actionValue;
-        }else {
+        } else {
             this.newList.push({ ...item, Action__c: actionValue });
         }
 
@@ -303,47 +430,17 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
 
 
         this.changes[checklistId] = actionValue;
-        console.log('OUTPUT : ',this.changes[checklistId]);
-        console.log('this.changes : ',JSON.stringify(this.changes));        
+        console.log('OUTPUT : ', this.changes[checklistId]);
+        console.log('this.changes : ', JSON.stringify(this.changes));
 
         // console.log('Updated groupedRejectedChecklist: ', JSON.stringify(this.groupedRejectedChecklist));
     }
-
-    /*updateAccount(){
-
-        const validActions = Object.values(this.changes).every(action => action === 'Accept' || action === 'Reject');
-        if (!validActions) {
-            const evt = new ShowToastEvent({
-                title: 'Error',
-                message: 'All actions should be either "Accept" or "Reject".',
-                variant: 'error',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(evt);
-            return;
-        }
-
-        const promises = Object.keys(this.changes).map(checklistId => {
-            return updateChecklistAction({ checklistId, actionValue: this.changes[checklistId] });
-        });
-
-        Promise.all(promises)
-        .then(() => {
-            console.log('All records updated successfully');
-            // Clear changes after saving
-            this.changes = {};
-            this.navigateToRecordPage();
-        })
-        .catch(error => {
-            console.error('Error updating records: ', error);
-        });
-    }*/
 
     updateAccount() {
         // Check if all actions are either 'Accept' or 'Reject' within each section
         const allValidActions = this.newList.every(data => data.Action__c === 'Accept' || data.Action__c === 'Reject');
         // console.log('All records have valid actions:', allValidActions);
-        
+
         if (!allValidActions) {
             const evt = new ShowToastEvent({
                 title: 'Error',
@@ -356,7 +453,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
         }
 
         // Send the groupedRejectedChecklist to the Apex method
-        updateChecklistAction({ bcList: this.newList})
+        updateChecklistAction({ bcList: this.newList })
             .then(() => {
                 console.log('All records updated successfully');
                 // Clear changes after saving
@@ -560,7 +657,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
 
     }
 
-    
+
 
 
     handlePayment(evt) {
@@ -577,13 +674,13 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
 
     handleSubmit() {
         let isValid = true;
-        console.log('isValid',isValid);
-        console.log('OUTPUT : ',isValid);
+        console.log('isValid', isValid);
+        console.log('OUTPUT : ', isValid);
         let inputFields = this.template.querySelectorAll('.validate');
-        console.log('OUTPUT : ',JSON.stringify(inputFields));
+        console.log('OUTPUT : ', JSON.stringify(inputFields));
 
         inputFields.forEach(inputField => {
-            if(!inputField.reportValidity()) {
+            if (!inputField.reportValidity()) {
                 //inputField.reportValidity();
                 isValid = false;
                 const event = new ShowToastEvent({
@@ -594,37 +691,21 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
                 this.dispatchEvent(event);
             }
         });
-        if(isValid == true){
+        if (isValid == true) {
             save({ bChecklist: this.allArray })
-            .then(result => {
-                this.result = result;
-                console.log('result : ', JSON.stringify(this.result));
-                if(this.result == 'Record insert successfully'){
-                    this.navigateToRecordPage();
-                }
-            })
-            .catch((error)=>{
-                this.error = error;
-                console.log('this.error is::'+JSON.stringify(this.error));
-            })
+                .then(result => {
+                    this.result = result;
+                    console.log('result : ', JSON.stringify(this.result));
+                    if (this.result == 'Record insert successfully') {
+                        this.navigateToRecordPage();
+                    }
+                })
+                .catch((error) => {
+                    this.error = error;
+                    console.log('this.error is::' + JSON.stringify(this.error));
+                })
         }
         return isValid;
-        
-
-        /*if (this.allArray.length > 0) {
-            save({ bChecklist: this.allArray })
-            .then(result => {
-                this.result = result;
-                console.log('result : ', JSON.stringify(this.result));
-                if(this.result == 'Record insert successfully'){
-                    this.navigateToRecordPage();
-                }
-            })
-            .catch((error)=>{
-                this.error = error;
-                console.log('this.error is::'+JSON.stringify(this.error));
-            })
-        }*/
     }
 
     navigateToRecordPage() {
