@@ -55,7 +55,7 @@ export default class Ex_BookingForm extends LightningElement {
                 console.log('result: ' + JSON.stringify(result));
                 if (result != null) {
                     this.getLegalData = result;
-                    console.log('Detail-1' + JSON.stringify(this.getLegalEntityDetails));
+                    console.log('Detail-1' + JSON.stringify(this.getLegalData));
                     this.error = undefined;
                 } else {
                     this.error = error;
@@ -624,7 +624,9 @@ export default class Ex_BookingForm extends LightningElement {
         // alert('bkWrapper: '+JSON.stringify(this.bkWrapper));
         // alert('applicantData: '+ JSON.stringify(this.getApplicantData))
         // alert('Quotation: '+ JSON.stringify(this.quote))
-        // alert('LegalEntity: '+ JSON.stringify (this.testData));
+        // alert('LegalEntity: '+ JSON.stringify (this.getLegalData));
+        // alert('getReceiptData: '+ JSON.stringify(this.getReceiptData));
+
         if (!this.isPrimaryApplicantDataValid()) {
             this.showCustomToast('error', 'Please Enter Salutation, Name, and Applicant Number');
             return;
@@ -681,7 +683,7 @@ export default class Ex_BookingForm extends LightningElement {
                 applicantData: JSON.stringify(this.getApplicantData),
                 quotationDetails: this.quote,
                 receiptData: JSON.stringify(this.getReceiptData),
-                bookingAccount: this.getLegalEntityDetails,
+                bookingAccount: this.getLegalData,
             })
                 .then(result => {
                     console.log('Booking: ', result);

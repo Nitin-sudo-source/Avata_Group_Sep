@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-15-2024
+  @last modified on  : 10-17-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -207,7 +207,13 @@
                         <tr key={le.Id}>
     
                             <th colspan="4" style="">
-                                Bank Account Details
+                                <div class="main">
+                                    <center>
+                                        <lightning-icon size="medium" icon-name="custom:custom10"></lightning-icon>
+                                        <label class="head" style="font-size:16px"> Bank Account Details</label>
+                                    </center>
+                                </div>
+                                
                             </th>
                         </tr>
                         <tr key={le.Id}>
@@ -344,7 +350,7 @@
                                                 variant="label-hidden" onchange={handleApplicant} type="number">
                                             </lightning-input-field>
                                         </td>
-                                        <th style="text-align:left;">Email<span style="color: red;">*</span>
+                                        <th style="text-align:left;">Email
                                         </th>
                                         <td>
                                             <lightning-input-field name="Email__c" data-id="Email__c"

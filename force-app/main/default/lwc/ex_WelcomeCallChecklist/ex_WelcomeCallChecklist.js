@@ -55,6 +55,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
 
     @track totalPrice = 0;
     @track totalPriceFormatted = '';
+    @track isLoaded = false;
 
     
     
@@ -76,24 +77,42 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
         }
     }
 
+    renderedCallback() {
+        if (this.isLoaded)
+            return;
+        const STYLE = document.createElement("style");
+        STYLE.innerText = `.uiModal--medium .modal-container{
+width: 100% !important;
+max-width: 95%;
+min-width: 480px;
+max-height:100%;
+min-height:480px;
+};`
+        this.template.querySelector('lightning-card').appendChild(STYLE);
+        this.isLoaded = true;
+    }
+
     viewDocument(event) {
         const appId = event.target.dataset.id;
-        console.log('appId is::' + JSON.stringify(appId));
         const docType = event.target.dataset.docType;
-        console.log('docType is::' + JSON.stringify(docType));
-
-        if (appId != null) {
+    
+        if (appId) {
             getApplicantDocuments({ appId: appId })
                 .then((data) => {
                     this.docData = data;
-                    console.log('this.docData::' + JSON.stringify(this.docData));
                     const filteredDocs = this.docData.filter(docWrapper => docWrapper.documentType === docType);
-
-                    if (filteredDocs && filteredDocs.length > 0) {
+                    console.log('filteredDocs: '+JSON.stringify(filteredDocs));
+    
+                    if (filteredDocs.length > 0) {
                         filteredDocs.forEach((docWrapper, index) => {
                             setTimeout(() => {
-                                window.open(`/servlet/servlet.FileDownload?file=${docWrapper.attachment.Id}`, '_blank');
-                            }); //index * 500); // Adding a 500ms delay between each document opening
+                                // Use the ContentVersion ID for download
+                                // const encodedFileId = encodeURIComponent(docWrapper.fileId);
+                                // // Use the correct download URL for ContentVersion
+                                // const downloadUrl = `/sfc/servlet.shepherd/document/download/${encodedFileId}`;
+                                console.log(`Opening download URL: ${docWrapper.documentViewLink}`);
+                                window.open(docWrapper.documentViewLink, '_blank');
+                            }, index * 500); // Optional delay between downloads
                         });
                     } else {
                         console.error('No attachments found for the document type');
@@ -101,11 +120,15 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
                 })
                 .catch((error) => {
                     this.error = error;
-                    console.log('this.error in document is::' + JSON.stringify(this.error));
-                })
+                    console.log('Error retrieving documents:', JSON.stringify(this.error));
+                });
         }
-
     }
+
+
+    
+    
+    
 
 
     // @wire(getQuotationDetails, { recId: '$recordId' })
@@ -213,6 +236,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
 if (data[0].Quotation_Status__c && 
     (data[0].Quotation_Status__c.toLowerCase() === 'valid' || 
     data[0].Quotation_Status__c.toLowerCase() === 'approved')) {
+        this.totalPrice = 0;
     
     for (let i = 1; i <= 3; i++) {
         const chargeBucket = data[0][`Charge_Bucket_${i}__c`];
@@ -229,7 +253,7 @@ if (data[0].Quotation_Status__c &&
                 this.agreementValueTax = totalTax ? totalTax.toLocaleString('en-IN') + '/-' : '0/-';
                 this.agreementTotal = chargeAmount ? 
                                       (chargeAmount + totalTax).toLocaleString('en-IN') + '/-' : '0/-';
-                                      totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
+                                      this.totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
 
                 console.log(`Formatted Agreement Value:`, this.agreementValue);
                 console.log(`Formatted Agreement Value Tax:`, this.agreementValueTax);
@@ -239,7 +263,7 @@ if (data[0].Quotation_Status__c &&
                 this.SDRTax = totalTax ? totalTax.toLocaleString('en-IN') + '/-' : '0/-';
                 this.SDRTotal = chargeAmount? 
                                 (chargeAmount + totalTax).toLocaleString('en-IN') + '/-' : '0/-';
-                                totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
+                                this.totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
 
                 console.log(`Formatted SDR Value:`, this.SDRValue);
                 console.log(`Formatted SDR Tax:`, this.SDRTax);
@@ -249,7 +273,7 @@ if (data[0].Quotation_Status__c &&
                 this.OCTax = totalTax ? totalTax.toLocaleString('en-IN') + '/-' : '0/-';
                 this.OCTotal = chargeAmount  ? 
                                (chargeAmount + totalTax).toLocaleString('en-IN') + '/-' : '0/-';
-                               totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
+                               this.totalPrice += chargeAmount ? (chargeAmount + totalTax) : 0;
 
                 console.log(`Formatted Other Charges Value:`, this.OCValue);
                 console.log(`Formatted Other Charges Tax:`, this.OCTax);
@@ -259,7 +283,7 @@ if (data[0].Quotation_Status__c &&
     }
 }
 
-this.totalPriceFormatted = totalPrice ? totalPrice.toLocaleString('en-IN') + '/-' : '0/-';
+this.totalPriceFormatted = this.totalPrice ? this.totalPrice.toLocaleString('en-IN') + '/-' : '0/-';
 console.log(`Total Price of all Charges:`, this.totalPriceFormatted);
 
 
