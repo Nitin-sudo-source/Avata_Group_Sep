@@ -40,11 +40,9 @@ newBookingList.add(newBooking);
             Ex_BookingHanldlerServices.insertWelcomeCallChecklist(newBookingList);
         }*/
         if(!bList.isEmpty() && bList != null) {
-            Ex_BookingHanldlerServices.handleAgreementValueChange(bList);
+           // Ex_BookingHanldlerServices.handleAgreementValueChange(bList);
         }
-        if(quotationBookingMap != null && !towerIdSet.isEmpty()){
-            // Ex_BookingHanldlerServices.updatePaymentMilestoneDueDate(quotationBookingMap, towerIdSet);
-        }
+        
     }
     
 }

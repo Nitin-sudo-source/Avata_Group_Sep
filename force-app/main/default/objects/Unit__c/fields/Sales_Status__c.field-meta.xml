@@ -15,16 +15,6 @@
                 <label>Vacant</label>
             </value>
             <value>
-                <fullName>Booking-In-Process</fullName>
-                <default>false</default>
-                <label>Booking-In-Process</label>
-            </value>
-            <value>
-                <fullName>Booked</fullName>
-                <default>false</default>
-                <label>Booked</label>
-            </value>
-            <value>
                 <fullName>Not for Sale</fullName>
                 <default>false</default>
                 <label>Not for Sale</label>
@@ -38,6 +28,16 @@
                 <fullName>UnBlocked</fullName>
                 <default>false</default>
                 <label>UnBlocked</label>
+            </value>
+            <value>
+                <fullName>Booking-In-Process</fullName>
+                <default>false</default>
+                <label>Booking-In-Process</label>
+            </value>
+            <value>
+                <fullName>Booked</fullName>
+                <default>false</default>
+                <label>Booked</label>
             </value>
         </valueSetDefinition>
     </valueSet>

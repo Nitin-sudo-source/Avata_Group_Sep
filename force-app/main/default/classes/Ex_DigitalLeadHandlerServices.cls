@@ -60,7 +60,7 @@ public class Ex_DigitalLeadHandlerServices {
                                            where Campaign_Code__c =: dLeadList[0].Campaign_Code__c AND Active__c =: true];
                 system.debug('cList: '+cList);
                 
-                if(cList != null) {
+                if(!cList.isEmpty() && cList != null) {
                     projectId = cList[0].Project__c;
                     campaignId = cList[0].Id;
                     source = cList[0].Lead_Source__c;

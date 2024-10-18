@@ -1,107 +1,107 @@
 public class Ex_BookingHanldlerServices {
-   /* public static void insertWelcomeCallChecklist(List<Booking__c> BookingList){
-        set<Id> bookingIds = new set<Id>();
-        for(Booking__c book : BookingList){
-            bookingIds.add(book.Id);
-        }
-        system.debug('bookingIds::'+bookingIds);
-        
-        Map<Id,List<Receipt__c>> receiptMap = new Map<Id,List<Receipt__c>>();
-        List<Receipt__c> bookingAmount = [select Id, Token_Amount_Received__c, Total_Amount__c,Booking__c from Receipt__c where Booking__c IN :bookingIds 
-                                         ]; 
-        system.debug('bookingAmount is::'+bookingAmount);
-        
-        if(!BookingList.isEmpty() && BookingList != null){
-            for(Receipt__c receipt : bookingAmount){
-                if(!receiptMap.containsKey(receipt.Booking__c)){
-                    List<Receipt__c> receiptList = new List<Receipt__c>();
-                    receiptList.add(receipt);
-                    receiptMap.put(receipt.Booking__c, receiptList);
-                }else{
-                    receiptMap.get(receipt.Booking__c).add(receipt);
-                    system.debug('receiptMap is::'+receiptMap);
-                }
-            }
-        }
-        
-        Map<Id,Unit__c> unitMap = new Map<Id,Unit__c>();
-        List<Unit__c> unitList = [select Id, Name, Floor__c,Booking__c,Booking__r.Payment_Scheme__r.Name,Tower__c,
-                                  Configuration__c,Tower__r.Name,Total_Carpet_Area_Sq_Ft__c,Booking__r.Total_Amount_Received__c,
-                                  Booking__r.Booking_Date__c,Booking__r.Sale_Value__c,Booking__r.Primary_Applicant_Name__c,
-                                  Booking__r.Primary_Applicant_Mobile__c,Booking__r.Primary_Applicant_Email__c from Unit__c where Booking__c=:bookingIds];
-        system.debug('unitList is::'+unitList);
-        
-        if(!unitList.isEmpty() && unitList != null){
-            for(Unit__c unit: unitList){
-                unitMap.put(unit.Booking__c, unit);
-            }            
-        }
-        
-        Map<Id,Applicant__c> applicantMap = new Map<Id,Applicant__c>();
-        List<Applicant__c> applicantList = [select Id, Name,Booking__c,Applicant_Number__c,Mobile_Number__c,Email__c 
-                                            from Applicant__c where Applicant_Number__c =:'Primary Applicant' AND Booking__c=:bookingIds];
-        system.debug('applicantList is::'+applicantList);
-        
-        if(!applicantList.isEmpty() && applicantList != null){
-            for(Applicant__c ps:applicantList){
-                applicantMap.put(ps.Booking__c,ps);
-            }
-        }        
-        for(Booking__c booking: BookingList){
-            Decimal Amount = 0;
-            String floor = '';
-            String config = '';
-            String sector = '';
-            String name = '';
-            string tower = '';
-            string ppname = '';
-            String carpet = '';
-            String appName = '';
-            String appMobile = '';
-            String appEmail = '';
-            
-            if(receiptMap.get(booking.Id) != null){
-                for(Receipt__c receipt : receiptMap.get(booking.Id)){
-                    Amount += receipt.Total_Amount__c;
-                    system.debug('Amount is::'+Amount);
-                }
-            }
-            
-            if(unitMap.get(booking.Id) != null){
-                floor = string.valueOf(unitMap.get(booking.Id).Floor__c);
-                config = unitMap.get(booking.Id).Configuration__c;
-                name = unitMap.get(booking.Id).Name;            
-                ppname = unitMap.get(booking.Id).Booking__r.Payment_Scheme__r.Name;
-                tower = unitMap.get(booking.Id).Tower__r.Name;
-                carpet = String.valueOf(unitMap.get(booking.Id).Total_Carpet_Area_Sq_Ft__c);
-            }
-            system.debug('ppname is::'+ppname);
-            if(applicantMap.get(booking.Id) != null){
-                appName = applicantMap.get(booking.Id).Name;
-                appMobile = applicantMap.get(booking.Id).Mobile_Number__c;
-                appEmail = applicantMap.get(booking.Id).Email__c;
-            }
-            
-            List<Welcome_Call_Checklist_Master__c> welcomeCallMasterList = [SELECT Name, Description__c,Sequence__c,Category_Name__c,Value__c FROM Welcome_Call_Checklist_Master__c ORDER By Sequence__c];
-            
-            List<Welcome_Call_Checklist__c> newWelcomeCallList = new List<Welcome_Call_Checklist__c>();
-            
-            if(!welcomeCallMasterList.isEmpty() && welcomeCallMasterList != null){   
-                for (Welcome_Call_Checklist_Master__c masterWelcomecall : welcomeCallMasterList) {
-                    Welcome_Call_Checklist__c WelcomeCall = new Welcome_Call_Checklist__c();
-                    WelcomeCall.Category__c = masterWelcomecall.Category_Name__c    ;
-                    WelcomeCall.Description__c = masterWelcomecall.Description__c;
-                    WelcomeCall.Booking__c = booking.Id;
-                    String fieldValue = getFieldDynamicValue(booking, masterWelcomecall.Value__c, unitMap);
-                    WelcomeCall.Values__c = fieldValue; 
-                    newWelcomeCallList.add(WelcomeCall);
-                }
-            }
-            if (!newWelcomeCallList.isEmpty()) {
-                insert newWelcomeCallList;
-            }
-        }
-    }*/
+    /* public static void insertWelcomeCallChecklist(List<Booking__c> BookingList){
+set<Id> bookingIds = new set<Id>();
+for(Booking__c book : BookingList){
+bookingIds.add(book.Id);
+}
+system.debug('bookingIds::'+bookingIds);
+
+Map<Id,List<Receipt__c>> receiptMap = new Map<Id,List<Receipt__c>>();
+List<Receipt__c> bookingAmount = [select Id, Token_Amount_Received__c, Total_Amount__c,Booking__c from Receipt__c where Booking__c IN :bookingIds 
+]; 
+system.debug('bookingAmount is::'+bookingAmount);
+
+if(!BookingList.isEmpty() && BookingList != null){
+for(Receipt__c receipt : bookingAmount){
+if(!receiptMap.containsKey(receipt.Booking__c)){
+List<Receipt__c> receiptList = new List<Receipt__c>();
+receiptList.add(receipt);
+receiptMap.put(receipt.Booking__c, receiptList);
+}else{
+receiptMap.get(receipt.Booking__c).add(receipt);
+system.debug('receiptMap is::'+receiptMap);
+}
+}
+}
+
+Map<Id,Unit__c> unitMap = new Map<Id,Unit__c>();
+List<Unit__c> unitList = [select Id, Name, Floor__c,Booking__c,Booking__r.Payment_Scheme__r.Name,Tower__c,
+Configuration__c,Tower__r.Name,Total_Carpet_Area_Sq_Ft__c,Booking__r.Total_Amount_Received__c,
+Booking__r.Booking_Date__c,Booking__r.Sale_Value__c,Booking__r.Primary_Applicant_Name__c,
+Booking__r.Primary_Applicant_Mobile__c,Booking__r.Primary_Applicant_Email__c from Unit__c where Booking__c=:bookingIds];
+system.debug('unitList is::'+unitList);
+
+if(!unitList.isEmpty() && unitList != null){
+for(Unit__c unit: unitList){
+unitMap.put(unit.Booking__c, unit);
+}            
+}
+
+Map<Id,Applicant__c> applicantMap = new Map<Id,Applicant__c>();
+List<Applicant__c> applicantList = [select Id, Name,Booking__c,Applicant_Number__c,Mobile_Number__c,Email__c 
+from Applicant__c where Applicant_Number__c =:'Primary Applicant' AND Booking__c=:bookingIds];
+system.debug('applicantList is::'+applicantList);
+
+if(!applicantList.isEmpty() && applicantList != null){
+for(Applicant__c ps:applicantList){
+applicantMap.put(ps.Booking__c,ps);
+}
+}        
+for(Booking__c booking: BookingList){
+Decimal Amount = 0;
+String floor = '';
+String config = '';
+String sector = '';
+String name = '';
+string tower = '';
+string ppname = '';
+String carpet = '';
+String appName = '';
+String appMobile = '';
+String appEmail = '';
+
+if(receiptMap.get(booking.Id) != null){
+for(Receipt__c receipt : receiptMap.get(booking.Id)){
+Amount += receipt.Total_Amount__c;
+system.debug('Amount is::'+Amount);
+}
+}
+
+if(unitMap.get(booking.Id) != null){
+floor = string.valueOf(unitMap.get(booking.Id).Floor__c);
+config = unitMap.get(booking.Id).Configuration__c;
+name = unitMap.get(booking.Id).Name;            
+ppname = unitMap.get(booking.Id).Booking__r.Payment_Scheme__r.Name;
+tower = unitMap.get(booking.Id).Tower__r.Name;
+carpet = String.valueOf(unitMap.get(booking.Id).Total_Carpet_Area_Sq_Ft__c);
+}
+system.debug('ppname is::'+ppname);
+if(applicantMap.get(booking.Id) != null){
+appName = applicantMap.get(booking.Id).Name;
+appMobile = applicantMap.get(booking.Id).Mobile_Number__c;
+appEmail = applicantMap.get(booking.Id).Email__c;
+}
+
+List<Welcome_Call_Checklist_Master__c> welcomeCallMasterList = [SELECT Name, Description__c,Sequence__c,Category_Name__c,Value__c FROM Welcome_Call_Checklist_Master__c ORDER By Sequence__c];
+
+List<Welcome_Call_Checklist__c> newWelcomeCallList = new List<Welcome_Call_Checklist__c>();
+
+if(!welcomeCallMasterList.isEmpty() && welcomeCallMasterList != null){   
+for (Welcome_Call_Checklist_Master__c masterWelcomecall : welcomeCallMasterList) {
+Welcome_Call_Checklist__c WelcomeCall = new Welcome_Call_Checklist__c();
+WelcomeCall.Category__c = masterWelcomecall.Category_Name__c    ;
+WelcomeCall.Description__c = masterWelcomecall.Description__c;
+WelcomeCall.Booking__c = booking.Id;
+String fieldValue = getFieldDynamicValue(booking, masterWelcomecall.Value__c, unitMap);
+WelcomeCall.Values__c = fieldValue; 
+newWelcomeCallList.add(WelcomeCall);
+}
+}
+if (!newWelcomeCallList.isEmpty()) {
+insert newWelcomeCallList;
+}
+}
+}*/
     
     private static Map<Id, Unit__c> getUnitMap(Set<Id> bookingIds) {
         Map<Id, Unit__c> unitMap = new Map<Id, Unit__c>();
@@ -118,38 +118,38 @@ public class Ex_BookingHanldlerServices {
     } 
     
     /*private static String getFieldDynamicValue(Booking__c booking, String fieldName, Map<Id, Unit__c> unitMap) {
-        if (fieldName == 'Amount' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Booking__r.Total_Amount_Received__c);
-        } else if (fieldName == 'ppname' && unitMap.containsKey(booking.Id)) {
-            return unitMap.get(booking.Id).Booking__r.Payment_Scheme__r.Name;
-        } else if (fieldName == 'floor' && unitMap.containsKey(booking.Id)) { 
-            return String.valueOf(unitMap.get(booking.Id).Floor__c);
-        } else if (fieldName == 'BookingDate' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Booking__r.Booking_Date__c);
-        } else if (fieldName == 'Tower' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Tower__r.Name);
-        } else if (fieldName == 'config' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Configuration__c);
-        } else if (fieldName == 'Name' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Name);
-        } else if (fieldName == 'carpet' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Total_Carpet_Area_Sq_Ft__c);
-        } else if (fieldName == 'GST' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Booking__r.Sale_Value__c);
-        } else if (fieldName == 'appName' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Booking__r.Primary_Applicant_Name__c);
-        } else if (fieldName == 'appMobile' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Booking__r.Primary_Applicant_Mobile__c);
-        } else if (fieldName == 'appEmail' && unitMap.containsKey(booking.Id)) {
-            return String.valueOf(unitMap.get(booking.Id).Booking__r.Primary_Applicant_Email__c);
-        }
-        return null; 
-    }  */  
+if (fieldName == 'Amount' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Booking__r.Total_Amount_Received__c);
+} else if (fieldName == 'ppname' && unitMap.containsKey(booking.Id)) {
+return unitMap.get(booking.Id).Booking__r.Payment_Scheme__r.Name;
+} else if (fieldName == 'floor' && unitMap.containsKey(booking.Id)) { 
+return String.valueOf(unitMap.get(booking.Id).Floor__c);
+} else if (fieldName == 'BookingDate' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Booking__r.Booking_Date__c);
+} else if (fieldName == 'Tower' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Tower__r.Name);
+} else if (fieldName == 'config' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Configuration__c);
+} else if (fieldName == 'Name' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Name);
+} else if (fieldName == 'carpet' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Total_Carpet_Area_Sq_Ft__c);
+} else if (fieldName == 'GST' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Booking__r.Sale_Value__c);
+} else if (fieldName == 'appName' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Booking__r.Primary_Applicant_Name__c);
+} else if (fieldName == 'appMobile' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Booking__r.Primary_Applicant_Mobile__c);
+} else if (fieldName == 'appEmail' && unitMap.containsKey(booking.Id)) {
+return String.valueOf(unitMap.get(booking.Id).Booking__r.Primary_Applicant_Email__c);
+}
+return null; 
+}  */  
     
     public static Map<Id, Map<String, List<Charge_Details__c>>> getChargeDetailsMap(Set<Id> qIdSet) {
         Map<Id, Map<String, List<Charge_Details__c>>> chargeDetailsMap = new Map<Id, Map<String, List<Charge_Details__c>>>();
         List<Charge_Details__c> chargeDetailList = [Select Id, Name, Quotation__c, Charge_Bucket__c, Charge_Type__c, Charge_Amount__c, Charge_Rate__c, Charge_Percentage__c
-                                                   from Charge_Details__c where Quotation__c IN: qIdSet];
+                                                    from Charge_Details__c where Quotation__c IN: qIdSet];
         
         if(chargeDetailList != null) {
             for(Charge_Details__c ch: chargeDetailList) {
@@ -176,7 +176,7 @@ public class Ex_BookingHanldlerServices {
         return chargeDetailsMap;
     }
     
-    public static void handleAgreementValueChange(List<Booking__c> bList) {
+   /* public static void handleAgreementValueChange(List<Booking__c> bList) {
         Set<Id> bIdSet = new Set<Id>();
         Set<Id> qIdSet = new Set<Id>();
         Map<Id, Booking__c> bookingMap = new Map<Id, Booking__c>();
@@ -214,6 +214,8 @@ public class Ex_BookingHanldlerServices {
                 Boolean isAVTaxChange = false;
                 Boolean isSDRChange = false;
                 Decimal diffAmount = b.Updated_Agreement_Value__c - b.Agreement_Value__c;
+                Decimal diffSDR = 0;
+                
                 
                 if(b.Agreement_Value__c != b.Updated_Agreement_Value__c) {
                     b.Agreement_Value__c = b.Agreement_Value__c + diffAmount;
@@ -226,6 +228,7 @@ public class Ex_BookingHanldlerServices {
                 }
                 if(((b.Agreement_Value__c / 100) * b.Stamp_Duty__c).setscale(0,RoundingMode.HALF_UP) != b.SDR_Value__c) {
                     b.SDR_Value__c = ((b.Agreement_Value__c / 100) * b.Stamp_Duty__c).setscale(0,RoundingMode.HALF_UP);
+                    diffSDR = b.SDR_Value__c;
                     isSDRChange = true;
                 }
                 
@@ -276,53 +279,60 @@ public class Ex_BookingHanldlerServices {
                                 }
                             }
                             
-                            if(isSDRChange) {
+                            if (isSDRChange) {
                                 Decimal amount = 0;
                                 Decimal sgst = 0;
                                 Decimal cgst = 0;
                                 
-                                if(!chargeDetailsMap.isEmpty() && chargeDetailsMap != null) {
-                                    if(chargeDetailsMap.containsKey(q.Id)) {
+                                if (!chargeDetailsMap.isEmpty() && chargeDetailsMap != null) {
+                                    if (chargeDetailsMap.containsKey(q.Id)) {
                                         Map<String, List<Charge_Details__c>> chargeBucketMap = chargeDetailsMap.get(q.Id);
                                         
-                                        for(Integer i = 1; i <= 3; i++) {
-                                            if(String.isNotBlank((String)q.get('Charge_Bucket_' + i + '__c'))) {
-                                                if(chargeBucketMap.containsKey('Statutory Charges')) {
-                                                    for(Charge_Details__c ch: chargeBucketMap.get('Statutory Charges')) {
-                                                        System.debug('ch: '+ch);
-                                                        if(ch.Charge_Type__c != null && ch.Charge_Type__c.equalsIgnoreCase('Percentage') ) {
-                                                            if(chargeBucketMap.containsKey('Agreement Value')) {
-                                                                amount = ((b.Updated_Agreement_Value__c * ch.Charge_Percentage__c) / 100).setscale(0,RoundingMode.HALF_UP);
-                                                                sgst = (((amount / 100) * b.GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
-                                                                cgst = (((amount / 100) * b.GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
-                                                            }   
+                                        for (Integer i = 1; i <= 3; i++) {
+                                            if (String.isNotBlank((String)q.get('Charge_Bucket_' + i + '__c'))) {
+                                                Decimal totalStatutoryChargeAmount = 0; // Reset for each bucket
+                                                if (chargeBucketMap.containsKey('Statutory Charges')) {
+                                                    for (Charge_Details__c ch : chargeBucketMap.get('Statutory Charges')) {
+                                                        System.debug('ch: ' + ch);
+                                                        if (ch.Charge_Type__c != null && ch.Charge_Type__c.equalsIgnoreCase('Percentage') && ch.Name.equalsIgnoreCase('Stamp Duty')) {
+                                                            ch.Charge_Percentage__c = b.Stamp_Duty__c;
+                                                            amount = ((b.Agreement_Value__c / 100) * b.Stamp_Duty__c).setscale(0,RoundingMode.HALF_UP);
+                                                            sgst = (((amount / 100) * b.Stamp_Duty__c) / 2).setScale(0, RoundingMode.HALF_UP);
+                                                            cgst = sgst; 
+                                                            ch.Charge_Amount__c = diffSDR;
+                                                            if (!chargeSet.contains(ch.Id)) {
+                                                                updateChargeDetails.add(ch);
+                                                                chargeSet.add(ch.Id); 
+                                                            }
+                                                        } else if (ch.Charge_Type__c != null && ch.Charge_Type__c.equalsIgnoreCase('Percentage')) {
+                                                            amount = ((b.Agreement_Value__c * ch.Charge_Percentage__c) / 100).setScale(0, RoundingMode.HALF_UP);
+                                                            sgst = (((amount / 100) * b.GST__c) / 2).setScale(0, RoundingMode.HALF_UP);
+                                                            cgst = sgst; 
+                                                            ch.Charge_Amount__c = amount;
+                                                            
+                                                            if (!chargeSet.contains(ch.Id)) {
+                                                                updateChargeDetails.add(ch);
+                                                                chargeSet.add(ch.Id); 
+                                                            }
                                                         } else {
-                                                            amount = (b.Agreement_Value__c).setscale(0,RoundingMode.HALF_UP);
-                                                            sgst = (((amount / 100) * b.GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
-                                                            cgst = (((amount / 100) * b.GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                                            amount = (ch.Charge_Amount__c).setScale(0, RoundingMode.HALF_UP);
+                                                            sgst = (((amount / 100) * b.GST__c) / 2).setScale(0, RoundingMode.HALF_UP);
+                                                            cgst = sgst; 
+                                                            if (!chargeSet.contains(ch.Id)) {
+                                                                updateChargeDetails.add(ch);
+                                                                chargeSet.add(ch.Id); 
+                                                            }
                                                         }
-                                                        q.put('Charge_Bucket_' + i + '_SGST__c', sgst);
-                                                        q.put('Charge_Bucket_' + i + '_CGST__c', cgst);
-                                                        q.put('Charge_Bucket_' + i + '_Total_Tax__c', sgst + cgst);
-                                                        ch.Charge_Amount__c = amount;
-                                                        ch.Charge_Percentage__c = b.Stamp_Duty__c;
-                                                        chargeSet.add(ch.Id);
-                                                        
-
-                                                        /* if(ch.Name.equalsIgnoreCase('Stamp Duty') && ch.Charge_Bucket__c != null){
-                                                            amount = b.Updated_Agreement_Value__c;
-                                                            amount += ((Decimal)q.get('Charge_Bucket_' + i + '_Amount__c') );
+                                                        if(String.isNotBlank((String)q.get('Charge_Bucket_'+i+'__c')) && ((String)q.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Statutory Charges')) {
+                                                            amount = ch.Charge_Amount__c;
                                                             sgst = (((amount / 100) * b.Stamp_Duty__c) / 2).setscale(0,RoundingMode.HALF_UP);
                                                             cgst = (((amount / 100) * b.Stamp_Duty__c) / 2).setscale(0,RoundingMode.HALF_UP);
-                                                            
+                                                            totalStatutoryChargeAmount += amount;
+                                                            q.put('Charge_Bucket_' + i + '_Amount__c', totalStatutoryChargeAmount);
                                                             q.put('Charge_Bucket_' + i + '_SGST__c', sgst);
-                                                            q.put('Charge_Bucket_' + i + '_CGST__c', cgst);
-                                                            q.put('Charge_Bucket_' + i + '_Total_Tax__c', sgst + cgst);
-                                                            ch.Charge_Amount__c = amount;
-                                                            ch.Charge_Percentage__c = b.Stamp_Duty__c;
-                                                            chargeSet.add(ch.Id);
-                                                        }*/
-                                                        
+q.put('Charge_Bucket_' + i + '_CGST__c', cgst);
+q.put('Charge_Bucket_' + i + '_Total_Tax__c', sgst + cgst);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -369,10 +379,7 @@ public class Ex_BookingHanldlerServices {
                 updateBookingList.add(b);
             }
         }
-        
-        updateChargeDetails = [Select Id, Name from Charge_Details__c where Name =: 'Stamp Duty' AND Id In: chargeSet];
-        
-       
+        System.debug('updateChargeDetails: '+updateChargeDetails);
         if(!updateBookingList.isEmpty() && updateBookingList != null)
             update updateBookingList;
         if(!updateQuotationList.isEmpty() && updateQuotationList != null)
@@ -381,7 +388,7 @@ public class Ex_BookingHanldlerServices {
             update updateChargeDetails;
         if(!updatePaymentMilestoneList.isEmpty() && updatePaymentMilestoneList != null)
             update updatePaymentMilestoneList;
-    }
+    }*/
     
     public static Map<Id, Booking__c> getBookingDetailMap(Set<Id> bIdSet) {
         Map<Id, Booking__c> bookingMap = new Map<Id, Booking__c>();

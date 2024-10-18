@@ -10,23 +10,25 @@ public class Ex_PrintBookingPDF {
     public decimal countOfIds { get; set; }
     public string stringCar { get; set; }
 
+    public List<String> termsList { get; set; } // Terms list for storing multiple terms
     public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
 
     public Ex_PrintBookingPDF() {
-        // Get the bId parameter from the URL
         bId = ApexPages.currentPage().getParameters().get('bId');
         
         bkList = new List<Booking__c>();
         carList = new List<Car_Park__c>();
         apList = new List<Applicant__c>();
         rtList = new List<Receipt__c>();
+        termsList = new List<String>(); // Initialize the terms list
         ApplicantWrapperList = new List<ApplicantWrapper>();
 
         if (bId != null) {
             // Fetch Booking details
             bkList = [
                 SELECT Id, Name, Agreement_Value__c, Project__r.Project_Logo__c, Booking_Date__c, Tower__r.Name,
-                       Unit__r.Name, Unit__r.Configuration_Type__c, Unit__r.RERA_Carpet_Area_Sq_Ft__c
+                       Unit__r.Name, Unit__r.Configuration_Type__c, Unit__r.RERA_Carpet_Area_Sq_Ft__c, 
+                       Project__r.Booking_Terms_and_Conditions_2__c  // Fetching the terms from Project__c
                 FROM Booking__c 
                 WHERE Id = :bId
             ];
@@ -38,7 +40,7 @@ public class Ex_PrintBookingPDF {
                 if (booking.Agreement_Value__c != null) {
                     amountInWords = Ex_NumberToWord.convertNumbertoWords(Integer.valueOf(booking.Agreement_Value__c));
                 }
-                
+
                 // Fetch Car Park details
                 carList = [SELECT Id FROM Car_Park__c WHERE Booking__c = :bId];
                 countOfIds = carList.size();
@@ -88,6 +90,11 @@ public class Ex_PrintBookingPDF {
                         applicant.City__c,
                         applicant.PIN__c
                     ));
+                }
+
+                // Add Booking Terms and Conditions 2 to the terms list
+                if (booking.Project__r.Booking_Terms_and_Conditions_2__c != null) {
+                    termsList.add(booking.Project__r.Booking_Terms_and_Conditions_2__c);
                 }
             }
         }

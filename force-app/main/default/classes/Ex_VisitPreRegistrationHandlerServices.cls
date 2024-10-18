@@ -44,6 +44,7 @@ public class Ex_VisitPreRegistrationHandlerServices {
             for (Visit_Pre_Registration__c vpr : updateVpr) {
                 System.debug('Extend_Validity_In_Hours__c: '+vpr.Extend_Validity_In_Hours__c);
                 if(vpr.Extend_Validity_In_Hours__c != null && vpr.Extend_Validity_In_Hours__c != 0){
+                    
                     Datetime workTime = vpr.Pre_Registration_Expiry__c.addHours(Integer.valueof(vpr.Extend_Validity_In_Hours__c));
                     vpr.Pre_Registration_Expiry__c = workTime;
                     System.debug('vpr.Pre_Registration_Expiry__c: '+vpr.Pre_Registration_Expiry__c);

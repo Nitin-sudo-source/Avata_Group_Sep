@@ -6,7 +6,7 @@
     <picklistValues>
         <picklist>Document_Type__c</picklist>
         <values>
-            <fullName>Aadhaar Card</fullName>
+            <fullName>Aadhar Card</fullName>
             <default>false</default>
         </values>
         <values>

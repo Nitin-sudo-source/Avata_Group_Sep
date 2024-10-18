@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Booking_Approval_Process</name>
         <label>Booking_Approval_Process</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>456</locationX>
+        <locationY>371</locationY>
         <actionName>submit</actionName>
         <actionType>submit</actionType>
         <connector>
@@ -37,8 +37,8 @@
     <actionCalls>
         <name>Custom_Notification</name>
         <label>Custom_Notification</label>
-        <locationX>176</locationX>
-        <locationY>647</locationY>
+        <locationX>456</locationX>
+        <locationY>695</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -80,8 +80,8 @@
     <assignments>
         <name>assignOwner</name>
         <label>assignOwner</label>
-        <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationX>456</locationX>
+        <locationY>588</locationY>
         <assignmentItems>
             <assignToReference>CRMHead</assignToReference>
             <operator>Add</operator>
@@ -105,7 +105,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -118,8 +118,8 @@
     <recordLookups>
         <name>getCustomNotType</name>
         <label>getCustomNotType</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>456</locationX>
+        <locationY>479</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignOwner</targetReference>
@@ -137,8 +137,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>330</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Booking_Approval_Process</targetReference>
         </connector>

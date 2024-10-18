@@ -16,9 +16,20 @@
         <label>Booking Cancelled</label>
     </customValue>
     <customValue>
+        <fullName>Welcome Call Pending</fullName>
+        <default>false</default>
+        <label>Welcome Call Pending</label>
+    </customValue>
+    <customValue>
         <fullName>Booking Confirmed</fullName>
         <default>false</default>
         <label>Booking Confirmed</label>
+    </customValue>
+    <customValue>
+        <fullName>Welcome Call Done</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Welcome Call Done</label>
     </customValue>
     <masterLabel>Booking Stage</masterLabel>
     <sorted>false</sorted>

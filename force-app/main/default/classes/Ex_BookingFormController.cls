@@ -24,7 +24,7 @@ public class Ex_BookingFormController {
                 }
             }
         }
-        String soqlQuery = 'Select ' + queryFields  + ', Opportunity__r.Name, Project__r.Name, Tower__r.Name, Opportunity__r.Source__c, Opportunity__r.Sub_Source__c, Opportunity__r.Channel_Partner__c, Opportunity__r.CP_Project__c, Opportunity__r.OwnerId, Unit__r.Name, Unit__r.Floor__c, Unit__r.Total_carpet_Sq_Ft__c from Quotation__c Where Id = \''+qId+'\''; 
+        String soqlQuery = 'Select ' + queryFields  + ', Opportunity__r.Name, Project__r.Name, Tower__r.Name, Opportunity__r.Source__c, Opportunity__r.Sub_Source__c, Opportunity__r.Channel_Partner__c, Opportunity__r.CP_Project__c, Opportunity__r.OwnerId, Unit__r.Name, Unit__r.Floor__c, Unit__r.Total_carpet_Sq_Ft__c, Payment_Scheme__r.Name, Booking__r.Agreement_Value__c, Unit__r.Saleable_Area__c  from Quotation__c Where Id = \''+qId+'\''; 
         system.debug(soqlQuery);
         qList = Database.query(soqlQuery);
         
@@ -40,6 +40,22 @@ public class Ex_BookingFormController {
             return null;
         }
     }
+    
+    @AuraEnabled(Cacheable=false)
+    public static List<Legal_Entity__c> getLegalEntityDetails(String qId){
+        List<Legal_Entity__c> legalEntities = new List<Legal_Entity__c>();
+        List<Quotation__c> qList = [Select Id, Name, Unit__r.Name, Project__c, Tower__c, Tower__r.Name, Project__r.Name, Unit__r.Floor__c, Unit__r.Configuration_Type__c, Unit__r.Total_Carpet_Sq_Ft__c from Quotation__c where Id = :qId];
+        if (!qList.isEmpty() && qList != null) {
+            for (Quotation__c quote : qList) {
+                Legal_Entity__c le = EX_InventoryPriceManagementServices.getLegalEntityDetails(quote.Unit__r.id, quote.Tower__r.id, quote.Project__r.id);
+                if (le != null) {
+                    legalEntities.add(le);
+                }
+            }
+        }
+        return legalEntities;
+    }
+    
     @AuraEnabled(cacheable=false)
     public static BookWrapper getBookingWrapper(String oppId){
         Opportunity__c opp = [Select Id, Project__c,Project__r.CRM_Head__c, Project__r.CRM_Head__r.ManagerId from Opportunity__c Where Id =: oppId];
@@ -187,7 +203,8 @@ public class Ex_BookingFormController {
     }
     
     @AuraEnabled
-    public static Id createBookingRecord(BookWrapper bkWrapper, String applicantData, Quotation__c quotationDetails, String receiptData){
+    public static Id createBookingRecord(BookWrapper bkWrapper, String applicantData, Quotation__c quotationDetails, String receiptData, List<Legal_Entity__c> bookingAccount){
+        System.debug('bookingAccount: '+bookingAccount);
         Decimal agreementValue = 0;
         Decimal agreementValueTax = 0;
         Decimal SDRValue = 0;
@@ -260,6 +277,19 @@ public class Ex_BookingFormController {
         booking.Updated_Agreement_Value__c = agreementValue;
 
         booking.Booking_Stage__c = 'Booking In-Process';
+        
+        if(!bookingAccount.isEmpty() && bookingAccount != null){
+            booking.Account_Name_Flat_Cost__c = bookingAccount[0].Account_Name_Flat_Cost__c;
+            booking.Account_Name_Tax__c = bookingAccount[0].Account_Name_Tax__c;
+            booking.Account_Number_Flat_Cost__c = bookingAccount[0].Account_Number_Flat_Cost__c;
+            booking.Account_Number_Tax__c = bookingAccount[0].Account_Number_Tax__c;
+            booking.Bank_Name_Flat_Cost__c = bookingAccount[0].Bank_Name_Flat_Cost__c;
+            booking.Branch_Name_Flat_Cost__c = bookingAccount[0].Branch_Name_Flat_Cost__c;
+            booking.Branch_Name_Tax__c = bookingAccount[0].Branch_Name_Tax__c;
+            booking.Bank_Name_Tax__c = bookingAccount[0].Bank_Name_Tax__c;
+            booking.IFSC_Code_Flat_Cost__c = bookingAccount[0].IFSC_Code_Flat_Cost__c;
+            booking.IFSC_Code_Tax__c = bookingAccount[0].IFSC_Code_Tax__c;
+        }
         try {
             insert booking;
             System.debug('Booking record inserted successfully : ' + booking.Id);
@@ -607,7 +637,7 @@ public class Ex_BookingFormController {
                                     if(!String.isBlank(Isbase64)){
                                         document.uploaded__c =true;
                                     }
-                                    document.Document_Type__c = 'Aadhaar Card';
+                                    document.Document_Type__c = 'Aadhar Card';
                                 }else if(docType.contains('Pan Card')){
                                     if(!String.isBlank(Isbase64)){
                                         document.uploaded__c =true;
@@ -665,13 +695,50 @@ public class Ex_BookingFormController {
         cdl.ContentDocumentId = [ SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersionId].ContentDocumentId;
         cdl.LinkedEntityId = recordId;
         cdl.ShareType = 'V';
+        
+        
+        ContentDistribution cd = new ContentDistribution();
+        if(cdl.ContentDocumentId != null) {
+            cd.Name = recordId;
+            cd.ContentVersionId = contentVersionId;
+            cd.PreferencesAllowViewInBrowser = true;
+            cd.PreferencesLinkLatestVersion = true;
+            cd.PreferencesNotifyOnVisit = false;
+            cd.PreferencesPasswordRequired = false;
+            cd.PreferencesAllowOriginalDownload = true;
+            insert cd;   
+            system.debug('cd: '+cd);
+            
+            cd = [SELECT Id, ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE Id =: cd.Id LIMIT 1];
+            system.debug('DistributionPublicUrl: '+cd.DistributionPublicUrl);
+        }
         try {
             insert cdl;
+            
+            List<Document__c> docList = new List<Document__c>();
+            List<Document__c> updateDocList = new List<Document__c>();
+            
+            docList = [Select Id, Name, Document_Type__c, Document_View_Link__c from Document__c where Id =: recordId];
+            for(Document__c doc: docList){
+                if(String.isNotBlank(cd.DistributionPublicUrl)){
+                    doc.Document_View_Link__c = cd.DistributionPublicUrl;
+                    updateDocList.add(doc);
+                }
+            }
+            if(!updateDocList.isEmpty()){
+                update updateDocList;
+            }
+            
+            
             return cdl;
         } catch(DMLException e) {
             System.debug(e);
             return null;
         }
+        
+        
+        
+        
     } 
     
 }

@@ -18,7 +18,7 @@
     <filters>
         <field>Lead_Stage__c</field>
         <operation>notContain</operation>
-        <value>Visit Done,Lost,Visit confirmed</value>
+        <value>Visit Done,Lost</value>
     </filters>
     <label>Missed Follow Ups</label>
 </ListView>

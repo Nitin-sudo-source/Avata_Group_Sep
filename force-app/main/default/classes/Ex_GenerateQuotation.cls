@@ -317,13 +317,23 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                                             if(priceListMap.get(priceName).Calculation_Area_Type__c.equalsIgnoreCase('Carpet Area')) {
                                                 chDetail.Charge_Rate__c = (allPriceInfoMap.get(priceName) / u.Total_carpet_Sq_Ft__c).setscale(2, RoundingMode.HALF_UP);
                                                 chDetail.Charge_Type__c = priceListMap.get(priceName).Charge_Type__c;
+                                                chDetail.Charge_Percentage__c = priceListMap.get(priceName).Charge_Percentage__c;
+                                                chDetail.Calculation_Area_Type__c = priceListMap.get(priceName).Calculation_Area_Type__c;
+                                                chDetail.GST__c = priceListMap.get(priceName).GST__c;
                                             } else {
                                                 chDetail.Charge_Rate__c = (allPriceInfoMap.get(priceName) / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
                                                 chDetail.Charge_Type__c = priceListMap.get(priceName).Charge_Type__c;
+                                                chDetail.Charge_Percentage__c = priceListMap.get(priceName).Charge_Percentage__c;
+                                                chDetail.Calculation_Area_Type__c = priceListMap.get(priceName).Calculation_Area_Type__c;
+                                                chDetail.GST__c = priceListMap.get(priceName).GST__c;
                                             }
                                         } else {
                                             chDetail.Charge_Rate__c = (allPriceInfoMap.get(priceName) / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
                                             chDetail.Charge_Type__c = priceListMap.get(priceName).Charge_Type__c;
+                                            chDetail.Charge_Percentage__c = priceListMap.get(priceName).Charge_Percentage__c;
+                                            chDetail.Calculation_Area_Type__c = priceListMap.get(priceName).Calculation_Area_Type__c;
+                                            chDetail.GST__c = priceListMap.get(priceName).GST__c;
+                                            
                                         }
                                     }
                                 }                            

@@ -189,6 +189,8 @@ public class Ex_InventoryPriceManagementServices {
     
     public static Map<String, Decimal> getAllPriceInfo(Id uId, Map<String, List<String>> priceListGroupMap, Map<String, Pricing_List__c> priceListMap, Decimal carParkPrice, Decimal discountPrice) {
         Unit__c u = getUnitInfo(uId);
+        Decimal avAmount = 0;
+        Decimal avWithoutCarPark = 0;
         
         if(u != null) {
             Map<String, Decimal> allPriceInfoMap = new Map<String, Decimal>();
@@ -200,6 +202,7 @@ public class Ex_InventoryPriceManagementServices {
             if(carParkPrice != null){
                 pl.Charge_Amount__c = carParkPrice;
             }
+            
             priceListMap.put(pl.Charge_Name__c, pl);
             if(carParkPrice != null){
                 allPriceInfoMap.put('Total Car Park Price', carParkPrice);
@@ -214,10 +217,13 @@ public class Ex_InventoryPriceManagementServices {
                         
                         if(priceListMap.containsKey(priceList)) {
                             if(priceListMap.get(priceList).Charge_Name__c.equalsIgnoreCase('Parking Charges')) {
+                                avAmount += carParkPrice;
                                 amount = carParkPrice;
                                 sgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
                                 cgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
                             } else {
+                                avAmount += (priceListMap.get(priceList).Actual_Cost__c ).setscale(0,RoundingMode.HALF_UP);
+                                avWithoutCarPark += (priceListMap.get(priceList).Actual_Cost__c ).setscale(0,RoundingMode.HALF_UP);
                                 amount = (priceListMap.get(priceList).Actual_Cost__c).setscale(0,RoundingMode.HALF_UP);
                                 sgst = (priceListMap.get(priceList).GST_Amount__c / 2).setscale(0,RoundingMode.HALF_UP);
                                 cgst = (priceListMap.get(priceList).GST_Amount__c / 2).setscale(0,RoundingMode.HALF_UP);
@@ -345,6 +351,7 @@ public class Ex_InventoryPriceManagementServices {
                     }
                 }
             }
+            allPriceInfoMap.put('Agreement Value Without Car Park',avWithoutCarPark);
             system.debug('allPriceInfoMap:'+allPriceInfoMap);
             return allPriceInfoMap;
         } else {
@@ -467,7 +474,7 @@ public class Ex_InventoryPriceManagementServices {
                     pm.Milestone_Type__c = psm.Milestone_Type__c;
                     pm.Number_of_Days__c = psm.Number_of_Days__c;
                     if(psm.Construction_Stage__c !=null)
-                    pm.Construction_Stage__c = psm.Construction_Stage__c;
+                        pm.Construction_Stage__c = psm.Construction_Stage__c;
                     pm.Deduct_Token__c = psm.Deduct_Token__c;
                     pm.Sequence_No__c = psm.Sequence_No__c;
                     
@@ -554,7 +561,7 @@ public class Ex_InventoryPriceManagementServices {
                                 pm.put('Charge_Bucket_'+i+'_Total_Tax__c', totalTax);
                             }
                             
-                           if(((String)psm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Other Charges')) {
+                            if(((String)psm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Other Charges')) {
                                 
                                 //Calculation for other than agreement value bucket
                                 Decimal amountOther = 0;
@@ -690,36 +697,43 @@ public class Ex_InventoryPriceManagementServices {
             for(PaymentMilestoneWrapper pmw: updatedPaymentMilestoneWrapperList) {
                 if(pmw.agMilestone && pmw.pm != null && pmw.psm != null) {
                     if(((String)pmw.psm.get('Charge_Bucket_'+agSeqNumber+'_Type__c')).equalsIgnoreCase('Percentage')) {
-                        totalAmount += (((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Percentage__c') * allPriceInfoMap.get('Agreement Value')) / 100); //.setscale(0,RoundingMode.HALF_UP);
-                        totalPercentage += (Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Percentage__c');
+                        totalAmount += ((((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Percentage__c') * allPriceInfoMap.get('Agreement Value')) / 100)); //.setscale(0,RoundingMode.HALF_UP);
+                        totalPercentage += ((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Percentage__c')).setscale(0,RoundingMode.HALF_UP);
                     } else if(((String)pmw.psm.get('Charge_Bucket_'+agSeqNumber+'_Type__c')).equalsIgnoreCase('Amount')) {
-                        totalAmount += (Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Amount__c');
-                        totalPercentage +=  ((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Amount__c') / allPriceInfoMap.get('Agreement Value') * 100); //.setscale(2,RoundingMode.HALF_UP);
+                        totalAmount += ((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Amount__c'));
+                        totalPercentage +=  ((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Amount__c') / allPriceInfoMap.get('Agreement Value') * 100).setscale(0,RoundingMode.HALF_UP); //.setscale(2,RoundingMode.HALF_UP);
                     }
                     system.debug('totalAmount: '+totalAmount);
                     system.debug('totalPercentage: '+totalPercentage);
                 }
             }
             system.debug('Milestone Total Amount: '+totalAmount);
-            system.debug('Agreement Value: '+allPriceInfoMap.get('Agreement Value'));
+            system.debug('Agreement Value: '+allPriceInfoMap.get('Agreement Value').setscale(0,RoundingMode.HALF_UP));
             
             if(validationErrorList.isEmpty()) {
-                if(Math.abs(totalAmount - allPriceInfoMap.get('Agreement Value')) > 1) {
-                    if(totalAmount > allPriceInfoMap.get('Agreement Value')) {
+                if(Math.abs(totalAmount.setscale(0,RoundingMode.HALF_UP) - allPriceInfoMap.get('Agreement Value')).setscale(0,RoundingMode.HALF_UP) > 1) {
+                    if(totalAmount > allPriceInfoMap.get('Agreement Value').setscale(0,RoundingMode.HALF_UP)) {
                         errorCount++;
-                        validationErrorList.add('Error '+errorCount+': There is an excess of ₹ '+currencyFormat(Math.abs(totalAmount - allPriceInfoMap.get('Agreement Value'))));
+                        validationErrorList.add('Error '+errorCount+': There is an excess of ₹ '+currencyFormat(Math.abs(totalAmount - allPriceInfoMap.get('Agreement Value').setscale(0,RoundingMode.HALF_UP))));
                         errorCount++;
                         validationErrorList.add('Error '+errorCount+': Percentages add up to: '+totalPercentage);
                     } else {
                         errorCount++;
-                        validationErrorList.add('Error '+errorCount+': There is an shortfall of ₹ '+currencyFormat(Math.abs(totalAmount - allPriceInfoMap.get('Agreement Value'))));
+                        validationErrorList.add('Error '+errorCount+': There is an shortfall of ₹ '+currencyFormat(Math.abs(totalAmount - allPriceInfoMap.get('Agreement Value').setscale(0,RoundingMode.HALF_UP))));
                         errorCount++;
                         validationErrorList.add('Error '+errorCount+': Percentages add up to: '+totalPercentage);
                     }
                 }
             }
         }
-        return validationErrorList;
+        if(validationErrorList != null){
+            return validationErrorList;
+        }else if(validationErrorList.isEmpty()){
+            return null;
+        }else{
+            return null;
+        }
+        
     }
     
     public static List<PaymentMilestoneWrapper> getUpdatedPaymentSchedule(Unit__c u, Integer agSeqNumber, Map<String, Pricing_List__c> priceListMap, Map<String, Decimal> allPriceInfoMap, List<PaymentMilestoneWrapper> updatedPaymentMilestoneWrapperList) {
@@ -1141,34 +1155,35 @@ public class Ex_InventoryPriceManagementServices {
         return formattedAmount+ '/-';
     }
     
-    /* public static Legal_Entity__c getLegalEntityDetails(Id unitId, Id TId,Id pId) {
-Legal_Entity__c le = new Legal_Entity__c();
-Id leId = null;
-
-List<Unit__c> uid = [Select Id, Name, Legal_Entity__r.Id from Unit__c where Id = : unitId];
-
-if(uid != null && uid.size() > 0) {
-leId =uid[0].Legal_Entity__r.Id; 
-}
-if(leId == null) {
-List<Tower__c> T = [Select Id, Name, Legal_Entity__r.Id from Tower__c where Id = : TId];
-if(T != null && T.size() > 0)
-leId = T[0].Legal_Entity__r.Id;
-}
-System.debug('ledId:' + leId);
-if(leId == null) {
-List<Project__c> P = [Select Id, Name, Legal_Entity__r.Id from Project__c where Id = : pId];
-if(P != null && P.size() > 0)
-leId = P[0].Legal_Entity__r.Id;
-}
-if(leId != null) {
-le = [Select Name,Account_Name_Flat_Cost__c,Account_Name_Tax__c,Account_Number_Flat_Cost__c,Account_Number_Tax__c,
-Bank_Name_Flat_Cost__c,Bank_Name_Tax__c,Branch_Name_Flat_Cost__c,Branch_Name_Tax__c,GSTIN__c,IFSC_Code_Flat_Cost__c,
-IFSC_Code_Tax__c,PAN_No__c,Company_Name__c
-FROM Legal_Entity__c where Id = : leId];
-}
-System.debug('ledId:' + leId);        
-return le;     
-}*/
+    public static Legal_Entity__c getLegalEntityDetails(Id unitId, Id TId,Id pId) {
+        Legal_Entity__c le = new Legal_Entity__c();
+        Id leId = null;
+        
+        List<Unit__c> uid = [Select Id, Name, Legal_Entity__r.Id from Unit__c where Id = : unitId];
+        
+        if(uid != null && uid.size() > 0) {
+            leId =uid[0].Legal_Entity__r.Id; 
+        }
+        if(leId == null) {
+            List<Tower__c> T = [Select Id, Name, Legal_Entity__r.Id from Tower__c where Id = : TId];
+            if(T != null && T.size() > 0)
+                leId = T[0].Legal_Entity__r.Id;
+        }
+        System.debug('ledId:' + leId);
+        if(leId == null) {
+            List<Project__c> P = [Select Id, Name, Legal_Entity__r.Id from Project__c where Id = : pId];
+            if(P != null && P.size() > 0)
+                leId = P[0].Legal_Entity__r.Id;
+        }
+        if(leId != null) {
+            le = [Select Name,Account_Name_Flat_Cost__c, Account_Name_Tax__c, Account_Number_Flat_Cost__c, Account_Number_Tax__c,
+                  Bank_Name_Flat_Cost__c,Bank_Name_Tax__c, Branch_Name_Flat_Cost__c ,Branch_Name_Tax__c, IFSC_Code_Flat_Cost__c,
+                  
+                  IFSC_Code_Tax__c
+                  FROM Legal_Entity__c where Id = : leId];
+        }
+        System.debug('ledId:' + leId);        
+        return le;     
+    }
     
 }

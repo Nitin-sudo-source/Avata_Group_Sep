@@ -176,7 +176,15 @@
         <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>PrintableListView</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <searchResultsAdditionalFields>Full_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Is_Serviced__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Lead_Source__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Lead_Stage__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Presales_Next_Follow_Up_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Presales_Proposed_Visit_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

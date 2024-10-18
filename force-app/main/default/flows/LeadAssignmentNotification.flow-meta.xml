@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Send_Notification_To_Lead_Owner</name>
-        <label>Send Notification To Lead Owner</label>
-        <locationX>696</locationX>
-        <locationY>223</locationY>
+        <name>leadassignmentnotification</name>
+        <label>leadassignmentnotification</label>
+        <locationX>402</locationX>
+        <locationY>357</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
-                <elementReference>Send_Notification.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
-            <value>
-                <elementReference>NotificationBody</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Lead Notification</stringValue>
+                <elementReference>getLeadAssignmentNotification.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recipientIds</name>
             <value>
-                <elementReference>RecipientID</elementReference>
+                <elementReference>getOwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Lead Assignment Notification</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>message</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -39,28 +39,29 @@
             </value>
         </inputParameters>
         <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>AssignIds</name>
-        <label>AssignIds</label>
-        <locationX>530</locationX>
-        <locationY>106</locationY>
+        <name>getOwner</name>
+        <label>getOwner</label>
+        <locationX>200</locationX>
+        <locationY>357</locationY>
         <assignmentItems>
-            <assignToReference>RecipientID</assignToReference>
+            <assignToReference>getOwnerId</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>$Record.OwnerId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Send_Notification</targetReference>
+            <targetReference>leadassignmentnotification</targetReference>
         </connector>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>LeadAssignmentNotification {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>LeadAssignmentNotification</label>
+    <interviewLabel>Lead {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead Assignment Notification</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -81,20 +82,20 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Send_Notification</name>
-        <label>Send Notification</label>
-        <locationX>486</locationX>
-        <locationY>267</locationY>
+        <name>getLeadAssignmentNotification</name>
+        <label>getLeadAssignmentNotification</label>
+        <locationX>206</locationX>
+        <locationY>164</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Notification_To_Lead_Owner</targetReference>
+            <targetReference>getOwner</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>LeadAssignmentNotification</stringValue>
+                <stringValue>Lead_Assignment_Notification</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -102,10 +103,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>59</locationX>
-        <locationY>41</locationY>
+        <locationX>458</locationX>
+        <locationY>48</locationY>
         <connector>
-            <targetReference>AssignIds</targetReference>
+            <targetReference>getLeadAssignmentNotification</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -116,20 +117,20 @@
             </value>
         </filters>
         <object>Lead__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <textTemplates>
-        <name>NotificationBody</name>
+        <name>message</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>You have new Lead Assignment  {!$Record.Name}</text>
+        <text>New Lead {!$Record.Name}:- {!$Record.Full_Name__c} has been Assign to you.</text>
     </textTemplates>
     <variables>
-        <name>RecipientID</name>
+        <name>getOwnerId</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>

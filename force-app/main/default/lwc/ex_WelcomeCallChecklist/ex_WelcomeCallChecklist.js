@@ -1,12 +1,12 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import getApplicants from '@salesforce/apex/ex_WelcomeCallChecklistController.getApplicants';
-import getApplicantDocuments from '@salesforce/apex/ex_WelcomeCallChecklistController.getApplicantDocuments';
-import getQuotationDetails from '@salesforce/apex/ex_WelcomeCallChecklistController.getQuotationDetails';
-import getTokenAmount from '@salesforce/apex/ex_WelcomeCallChecklistController.getTokenAmount';
-import getSourceDetails from '@salesforce/apex/ex_WelcomeCallChecklistController.getSourceDetails';
-import getRejectedChecklist from '@salesforce/apex/ex_WelcomeCallChecklistController.getRejectedChecklist';
-import updateChecklistAction from '@salesforce/apex/ex_WelcomeCallChecklistController.updateChecklistAction';
-import save from '@salesforce/apex/ex_WelcomeCallChecklistController.save';
+import getApplicants from '@salesforce/apex/Ex_WelcomeCallChecklistController.getApplicants';
+import getApplicantDocuments from '@salesforce/apex/Ex_WelcomeCallChecklistController.getApplicantDocuments';
+import getQuotationDetails from '@salesforce/apex/Ex_WelcomeCallChecklistController.getQuotationDetails';
+import getTokenAmount from '@salesforce/apex/Ex_WelcomeCallChecklistController.getTokenAmount';
+import getSourceDetails from '@salesforce/apex/Ex_WelcomeCallChecklistController.getSourceDetails';
+import getRejectedChecklist from '@salesforce/apex/Ex_WelcomeCallChecklistController.getRejectedChecklist';
+import updateChecklistAction from '@salesforce/apex/Ex_WelcomeCallChecklistController.updateChecklistAction';
+import save from '@salesforce/apex/Ex_WelcomeCallChecklistController.save';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
