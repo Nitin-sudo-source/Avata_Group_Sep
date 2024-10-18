@@ -1,13 +1,13 @@
 /**
- * @description       : 
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @group             : 
- * @last modified on  : 10-18-2024
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+* @description       : 
+* @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+* @group             : 
+* @last modified on  : 10-18-2024
+* @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public class Ex_WelcomeCallEmailController {
+    
     public String bId { get; set; }
-    public Booking__c bk { get; set; }
     public List<Booking__c> bkList { get; set; }
     public String unitName {get;set;}
     public String towerName {get;set;}
@@ -18,13 +18,19 @@ public class Ex_WelcomeCallEmailController {
     public String tdsEmail {get;set;}
     public String tdsCompanyAddress {get;set;}
     public String tdsContactNo {get;set;}
-    //  public List<Applicant__c> apList { get; set; }
-    // public String currentDate { get; set; }
-    //public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
+    public String crmName {get;set;}
+    public DateTime welcomecallDate {get;set;}
+    public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
+    public List<applicant__c> apList { get; set; }
+    public String projName {get;set;}
+    
+    
     
     public Ex_WelcomeCallEmailController() {
         bId = ApexPages.currentPage().getParameters().get('bId');
-        bk = new Booking__c();
+        apList = new List<Applicant__c>();
+        ApplicantWrapperList = new List<ApplicantWrapper>();
+        
         bkList = new List<Booking__c>();
         unitName = '';
         towerName = '';
@@ -35,106 +41,121 @@ public class Ex_WelcomeCallEmailController {
         tdsEmail='';
         tdsCompanyAddress='';
         tdsContactNo='';
-    
-        //ApplicantWrapperList = new List<ApplicantWrapper>();
-        //apList= new List<Applicant__c>();
+        crmName = '';
+        welcomecallDate = System.today();
+        projName = '';
         
         if (bId != null) {
-            // Fetch Booking details
-            bkList = [SELECT Id, Primary_Applicant_Name__c, 
-                      Primary_Applicant_Mobile__c,
-                      Primary_Applicant_Email__c,
-                      Tower__r.Name,
-                      Unit__r.Name,
-                      Unit__r.RERA_Carpet_Area_Sq_Ft__c,
-                      Unit__r.Floor__c,
-                      Account_Name_Flat_Cost__c, 
-                      Bank_Name_Flat_Cost__c, 
-                      Branch_Name_Flat_Cost__c, 
-                      Account_Number_Flat_Cost__c, 
-                      IFSC_Code_Flat_Cost__c,
-                      Account_Name_Tax__c,
-                      Bank_Name_Tax__c,
-                      Branch_Name_Tax__c,
-                      Account_Number_Tax__c,
-                      IFSC_Code_Tax__c
-                      FROM Booking__c 
-                      WHERE Id = :bId];
+            bkList = [SELECT Id, Primary_Applicant_Name__c, Primary_Applicant_Mobile__c, Primary_Applicant_Email__c, Tower__r.Name, Unit__r.Name, Unit__r.RERA_Carpet_Area_Sq_Ft__c, Unit__r.Floor__c,
+                      Account_Name_Flat_Cost__c, Bank_Name_Flat_Cost__c, Branch_Name_Flat_Cost__c, Account_Number_Flat_Cost__c,  IFSC_Code_Flat_Cost__c, Account_Name_Tax__c, Bank_Name_Tax__c,
+                      Branch_Name_Tax__c,  Account_Number_Tax__c, IFSC_Code_Tax__c, Project__r.Contact_No__c, Project__r.Company_Address__c, Project__r.Email_ID__c, Project__r.Pan_No__c, Project__r.Company_Name__c,
+                      Welcome_Call_Done_DateTime__c, Project__r.Name,
+                      CRM_Head__r.Name
+                      FROM Booking__c  WHERE Id = :bId];
             System.debug('bkList: '+bkList);
             
             if (!bkList.isEmpty()) {
-                unitName = bkList[0].Unit__r.Name;
-                towerName = bkList[0].Tower__r.Name;
-                reraArea = String.valueof(bkList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c);
-                floorNo = String.valueof(bkList[0].Unit__r.Floor__c);
-                bk = bkList[0]; // Set the first booking record to bk
+                Booking__c bk = bkList[0];
+                unitName = bk.Unit__r.Name;
+                towerName = bk.Tower__r.Name;
+                reraArea = String.valueof(bk.Unit__r.RERA_Carpet_Area_Sq_Ft__c);
+                floorNo = String.valueof(bk.Unit__r.Floor__c);
+                tdsCompanyName= bk.Project__r.Company_Name__c;
+                tdsPan=bk.Project__r.Pan_No__c;
+                tdsEmail=bk.Project__r.Email_ID__c;
+                tdsCompanyAddress=bk.Project__r.Company_Address__c;
+                tdsContactNo=bk.Project__r.Contact_No__c;
+                crmName = bk.CRM_Head__r.Name;
+                welcomecallDate = bk.Welcome_Call_Done_DateTime__c;
+                projName = bk.Project__r.Name;
             }
         }
         
-        // Initialize current date
-        //currentDate = String.valueOf(Date.today());
+        // Fetch Applicants
+        apList = [
+            SELECT Id, Name, Applicant_Number__c, Applicant_Title__c, DOB__c, Anniversary_Date__c, 
+            Occupation__c, Mobile__c, Email__c, PAN_Number__c, Permanent_Address__c, 
+            Country__c, State__c, City__c, PIN__c
+            FROM Applicant__c 
+            WHERE Booking__c = :bId 
+            ORDER BY Applicant_Number__c ASC
+        ];
+        
+        // Populate ApplicantWrapperList
+        for (Applicant__c applicant : apList) {
+            ApplicantWrapperList.add(new ApplicantWrapper(
+                applicant.Applicant_Title__c,
+                applicant.Applicant_Number__c,
+                applicant.Name,
+                null, // Gender (not available in the queried fields)
+                applicant.DOB__c,
+                applicant.Anniversary_Date__c,
+                applicant.Occupation__c,
+                applicant.Mobile__c,
+                applicant.PAN_Number__c,
+                applicant.Email__c,
+                applicant.Permanent_Address__c,
+                applicant.State__c,
+                applicant.Country__c,
+                applicant.City__c,
+                applicant.PIN__c,
+                '', // Permanent address fields can be adjusted if necessary
+                applicant.State__c,
+                applicant.Country__c,
+                applicant.City__c,
+                applicant.PIN__c
+            ));
+        }
+        
     }
     
-    // Wrapper class to hold Applicant details
     public class ApplicantWrapper {
+        public String apTitle { get; set; }
+        public String applicantNumber { get; set; }
         public String applicantName { get; set; }
+        public String applicantGender { get; set; }
+        public Date applicantDOB { get; set; }
+        public Date applicantAnivserD { get; set; }
+        public String applicantOccupation { get; set; }
         public String applicantMobile { get; set; }
+        public String applicantPAN { get; set; }
         public String applicantEmail { get; set; }
-        public String buildingname {get;set;}
-        public String unitno { get; set; }
-        public String typeofunit { get; set; }
-        public String reracarpetarea { get; set; }
-        public String floor { get; set; } 
-        public String companynameandaccountname { get; set; }
-        public String bankandbranchname { get; set; }
-        public String accountno { get; set; }
-        public String ifsccode { get; set; }
+        public String commAddress { get; set; }
+        public String commState { get; set; }
+        public String commCountry { get; set; }
+        public String commCity { get; set; }
+        public String commPIN { get; set; }
+        public String permAddress { get; set; }
+        public String permState { get; set; }
+        public String permCountry { get; set; }
+        public String permCity { get; set; }
+        public String permPIN { get; set; }
         
-        public String companynameandaccountname1 { get; set; }
-        public String bankandbranchname1 { get; set; }
-        public String accountno1 { get; set; }
-        public String ifsccode1 { get; set; }
-        
-        public String companyname { get; set; }
-        public String panno { get; set; }
-        public String emailid { get; set; }
-        public String companyaddress { get; set; }
-        public String contactno { get; set; }
-        
-        
-        
-        
-        public ApplicantWrapper(String name, String mobile, String email,String buildingname,String unitno,String typeofunit, String reracarpetarea,String floor ,
-                                String companynameandaccountname,String bankandbranchname,String accountno ,String ifsccode,
-                                String companynameandaccountname1, String bankandbranchname1, String accountno1,String ifsccode1 ,
-                                String companyname ,String panno,String emailid,String companyaddress,String contactno ) {
-                                    this.applicantName = name;
-                                    this.applicantMobile = mobile;
-                                    this.applicantEmail = email;
-                                    
-                                    this.buildingname= buildingname;
-                                    this.unitno= unitno;
-                                    this.typeofunit= typeofunit;
-                                    this.reracarpetarea= reracarpetarea;
-                                    this.floor= floor;
-                                    this.companynameandaccountname= companynameandaccountname;
-                                    this.bankandbranchname= bankandbranchname;
-                                    this.accountno= accountno;
-                                    this.ifsccode= ifsccode;
-                                    
-                                    this.companynameandaccountname1= companynameandaccountname1;
-                                    this.bankandbranchname1= bankandbranchname1;
-                                    this.accountno1= accountno1;             
-                                    this.ifsccode1= ifsccode1;
-                                    
-                                    this.companyname= companyname;
-                                    this.panno= panno;
-                                    this.emailid= emailid;
-                                    this.companyaddress= companyaddress;
-                                    this.contactno= contactno;
-                                    
-                                    
-                                    
+        public ApplicantWrapper(String apTitle, String applicantNumber, String applicantName, String applicantGender, 
+                                Date applicantDOB, Date applicantAnivserD, String applicantOccupation, String applicantMobile, 
+                                String applicantPAN, String applicantEmail, String commAddress, String commState, 
+                                String commCountry, String commCity, String commPIN, String permAddress, String permState, 
+                                String permCountry, String permCity, String permPIN) {
+                                    this.apTitle = apTitle;
+                                    this.applicantNumber = applicantNumber;
+                                    this.applicantName = applicantName;
+                                    this.applicantGender = applicantGender;
+                                    this.applicantDOB = applicantDOB;
+                                    this.applicantAnivserD = applicantAnivserD;
+                                    this.applicantOccupation = applicantOccupation;
+                                    this.applicantMobile = applicantMobile;
+                                    this.applicantPAN = applicantPAN;
+                                    this.applicantEmail = applicantEmail;
+                                    this.commAddress = commAddress;
+                                    this.commState = commState;
+                                    this.commCountry = commCountry;
+                                    this.commCity = commCity;
+                                    this.commPIN = commPIN;
+                                    this.permAddress = permAddress;
+                                    this.permState = permState;
+                                    this.permCountry = permCountry;
+                                    this.permCity = permCity;
+                                    this.permPIN = permPIN;
                                 }
     }
 }

@@ -21,6 +21,7 @@ global class Ex_RESTCTIAgentServices {
         String projectId;
         String virtualNumber;
         String mcubeURL = '';
+        String recordId = '';
         Boolean isOffline = false;
         List<Campaign__c> cList = new List<Campaign__c>();
         List<Account> accList = new List<Account>();
@@ -58,6 +59,7 @@ global class Ex_RESTCTIAgentServices {
                 System.debug('accList: '+accList);
                 if(!accList.isEmpty() && accList != null) {
                     ownerId = accList[0].OwnerId;
+                    recordId = accList[0].Id;
                 } else {
                     
                     leadList = [Select Id, First_Name__c, Last_Name__c, Mobile__c, Alternate_Mobile__c, OwnerId from Lead__c where ((Mobile__c =:fromnumber  OR Alternate_Mobile__c =:fromnumber))
@@ -66,6 +68,7 @@ global class Ex_RESTCTIAgentServices {
                     
                     if(!leadList.isEmpty() && leadList != null) {
                         ownerId = leadList[0].OwnerId;
+                        recordId = leadList[0].Id;
                     } else {
                         Lead__c l = new Lead__c();
                         l.First_Name__c = 'Incoming';
@@ -84,8 +87,10 @@ global class Ex_RESTCTIAgentServices {
                             List<Lead__c> getList = [Select Id, OwnerId from Lead__c where Id =: l.Id];
                             system.debug('getList: '+getList);
                             
+                            
                             if(!getList.isEmpty() && getList != null) {
                                 ownerId = getList[0].OwnerId;
+                                recordId = getList[0].Id;
                             }
                         } catch(Exception ex) {
                             system.debug('Error: '+ex.getMessage());
@@ -103,22 +108,29 @@ global class Ex_RESTCTIAgentServices {
                 if(userList[0].Agent_Id__c != null && userList[0].Agent_Id__c != '' && userList[0].MobilePhone != null && userList[0].MobilePhone != '') {
                     r.agentId = userList[0].Agent_Id__c;
                     r.agentNo = userList[0].MobilePhone;
+                    if(String.isNotBlank(recordId))
+                    r.recordId = recordId;
                 } else {
                     r.agentId = null;
                     r.agentNo = null;
+                    r.recordId = null;
                 }
             } else {
                 r.agentId = null;
                 r.agentNo = null;
+                r.recordId = null;
             }
         } else {
             r.agentId = null;
             r.agentNo = null;
+            r.recordId = null;
         }
         return r;
     }
     global class REST_result{
         webservice String AgentId;
         webservice String AgentNo;
+        webservice String recordId;
+        
     }
 }

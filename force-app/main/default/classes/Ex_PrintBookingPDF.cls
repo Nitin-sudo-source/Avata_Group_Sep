@@ -12,6 +12,7 @@ public class Ex_PrintBookingPDF {
 
     public List<String> termsList { get; set; } // Terms list for storing multiple terms
     public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
+   
 
     public Ex_PrintBookingPDF() {
         bId = ApexPages.currentPage().getParameters().get('bId');

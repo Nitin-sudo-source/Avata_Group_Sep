@@ -1,21 +1,114 @@
 <apex:page controller="Ex_WelcomeCallEmailController" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
     <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style type="text/css" media="print">
+                               @page {
+                    font-family: Times, sans-serif;
+                    size: A4;
+                    margin-top: 0.5in;
+                    padding: 2px;
+                }
+
+                .header {
+                    position: running(header);
+                    font-size: 10px;
+                    text-align: left;
+                    padding-left: 5px;
+                    margin-top: 5mm;
+                }
+
+                .footer {
+                    display: block;
+                    text-align: right;
+                    position: running(footer);
+                }
+
+                * {
+                    box-sizing: border-box;
+                    font-size: 10px;
+                }
+
+                body {
+                    font-family: Times, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .content-container {
+                    font-family: Arial, sans-serif;
+                    padding: 20px;
+                }
+
+                .date-text,
+                .salutation-text,
+                .section-title,
+                .paragraph-text,
+                .contact-text {
+                    font-size: 15px;
+                }
+
+                .section-title {
+                    font-size: 18px;
+                    text-decoration: underline;
+                }
+
+                .crm-details b {
+                    font-size: 14px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th,
+                td {
+                    border: 0.5px solid black;
+                    padding: 4px;
+                    text-align: left;
+                    font-size: 12px;
+                    page-break-inside: avoid;
+                	width:50%;
+                }
+
+                th {
+                    font-weight: bold;
+                }
+
+                h3 {
+                    font-size: 18px;
+                }
+                
+            </style>
+        </head>
         
         <body>
-            <div style="font-family: Arial, sans-serif; padding: 20px;">
-               <!-- <p style="font-size: 15px;text-align: right;">Date: {!currentDate}</p>-->
+             <div class="content-container">
+
+                <p style="font-size: 15px;text-align: right;"> Date:
+                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                        <apex:param value="{!welcomecallDate}" /> 
+                    </apex:outputText>
+                </p>
+                
+                <!-- <p style="font-size: 15px;text-align: right;">Date: {!currentDate}</p>-->
                 
                 <!-- Salutation -->
-                <p>Dear {!bkList[0].Primary_Applicant_Name__c},</p>
+                <p style="font-size: 18px;">Dear {!bkList[0].Primary_Applicant_Name__c},</p>
                 
                 <p style="font-size: 15px;">
-                    Greetings from Avant Group…!!!<br/>
+                    Greetings from Avant Group…!!!
+                </p>
+                <p style="font-size: 15px;">
                     Congratulations on your new home, we are delighted to welcome you.
                 </p>
                 
+                
                 <p style="font-size: 15px;">
-                    My name is {!bkList[0].Primary_Applicant_Name__c} and I am your Customer Relationship Manager for your booking at 
-                    <b>AVANT HERITAGE V</b>. It shall be my pleasure to assist you in completing your flat purchase formalities.
+                    My name is <b style="font-size: 14px;"> {!crmName} </b> and I am your Customer Relationship Manager for your booking at 
+                    <b style="font-size: 14px;"> {!projName} </b>. It shall be my pleasure to assist you in completing your flat purchase formalities.
                 </p>
                 
                 <p style="font-size: 15px;">
@@ -25,56 +118,69 @@
                 </p>
                 
                 <!-- Personal Details Section -->
-                <h3 style="font-size: 18px;"><u>Your Personal Details:</u></h3>
-            
-
+               
+                
+                
+                
+                <table>
+                    <tr>
+                    	<th colspan="2" style="border:none;">  <h3><u style="font-size: 16px;">Your Personal Details:</u></h3> </th>
+                    </tr>
+                    <tr>
+                        <th>Primary Applicant’s Name</th>
+                        <th>{!bkList[0].Primary_Applicant_Name__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Co-Applicant’s Name</th>
+                        <th>
+                            <apex:repeat value="{!ApplicantWrapperList}" var="ap">
+                                {!ap.applicantName},
+                            </apex:repeat>
+                            
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Primary Applicant’s Mobile</th>
+                        <th>{!bkList[0].Primary_Applicant_Mobile__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Primary Applicant’s Email</th>
+                        <th>{!bkList[0].Primary_Applicant_Email__c}</th>
+                    </tr>
+                    
+                </table>
                  
-                 <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.7; padding:5px; font-size:12px">
+                 
+                 
+                
+                
+                <table>
                      <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Primary Applicant’s Name</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Primary_Applicant_Name__c}</th>
-                    </tr>
-                      <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Co-Applicant’s Name</th>
-                        <th style="padding: 10px;" align="left"></th>
+                    	<th colspan="2" style="border:none;">  <h3><u style="font-size: 16px;">Details of the Residential unit:</u></h3> </th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Primary Applicant’s Mobile</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Primary_Applicant_Mobile__c}</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Primary Applicant’s Email</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Primary_Applicant_Email__c}</th>
-                    </tr>
-     
-               </table>
-
-
-                <h3 style="font-size: 18px;"><u>Details of the Residential unit:</u></h3>
-                <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.7; padding:5px; font-size:12px">
-                    <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Building Name</th>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left"> {!towerName} </th>
+                        <th>Building Name</th>
+                        <th> {!towerName} </th>
                         <!-- <th style="padding: 10px;" align="left">{!bkList[0].Tower__r.Name}</th>-->
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Unit No.</th>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left"> {!unitName} </th>
-                       <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Name}</th>-->
+                        <th>Unit No.</th>
+                        <th> {!unitName} </th>
+                        <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Name}</th>-->
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Type of Unit</th>
-                        <th style="padding: 10px;" align="left">Residential</th>
+                        <th>Type of Unit</th>
+                        <th>Residential</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Rera Carpet Area</th>
-                        <th style="padding: 10px;" align="left"> {!reraArea} </th>
-                      <!--  <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c}</th>-->
+                        <th>Rera Carpet Area</th>
+                        <th> {!reraArea} </th>
+                        <!--  <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c}</th>-->
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Floor</th>
-                        <th style="padding: 10px;" align="left"> {!floorNo} </th>
-                       <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Floor__c}</th>-->
+                        <th>Floor</th>
+                        <th> {!floorNo} </th>
+                        <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Floor__c}</th>-->
                     </tr>
                 </table>
                 
@@ -92,86 +198,86 @@
                 </p>
                 
                 
-        
-               <h3 style="page-break-before: always; font-size: 18px;"><u>Account Details for Payment to be made against Flat:</u></h3>
-
-                   <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.6; padding:5px; font-size:12px">
-                        <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Particulars</th>
-                        <th style="padding: 10px;" align="left">Online payments towards</th>
-                    </tr>
-                       <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Company Name/Account Name</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Account_Name_Flat_Cost__c}</th>
+                
+                <h3 style="page-break-before: always; font-size: 18px;"><u>Account Details for Payment to be made against Flat:</u></h3>
+                
+                <table>
+                    <tr>
+                        <th>Particulars</th>
+                        <th>Online payments towards</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Bank /Branch Name</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Bank_Name_Flat_Cost__c} / {!bkList[0].Branch_Name_Flat_Cost__c}</th>
+                        <th>Company Name/Account Name</th>
+                        <th>{!bkList[0].Account_Name_Flat_Cost__c}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Account No</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Account_Number_Flat_Cost__c}</th>
+                        <th>Bank /Branch Name</th>
+                        <th>{!bkList[0].Bank_Name_Flat_Cost__c} / {!bkList[0].Branch_Name_Flat_Cost__c}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">IFSC CODE</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].IFSC_Code_Flat_Cost__c}</th>
+                        <th>Account No</th>
+                        <th>{!bkList[0].Account_Number_Flat_Cost__c}</th>
                     </tr>
-          </table>
+                    <tr>
+                        <th>IFSC CODE</th>
+                        <th>{!bkList[0].IFSC_Code_Flat_Cost__c}</th>
+                    </tr>
+                </table>
                 
                 <!-- Account Details for Payments Against GST -->
                 <h3 style="font-size: 18px;"><u>Account Details for Payments to be Made Against GST:</u></h3>
-                <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.6; padding:5px; font-size:12px">
-                   <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Particulars</th>
-                        <th style="padding: 10px;" align="left">Online payments towards</th>
-                    </tr>
-                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Company Name/Account Name</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Account_Name_Tax__c}</th>
+                <table>
+                    <tr>
+                        <th>Particulars</th>
+                        <th>Online payments towards</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Bank and Branch Name</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Bank_Name_Tax__c} / {!bkList[0].Branch_Name_Tax__c}</th>
+                        <th>Company Name/Account Name</th>
+                        <th>{!bkList[0].Account_Name_Tax__c}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Account No</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Account_Number_Tax__c}</th>
+                        <th>Bank and Branch Name</th>
+                        <th>{!bkList[0].Bank_Name_Tax__c} / {!bkList[0].Branch_Name_Tax__c}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">IFSC CODE</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].IFSC_Code_Tax__c}</th>
+                        <th>Account No</th>
+                        <th>{!bkList[0].Account_Number_Tax__c}</th>
                     </tr>
-               </table>
-              <!-- TDS Payment Details -->
+                    <tr>
+                        <th>IFSC CODE</th>
+                        <th>{!bkList[0].IFSC_Code_Tax__c}</th>
+                    </tr>
+                </table>
+                <!-- TDS Payment Details -->
                 <h3 style="font-size: 18px;"><u>TDS Payment Details:</u></h3>
                 
-              <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.6; padding:5px; font-size:12px">
-                   <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Particulars</th>
-                        <th style="padding: 10px;" align="left"></th>
-                    </tr>
-                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Company Name</th>
-                        <th style="padding: 10px;" align="left"></th>
+                <table>
+                    <tr>
+                        <th>Particulars</th>
+                        <th></th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">PAN No</th>
-                        <th style="padding: 10px;" align="left"></th>
+                        <th>Company Name</th>
+                        <th>{!tdsCompanyName}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Email ID</th>
-                        <th style="padding: 10px;" align="left"></th>
+                        <th>PAN No</th>
+                        <th>{!tdsPan}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Company Address</th>
-                        <th style="padding: 10px;" align="left"></th>
+                        <th>Email ID</th>
+                        <th>{!tdsEmail}</th>
                     </tr>
                     <tr>
-                        <th colspan="2" style="padding: 10px;font-size:12px" align="left">Contact No</th>
-                        <th style="padding: 10px;" align="left"></th>
-                     </tr>
-                
-                 </table>
+                        <th>Company Address</th>
+                        <th>{!tdsCompanyAddress}</th>
+                    </tr>
+                    <tr>
+                        <th>Contact No</th>
+                        <th>{!tdsContactNo}</th>
+                    </tr>
+                    
+                </table>
                 
                 <h3 style="font-size: 18px;"><u>Please share the following with us once you have made an online payment:</u></h3>
                 <p style="font-size: 15px;">(1) Bank name and account number from which the payment has been made</p>
@@ -179,9 +285,9 @@
                 <p style="font-size: 15px;">(3) Transaction Date and Transaction Amount</p>
                 <p style="font-size: 15px;">(4) Unit number and Project Name</p>
                 
-              <h3 style="font-size: 18px;"><u>Contact Us:</u></h3>
-
-                <p style="font-size: 15px;">You may reach us at <strong>crm@avantinfra.com</strong></p>
+                <h3 style="font-size: 18px;"><u>Contact Us:</u></h3>
+                
+                <p style="font-size: 15px;">You may reach us at <strong style="font-size: 15px;">crm@avantinfra.com</strong></p>
                 
                 <p style="font-size: 15px;">I truly wish to make your journey until possession of your home a very enjoyable one.<br/>
                     Looking forward to assisting you.</p>

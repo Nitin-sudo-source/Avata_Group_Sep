@@ -131,14 +131,7 @@ global without sharing class mCubeController {
         return false;
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     @auraenabled
     webservice static boolean clickToCall(String recordId) { 
        
