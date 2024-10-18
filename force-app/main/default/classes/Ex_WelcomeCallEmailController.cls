@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 10-18-2024
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public class Ex_WelcomeCallEmailController {
     public String bId { get; set; }
     public Booking__c bk { get; set; }
@@ -6,6 +13,11 @@ public class Ex_WelcomeCallEmailController {
     public String towerName {get;set;}
     public String reraArea {get;set;}
     public String floorNo {get;set;}
+    public String tdsCompanyName {get;set;}
+    public String tdsPan {get;set;}
+    public String tdsEmail {get;set;}
+    public String tdsCompanyAddress {get;set;}
+    public String tdsContactNo {get;set;}
     //  public List<Applicant__c> apList { get; set; }
     // public String currentDate { get; set; }
     //public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
@@ -18,6 +30,12 @@ public class Ex_WelcomeCallEmailController {
         towerName = '';
         reraArea = '';
         floorNo = '';
+        tdsCompanyName='';
+        tdsPan='';
+        tdsEmail='';
+        tdsCompanyAddress='';
+        tdsContactNo='';
+    
         //ApplicantWrapperList = new List<ApplicantWrapper>();
         //apList= new List<Applicant__c>();
         
@@ -35,14 +53,11 @@ public class Ex_WelcomeCallEmailController {
                       Branch_Name_Flat_Cost__c, 
                       Account_Number_Flat_Cost__c, 
                       IFSC_Code_Flat_Cost__c,
-                      
                       Account_Name_Tax__c,
                       Bank_Name_Tax__c,
                       Branch_Name_Tax__c,
                       Account_Number_Tax__c,
                       IFSC_Code_Tax__c
-                      
-                      
                       FROM Booking__c 
                       WHERE Id = :bId];
             System.debug('bkList: '+bkList);
