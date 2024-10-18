@@ -17,15 +17,16 @@ public class Ex_BookingTriggerHandler {
         Map<Id, Booking__c> quotationBookingMap = new Map<Id, Booking__c>();
         Set<Id> towerIdSet = new Set<Id>();
         
-        List<Booking__c> newBookingList = new List<Booking__c>();
+        Set<Id> bkSetId = new Set<Id>();
         List<Booking__c> bList = new List<Booking__c>();
         
         for(Booking__c oldBooking: oldMap.values()) {
             Booking__c newBooking = newMap.get(oldBooking.Id);
             
-            /*if(oldBooking.Generate_Welcome_Call_Checklist_Master__c != newBooking.Generate_Welcome_Call_Checklist_Master__c && newBooking.Generate_Welcome_Call_Checklist_Master__c == True ){
-newBookingList.add(newBooking);
-}*/
+            if(oldBooking.Welcome_Call_Done__c != newBooking.Welcome_Call_Done__c && newBooking.Welcome_Call_Done__c == True ){
+                bkSetId.add(newBooking.Id);
+            }
+            
             if(oldBooking.Updated_Agreement_Value__c != newBooking.Updated_Agreement_Value__c || oldBooking.GST__c != newBooking.GST__c || oldBooking.Stamp_Duty__c != newBooking.Stamp_Duty__c) {
                 bList.add(newBooking);
             }
@@ -36,9 +37,9 @@ newBookingList.add(newBooking);
             }
         }
         
-       /* if(!newBookingList.isEmpty() && newBookingList != null){
-            Ex_BookingHanldlerServices.insertWelcomeCallChecklist(newBookingList);
-        }*/
+        if(!bkSetId.isEmpty() && bkSetId != null){
+            Ex_SendEmailWelcomeCall.sendEmailWelcomeCall(bkSetId);
+        }
         if(!bList.isEmpty() && bList != null) {
            // Ex_BookingHanldlerServices.handleAgreementValueChange(bList);
         }

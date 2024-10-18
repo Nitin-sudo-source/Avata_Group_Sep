@@ -54,11 +54,13 @@
                 <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.7; padding:5px; font-size:12px">
                     <tr>
                         <th colspan="2" style="padding: 10px;font-size:12px" align="left">Building Name</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Tower__r.Name}</th>
+                        <th colspan="2" style="padding: 10px;font-size:12px" align="left"> {!towerName} </th>
+                        <!-- <th style="padding: 10px;" align="left">{!bkList[0].Tower__r.Name}</th>-->
                     </tr>
                     <tr>
                         <th colspan="2" style="padding: 10px;font-size:12px" align="left">Unit No.</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Name}</th>
+                        <th colspan="2" style="padding: 10px;font-size:12px" align="left"> {!unitName} </th>
+                       <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Name}</th>-->
                     </tr>
                     <tr>
                         <th colspan="2" style="padding: 10px;font-size:12px" align="left">Type of Unit</th>
@@ -66,11 +68,13 @@
                     </tr>
                     <tr>
                         <th colspan="2" style="padding: 10px;font-size:12px" align="left">Rera Carpet Area</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c}</th>
+                        <th style="padding: 10px;" align="left"> {!reraArea} </th>
+                      <!--  <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c}</th>-->
                     </tr>
                     <tr>
                         <th colspan="2" style="padding: 10px;font-size:12px" align="left">Floor</th>
-                        <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Floor__c}</th>
+                        <th style="padding: 10px;" align="left"> {!floorNo} </th>
+                       <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Floor__c}</th>-->
                     </tr>
                 </table>
                 

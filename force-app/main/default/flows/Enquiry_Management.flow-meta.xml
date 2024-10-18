@@ -445,7 +445,7 @@
         <connector>
             <targetReference>Enquiry_Against_Account</targetReference>
         </connector>
-        <filterFormula>{!$Record.RecordType.DeveloperName} == &apos;Enquiry&apos;</filterFormula>
+        <filterFormula>AND ({!$Record.RecordType.DeveloperName} == &apos;Enquiry&apos;, {!$Record.Is_New_Lead_Created__c} == false)</filterFormula>
         <object>Task</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
