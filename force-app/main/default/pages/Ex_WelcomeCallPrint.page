@@ -68,7 +68,7 @@
                     border: 0.5px solid black;
                     padding: 4px;
                     text-align: left;
-                    font-size: 12px;
+                    font-size: 14px;
                     page-break-inside: avoid;
                 	width:50%;
                 }
@@ -96,7 +96,7 @@
                 <!-- <p style="font-size: 15px;text-align: right;">Date: {!currentDate}</p>-->
                 
                 <!-- Salutation -->
-                <p style="font-size: 18px;">Dear {!bkList[0].Primary_Applicant_Name__c},</p>
+                <p style="font-size: 15px;">Dear {!bkList[0].Primary_Applicant_Name__c},</p>
                 
                 <p style="font-size: 15px;">
                     Greetings from Avant Group…!!!
@@ -107,13 +107,13 @@
                 
                 
                 <p style="font-size: 15px;">
-                    My name is <b style="font-size: 14px;"> {!crmName} </b> and I am your Customer Relationship Manager for your booking at 
-                    <b style="font-size: 14px;"> {!projName} </b>. It shall be my pleasure to assist you in completing your flat purchase formalities.
+                    My name is <b style="font-size: 15px;"> {!crmName} </b> and I am your Customer Relationship Manager for your booking at 
+                    <b style="font-size: 15px;"> {!projName} </b>and it shall be my pleasure to assist you in completing your flat purchase formalities.
                 </p>
                 
                 <p style="font-size: 15px;">
-                    I am pleased to inform you that your request for the purchase of a residential/commercial unit 
-                    has been accepted and accordingly, a flat/shop is tentatively booked under your name, 
+                    I am pleased to inform you that your request for the purchase of a {!inventoryType} unit 
+                    has been accepted and accordingly, a {!configrationType} is tentatively booked under your name, 
                     the details of which are as follows:
                 </p>
                 
@@ -156,7 +156,7 @@
                 
                 <table>
                      <tr>
-                    	<th colspan="2" style="border:none;">  <h3><u style="font-size: 16px;">Details of the Residential unit:</u></h3> </th>
+                    	<th colspan="2" style="border:none;">  <h3><u style="font-size: 16px;">Details of the {!inventoryType} unit:</u></h3> </th>
                     </tr>
                     <tr>
                         <th>Building Name</th>
@@ -170,7 +170,7 @@
                     </tr>
                     <tr>
                         <th>Type of Unit</th>
-                        <th>Residential</th>
+                        <th>{!inventoryType}</th>
                     </tr>
                     <tr>
                         <th>Rera Carpet Area</th>
@@ -184,14 +184,14 @@
                     </tr>
                 </table>
                 
-                <h3 style="font-size: 18px;">Payment Plan:</h3>
+                <h3 style="font-size: 16px;">Payment Plan:</h3>
                 <p style="font-size: 15px;">
                     Please note all payments shall be made in accordance with the cost sheet attached separately with this email/letter. 
                     All statutory taxes and levies need to be borne by the home buyer as per the rates applicable from time to time and paid 
                     to the developer as and when called for the same.
                 </p>
                 
-                <h3 style="font-size: 18px;"><u>Online/Cheque Payment Details:</u></h3>
+                <h3 ><u style="font-size: 16px;">Online/Cheque Payment Details:</u></h3>
                 <p style="font-size: 15px;">
                     We would strongly encourage you to make the payments online and provide us with the UTR No. of the payments so 
                     we can trace your payments and accordingly confirm.
@@ -199,7 +199,7 @@
                 
                 
                 
-                <h3 style="page-break-before: always; font-size: 18px;"><u>Account Details for Payment to be made against Flat:</u></h3>
+                <h3 style="page-break-before: always;"><u style="font-size: 15px;">Account Details for Payment to be made against Flat:</u></h3>
                 
                 <table>
                     <tr>
@@ -225,7 +225,7 @@
                 </table>
                 
                 <!-- Account Details for Payments Against GST -->
-                <h3 style="font-size: 18px;"><u>Account Details for Payments to be Made Against GST:</u></h3>
+                <h3><u style="font-size: 15px;">Account Details for Payments to be Made Against GST:</u></h3>
                 <table>
                     <tr>
                         <th>Particulars</th>
@@ -249,7 +249,7 @@
                     </tr>
                 </table>
                 <!-- TDS Payment Details -->
-                <h3 style="font-size: 18px;"><u>TDS Payment Details:</u></h3>
+                <h3><u style="font-size: 15px;">TDS Payment Details:</u></h3>
                 
                 <table>
                     <tr>
@@ -279,20 +279,23 @@
                     
                 </table>
                 
-                <h3 style="font-size: 18px;"><u>Please share the following with us once you have made an online payment:</u></h3>
+                <h3><u style="font-size: 16px;">Please share the following with us once you have made an online payment:</u></h3>
                 <p style="font-size: 15px;">(1) Bank name and account number from which the payment has been made</p>
                 <p style="font-size: 15px;">(2) Transaction Code – the 16 digit UTR code is mandatory for us to accept your payment, since banks/we cannot identify the payment without it</p>
                 <p style="font-size: 15px;">(3) Transaction Date and Transaction Amount</p>
                 <p style="font-size: 15px;">(4) Unit number and Project Name</p>
                 
-                <h3 style="font-size: 18px;"><u>Contact Us:</u></h3>
+                <h3><u style="font-size: 16px;">Contact Us:</u></h3>
                 
-                <p style="font-size: 15px;">You may reach us at <strong style="font-size: 15px;">crm@avantinfra.com</strong></p>
+                <p style="font-size: 15px;">You may reach us at <strong style="font-size: 15px;">"crm@avantinfra.com"</strong></p>
                 
                 <p style="font-size: 15px;">I truly wish to make your journey until possession of your home a very enjoyable one.<br/>
                     Looking forward to assisting you.</p>
                 
                 <p style="font-size: 15px;">Thanking You,</p>
+                 <p>
+                     <b style="font-size: 15px;">Avant Group </b>
+                 </p>
             </div>
         </body>
     </html>

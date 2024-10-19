@@ -17,8 +17,8 @@ public class Ex_SMAssignmentController {
     
     @AuraEnabled
     public static List<Team_Member__c> getAllSalesManager(Site_Visit__c svRecord) {
-        List<Team_Member__c> userList = [Select Id, User__r.Name, Availability__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
-                                         where Team__r.Project__c =: svRecord.Project__c AND  User_Active_Status__c = true AND Team__r.Team_Type__c = 'Sales Team' ORDER BY Last_Assignment_DateTime__c ASC];
+        List<Team_Member__c> userList = [Select Id, User__r.Name, Availability__c, DayOff__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
+                                         where Team__r.Project__c =: svRecord.Project__c AND  User_Active_Status__c = true AND DayOff__c = false AND Team__r.Team_Type__c = 'Sales Team' ORDER BY Last_Assignment_DateTime__c ASC];
         system.debug('Inside:::'+ userList);
         if(!userList.isEmpty() && userList != null){
             return userList;

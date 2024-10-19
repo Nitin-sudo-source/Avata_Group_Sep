@@ -8,7 +8,7 @@ public class Ex_SendEmailWelcomeCall {
         }
         
         List<Booking__c> bkList = new List<booking__c>();
-        bkList = [Select Id, Name, Primary_Applicant_Email__c from Booking__c where Id IN: bkSetId];
+        bkList = [Select Id, Name, Primary_Applicant_Email__c, Unit__r.Name, Opportunity__r.Name from Booking__c where Id IN: bkSetId];
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
         OrgWideEmailAddress orgWideEmail;
         
@@ -25,8 +25,8 @@ public class Ex_SendEmailWelcomeCall {
                 System.debug('Booking Email: '+booking.Primary_Applicant_Email__c);
                 if (booking.Primary_Applicant_Email__c != null) { 
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                    mail.setSubject('Welcome Call Checklist');
-                    mail.setHtmlBody('Demo Test'); 
+                    mail.setSubject('Welcome to Avant Group'+''+ '['+booking.Unit__r.Name +']' + '['+booking.Opportunity__r.Name+']');
+                    mail.setHtmlBody('Avant Group !!'); 
                     mail.setToAddresses(new List<String>{booking.Primary_Applicant_Email__c});
                     
                     if (orgWideEmail != null) {

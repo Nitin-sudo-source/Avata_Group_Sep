@@ -345,6 +345,7 @@ global without sharing class Ex_SiteVisitForm {
                 // sv.sv.Possession_Timeframe_Required__c = cp.Possession_Timeframe__c;
                 //  sv.sv.Area_Sq_Ft__c = cp.Area_Sq_Ft__c;
                 sv.sv.Location__c = cp.Location__c;
+                if(cp.Actual_Budget__c != null)
                 sv.sv.Actual_budget__c = Decimal.valueof(cp.Actual_Budget__c);
                 
             }

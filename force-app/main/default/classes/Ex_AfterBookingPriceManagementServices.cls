@@ -96,9 +96,9 @@ public class Ex_AfterBookingPriceManagementServices {
                         priceListGroupMap.put(pl.Charge_Bucket__c, newList);
                     }
                 }
-                /* if(priceListGroupMap.containsKey('Agreement Value') ){
-priceListGroupMap.get('Agreement Value').add('Parking Charges');
-}*/
+               /* if(priceListGroupMap.containsKey('Agreement Value') ){
+                    priceListGroupMap.get('Agreement Value').add('Parking Charges');
+                }*/
             }
             System.debug('priceListGroupMapApex: '+priceListGroupMap);
             return priceListGroupMap;
@@ -140,10 +140,11 @@ priceListGroupMap.get('Agreement Value').add('Parking Charges');
                             
                             if(priceListMap.containsKey(priceList)) {
                                 if(priceListMap.get(priceList).Name.equalsIgnoreCase('Parking Charges')) {
-                                    avAmount += carParkPrice;
-                                    amount = carParkPrice;
-                                    sgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
-                                    cgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                    //avAmount += carParkPrice;
+                                    //amount = carParkPrice;
+                                    amount = priceListMap.get('Parking Charges').Charge_Amount__c.setscale(0,RoundingMode.HALF_UP);
+                                    sgst = (((amount / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                    cgst = (((amount / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
                                 } else {
                                     if(priceListMap.get(priceList).Charge_Type__c != null && priceListMap.get(priceList).Charge_Type__c.equalsIgnoreCase('Percentage')) {
                                         if(allPriceInfoMap.containsKey('Agreement Value')) {
@@ -569,13 +570,13 @@ priceListGroupMap.get('Agreement Value').add('Parking Charges');
             PaymentMilestoneWrapper secondToLastElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 2];
             
             // Calculate differences for the last row
-            Decimal percentageDiff = 100 - lastRowElement.percentage;
-            System.debug('percentage: '+percentageDiff);
             Decimal amountDiffLatest = allPriceInfoMap.get('Agreement Value') - lastRowElement.amount;
+            System.debug('amountDiffLatest: '+amountDiffLatest);
             Decimal taxDiffLatest = allPriceInfoMap.get('Agreement Value TAX') - lastRowElement.tax;
+            System.debug('taxDiffLatest:'+ taxDiffLatest);
             
             // Adjust percentage values dynamically to stay within the range of 0% to 100%
-            if (percentageDiff != 0) {
+           /* if (percentageDiff != 0) {
                 Decimal newLastRowPercentage = lastRowElement.percentage + percentageDiff;
                 System.debug('newLastRowPercentage: '+newLastRowPercentage);
                 // Ensure the last row percentage is within the range 0% to 100%
@@ -599,7 +600,7 @@ priceListGroupMap.get('Agreement Value').add('Parking Charges');
                 }
                 
                 System.debug('secondToLastElement.percentage: ' + secondToLastElement.percentage);
-            }
+            }*/
 
             
             // Update the last row element

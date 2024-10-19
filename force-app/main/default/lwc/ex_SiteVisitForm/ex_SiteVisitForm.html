@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-10-2024
+  @last modified on  : 10-19-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -24,7 +24,7 @@
                     <lightning-layout multiple-rows>
                         <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" style="width: 95%!important ;">
                             <label class="required-label">Select Project</label>
-                            <lightning-combobox label="Select Project" name="Select Project"
+                            <lightning-combobox label="Select Project" name="Select Project" required
                                 class="slds-p-bottom_small slds-p-top_small" variant="label-hidden"
                                 options={projectOptions} value={projectId} onchange={handleProjectChange}
                                 disabled={disabledProject}>
@@ -53,10 +53,25 @@
                                 disabled={disabledMobile} field-name="Mobile__c" name="Mobile__c"
                                 onchange={handlemobile}></lightning-input>
                         </lightning-layout-item>
+
+                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box"
+                        if:true={showNumber} style="width: 95%!important ;">
+                        <label class="Email">Email</label>
+                        <lightning-input  type="text" field-name="Email__c"  name="Email__c" placeholder="useremail.com" 
+                        value={svWrapper.sv.Email__c} disabled={disabledEmail}
+                                onchange={handleChange} variant="label-hidden"></lightning-input>
+                                </lightning-layout-item>
+
+                        <!-- <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label>Email</label>
+                            <lightning-input-field field-name="Email__c" value={svWrapper.sv.Email__c} disabled="true"
+                                onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div> -->
+
                     </lightning-layout>
                 </form>
 
-                <div class="slds-docked-form-footer">
+                <div class="slds-docked-form-footer" >
                     <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error"
                         title="Resolve error" if:true={showValidationPopup}>
                         <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small"
@@ -65,7 +80,7 @@
                     </button>
 
                     <!-- footer buttons -->
-                    <lightning-button type="button" label="Reset" class="slds-p-around_xx-small"
+                    <lightning-button type="button" label="Reset"  class="slds-p-around_xx-small custom-grey-button" 
                         variant="destructive-text" title="Reset" onclick={handleReset}>Reset</lightning-button>
 
                     <template if:false={hideSearch}>
@@ -474,13 +489,13 @@
             
                 <!-- Second Row: First Name and Last Name (Side by Side) -->
                 <div class="slds-grid slds-wrap slds-gutters">
-                    <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                         <label class="required-label">Enter First Name</label>
                         <lightning-input type="text" label="First Name" name="First_Name__c" field-name="First_Name__c"
                             placeholder="Enter First Name" value={svWrapper.sv.First_Name__c} variant="label-hidden"
                             onchange={handleChange}></lightning-input>
                     </div>
-                    <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                         <label class="required-label">Enter Last Name</label>
                         <lightning-input type="text" label="Last Name" name="Last_Name__c" field-name="Last_Name__c"
                             placeholder="Enter Last Name" value={svWrapper.sv.Last_Name__c} variant="label-hidden"
@@ -490,12 +505,12 @@
             
                 <!-- Third Row: Email and Mobile (Side by Side) -->
                 <div class="slds-grid slds-wrap slds-gutters">
-                    <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                         <label>Email</label>
                         <lightning-input-field field-name="Email__c" value={svWrapper.sv.Email__c} disabled="true"
                             onchange={handleChange} variant="label-hidden"></lightning-input-field>
                     </div>
-                    <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box" if:true={showNumber}>
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box" if:true={showNumber}>
                         <label>Mobile</label>
                         <lightning-input type="tel" label="Mobile" placeholder="e.g.1234567890" maxlength="10"
                             pattern="[0-9]{10}$" variant="label-hidden" value={storeMobile}
@@ -506,12 +521,12 @@
             
                 <!-- Fourth Row: Age Group and Nationality (Side by Side) -->
                 <div class="slds-grid slds-wrap slds-gutters">
-                    <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                         <label class="required-label">Age Group</label>
                         <lightning-input-field field-name="Age_Group__c" value={svWrapper.sv.Age_Group__c}
                             onchange={handleChange} variant="label-hidden"></lightning-input-field>
                     </div>
-                    <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                         <label class="required-label">Nationality</label>
                         <lightning-input-field field-name="Nationality__c" value={svWrapper.sv.Nationality__c}
                             onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -656,13 +671,13 @@
         <form class="slds-p-around_medium">
             <!-- Residential Address and Locality Side by Side -->
             <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="">Residential Address</label>
                     <lightning-input-field field-name="Residential_Address__c"
                         value={svWrapper.sv.Residential_Address__c} onchange={handleChange}
                         variant="label-hidden"></lightning-input-field>
                 </div>
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Locality</label>
                     <lightning-input-field field-name="Locality__c" value={svWrapper.sv.Locality__c} 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -671,12 +686,12 @@
     
             <!-- City and State Side by Side -->
             <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">City</label>
                     <lightning-input-field field-name="City__c" value={svWrapper.sv.City__c} 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
                 </div>
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">State</label>
                     <lightning-input-field field-name="State__c" value={svWrapper.sv.State__c} 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -685,7 +700,7 @@
     
             <!-- Pincode -->
             <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Pincode</label>
                     <lightning-input-field field-name="Pincode__c" value={svWrapper.sv.Pincode__c} 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -788,12 +803,12 @@
                 <form class="slds-p-around_medium">
                     <!-- Employment Type and Company Name Side by Side -->
                     <div class="slds-grid slds-wrap slds-gutters">
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label class="required-label">Employment Type</label>
                             <lightning-input-field field-name="Employment_Type__c" value={svWrapper.sv.Employment_Type__c} 
                                 required onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Company Name</label>
                             <lightning-input-field field-name="Company_Name__c" value={svWrapper.sv.Company_Name__c} 
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -802,12 +817,12 @@
             
                     <!-- Industry and Designation Side by Side -->
                     <div class="slds-grid slds-wrap slds-gutters">
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Industry</label>
                             <lightning-input-field field-name="Industry__c" value={svWrapper.sv.Industry__c} 
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Designation</label>
                             <lightning-input-field field-name="Designation__c" value={svWrapper.sv.Designation__c} 
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -816,12 +831,12 @@
             
                     <!-- Annual Income and Office Pincode Side by Side -->
                     <div class="slds-grid slds-wrap slds-gutters">
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Annual Income</label>
                             <lightning-input-field field-name="Annual_Income__c" value={svWrapper.sv.Annual_Income__c} 
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label class="required-label">Office Pincode</label>
                             <lightning-input-field field-name="Office_Pincode__c" value={svWrapper.sv.Office_Pincode__c} 
                                 required onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -830,7 +845,7 @@
             
                     <!-- Office Location -->
                     <div class="slds-grid slds-wrap slds-gutters">
-                        <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Office Location</label>
                             <lightning-input-field field-name="Office_Location__c" value={svWrapper.sv.Office_Location__c} 
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
@@ -972,13 +987,13 @@
         <form class="slds-p-around_medium">
             <!-- Configuration Required and Budget Range Side by Side -->
             <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Configuration Required</label>
                     <lightning-input-field field-name="Configuration_Required__c" 
                         value={svWrapper.sv.Configuration_Required__c} required 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
                 </div>
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Budget Range</label>
                     <lightning-input-field field-name="Budget_Range__c" 
                         value={svWrapper.sv.Budget_Range__c} required 
@@ -988,13 +1003,13 @@
     
             <!-- Area Sq Ft and Buying Purpose Side by Side -->
             <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Area Sq Ft</label>
                     <lightning-input-field field-name="Area_Sq_Ft__c" 
                         value={svWrapper.sv.Area_Sq_Ft__c} required 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
                 </div>
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Buying Purpose</label>
                     <lightning-input-field field-name="Buying_Purpose__c" 
                         value={svWrapper.sv.Buying_Purpose__c} required 
@@ -1004,13 +1019,13 @@
     
             <!-- Possession Timeframe and Current Resident Status Side by Side -->
             <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Possession Timeframe Required</label>
                     <lightning-input-field field-name="Possession_Timeframe_Required__c" 
                         value={svWrapper.sv.Possession_Timeframe_Required__c} required 
                         onchange={handleChange} variant="label-hidden"></lightning-input-field>
                 </div>
-                <div class="slds-col slds-size_6-of-12 slds-p-around_medium user-input-box">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                     <label class="required-label">Current Resident Status</label>
                     <lightning-input-field field-name="Current_Resident_Status__c" 
                         value={svWrapper.sv.Current_Resident_Status__c} required 

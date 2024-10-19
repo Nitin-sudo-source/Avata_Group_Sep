@@ -33,6 +33,10 @@ public class Ex_AccountHandlerServices {
                     if(!test.isRunningTest())
                         a.addError('Duplicate CP Account Found with Name: '+dw.dupAccount.Name+' Owner Name: '+ dw.dupAccount.Owner.Name +'. Record Id is '+dw.dupAccount.Id);
                 }
+            }else{
+                if(System.label.CP_Approver != null){
+                   a.CP_Approver__c =  System.label.CP_Approver;
+                }
             }
         }
     }

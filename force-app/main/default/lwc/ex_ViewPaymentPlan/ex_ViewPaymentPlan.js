@@ -1,6 +1,6 @@
 import { LightningElement,api,track,wire } from 'lwc';
-import getPaymentMilestone from '@salesforce/apex/ex_ViewPaymentPlanController.getPaymentMilestone';
-import getPaymentScheme from '@salesforce/apex/ex_ViewPaymentPlanController.getPaymentScheme';
+import getPaymentMilestone from '@salesforce/apex/Ex_ViewPaymentPlanController.getPaymentMilestone';
+import getPaymentScheme from '@salesforce/apex/Ex_ViewPaymentPlanController.getPaymentScheme';
 
 export default class Ex_ViewPaymentPlan extends LightningElement {
     @api booking;

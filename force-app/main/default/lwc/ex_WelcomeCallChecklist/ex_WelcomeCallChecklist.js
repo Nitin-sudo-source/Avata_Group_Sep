@@ -334,8 +334,8 @@ this.carPark1 = data[0].Car_Park_Required_Count__c;
            // this.isConflict = data[0].Is_CP_Conflict__c;
 
             if (this.sourceDetails == 'Channel Partner') {
-                if (data[0].First_CP__r.Name != null || data[0].First_CP__r.Name != undefined || data[0].First_CP__r.Name != '') {
-                    this.cp1 = data[0].First_CP__r.Name;
+                if (data[0].Channel_Partner__r.Name != null || data[0].Channel_Partner__r.Name != undefined || data[0].Channel_Partner__r.Name != '') {
+                    this.cp1 = data[0].Channel_Partner__r.Name;
                     console.log('this.cp1 is::' + this.cp1);
                 }
                 this.showCP = true;

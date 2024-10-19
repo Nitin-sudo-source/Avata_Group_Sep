@@ -23,6 +23,8 @@ public class Ex_WelcomeCallEmailController {
     public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
     public List<applicant__c> apList { get; set; }
     public String projName {get;set;}
+    public String inventoryType {get;set;}
+    public String configrationType {get;set;}
     
     
     
@@ -44,12 +46,15 @@ public class Ex_WelcomeCallEmailController {
         crmName = '';
         welcomecallDate = System.today();
         projName = '';
+        inventoryType = '';
+        configrationType = '';
+        
         
         if (bId != null) {
             bkList = [SELECT Id, Primary_Applicant_Name__c, Primary_Applicant_Mobile__c, Primary_Applicant_Email__c, Tower__r.Name, Unit__r.Name, Unit__r.RERA_Carpet_Area_Sq_Ft__c, Unit__r.Floor__c,
                       Account_Name_Flat_Cost__c, Bank_Name_Flat_Cost__c, Branch_Name_Flat_Cost__c, Account_Number_Flat_Cost__c,  IFSC_Code_Flat_Cost__c, Account_Name_Tax__c, Bank_Name_Tax__c,
                       Branch_Name_Tax__c,  Account_Number_Tax__c, IFSC_Code_Tax__c, Project__r.Contact_No__c, Project__r.Company_Address__c, Project__r.Email_ID__c, Project__r.Pan_No__c, Project__r.Company_Name__c,
-                      Welcome_Call_Done_DateTime__c, Project__r.Name,
+                      Welcome_Call_Done_DateTime__c, Project__r.Name, Unit__r.Inventory_Type__c, Unit__r.Configuration_Type__c,
                       CRM_Head__r.Name
                       FROM Booking__c  WHERE Id = :bId];
             System.debug('bkList: '+bkList);
@@ -68,6 +73,8 @@ public class Ex_WelcomeCallEmailController {
                 crmName = bk.CRM_Head__r.Name;
                 welcomecallDate = bk.Welcome_Call_Done_DateTime__c;
                 projName = bk.Project__r.Name;
+                inventoryType = bk.Unit__r.Inventory_Type__c;
+                configrationType = bk.Unit__r.Configuration_Type__c;
             }
         }
         
@@ -77,7 +84,8 @@ public class Ex_WelcomeCallEmailController {
             Occupation__c, Mobile__c, Email__c, PAN_Number__c, Permanent_Address__c, 
             Country__c, State__c, City__c, PIN__c
             FROM Applicant__c 
-            WHERE Booking__c = :bId 
+            WHERE Booking__c = :bId AND
+            Applicant_Number__c != 'Primary Applicant'
             ORDER BY Applicant_Number__c ASC
         ];
         

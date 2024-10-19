@@ -29,12 +29,6 @@ public with sharing class Ex_WelcomeCallChecklistController {
         booking = [SELECT Id, Source__c, Quotation__c FROM Booking__c WHERE Id = :recId LIMIT 1];
         system.debug('booking is::' + booking);
         
-        /*quote = [Select Id, Name, Booking__c, Booking__r.Agreement_Value__c, Tower__r.Name, Unit__r.Name,
-Payment_Scheme__r.Name, Payment_Scheme__c, Unit__r.Saleable_Area__c
-From Quotation__c 
-where Id =: booking.Quotation__c LIMIT 1];
-system.debug('quote is::'+quote);*/
-        
         quote = Ex_BookingFormController.getQuotationDetails(booking.Quotation__c);
         
         
@@ -157,9 +151,6 @@ system.debug('quote is::'+quote);*/
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && agreementValue != null){
                             if (parts[0].contains('Agreement Value')) {
                                 String agrvalue = parts[1].trim();
-                                /*if (!quote.Agreement_Value1__c.equals(agrvalue)) {
-item.Item__c = 'Agreement Value - ' + quote.Agreement_Value1__c;
-}*/
                                 String formattedValue = agreementValue.format();
                                 if (!formattedValue.equals(agrvalue)) {
                                     item.Item__c = 'Agreement Value - ' + formattedValue + '/-';
@@ -170,7 +161,6 @@ item.Item__c = 'Agreement Value - ' + quote.Agreement_Value1__c;
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && SDRValue != null){
                             if (parts[0].contains('SDR')) {
                                 String sdrvalueq = parts[1].trim();
-                                
                                 String formattedValue = SDRValue.format();
                                 if (!formattedValue.equals(sdrvalueq)) {
                                     item.Item__c = 'SDR - ' + formattedValue + '/-';
@@ -191,9 +181,6 @@ item.Item__c = 'Agreement Value - ' + quote.Agreement_Value1__c;
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && agreementValueTax != null){
                             if (parts[0].contains('GST on Agreement Value')) {
                                 String gstonotherchargevalue = parts[1].trim();
-                                /*if (!quote.GST_on_Agreement_Value__c.equals(gstonotherchargevalue)) {
-item.Item__c = 'GST on Agreement Value - ' + quote.GST_on_Agreement_Value__c;
-}*/
                                 String formattedValue = agreementValueTax.format();
                                 if (!formattedValue.equals(gstonotherchargevalue)) {
                                     item.Item__c = 'GST on Agreement Value - ' + formattedValue + '/-';
@@ -204,9 +191,6 @@ item.Item__c = 'GST on Agreement Value - ' + quote.GST_on_Agreement_Value__c;
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && agreementValue != null){
                             if (parts[0].contains('Total Agreement Value Bucket')) {
                                 String totalagrvaluebucket = parts[1].trim();
-                                /*if (!quote.Total_Agreement_Value_Bucket__c.equals(totalagrvaluebucket)) {
-item.Item__c = 'Total Agreement Value Bucket - ' + quote.Total_Agreement_Value_Bucket__c;
-}*/
                                 String formattedValue = (agreementValue + agreementValueTax).format();
                                 if (!formattedValue.equals(totalagrvaluebucket)) {
                                     item.Item__c = 'Total Agreement Value Bucket - ' + formattedValue + '/-';
@@ -217,9 +201,6 @@ item.Item__c = 'Total Agreement Value Bucket - ' + quote.Total_Agreement_Value_B
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && OCTax != null){
                             if (parts[0].contains('GST on Other Charges')) {
                                 String gstonothercharges = parts[1].trim();
-                                /*if (!quote.GST_on_Other_Charges__c.equals(gstonothercharges)) {
-item.Item__c = 'GST on Other Charges - ' + quote.GST_on_Other_Charges__c;
-}*/
                                 String formattedValue = OCTax.format();
                                 if (!formattedValue.equals(gstonothercharges)) {
                                     item.Item__c = 'GST on Other Charges - ' + formattedValue + '/-';
@@ -230,9 +211,7 @@ item.Item__c = 'GST on Other Charges - ' + quote.GST_on_Other_Charges__c;
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && OCValue != null){
                             if (parts[0].contains('Total Other Charges')) {
                                 String totalOtherCharges = parts[1].trim();
-                                /*if (!quote.Total_Other_Charges__c.equals(totalOtherCharges)) {
-item.Item__c = 'Total Other Charges - ' + quote.Total_Other_Charges__c;
-}*/
+                                
                                 String formattedValue = (OCValue+ OCTax).format();
                                 if (!formattedValue.equals(totalOtherCharges)) {
                                     item.Item__c = 'Total Other Charges - ' + formattedValue + '/-';
@@ -243,15 +222,12 @@ item.Item__c = 'Total Other Charges - ' + quote.Total_Other_Charges__c;
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && quote.Car_Park_Required_Count__c != null){
                             if (parts[0].contains('Total Car Park Count')) {
                                 String totalOtherCharges = parts[1].trim();
-                                
                                 String formattedValue = quote.Car_Park_Required_Count__c.format();
                                 if (!formattedValue.equals(totalOtherCharges)) {
                                     item.Item__c = 'Total Car Park Amount - ' + formattedValue + '/-';
                                 }
                             }
                         }
-                        
-                        
                         
                         if (item.Section__c == 'Payment Schedules' && quote.Payment_Scheme__r.Name != null){
                             if (parts[0].contains('Payment Schedule')) {
@@ -268,13 +244,12 @@ item.Item__c = 'Total Other Charges - ' + quote.Total_Other_Charges__c;
                             if (parts[0].contains('Token Amount')  && parts.size() >= 1) {
                                 String tokenAmount = parts[0].trim();
                                 System.debug('tokenAmount .: ' +tokenAmount);
-                                /*if (!totalTokenAmount.equals(tokenAmount)) {
-item.Item__c = 'Token Amount - ' + totalTokenAmount;
-}*/
                                 String formattedValue = totalTokenAmount.format();
                                 item.Item__c = 'Total Amount Received - ' + formattedValue + '/-';
                             }
                         }
+                        
+                        
                     }
         
         system.debug('Updated checklist is::' + checklist);
@@ -286,8 +261,6 @@ item.Item__c = 'Token Amount - ' + totalTokenAmount;
         try {
             system.debug('checklistId is::'+bcList);
             system.debug('actionValue is::'+bcList);
-            /*Booking_Checklist__c checklist = [SELECT Id, Action__c FROM Booking_Checklist__c WHERE Id = :checklistId LIMIT 1];
-checklist.Action__c = actionValue;*/
             update bcList;
             system.debug('Checklist updated: ' + bcList);
         } catch (Exception e) {
@@ -310,6 +283,7 @@ checklist.Action__c = actionValue;*/
     
     @AuraEnabled(cacheable=true)
     public static List<AttachmentWrapper> getApplicantDocuments(String appId) {
+        System.debug('appId: '+appId);
         List<Document__c> docList = [
             SELECT Id, Name, Document_Type__c, RecordTypeId, Document_View_Link__c
             FROM Document__c
@@ -324,15 +298,29 @@ checklist.Action__c = actionValue;*/
         
         if (!docList.isEmpty()) {
             for (Document__c doc : docList) {
+               
                 String recordTypeName = Schema.SObjectType.Document__c.getRecordTypeInfosById().get(doc.RecordTypeId).getName();
                 if (recordTypeName == 'Applicant Document') {
                     Map<String, String> docMap = new Map<String, String>();
-                    docMap.put(doc.Document_View_Link__c, doc.Document_Type__c);
-                    documentTypeMap.put(doc.Id, docMap);
+                    if(!documentTypeMap.containsKey(doc.Id)) {
+                        if(!docMap.containsKey(doc.Document_View_Link__c)) {
+                            docMap.put(doc.Document_View_Link__c, doc.Document_Type__c);
+                        } else {
+                            docMap.get(doc.Document_View_Link__c);
+                        }
+                        documentTypeMap.put(doc.Id, docMap);
+                    } else {
+                        documentTypeMap.get(doc.Id);
+                    }
+                    //docMap.put(doc.Document_View_Link__c, doc.Document_Type__c);
+                   // documentTypeMap.put(doc.Id, docMap);
                     documentViewLinkMap.put(doc.Id, doc.Document_View_Link__c); 
                 }
             }
         }
+        
+        System.debug('documentTypeMap: '+documentTypeMap);
+         System.debug('documentTypeMapKey: '+documentTypeMap.keySet());
         
         List<ContentDocumentLink> contentLinks = [
             SELECT ContentDocumentId, LinkedEntityId
@@ -381,10 +369,7 @@ checklist.Action__c = actionValue;*/
             this.fileId = content.ContentDocumentId;
             this.documentViewLink = documentViewLink; 
         }
-    }
-
-    
-    
+    }    
     
     @AuraEnabled(cacheable=true)
     public static List<Quotation__c> getQuotationDetails(String recId){
@@ -392,11 +377,6 @@ checklist.Action__c = actionValue;*/
         List<Quotation__c> quoteList = new List<Quotation__c>();
         Quotation__c q = Ex_BookingFormController.getQuotationDetails(book.Quotation__c);
         quoteList.add(q);
-        /* List<Quotation__c> quoteList = [Select Id, Name, Booking__c, Booking__r.Agreement_Value__c, Tower__r.Name, Unit__r.Name,
-Payment_Scheme__r.Name,Payment_Scheme__c,Unit__r.Market_Value__c,Payment_Schedule_Deviation__c,Unit__r.Carpet_Area__c,Unit__r.Saleable_Area__c,
-Agreement_Value1__c,SDR__c, Other_Charges__c,Total_Agreement_Value__c,Total_Cost_of_Unit__c,Total_Agreement_Value_Bucket__c, GST_on_Agreement_Value__c, GST_on_Other_Charges__c, Total_Other_Charges__c, Total_Car_Park_Amount__c
-From Quotation__c 
-where Id =: book.Quotation__c];*/
         if(!quoteList.isEmpty() && quoteList != null){
             return quoteList;
         }else{
@@ -418,7 +398,7 @@ where Id =: book.Quotation__c];*/
     
     @AuraEnabled(cacheable=true)
     public static List<Booking__c> getSourceDetails(String recId){
-        List<Booking__c> bookList = [Select Id, Source__c , Referrer_Name__r.Name FROM Booking__c where Id=:recId];
+        List<Booking__c> bookList = [Select Id, Source__c , Referrer_Name__r.Name, Channel_Partner__r.Name FROM Booking__c where Id=:recId];
         System.debug('bookList is::'+bookList);
         if(!bookList.isEmpty() && bookList != null){
             return bookList;    

@@ -3,6 +3,19 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>ex_CPLeadVisitDonePopup</componentName>
+                <identifier>c_ex_CPLeadVisitDonePopup</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CP_Lead_Stage__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Visit Done</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
@@ -25,6 +38,13 @@
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CP_Lead_Stage__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Visit Done</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -115,6 +135,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CP_Lead_Stage__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Visit Done</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -129,6 +156,13 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CP_Lead_Stage__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Visit Done</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

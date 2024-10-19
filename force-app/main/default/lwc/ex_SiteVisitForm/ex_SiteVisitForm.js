@@ -191,6 +191,13 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
         }
     }
 
+    handleEmail(event) {
+        this.storeEmail = event.target.value;
+        if (this.storeEmail != '') {
+            this.svWrapper.sv.Email__c = this.storeEmail;
+        }
+    }
+
     handleChange(event) {
         if (event.target.name == "Address") {
             this.svWrapper.sv.City__c = event.target.city;
@@ -561,6 +568,7 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
 
     handlesubmit() {
         this.svWrapper.sv.Mobile__c = this.storeMobile;
+        this.svWrapper.sv.Email__c = this.storeEmail;
         if (this.svWrapper.sv.Configuration_Required__c === undefined || this.svWrapper.sv.Configuration_Required__c === '') {
             this.showValidation = 'Please enter Configuration';
             this.showValidationPopup = true;

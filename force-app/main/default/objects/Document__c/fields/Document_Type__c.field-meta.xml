@@ -7,7 +7,6 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -39,6 +38,11 @@
                 <fullName>RERA Competency Certificate</fullName>
                 <default>false</default>
                 <label>RERA Competency Certificate</label>
+            </value>
+            <value>
+                <fullName>Aadhaar Card</fullName>
+                <default>false</default>
+                <label>Aadhaar Card</label>
             </value>
         </valueSetDefinition>
     </valueSet>
