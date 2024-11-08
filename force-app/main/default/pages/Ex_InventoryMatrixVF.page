@@ -1,4 +1,5 @@
-<apex:page showHeader="false" sidebar="false"  >
+<apex:page showHeader="false" sidebar="false"  docType="html-5.0" lightningStylesheets="false" standardStylesheets="false">
+    
     <apex:includeLightning />  
     <div id="LightningComponentid" />    
     <script>

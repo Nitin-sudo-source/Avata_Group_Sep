@@ -508,17 +508,7 @@
 
                                         </th>
                                     </tr>
-                                    <tr>
-                                        <th style="text-align:left;"> Mailing address Same as Permanent address</th>
-                                        <td colspan="7">
-                                            <lightning-input-field name="Mailing_Address_Same_as_PermanentAddress__c"
-                                                data-id="Mailing_Address_Same_as_PermanentAddress__c"
-                                                data-key={applicant.key} variant="label-hidden"
-                                                field-name="Mailing_Address_Same_as_PermanentAddress__c"
-                                                value={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}
-                                                onchange={handleApplicant} type="checkbox"></lightning-input-field>
-                                        </td>
-                                    </tr>
+                                   
                                    
                                     <th>
                                         Permanent Address
@@ -572,6 +562,17 @@
                                             <div if:true={showErrorPIN} class="slds-text-color_error">
                                                 {showPINMsg}
                                             </div>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <th style="text-align:left;"> Mailing address Same as Permanent address</th>
+                                        <td colspan="7">
+                                            <lightning-input-field name="Mailing_Address_Same_as_PermanentAddress__c"
+                                                data-id="Mailing_Address_Same_as_PermanentAddress__c"
+                                                data-key={applicant.key} variant="label-hidden"
+                                                field-name="Mailing_Address_Same_as_PermanentAddress__c"
+                                                value={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}
+                                                onchange={handleApplicant} type="checkbox"></lightning-input-field>
                                         </td>
                                     </tr>
                                      <template if:false={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}>

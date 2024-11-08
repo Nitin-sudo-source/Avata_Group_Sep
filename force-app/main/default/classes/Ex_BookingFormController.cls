@@ -101,7 +101,7 @@ public class Ex_BookingFormController {
     } 
     
     @AuraEnabled(cacheable=false)
-    public static List<ApplicantWrapper> ApplicantdocumentDetails(String fieldValue, String oppId, String tabKey) {
+    public static List<ApplicantWrapper> ApplicantdocumentDetails(String fieldValue, String nationality, String oppId, String tabKey) {
         System.debug('tabKey: '+tabKey);
         System.debug('oppId: '+oppId);
         
@@ -112,6 +112,8 @@ public class Ex_BookingFormController {
         {
             opp = [Select Id, Name, Account__r.Name, Account__r.Salutation, Mobile__c, Email__c, Account__r.Designation__c,
                    OwnerId, Account__r.Company_Name__c, Account__r.Residential_Address__c, Account__r.Locality__c,
+                   Account__r.BillingPostalCode, Account__r.BillingCountry, Account__r.BillingState,
+                   Account__r.BillingCity,
                    Account__r.City__c, Account__r.Pincode__c from Opportunity__c where Id=: oppId];
             if(opp != null)
             {
@@ -130,23 +132,32 @@ public class Ex_BookingFormController {
                         ap.Company_Name__c = opp[0].Account__r.Company_Name__c;
                     if(opp[0].Account__r.Salutation != null)
                         ap.Applicant_Title__c = opp[0].Account__r.Salutation;
-                    if(opp[0].Account__r.City__c != null)
-                        ap.City__c = opp[0].Account__r.City__c;
-                   // if(opp[0].Account__r.Country__c != null)
-                        //ap.Country__c = opp[0].Account__r.Country__c;
-                    if(opp[0].Account__r.Pincode__c != null)
-                        ap.PIN__c = opp[0].Account__r.Pincode__c;
-                   // if(opp[0].Account__r.Residence__c != null)
-                       // ap.Residential_Status__c = opp[0].Account__r.Residence__c;
+                    if(opp[0].Account__r.BillingCity != null)
+                        ap.City__c = opp[0].Account__r.BillingCity;
+                    if(opp[0].Account__r.BillingPostalCode != null)
+                        ap.PIN__c = opp[0].Account__r.BillingPostalCode;
+                     if(opp[0].Account__r.BillingCountry != null)
+                        ap.Country__c = opp[0].Account__r.BillingCountry;
+                    if(opp[0].Account__r.BillingState != null)
+                        ap.State__c = opp[0].Account__r.BillingState;
                     if(opp[0].Account__r.Residential_Address__c != null)
                         ap.Permanent_Address__c = opp[0].Account__r.Residential_Address__c;
+                    
                 }
             }
         }
         appList.add(new ApplicantWrapper(ap));
         
-        if(String.isNotBlank(fieldValue) && !(fieldValue.equalsIgnoreCase('No'))){            
-            List<Applicant_Document__c> documents = [SELECT Name, Document_Upload_Required__c FROM Applicant_Document__c Where Document_Upload_Required__c =: fieldValue]; 
+        if(String.isNotBlank(fieldValue) && !(fieldValue.equalsIgnoreCase('No')) && String.isNotBlank(nationality) && nationality.equalsIgnoreCase('Indian')){            
+            List<Applicant_Document__c> documents = [SELECT Name, Document_Upload_Required__c, Nationality__c FROM Applicant_Document__c Where Document_Upload_Required__c =: fieldValue AND Nationality__c =: nationality]; 
+            for (Applicant_Document__c document : documents) {
+                ApplicantWrapper wrapper = new ApplicantWrapper(document);
+                wrapper.fileUploader = '';
+                wrapper.fileName = document.Name;
+                appList.add(wrapper);
+            }
+        } else if(String.isNotBlank(fieldValue) && !(fieldValue.equalsIgnoreCase('No')) && String.isNotBlank(nationality) && nationality.equalsIgnoreCase('NRI')){            
+            List<Applicant_Document__c> documents = [SELECT Name, Document_Upload_Required__c, Nationality__c FROM Applicant_Document__c Where Document_Upload_Required__c =: fieldValue AND Nationality__c =: nationality]; 
             for (Applicant_Document__c document : documents) {
                 ApplicantWrapper wrapper = new ApplicantWrapper(document);
                 wrapper.fileUploader = '';
@@ -202,6 +213,40 @@ public class Ex_BookingFormController {
         }
     }
     
+    public static List<Charge_Details__c> getChargeListInfo(Id qId) {
+        //Unit__c u = getUnitInfo(uId);
+        
+        List<Charge_Details__c> priceList = new List<Charge_Details__c>();
+        String[] types = new String[]{'Charge_Details__c'};
+            string queryFields = '';
+        Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
+        
+        for(Schema.DescribeSobjectResult res : results) {
+            string sObjectname = res.getName();
+            Map <String, Schema.SObjectField> fieldMap = res.fields.getMap();
+            
+            for(Schema.SObjectField sfield : fieldMap.Values()) { 
+                schema.describefieldresult dfield = sfield.getDescribe();
+                String fieldLabel = dfield.getLabel();
+                
+                if(queryFields == null || queryFields == '') {
+                    queryFields = dField.getName();
+                } else {
+                    queryFields = queryFields + ', ' + dField.getName();
+                }
+            }
+        }
+        System.debug('qId: '+qId);
+        String soqlQuery = 'Select ' + queryFields  + ' from Charge_Details__c Where Quotation__c = \''+qId +'\' ORDER BY Charge_Bucket__c, Name ASC'; 
+        system.debug('chargeDetails:' +soqlQuery);
+        priceList = Database.query(soqlQuery);
+        if (priceList.size() > 0) {
+            return priceList;
+        } else {
+            return null;
+        }
+    }
+    
     @AuraEnabled
     public static Id createBookingRecord(BookWrapper bkWrapper, String applicantData, Quotation__c quotationDetails, String receiptData, List<Legal_Entity__c> bookingAccount){
         System.debug('bookingAccount: '+bookingAccount);
@@ -209,6 +254,11 @@ public class Ex_BookingFormController {
         Decimal agreementValueTax = 0;
         Decimal SDRValue = 0;
         Decimal SDRTax = 0;
+        Decimal registrationValue = 0;
+        Decimal registrationValueTax = 0;
+        Decimal stampDutyValueTax = 0;
+        Decimal stampDutyValue = 0;
+        
         List<Object> applicantDataList = (List<Object>) JSON.deserializeUntyped(applicantData); 
         List<Object> receiptList = (List<Object>) JSON.deserializeUntyped(receiptData);
         List<Receipt__c> InsertReceipt = new List<Receipt__c>();
@@ -228,6 +278,19 @@ public class Ex_BookingFormController {
                 if(String.isNotBlank((String)quotation.get('Charge_Bucket_'+i+'__c')) && ((String)quotation.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Statutory Charges')) {
                     SDRValue = (Decimal)quotation.get('Charge_Bucket_'+i+'_Amount__c');
                     SDRTax = (Decimal)quotation.get('Charge_Bucket_'+i+'_Total_Tax__c');
+                }
+            }
+        }
+        
+        List<Charge_Details__c> chList = getChargeListInfo(quotation.Id);
+        
+        if(!chList.isEmpty() && chList != null){
+            for(Charge_Details__c ch: chList){
+                if(ch.Name != null && ch.Charge_Amount__c != null && ch.Name.equalsIgnoreCase('Stamp Duty')){
+                    stampDutyValue = ch.Charge_Amount__c;
+                }
+                if(ch.Name != null && ch.Charge_Amount__c != null && ch.Name.equalsIgnoreCase('Registration Charges')){
+                    registrationValue = ch.Charge_Amount__c;
                 }
             }
         }
@@ -270,10 +333,15 @@ public class Ex_BookingFormController {
         if (bkWrapper.bk.Remarks__c != null) {
             booking.Remarks__c = bkWrapper.bk.Remarks__c;
         }
+        
         booking.Agreement_Value__c = agreementValue;
         booking.Agreement_Value_Tax__c = agreementValueTax;
         booking.SDR_Value__c = SDRValue;
         booking.SDR_Tax__c = SDRTax;
+        booking.Stamp_Duty_Amount__c = stampDutyValue;
+        booking.Stamp_Duty_Tax__c = stampDutyValueTax;
+        booking.Registration_Amount__c = registrationValue;
+        booking.Registration_Tax__c = registrationValueTax;
         booking.Updated_Agreement_Value__c = agreementValue;
 
         booking.Booking_Stage__c = 'Booking In-Process';
@@ -631,7 +699,7 @@ public class Ex_BookingFormController {
                                 Isbase64 = (string)documentMap.get('base64');
                             }
                             if(documentMap.get('type') != null){
-                                System.debug('document type/////////'+documentMap.get('type'));
+                                System.debug('document type: '+documentMap.get('type'));
                                 String docType = (String) documentMap.get('type');
                                 if(docType.contains('Aadhar Card')){
                                     if(!String.isBlank(Isbase64)){
@@ -643,6 +711,11 @@ public class Ex_BookingFormController {
                                         document.uploaded__c =true;
                                     }
                                     document.Document_Type__c = 'Pan Card';
+                                }else if(docType.contains('Passport')){
+                                    if(!String.isBlank(Isbase64)){
+                                        document.uploaded__c =true;
+                                    }
+                                    document.Document_Type__c = 'Passport';
                                 }
                             }
                             if(applicant.Id != null){

@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>Opportunity_Sub_Stage__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Missed_by__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

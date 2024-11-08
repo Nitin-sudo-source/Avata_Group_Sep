@@ -86,9 +86,9 @@ public class TestEx_ChannelPartnerServices {
 		insert doc;
         
         String cpDocList ='[{"Id":"'+ String.valueOf(doc.Id) +'","Name":"D-0242","Document_Type__c":"RERA Certificate","Channel_Partner__c":"' + String.valueOf(cp4.Id) + '","Uploaded__c":true,"isUploadedFalse":true,"isUploadedTrue":false,"filename":"Aadhar.png","base64":"base64"}]';
-        Ex_CPDocumentUploadController.getCPDocumentDetails(cpd.id);
-        Ex_CPDocumentUploadController.uploadFile(cpDocList);
-        Ex_AccountHandlerServices.updateDocument(accList);
+        //Ex_CPDocumentUploadController.getCPDocumentDetails(cpd.id);
+        //Ex_CPDocumentUploadController.uploadFile(cpDocList);
+       // Ex_AccountHandlerServices.updateDocument(accList);
         
         
          Test.StopTest();

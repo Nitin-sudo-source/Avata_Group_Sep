@@ -12,7 +12,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>India</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>India</label>
             </value>
         </valueSetDefinition>

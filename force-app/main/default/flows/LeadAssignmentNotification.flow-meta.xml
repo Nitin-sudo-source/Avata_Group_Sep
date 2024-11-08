@@ -46,7 +46,7 @@
     <assignments>
         <name>getOwner</name>
         <label>getOwner</label>
-        <locationX>200</locationX>
+        <locationX>207</locationX>
         <locationY>357</locationY>
         <assignmentItems>
             <assignToReference>getOwnerId</assignToReference>

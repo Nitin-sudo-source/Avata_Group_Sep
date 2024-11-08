@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -71,17 +70,6 @@
             <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
-    <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <fields>NAME</fields>
-        <fields>User__c</fields>
-        <fields>Availability__c</fields>
-        <fields>DayOff__c</fields>
-        <fields>User_Active_Status__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>Last_Assignment_DateTime__c</fields>
-        <relatedList>Team_Member__c.Team__c</relatedList>
-    </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>

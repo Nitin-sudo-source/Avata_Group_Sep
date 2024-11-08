@@ -17,8 +17,8 @@ public class Ex_AccountTriggerHandler {
         }
         if(!personAccountList.isEmpty() && personAccountList != null)
             Ex_AccountHandlerServices.duplicationCheck(personAccountList);
-        if(!cpAccList.isEmpty() && cpAccList != null)
-            Ex_AccountHandlerServices.duplicationCheckOnCP(cpAccList);
+        /*if(!cpAccList.isEmpty() && cpAccList != null)
+            Ex_AccountHandlerServices.duplicationCheckOnCP(cpAccList);*/
     }
     
     public static void beforeUpdate(Map<Id, Account> oldMap, Map<Id, Account> newMap) {
@@ -39,8 +39,8 @@ public class Ex_AccountTriggerHandler {
         }        
         if(!accList.isEmpty() && accList != null)
             Ex_AccountHandlerServices.duplicationCheck(accList);
-        if(!cpAccList.isEmpty() && cpAccList != null)
-            Ex_AccountHandlerServices.duplicationCheckOnCP(cpAccList);
+       /* if(!cpAccList.isEmpty() && cpAccList != null)
+            Ex_AccountHandlerServices.duplicationCheckOnCP(cpAccList);*/
     }
     
     public static void afterInsert(List<Account> accountlist) {

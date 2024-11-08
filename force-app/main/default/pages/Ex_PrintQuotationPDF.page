@@ -250,7 +250,7 @@
                             </tr>
                             <tr>
                                 <th>PARTICULARS</th>
-                                <th class="align-right">%</th>
+                                <th class="align-right">% Due</th>
                                 <th class="align-right">GST</th>
                                 <th class="align-right">Flat Cost</th>
 

@@ -123,6 +123,12 @@
                 <identifier>RecordEmail_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Virtual_Number__c</fieldItem>
+                <identifier>RecordVirtual_Number__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-38bd8a32-99c4-410d-90e6-1509d1dd33da</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1202,32 +1208,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Lead__c.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Visit_Pre_Registrations__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>Facet-ce9649cd-4d9f-49d1-b755-92bda2bf599f</name>
         <type>Facet</type>
     </flexiPageRegions>

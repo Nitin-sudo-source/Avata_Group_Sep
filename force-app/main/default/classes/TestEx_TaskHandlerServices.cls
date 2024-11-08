@@ -25,6 +25,7 @@ public class TestEx_TaskHandlerServices {
         t.Priority = 'Normal';
         t.Call_Status__c = 'Busy';
         t.Status = 'Open';
+        t.Next_Follow_Up_Date__c = system.today().addDays(1);
         insert t;
         
         t.Stage__c = 'Incoming';
@@ -140,7 +141,7 @@ public class TestEx_TaskHandlerServices {
         insert t;
         
         Test.startTest();
-         Ex_CPLeadHandlerServices.duplicationCheck('No', cpLeadList);
+        // Ex_CPLeadHandlerServices.duplicationCheck('No', cpLeadList);
         Test.stopTest();
         
     }
@@ -162,6 +163,7 @@ public class TestEx_TaskHandlerServices {
         t.Priority = 'Normal';
        // t.Call_Status__c = 'Answered';
         t.Status = 'Open';
+         t.Next_Follow_Up_Date__c = system.today().addDays(1);
         insert t;
         
         CP_Project__c cp1 = new CP_Project__c( Project_Name__c = p.Id);

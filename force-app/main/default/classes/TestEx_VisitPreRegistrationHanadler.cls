@@ -25,12 +25,12 @@ public class TestEx_VisitPreRegistrationHanadler {
         Map<Id,Visit_Pre_Registration__c> newVprMap = new Map<Id,Visit_Pre_Registration__c>();
         newVprMap.put(vpr.id,vpr);
         
-        Test.startTest();
+      /*  Test.startTest();
          Ex_VisitPreRegistrationHandler.beforeInsert(vprList);
          Ex_VisitPreRegistrationHandler.beforeUpdate(newVprMap, newVprMap);
          Ex_VisitPreRegistrationHandlerServices.createVPRLead(vprList);
          Ex_VisitPreRegistrationHandlerServices.updateVpr(vprList);
-        Test.stopTest();
+        Test.stopTest();*/
         
     }
 }

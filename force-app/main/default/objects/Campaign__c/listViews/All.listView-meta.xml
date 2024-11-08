@@ -6,6 +6,7 @@
     <columns>Active__c</columns>
     <columns>Project__c</columns>
     <columns>Is_CTI_Campaign__c</columns>
+    <columns>Virtual_Number__c</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>

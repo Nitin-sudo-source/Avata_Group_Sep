@@ -25,10 +25,12 @@ public class Ex_TaskHandlerServices {
                     if(leadMap.containsKey(lId)) {
                         if(String.isNotBlank(leadMap.get(lId).Lead_Stage__c)) {
                             if(stageMap.containsKey(leadMap.get(lId).Lead_Stage__c)) {
-                                if(stageMap.get(leadMap.get(lId).Lead_Stage__c).containsIgnoreCase(t.Stage__c) == false) {
-                                    if(!test.isRunningTest()) {
-                                        t.addError('You can not create the task with Stage: '+t.Stage__c+' where Lead Stage is: '+leadMap.get(lId).Lead_Stage__c);
-                                    }       
+                                if(t.Stage__c != null){
+                                    if(stageMap.get(leadMap.get(lId).Lead_Stage__c).containsIgnoreCase(t.Stage__c) == false) {
+                                        if(!test.isRunningTest()) {
+                                            t.addError('You can not create the task with Stage: '+t.Stage__c+' where Lead Stage is: '+leadMap.get(lId).Lead_Stage__c);
+                                        }       
+                                    }
                                 }
                             }
                         }
@@ -43,12 +45,14 @@ public class Ex_TaskHandlerServices {
         Map<Id, List<Task>> mapRollUpOpp  = new Map<Id, List<Task>>();
         Map<Id, List<Task>> mapRollUpCp = new Map<Id, List<Task>>();
         Map<Id, List<Task>> mapRollUpCpLead = new Map<Id, List<Task>>();
+        Map<Id, List<Task>> mapRollUpRegistration = new Map<Id, List<Task>>();
         
         
-        List<Task> taskList = [Select Id, WhoId, WhatId, CreatedDate, CallType, Call_Status__c, CallDurationInSeconds, Description, Subject, RecordTypeId, RecordType.Name,
+        
+        List<Task> taskList = [Select Id, Status__c, Registration_Date__c, Registration_Scheduled_Date__c, Registration_Venue__c, WhoId, WhatId, CreatedDate, CallType, Call_Status__c, CallDurationInSeconds, Description, Subject, RecordTypeId, RecordType.Name,
                                Stage__c, Sub_Stage__c, Sub_Stage_Reason__c, Next_Follow_Up_Date__c, Proposed_Date_Of_Visit__c, Date__c, Meeting_Type__c,
                                Next_Call_Date__c, Next_Meeting_Date__c, Purpose_of_Meeting__c from Task where Id IN: taskId 
-                               AND (RecordType.Name = 'Presales Call' OR RecordType.Name = 'Sales Call'OR  RecordType.Name = 'CP Call' OR RecordType.Name = 'CP Meeting' OR RecordType.Name = 'CP Lead Call')];
+                               AND (RecordType.Name = 'Presales Call' OR RecordType.Name = 'Sales Call'OR  RecordType.Name = 'CP Call' OR RecordType.Name = 'CP Meeting' OR RecordType.Name = 'CP Lead Call' OR RecordType.Name = 'Registration Call')];
         system.debug('taskList: '+taskList);
         
         for(Task t: taskList) {
@@ -100,6 +104,16 @@ public class Ex_TaskHandlerServices {
                         mapRollUpCpLead.get(t.WhatId).add(t);
                     }
                 }
+            }else if(t.WhatId != Null && t.WhatId.getSObjectType().getDescribe().getName() == 'Registration__c') {
+                if(t.RecordType.Name == 'Registration Call') {
+                    if(!mapRollUpRegistration.containsKey(t.WhatId)) {
+                        List<Task> newTaskList = new List<Task>();
+                        newTaskList.add(t);
+                        mapRollUpRegistration.put(t.WhatId, newTaskList);
+                    } else {
+                        mapRollUpRegistration.get(t.WhatId).add(t);
+                    }
+                }
             }
         }
         if(!mapRollUpLead.isEmpty()) {
@@ -114,8 +128,60 @@ public class Ex_TaskHandlerServices {
         if(!mapRollUpCpLead.isEmpty() && mapRollUpCpLead != null) {
             RollUpTaskCPLeadServices(mapRollUpCpLead);
         }
+        if(!mapRollUpRegistration.isEmpty() && mapRollUpRegistration !=null){
+            RollUpTaskRegistrationServices(mapRollUpRegistration);
+        }
     }
     
+    
+    public static void RollUpTaskRegistrationServices(Map<Id, List<Task>> mapRollUpRegistration) {
+        List<Registration__c> updateRCList = new List<Registration__c>();
+        List<Registration__c> rcList = [SELECT Id, Name, Registration_Date__c, Registration_Call_Count__c, Last_Call_Comment__c, Registration_Call_History__c, Last_Call_Status__c, Registration_Venue__c, Registration_Stage__c,  Registration_Scheduled_Date__c
+                                   from Registration__c where Id =: mapRollUpRegistration.keySet()];
+        system.debug('rcList: '+rcList);
+        
+        for(Registration__c rc: rcList) {
+            List<Task> getcpTaskList = mapRollUpRegistration.get(rc.Id);
+            system.debug('getcpTaskList: '+getcpTaskList);
+            
+            DateTime dT = System.now();
+            Date myDate = date.newinstance(dT.year(), dT.month(), dT.day());
+            
+            if(!getcpTaskList.isEmpty()) {
+                for(Task t: getcpTaskList) {
+                    if(t.RecordType.Name == 'Registration Call') {
+                        if(t.Call_Status__c != null)
+                        rc.Last_Call_Status__c = t.Call_Status__c;
+                        if(t.Registration_Scheduled_Date__c != null)
+                        rc.Registration_Scheduled_Date__c = t.Registration_Scheduled_Date__c;
+                        rc.Last_Call_Comment__c = t.Description;
+                        if(t.Status__c != null)
+                            rc.Registration_Stage__c = t.Status__c;
+                        if(t.Registration_Date__c != null)
+                            rc.Registration_Date__c = t.Registration_Date__c;
+                        if(t.Registration_Venue__c != null){
+                            rc.Registration_Venue__c = t.Registration_Venue__c;
+                        }
+                        
+                        if(rc.Registration_Call_Count__c == null)
+                            rc.Registration_Call_Count__c = 1;
+                        else
+                            rc.Registration_Call_Count__c = rc.Registration_Call_Count__c + 1;
+                        if(rc.Last_Call_Comment__c != null) {
+                            if(rc.Registration_Call_History__c == null)
+                                rc.Registration_Call_History__c = '';
+                            rc.Registration_Call_History__c = String.ValueOf(myDate)+': ' + rc.Last_Call_Comment__c + '\n' + rc.Registration_Call_History__c ;
+                        }
+                        updateRCList.add(rc);    
+                    }
+                }
+            }
+            system.debug('updateRCList: '+updateRCList);
+            if(!updateRCList.isEmpty() && updateRCList != null)
+                update updateRCList;
+        }
+        
+    }
     
     
     public static void RollUpTaskLeadServices(Map<Id, List<Task>> mapRollUpLead, String operation, Boolean count) {
@@ -144,7 +210,9 @@ public class Ex_TaskHandlerServices {
                         l.Is_Serviced__c = true;
                         if(t.Stage__c != null) {
                             l.Lead_Stage__c = t.Stage__c;
+                            if(t.Sub_Stage__c != null)
                             l.Lead_Sub_Stage__c = t.Sub_Stage__c;
+                            if(t.Sub_Stage_Reason__c != null)
                             l.Lead_Sub_Stage_Reason__c = t.Sub_Stage_Reason__c;
                         }
                         if(l.Presales_Call_Count__c == null)
@@ -216,7 +284,7 @@ public class Ex_TaskHandlerServices {
         List<CP_Project__c> updateCPList = new List<CP_Project__c>();
         List<CP_Project__c> CPList = [SELECT Id, Name, Last_CP_Call_Date__c, Last_CP_Call_Remarks__c, Next_Call_Date__c, Last_CP_Call_Status__c, Last_Meeting_Call_Remarks__c,
                                       Last_CP_Meeting_Date__c, Next_Meeting_Date__c, Purpose_of_Meeting__c, Last_CP_Meeting_Status__c,
-                                       CreatedDate,CP_Call_Count__c, CP_Meeting_Count__c, CP_Call_Remark_History__c,CP_Meeting_Remark_History__c
+                                      CreatedDate,CP_Call_Count__c, CP_Meeting_Count__c, CP_Call_Remark_History__c,CP_Meeting_Remark_History__c
                                       from CP_Project__c where Id =: mapRollUpCp.keySet()];
         system.debug('CPList: '+CPList);
         
@@ -236,7 +304,7 @@ public class Ex_TaskHandlerServices {
                         cp.Next_Meeting_Date__c = t.Next_Meeting_Date__c;
                         if(t.Call_Status__c != null)
                             cp.Last_CP_Call_Status__c = t.Call_Status__c; 
-                            cp.CP_Call_Count__c = cp.CP_Call_Count__c + 1;
+                        cp.CP_Call_Count__c = cp.CP_Call_Count__c + 1;
                         if(cp.Last_CP_Call_Remarks__c != null) {
                             if(cp.CP_Call_Remark_History__c == null)
                                 cp.CP_Call_Remark_History__c = '';
@@ -248,9 +316,9 @@ public class Ex_TaskHandlerServices {
                         cp.Last_Meeting_Call_Remarks__c = t.Description;
                         cp.Next_Meeting_Date__c = t.Next_Meeting_Date__c ;
                         if(t.Purpose_of_Meeting__c != null)
-                        cp.Purpose_of_Meeting__c = t.Purpose_of_Meeting__c;
+                            cp.Purpose_of_Meeting__c = t.Purpose_of_Meeting__c;
                         if(t.Meeting_Type__c != null)
-                        cp.Last_Meeting_Type__c = t.Meeting_Type__c;
+                            cp.Last_Meeting_Type__c = t.Meeting_Type__c;
                         cp.CP_Meeting_Count__c = cp.CP_Meeting_Count__c + 1;
                         if(t.Call_Status__c != null)
                             cp.Last_CP_Meeting_Status__c = t.Call_Status__c; 
@@ -274,7 +342,7 @@ public class Ex_TaskHandlerServices {
     public static void RollUpTaskCPLeadServices(Map<Id, List<Task>> mapRollUpCpLead) {
         List<CP_Lead__c> updateCPList = new List<CP_Lead__c>();
         List<CP_Lead__c> CPList = [SELECT Id, Name, Last_CP_Lead_Call_Date__c, Last_CP_Lead_Call_Comment__c, Proposed_Visit_Date__c, CP_Lead_Next_Follow_up_Date__c, CP_Lead_Call_Count__c, CP_Lead_Call_Comment_History__c
-                                      from CP_Lead__c where Id =: mapRollUpCpLead.keySet()];
+                                   from CP_Lead__c where Id =: mapRollUpCpLead.keySet()];
         system.debug('CPList: '+CPList);
         
         for(CP_Lead__c cp: CPList) {
@@ -294,7 +362,7 @@ public class Ex_TaskHandlerServices {
                         if(cp.CP_Lead_Call_Count__c == null)
                             cp.CP_Lead_Call_Count__c = 1;
                         else
-                        cp.CP_Lead_Call_Count__c = cp.CP_Lead_Call_Count__c + 1;
+                            cp.CP_Lead_Call_Count__c = cp.CP_Lead_Call_Count__c + 1;
                         if(cp.Last_CP_Lead_Call_Comment__c != null) {
                             if(cp.CP_Lead_Call_Comment_History__c == null)
                                 cp.CP_Lead_Call_Comment_History__c = '';
@@ -322,5 +390,5 @@ public class Ex_TaskHandlerServices {
             }
         }
         return stageMap;
-	}
+    }
 }

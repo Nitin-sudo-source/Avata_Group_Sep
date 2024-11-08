@@ -16,8 +16,10 @@ public class Ex_BookingTriggerHandler {
     public static void afterUpdate(Map<Id, Booking__c> oldMap, Map<Id, Booking__c> newMap) {
         Map<Id, Booking__c> quotationBookingMap = new Map<Id, Booking__c>();
         Set<Id> towerIdSet = new Set<Id>();
+        Boolean isBatchReq2 = false;
         
         Set<Id> bkSetId = new Set<Id>();
+        Set<Id> cancellBkSet = new Set<Id>();
         List<Booking__c> bList = new List<Booking__c>();
         
         for(Booking__c oldBooking: oldMap.values()) {
@@ -26,6 +28,16 @@ public class Ex_BookingTriggerHandler {
             if(oldBooking.Welcome_Call_Done__c != newBooking.Welcome_Call_Done__c && newBooking.Welcome_Call_Done__c == True ){
                 bkSetId.add(newBooking.Id);
             }
+            
+            if(oldBooking.Booking_Stage__c != newBooking.Booking_Stage__c && newBooking.Booking_Stage__c != null && newBooking.Booking_Stage__c.equalsIgnoreCase('Booking Cancelled')){
+                cancellBkSet.add(newBooking.Id);
+            }
+            
+            if(oldBooking.Booking_Stage__c != newBooking.Booking_Stage__c && newBooking.Booking_Stage__c != null && newBooking.Booking_Stage__c.equalsIgnoreCase('Booking Confirmed')){
+                isBatchReq2 = true;
+            }
+            
+            
             
             if(oldBooking.Updated_Agreement_Value__c != newBooking.Updated_Agreement_Value__c || oldBooking.GST__c != newBooking.GST__c || oldBooking.Stamp_Duty__c != newBooking.Stamp_Duty__c) {
                 bList.add(newBooking);
@@ -37,9 +49,20 @@ public class Ex_BookingTriggerHandler {
             }
         }
         
+        if (isBatchReq2) {
+            if (!Test.isRunningTest()){
+                Database.executeBatch(new Ex_DemandRaiseBatch(),1);
+            }
+        }
+        
         if(!bkSetId.isEmpty() && bkSetId != null){
             Ex_SendEmailWelcomeCall.sendEmailWelcomeCall(bkSetId);
         }
+        if(!cancellBkSet.isEmpty() && cancellBkSet != null){
+            Ex_BookingHanldlerServices.getbookingCancellationUpdate(cancellBkSet);
+        }
+
+        
         if(!bList.isEmpty() && bList != null) {
            // Ex_BookingHanldlerServices.handleAgreementValueChange(bList);
         }

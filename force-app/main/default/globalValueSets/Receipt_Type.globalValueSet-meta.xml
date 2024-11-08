@@ -30,6 +30,41 @@
         <default>false</default>
         <label>TDS</label>
     </customValue>
+    <customValue>
+        <fullName>Flat Cost</fullName>
+        <default>false</default>
+        <label>Flat Cost</label>
+    </customValue>
+    <customValue>
+        <fullName>Flat Cost + GST</fullName>
+        <default>false</default>
+        <label>Flat Cost + GST</label>
+    </customValue>
+    <customValue>
+        <fullName>GST</fullName>
+        <default>false</default>
+        <label>GST</label>
+    </customValue>
+    <customValue>
+        <fullName>TDS Challan</fullName>
+        <default>false</default>
+        <label>TDS Challan</label>
+    </customValue>
+    <customValue>
+        <fullName>SDR Challan</fullName>
+        <default>false</default>
+        <label>SDR Challan</label>
+    </customValue>
+    <customValue>
+        <fullName>Interest</fullName>
+        <default>false</default>
+        <label>Interest</label>
+    </customValue>
+    <customValue>
+        <fullName>Interest GST</fullName>
+        <default>false</default>
+        <label>Interest GST</label>
+    </customValue>
     <masterLabel>Receipt Type</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

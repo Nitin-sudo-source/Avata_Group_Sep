@@ -1,15 +1,15 @@
 ({
     getDetails : function(component, event, helper, payload) {
-       if(payload.User_Id__c == $A.get( "$SObjectType.CurrentUser.Id" )){
-              component.set('v.displayCall', true); 
+        if(payload.User_Id__c == $A.get( "$SObjectType.CurrentUser.Id" )){
+            component.set('v.displayCall', true); 
             if(payload.Record_Id__c != undefined && payload.Record_Id__c != null){
-                    component.set('v.recordId', payload.Record_Id__c); 
-                    component.set('v.objectName', payload.ObjectName__c); 
-                 
-                    component.set('v.displayCall', true);
+                component.set('v.recordId', payload.Record_Id__c); 
+                component.set('v.objectName', payload.ObjectName__c); 
+                
+                component.set('v.displayCall', true);
             } 
             helper.openUtility(component, event, helper);
-           
+            
         }
     },
     

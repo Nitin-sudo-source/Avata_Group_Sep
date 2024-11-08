@@ -21,7 +21,7 @@ public class Ex_AccountHandlerServices {
         }
     }
     
-    public static void duplicationCheckOnCP(List<Account> accountList) {
+   /* public static void duplicationCheckOnCP(List<Account> accountList) {
         Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>> CPduplicateWrapperMap = new Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
         
         CPduplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckCPAcccount(accountList);
@@ -39,7 +39,7 @@ public class Ex_AccountHandlerServices {
                 }
             }
         }
-    }
+    }*/
     
     public static void insertDocument(List<Account> accountList) {
         List<Document__c> cpDocumentList = new List<Document__c>();

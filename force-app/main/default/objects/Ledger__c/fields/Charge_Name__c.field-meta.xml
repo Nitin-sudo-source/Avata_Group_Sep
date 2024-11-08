@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Charge_Name__c</fullName>
+    <label>Charge Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Demand Cost</fullName>
+                <default>false</default>
+                <label>Demand Cost</label>
+            </value>
+            <value>
+                <fullName>Demand Tax</fullName>
+                <default>false</default>
+                <label>Demand Tax</label>
+            </value>
+            <value>
+                <fullName>Demand Interest</fullName>
+                <default>false</default>
+                <label>Demand Interest</label>
+            </value>
+            <value>
+                <fullName>Flat Cost</fullName>
+                <default>false</default>
+                <label>Flat Cost</label>
+            </value>
+            <value>
+                <fullName>Tax</fullName>
+                <default>false</default>
+                <label>Tax</label>
+            </value>
+            <value>
+                <fullName>Interest</fullName>
+                <default>false</default>
+                <label>Interest</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

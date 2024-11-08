@@ -345,16 +345,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Submit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>2</sortOrder>
@@ -368,6 +358,16 @@
             <actionName>Print_Quotation</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
@@ -390,6 +390,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Car_Park_Count__c</fields>
+        <fields>Car_Park_Type__c</fields>
+        <fields>Car_Park_Amount__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Car_Park_Required__c.Quotation__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -401,12 +405,11 @@
         <fields>NAME</fields>
         <fields>Sequence_No__c</fields>
         <fields>Construction_Stage__c</fields>
-        <fields>Charge_Bucket_1__c</fields>
-        <fields>Charge_Bucket_1_Percentage__c</fields>
+        <fields>Is_Due__c</fields>
+        <fields>Due_Date__c</fields>
+        <fields>Is_Raised__c</fields>
+        <fields>Demand_Raised_Date__c</fields>
         <fields>Charge_Bucket_1_Amount__c</fields>
-        <fields>Charge_Bucket_1_CGST__c</fields>
-        <fields>Charge_Bucket_1_SGST__c</fields>
-        <fields>Charge_Bucket_1_Total_Tax__c</fields>
         <relatedList>Payment_Milestone__c.Quotation__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -419,7 +422,25 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Amount__c</fields>
+        <fields>Discount_Type__c</fields>
+        <fields>Discount_Category__c</fields>
+        <fields>Category__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Discount_Applied__c.Quotation__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Demand_Status__c</fields>
+        <fields>Due_Date__c</fields>
+        <fields>Invoice_Date__c</fields>
+        <fields>Agreement_Value_Demanded__c</fields>
+        <fields>Agreement_Value_Paid__c</fields>
+        <fields>Agreement_Value_Remaining__c</fields>
+        <fields>Agreement_Value_Tax_Demanded__c</fields>
+        <fields>Agreement_Value_Tax_Paid__c</fields>
+        <fields>Agreement_Value_Tax_Remaining__c</fields>
+        <relatedList>Demand__c.Quotation__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

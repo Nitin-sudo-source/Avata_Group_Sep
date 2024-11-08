@@ -35,7 +35,9 @@ public class Ex_TaskTriggerHandler {
                 Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'Sales Call' ||
                 Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'CP Call' ||
                 Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'CP Meeting' ||
-               Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'CP Lead Call'))
+               Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'CP Lead Call'||
+               Schema.SObjectType.Task.getRecordTypeInfosById().get(t.RecordTypeId).getName() == 'Registration Call'
+               ))
             {
                 taskIdSet.add(t.Id);
             }

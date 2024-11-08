@@ -44,7 +44,8 @@ public class Ex_LeadHandlerServices {
             // Pick the next person to be assigned
             if(!tmList.isEmpty()) {
                 Team_Member__c member = tmList.get(Math.mod(index, tmList.size()));
-                
+                System.debug('member: '+member);
+                System.debug('memberUser: '+member.User__c);
                 l.OwnerId = member.User__c;
 
                 DateTime now = DateTime.now();

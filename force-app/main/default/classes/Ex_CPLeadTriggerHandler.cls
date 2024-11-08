@@ -5,8 +5,8 @@ public class Ex_CPLeadTriggerHandler {
         for(CP_Lead__c l: leadList) {
             lList.add(l);
         }
-        if(!lList.isEmpty() && lList != null)
-            Ex_CPLeadHandlerServices.duplicationCheck('Yes', lList);
+       // if(!lList.isEmpty() && lList != null)
+            //Ex_CPLeadHandlerServices.duplicationCheck('Yes', lList);
     }
     
     public static void beforeUpdate(Map<Id, CP_Lead__c> oldMap, Map<Id, CP_Lead__c> newMap) {
@@ -21,7 +21,7 @@ public class Ex_CPLeadTriggerHandler {
             }
                 
         }
-        if(!lList.isEmpty() && lList != null)
-            Ex_CPLeadHandlerServices.duplicationCheck('No', lList);
+        //if(!lList.isEmpty() && lList != null)
+            //Ex_CPLeadHandlerServices.duplicationCheck('No', lList);
     }
 }

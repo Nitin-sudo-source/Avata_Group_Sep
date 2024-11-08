@@ -1,10 +1,3 @@
-/**
- * @description       : 
- * @author            : nitinSFDC@exceller.SFDoc
- * @group             : 
- * @last modified on  : 19-10-2024
- * @last modified by  : nitinSFDC@exceller.SFDoc
-**/
 // -------------------------------------------
 //   Project: Avant Infra 
 //   Created By: Exceller Tech
@@ -26,7 +19,7 @@ public class Ex_LeadConversionPopup {
         return checkMap;
     }
     
-    @AuraEnabled (cacheable=true)
+   /* @AuraEnabled (cacheable=true)
     public static Map<ID, CP_Lead__c> isCPLeadChecked(String ID){
         Map<ID, CP_Lead__c> checkMap = new Map<ID, CP_Lead__c>(); 
         for (CP_Lead__c l : [select Id, CP_Lead_Stage__c FROM CP_Lead__c where id=:ID]){
@@ -38,7 +31,7 @@ public class Ex_LeadConversionPopup {
             } 
         }
         return checkMap;
-    }
+    }*/
     
 
 }

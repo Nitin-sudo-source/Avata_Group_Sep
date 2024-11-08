@@ -37,15 +37,19 @@ public class TestEx_CampaignHandlerServices {
         insert opportunities;
         
           // Insert test Task records
-        List<Task> taskList=new List<Task>();
+       /* List<Task> taskList=new List<Task>();
         Task t=new Task();
         t.Call_Status__c='Busy';
+        t.Next_Follow_Up_Date__c = system.today().addDays(1);
         insert t;
-        taskList.add(t);
+        taskList.add(t);*/
 
-        Booking__c b=new Booking__c();
-        b.Booking_Stage__c='Booking Confirmed';
+       /* Booking__c b=new Booking__c();
+        b.Booking_Stage__c='Booking In-Process';
+        b.CRM_Head__c = UserInfo.getUserId();
         insert b;
+        b.Booking_Stage__c='Booking Confirmed';
+        update b;*/
         
         Set<Id> campaignIds = new Set<Id>();
         for (Campaign__c camp : [SELECT Id FROM Campaign__c]) {
