@@ -714,8 +714,8 @@ export default class Ex_GenerateQuotation extends LightningElement {
                         //this.showAllIn.push(getAllInPrice);
                         //console.log('All: '+JSON.stringify(this.showAllIn));
                     }
-                    //this.totalCarParkAmountString = this.allPriceInfoFormattedMap['Total Car Park Price'];
-                    //this.totalDiscountAmountString = this.allPriceInfoFormattedMap['Total Discount Price'];
+                    this.totalCarParkAmountString = this.allPriceInfoFormattedMap['Total Car Park Price'];
+                    this.totalDiscountAmountString = this.allPriceInfoFormattedMap['Total Discount Price'];
                     //console.log('allPriceDetailMap: '+JSON.stringify(this.allPriceDetailMap));
                 } else if (error) {
                     console.error('Error In getAllPriceFormattedMap: ', error);

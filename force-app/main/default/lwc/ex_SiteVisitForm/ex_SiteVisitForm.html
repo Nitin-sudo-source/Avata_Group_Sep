@@ -58,8 +58,8 @@
                         if:true={showNumber} style="width: 95%!important ;">
                         <label class="Email">Email</label>
                         <lightning-input  type="text" field-name="Email__c"  name="Email__c" placeholder="useremail.com" 
-                        value={svWrapper.sv.Email__c} disabled={disabledEmail}
-                                onchange={handleChange} variant="label-hidden"></lightning-input>
+                        value={storeEmail} disabled={disabledEmail}
+                                onchange={handleEmail} variant="label-hidden"></lightning-input>
                                 </lightning-layout-item>
 
                         <!-- <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">

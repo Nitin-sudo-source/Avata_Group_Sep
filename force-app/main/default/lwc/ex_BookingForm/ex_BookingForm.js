@@ -284,8 +284,8 @@ export default class Ex_BookingForm extends LightningElement {
         }
     }
 
-    callDocument(tabKey, fieldValue) {
-        ApplicantdocumentDetails({ fieldValue: fieldValue, oppId: this.quote.Opportunity__c, tabKey: this.tabKey })
+    callDocument(tabKey, fieldValue, nationality) {
+        ApplicantdocumentDetails({ fieldValue: fieldValue, nationality: nationality, oppId: this.quote.Opportunity__c, tabKey: this.tabKey })
             .then(result => {
                 console.log('result', JSON.stringify(result));
 
@@ -351,55 +351,62 @@ export default class Ex_BookingForm extends LightningElement {
                     updatedApplicant.ap.Mailing_City__c = updatedApplicant.ap.City__c;
                     updatedApplicant.ap.Mailing_Pincode__c = updatedApplicant.ap.PIN__c;
                 }
+                if (updatedApplicant.ap.Document_Upload_Required__c === 'Yes' && updatedApplicant.ap.Nationality__c === 'Indian') {
+                    this.callDocument(tabKey, updatedApplicant.ap.Document_Upload_Required__c, updatedApplicant.ap.Nationality__c);
+                } else if (updatedApplicant.ap.Document_Upload_Required__c === 'Yes' && updatedApplicant.ap.Nationality__c === 'NRI') {
+                    this.callDocument(tabKey, updatedApplicant.ap.Document_Upload_Required__c, updatedApplicant.ap.Nationality__c);
+                } else if (updatedApplicant.ap.Document_Upload_Required__c === 'No' && updatedApplicant.ap.Nationality__c === 'NRI') {
+                    this.callDocument(tabKey, updatedApplicant.ap.Document_Upload_Required__c, updatedApplicant.ap.Nationality__c);
+                }else if (updatedApplicant.ap.Document_Upload_Required__c === 'No' && updatedApplicant.ap.Nationality__c === 'Indian') {
+                    this.callDocument(tabKey, updatedApplicant.ap.Document_Upload_Required__c, updatedApplicant.ap.Nationality__c);
+                } else if (fieldApiName === 'PAN_Number__c') {
+                    //alert('textt');
+                    const panNumber = event.detail.value;
+                    console.log('Inside Pan:::' + panNumber);
+                    const isValidPan = this.sValidPanCardNo(panNumber);
+                    console.log('isValidPan: ' + isValidPan);
+    
+                    if (isValidPan === 'false') {
+                        this.showErrorPan = true;
+                        this.showMsg = 'Please Enter Valid PAN Number ';
+                    } else {
+                        this.showErrorPan = false;
+                    }
+                } else if (fieldApiName === 'Aadhar_Number__c') {
+                    const aadharNumber = event.detail.value;
+                    const isValidAadhar = this.validateAadharNumber(aadharNumber);
+    
+                    if (!isValidAadhar) {
+                        this.showError = true;
+                        this.showMsg = 'Please Enter Valid Aadhar Number ';
+                    } else {
+                        this.showError = false;
+                    }
+                } else if (fieldApiName === 'PIN__c') {
+                    const pinNumber = event.detail.value;
+                    const isValidPIN = this.validPINNumber(pinNumber);
+    
+                    if (!isValidPIN) {
+                        this.showErrorPIN = true;
+                        this.showPINMsg = 'Please Enter Valid PIN Code';
+                    } else {
+                        this.showErrorPIN = false;
+                    }
+                } else if (fieldApiName === 'Mailing_Pincode__c') {
+                    const MailingPinNumber = event.detail.value;
+                    const isValidMailingPIN = this.validMailingPINNumber(MailingPinNumber);
+    
+                    if (!isValidMailingPIN) {
+                        this.showErrorMailingPIN = true;
+                        this.showMailingPINMsg = 'Please Enter Valid Mailing PIN Code';
+                    } else {
+                        this.showErrorMailingPIN = false;
+                    }
+                }
                 this.getApplicantData.splice(applicantIndex, 1, updatedApplicant);
             }
             console.log('Applicant Data::' + JSON.stringify(this.getApplicantData));
-            if (fieldValue && fieldApiName === 'Document_Upload_Required__c') {
-                this.callDocument(tabKey, fieldValue);
-            } else if (fieldApiName === 'PAN_Number__c') {
-                //alert('textt');
-                const panNumber = event.detail.value;
-                console.log('Inside Pan:::' + panNumber);
-                const isValidPan = this.sValidPanCardNo(panNumber);
-                console.log('isValidPan: ' + isValidPan);
-
-                if (isValidPan === 'false') {
-                    this.showErrorPan = true;
-                    this.showMsg = 'Please Enter Valid PAN Number ';
-                } else {
-                    this.showErrorPan = false;
-                }
-            } else if (fieldApiName === 'Aadhar_Number__c') {
-                const aadharNumber = event.detail.value;
-                const isValidAadhar = this.validateAadharNumber(aadharNumber);
-
-                if (!isValidAadhar) {
-                    this.showError = true;
-                    this.showMsg = 'Please Enter Valid Aadhar Number ';
-                } else {
-                    this.showError = false;
-                }
-            } else if (fieldApiName === 'PIN__c') {
-                const pinNumber = event.detail.value;
-                const isValidPIN = this.validPINNumber(pinNumber);
-
-                if (!isValidPIN) {
-                    this.showErrorPIN = true;
-                    this.showPINMsg = 'Please Enter Valid PIN Code';
-                } else {
-                    this.showErrorPIN = false;
-                }
-            } else if (fieldApiName === 'Mailing_Pincode__c') {
-                const MailingPinNumber = event.detail.value;
-                const isValidMailingPIN = this.validMailingPINNumber(MailingPinNumber);
-
-                if (!isValidMailingPIN) {
-                    this.showErrorMailingPIN = true;
-                    this.showMailingPINMsg = 'Please Enter Valid Mailing PIN Code';
-                } else {
-                    this.showErrorMailingPIN = false;
-                }
-            }
+           
 
         } catch (error) {
             console.error(error.message)
