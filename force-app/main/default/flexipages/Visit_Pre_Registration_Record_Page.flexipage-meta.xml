@@ -139,7 +139,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Site_Visit_Date__c</fieldItem>
                 <identifier>RecordSite_Visit_Date_cField</identifier>

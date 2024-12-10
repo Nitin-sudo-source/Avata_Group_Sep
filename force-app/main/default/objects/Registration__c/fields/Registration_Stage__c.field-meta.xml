@@ -16,11 +16,6 @@
                 <label>Booking Confirmed</label>
             </value>
             <value>
-                <fullName>Registration Completed</fullName>
-                <default>false</default>
-                <label>Registration Completed</label>
-            </value>
-            <value>
                 <fullName>AFS draft send</fullName>
                 <default>false</default>
                 <label>AFS draft send</label>
@@ -29,6 +24,11 @@
                 <fullName>Registration Scheduled</fullName>
                 <default>false</default>
                 <label>Registration Scheduled</label>
+            </value>
+            <value>
+                <fullName>Registration Completed</fullName>
+                <default>false</default>
+                <label>Registration Completed</label>
             </value>
         </valueSetDefinition>
     </valueSet>

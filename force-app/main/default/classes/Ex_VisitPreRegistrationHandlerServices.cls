@@ -53,4 +53,20 @@ public class Ex_VisitPreRegistrationHandlerServices {
         }
         
     }
+    
+    public static void duplicationCheck(List<Visit_Pre_Registration__c> vprLeadList){
+        Map<Visit_Pre_Registration__c, List<Ex_VisitPreRegDuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = Ex_VisitPreRegDuplicationHandlerServices.duplicationCheck(vprLeadList);
+        if(!vprLeadList.isEmpty() && vprLeadList!=null){
+            for(Visit_Pre_Registration__c vpr : vprLeadList){
+                String errMsg = '';
+                if(duplicateWrapperMap.containsKey(vpr)){
+                    for(Ex_VisitPreRegDuplicationHandlerServices.duplicateWrapper dw : duplicateWrapperMap.get(vpr)){
+                        errMsg = 'Visit Pre-Registration for selected '+dw.Type+' Already Exists with Moible Number: '+dw.dupVisitPreReg.Mobile_Number__c+' and Project: '+dw.dupVisitPreReg.Project__r.Name;
+                    }
+                    if(!test.isRunningTest() && errMsg != null)
+                        vpr.addError(errMsg);
+                }
+            }
+        }
+    }   
 }

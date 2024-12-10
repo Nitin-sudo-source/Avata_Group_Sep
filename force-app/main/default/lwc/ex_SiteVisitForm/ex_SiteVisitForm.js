@@ -3,6 +3,8 @@ import selectProject from '@salesforce/apex/Ex_SiteVisitForm.selectProject';
 import projectImage from '@salesforce/apex/Ex_SiteVisitForm.projectImage';
 import getSVWrapper from '@salesforce/apex/Ex_SiteVisitForm.getSVWrapper';
 import getSalutation from '@salesforce/apex/Ex_SiteVisitForm.getSalutation'; //searchForData
+import getLeadSource from '@salesforce/apex/Ex_SiteVisitForm.getLeadSource';
+import getLeadSubSource from '@salesforce/apex/Ex_SiteVisitForm.getLeadSubSource';
 import { NavigationMixin } from 'lightning/navigation';
 import search from '@salesforce/apex/Ex_SiteVisitForm.search'; //searchForData
 import submit from '@salesforce/apex/Ex_SiteVisitForm.submit';
@@ -19,7 +21,7 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
     }
 
 
-
+    @track revisitShow = false;
     @track vprData = [];
     @api project;
     @track isQrcustomer = false;
@@ -40,8 +42,16 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
     @track showthirdPage = false;
     @track showFourthPage = false;
     @track showFifthPage = false;
+    @track showSixthPage = false;
     @track showFinalScreen = false;
     @track Salutation = '';
+    @track LeadSource = '';
+    @track LeadSubSource = '';
+    @track leadSourceValue = '';
+    @track leadSubSourceValue = '';
+    @track cpLkUpValue = '';
+    @track referrerNameValue = '';
+    @track showCP = '';
     @track leadId = null;
     @track oppId = null;
     @track accId = null;
@@ -66,6 +76,8 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
     @track showAccountDataFound = false;
     @track showLeadDataFound = false;
     @track showOpportunityDataFound = false;
+    @track showChannelPartner = false;
+    @track isRevisit = false;
     @track accountFetch = [];
     @track leadFetch = [];
     @track opportunityFetch = [];
@@ -74,6 +86,9 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
     @api opportunityDataFound = [];
     @track getFinalResult = [];
     @track vpId = '';
+    @track isSourceNotEditable = false;
+    
+    test = '';
 
     handleRegistration(event) {
         this.registration = event.detail.value;
@@ -85,12 +100,13 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
             this.showNumber = false;
             this.hideSearch = true;
             this.showVerify = true;
+            this.isSourceNotEditable = true;
 
         } else if (this.registration == 'No') {
             this.showCode = false;
             this.showNumber = true;
             this.showVerify = false;
-
+            this.isSourceNotEditable = false;
         }
     }
 
@@ -115,7 +131,43 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
         console.log('regCode: ' + (this.regCode));
     }
 
+    lookupRecord(event) {
+        // Retrieve the selected record from the event detail
+        const selectedRecord = event.detail.selectedRecord;
+        const getObjectName = event.target.dataset.name;
+        console.log('Selected Record:', JSON.stringify(selectedRecord));
+        console.log('Object Name:', getObjectName);
 
+        // Check if getObjectName and selectedRecord are defined
+        if (getObjectName && selectedRecord) {
+            if (getObjectName === 'Account' && selectedRecord.Id) {
+                this.svWrapper.sv.Channel_Partner__c = selectedRecord.Id;
+                this.searchName = selectedRecord.Name;
+                //alert('Selected Channel Partner ' + selectedRecord.Name);
+                //this.callCPProject(this.svWrapper.sv.Channel_Partner__c, this.projectId);
+
+                // Optionally set the display name for UI
+                // this.showCP = selectedRecord.Name;
+            } else if (getObjectName === 'User' && selectedRecord.Id) {
+                this.svWrapper.sv.Sourcing_Manager__c = selectedRecord.Id;
+                this.searchNameSourcing = selectedRecord.Name;
+                //alert('Selected Sourcing Name ' + selectedRecord.Name);
+            }
+        }
+        if (getObjectName && selectedRecord === undefined) {
+            if (getObjectName === 'Account') {
+                this.svWrapper.sv.Channel_Partner__c = undefined;
+                // alert('Selected Channel Partner ' + selectedRecord.Name);
+                // Optionally set the display name for UI
+                // this.showCP = selectedRecord.Name;
+            } else if (getObjectName === 'User') {
+                this.svWrapper.sv.Sourcing_Manager__c = undefined;
+                // alert('Selected Sourcing Name ' + selectedRecord.Name);
+            }
+
+        }
+        console.log('svWrapper:', JSON.stringify(this.svWrapper));
+    }
 
 
     connectedCallback() {
@@ -146,6 +198,29 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
             });
     }
 
+    getLeadSource(){
+        getLeadSource({})
+            .then((result) =>{
+                this.LeadSource = result.map(picklistValue => ({ label: picklistValue, value: picklistValue }));
+            }).catch(error => {
+                console.log('Lead Source error ' + JSON.stringify(error));
+
+            }).catch(error => {
+                console.error('An unexpected error occurred:', error);
+            });
+    }
+
+    getLeadSubSource(){
+        getLeadSubSource({})
+            .then((result) =>{
+                this.LeadSubSource = result.map(picklistValue => ({ label: picklistValue, value: picklistValue }));
+            }).catch(error => {
+                console.log('Lead Sub Source error ' + JSON.stringify(error));
+
+            }).catch(error => {
+                console.error('An unexpected error occurred:', error);
+            });
+    }
 
     getSVWrapper() {
         console.log('cpLeadId: ' + this.cpLeadId);
@@ -210,22 +285,24 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
             try {
                 const fieldName = event.target ? event.target.fieldName : event.detail ? event.detail.fieldName : '';
                 const value = event.target ? event.target.value : event.detail ? event.detail.value : '';
-                // if (fieldName == 'Lead_Source__c' && value == 'Channel Partner') {
-                //     this.searchPlaceholder = 'Search Channel Partner';
-                //     this.showChannelPartner = true;
-                //     this.showReferenceName = false;
-
-                // } else if (fieldName == 'Lead_Source__c' && value == 'Reference') {
-                //     this.showReferenceName = true;
-                //     this.showChannelPartner = false;
-                //     this.getSVWrapperList = {
-                //         ...this.svWrapper.sv,
-                //         [fieldName]: value
-                //     };
-                // } else {
-                //     this.showChannelPartner = false;
-                //     this.showReferenceName = false;
-                // }
+                if ((fieldName == 'Lead_Source__c' && value == 'Channel Partner') || (fieldName == 'Lead_Sub_Source__c' && value == 'Channel Partner')) {
+                    this.searchPlaceholder = 'Search Channel Partner';
+                    this.showChannelPartner = true;
+                    this.showReferenceName = false;
+                    this.svWrapper.sv.Referrer_Name__c = undefined;
+                } else if ((fieldName == 'Lead_Source__c' && value == 'Reference') || (fieldName == 'Lead_Sub_Source__c' && value == 'Reference')) {
+                    this.showReferenceName = true;
+                    this.showChannelPartner = false;
+                    this.svWrapper.sv.Channel_Partner__c = undefined;
+                    this.getSVWrapperList = {
+                        ...this.svWrapper.sv,
+                        [fieldName]: value
+                    };
+                } else if((fieldName != 'Lead_Source__c' && value != 'Channel Partner') || (fieldName != 'Lead_Sub_Source__c' && value != 'Channel Partner')) {
+                    this.showChannelPartner = false;
+                } else if((fieldName != 'Lead_Source__c' && value != 'Reference') || (fieldName != 'Lead_Sub_Source__c' && value != 'Reference')){
+                    this.showReferenceName = false;
+                }
                 this.getSVWrapperList = {
                     ...this.svWrapper.sv,
                     [fieldName]: value
@@ -344,25 +421,48 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
                             }
                             if (element.key.includes('Opportunity')) {
                                 this.showOpportunityDataFound = true;
+                                this.isRevisit = true;
                                 this.opportunityFetch.push(element.value);
                                 this.opportunityDataFound = this.opportunityFetch[0];
                                 this.oppId = this.opportunityDataFound[0].Id;
                                 console.log('oppId: ' + this.oppId);
+
+                                if(this.opportunityDataFound!=[] && this.opportunityDataFound.length>0){
+                                    this.opportunityDataFound.forEach(Opportunity => {
+                                        Opportunity.SalesManager = Opportunity.Owner.FirstName+' '+Opportunity.Owner.LastName;
+                                        console.log('salesmanager:'+JSON.stringify(Opportunity.SalesManager));
+
+                                        if (Opportunity.SV_Comment_History__c!=null) {
+                                            Opportunity.FormattedComments = Opportunity.SV_Comment_History__c.replace(/\n/g, '<br>');
+                                        } else {
+                                            Opportunity.FormattedComments = '';
+                                        }
+
+                                        if (Opportunity.SV_Date_History__c!=null) {
+                                            Opportunity.showSVDate = Opportunity.SV_Date_History__c.replace(/\n/g, '<br>');
+                                        } else {
+                                            Opportunity.showSVDate = '';
+                                        }
+                                        console.log('showSVDate:', JSON.stringify(Opportunity.showSVDate));
+                                        
+                                        console.log('Formatted Comments:', JSON.stringify(Opportunity.FormattedComments));
+                                    })
+                                }
                                 //this.getSVWrapper();
                                 // console.log('FirstName: ' + JSON.stringify(this.opportunityDataFound[0].Owner.FirstName));
                                 // console.log('LastName: ' + JSON.stringify(this.opportunityDataFound[0].Owner.LastName))
                                 // console.log('calling oppFetchvalue: ' + this.opportunityDataFound.length);
                             }
                             this.getSVWrapper();
-                            if (this.isQrcustomer) {
-                                this.handleContinue();
-                            }
+                            // if (this.isQrcustomer) {
+                            //     this.handleContinue();
+                            // }
                         })
                     } else {
                         this.nodataFound = true;
-                        if (this.isQrcustomer) {
-                            this.handleContinue();
-                        }
+                        // if (this.isQrcustomer) {
+                        //     this.handleContinue();
+                        // }
                     }
                 }).catch(error => {
                     console.log('Search Data ' + JSON.stringify(error));
@@ -527,6 +627,12 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
             this.showValidationPopup = false;
             this.showthirdPage = false;
             this.showFourthPage = true;
+            // if(this.isRevisit==false){
+            //     this.showFourthPage = true;
+            // }
+            // if(this.isRevisit==true){
+            //     this.showFifthPage = true;
+            // }
         }
     }
 
@@ -536,6 +642,37 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
     }
 
     handleFourthPageNext() {
+
+        if(this.svWrapper.sv.Lead_Source__c === undefined || this.svWrapper.sv.Lead_Source__c === ''){
+            this.showValidation = 'Please enter the Lead Source';
+            this.showValidationPopup = true;
+        }else if(this.svWrapper.sv.Lead_Sub_Source__c === undefined || this.svWrapper.sv.Lead_Sub_Source__c === ''){
+            this.showValidation = 'Please enter the Lead Sub Source';
+            this.showValidationPopup = true;
+        }else if((this.svWrapper.sv.Lead_Source__c == "Channel Partner" && (this.svWrapper.sv.Channel_Partner__c == undefined || this.svWrapper.sv.Channel_Partner__c == ""))){
+            this.showValidation = 'Please select the Channel Partner';
+            this.showValidationPopup = true;
+        }else if((this.svWrapper.sv.Lead_Source__c == "Reference" && (this.svWrapper.sv.Referrer_Name__c == undefined || this.svWrapper.sv.Referrer_Name__c == ""))){
+            this.showValidation = 'Please enter the Referrer Name';
+            this.showValidationPopup = true;
+        }else {
+            this.showValidationPopup = false;
+            this.showFourthPage = false;
+            this.showFifthPage = true;
+        }
+        console.log('cp'+JSON.stringify(this.svWrapper.sv.Channel_Partner__c));
+    }
+
+    handleFifthPagePrevious() {
+        this.showFifthPage = false;
+        // if(this.isRevisit==false){
+        //     this.showFourthPage = true;
+        // } else if(this.isRevisit==true){
+        //     this.showthirdPage = true;
+        // }
+    }
+
+    handleFifthPageNext(){
 
         if (this.svWrapper.sv.Employment_Type__c === undefined || this.svWrapper.sv.Employment_Type__c === '') {
             this.showValidation = 'Please enter Employment Type';
@@ -551,34 +688,33 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
         }
         else {
             this.showValidationPopup = false;
-            this.showFourthPage = false;
-            this.showFifthPage = true;
+            this.showFifthPage = false;
+            this.showSixthPage = true;
         }
 
     }
 
-    handlefifthpagePrevious() {
-        this.showFifthPage = false;
-        this.showFourthPage = true;
+    handlesixthpagePrevious() {
+        this.showSixthPage = false;
+        this.showFifthPage = true;
 
     }
-
-
 
 
     handlesubmit() {
         this.svWrapper.sv.Mobile__c = this.storeMobile;
         this.svWrapper.sv.Email__c = this.storeEmail;
-        if (this.svWrapper.sv.Configuration_Required__c === undefined || this.svWrapper.sv.Configuration_Required__c === '') {
+        console.log('cp'+JSON.stringify(this.svWrapper.sv.Channel_Partner__c));
+        if ((this.svWrapper.sv.Configuration_Required__c === undefined || this.svWrapper.sv.Configuration_Required__c === '' ) && this.isRevisit == false) {
             this.showValidation = 'Please enter Configuration';
             this.showValidationPopup = true;
-        } else if (this.svWrapper.sv.Budget_Range__c === undefined || this.svWrapper.sv.Budget_Range__c === '') {
+        } else if ((this.svWrapper.sv.Budget_Range__c === undefined || this.svWrapper.sv.Budget_Range__c === '' ) && this.isRevisit == false) {
             this.showValidation = 'Please enter a Budget';
             this.showValidationPopup = true;
-        } else if (this.svWrapper.sv.Area_Sq_Ft__c === undefined || this.svWrapper.sv.Area_Sq_Ft__c === '') {
+        } else if ((this.svWrapper.sv.Area_Sq_Ft__c === undefined || this.svWrapper.sv.Area_Sq_Ft__c === '' ) && this.isRevisit == false) {
             this.showValidation = 'Please enter a Area Sq Ft';
             this.showValidationPopup = true;
-        } else if (this.svWrapper.sv.Buying_Purpose__c === undefined || this.svWrapper.sv.Buying_Purpose__c === '') {
+        } else if ((this.svWrapper.sv.Buying_Purpose__c === undefined || this.svWrapper.sv.Buying_Purpose__c === '' ) && this.isRevisit == false) {
             this.showValidation = 'Please enter Buying Purpose';
             this.showValidationPopup = true;
         } else {
@@ -586,8 +722,10 @@ export default class Ex_SiteVisitForm extends NavigationMixin(LightningElement) 
             this.isSpinner = true;
             console.log('storeMobile: ' + this.storeMobile);
             console.log('this.svWrapper.sv.Mobile__c: ' + this.svWrapper.sv.Mobile__c);
-            this.showFifthPage = false;
+            this.showSixthPage = false;
             this.showFinalScreen = true;
+            this.createNewData = false;
+            this.showFirstPage = false;
             //alert('insidesave');
             submit({ SVWrapper: this.svWrapper, projectId: this.projectId, isQRUser: this.isQrcustomer, changeStatus: this.changeStatus, vpId: this.vpId }) //, showVprDataArray: this.showVprDataArray
                 .then(result => {

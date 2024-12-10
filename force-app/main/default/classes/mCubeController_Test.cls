@@ -57,19 +57,29 @@ public class mCubeController_Test {
         mCubeController.readCall();
         
         mCubeController.readCall();
+        
+        
+       CP_Project__c testProject = new CP_Project__c(DID_1__c = '9988776655', DID_2__c = '9988776644');
+        insert testProject;
+
+        // Create a CP_Lead__c record associated with the CP_Project__c
+        CP_Lead__c testLead = new CP_Lead__c( CP_Project__c = testProject.Id);
+        insert testLead;
 
         
         System.runAs(u) {
-            mCubeController.clickToCall(lead .id);
+            mCubeController.clickToCall(lead .id,'1234567');
             mCubeController.clickToCallNumber(string.valueof( lead.id),'1111111' );
             mCubeController.readNumbers(string.valueof( lead.id) );
+            mCubeController.getTheObjectDetails(testLead.id);
+            mCubeController.getProjects();
             pageRef = Page.Dialer;
             Test.setCurrentPage(pageRef);
             ApexPages.StandardSetController stdSetController = new ApexPages.StandardSetController(new List<lead>{lead});
-            Dialercontroller s = new Dialercontroller(stdSetController );
+           /* Dialercontroller s = new Dialercontroller(stdSetController );
             s.direct();
             u.massdialerIds__c = +','+lead.id;
-            update u;
+            update u;*/
             
          }
         

@@ -34,6 +34,10 @@
                 <behavior>Readonly</behavior>
                 <field>Payment_Scheme__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Car_Park_Amount__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

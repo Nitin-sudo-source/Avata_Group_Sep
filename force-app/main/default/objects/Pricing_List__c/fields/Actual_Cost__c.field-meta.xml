@@ -11,9 +11,10 @@ IF(
 
 AND(
 
-ISPICKVAL(Charge_Type__c, &apos;PSF&apos;), ISPICKVAL(Calculation_Area_Type__c, &apos;Carpet Area&apos;)), Charge_Rate__c* Unit__r.Total_carpet_Sq_Ft__c ,
+ISPICKVAL(Charge_Type__c, &apos;PSF&apos;), ISPICKVAL( Calculation_Area_Type__c , &apos;Carpet Area&apos;)), Charge_Rate__c*  Unit__r.Total_carpet_Sq_Ft__c ,
 
-IF(AND(ISPICKVAL(Charge_Type__c, &apos;Lumpsum&apos;)),Charge_Amount__c,0)
+IF(AND(ISPICKVAL(Charge_Type__c, &apos;Lumpsum&apos;)),
+   Charge_Amount__c,0)
 
 )
 )</formula>

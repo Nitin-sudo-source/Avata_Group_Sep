@@ -5,6 +5,7 @@
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>RecordShareHierarchy</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -799,14 +800,27 @@
         <relatedList>Opportunity__c.Booking__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>Section__c</fields>
+        <fields>Item__c</fields>
+        <fields>Action__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Booking_Checklist__c.Booking__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>Registration_Stage__c</fields>
+        <fields>Registration_Scheduled_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Registration__c.Booking__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Demand_Status__c</fields>
         <fields>Due_Date__c</fields>

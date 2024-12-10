@@ -65,7 +65,7 @@ public class Ex_InventoryMatrix {
             List<Unit__c> uList = [SELECT Name, Configuration_Type__c, Sales_Status__c FROM Unit__c 
                                    WHERE Tower__c = :towerId];
             System.debug('Unit List .:' +uList);
-            if (!uList.isEmpty()) {
+            if (uList != null && !uList.isEmpty()) {
                 return uList;
             } else {
                 return null;
@@ -80,7 +80,7 @@ public class Ex_InventoryMatrix {
     public static Map<String, Integer> getUnitConfigurationMapDetails(String towerId){
         Map<String, Integer> unitConfigurationMap = new Map<String, Integer>();
         List<Unit__c> uList = [Select Id, Name, Floor__c, Sales_Status__c, Configuration_Type__c, 
-                               Total_carpet_Sq_Ft__c from Unit__c
+                               Total_carpet_Sq_Ft__c, Purpose__c from Unit__c
                                where Configuration_Type__c != null 
                                AND Tower__c =: towerId  
                                ORDER BY Configuration_Type__c ASC, Name ASC];
@@ -88,6 +88,7 @@ public class Ex_InventoryMatrix {
         
         if(uList != null){
             for(Unit__c u : uList){
+             
                 if(!unitConfigurationMap.containsKey(u.Configuration_Type__c)){
                     unitConfigurationMap.put(u.Configuration_Type__c, 1);
                     System.debug('unitConfigurationMap if .: '+unitConfigurationMap);
@@ -98,7 +99,7 @@ public class Ex_InventoryMatrix {
             }
         }
         System.debug('Unit Configuration Map .: '+unitConfigurationMap);
-        if(!unitConfigurationMap.isEmpty() && unitConfigurationMap != null){
+        if(unitConfigurationMap != null &&!unitConfigurationMap.isEmpty()){
             return unitConfigurationMap;
         }else{
             return null;
@@ -115,17 +116,22 @@ public class Ex_InventoryMatrix {
         
         if(uList != null){
             for(Unit__c u : uList){
+               
                 if(!unitFloorMap.containsKey('Floor: '+u.Floor__c)) {
                     List<Unit__c> newList = new List<Unit__c>();
                     newList.add(u);
                     unitFloorMap.put('Floor: '+u.Floor__c, newList);
-                } else {
-                    unitFloorMap.get('Floor: '+u.Floor__c).add(u);
-                }
+                } else{
+                      unitFloorMap.get('Floor: '+u.Floor__c).add(u);
+                    }
             }
         }
         System.debug('unitFloorMap: '+unitFloorMap);
+        if(unitFloorMap != null && !unitFloorMap.isEmpty()){
         return unitFloorMap;
+        }else{
+            return null;
+        }
         
     }
     

@@ -262,7 +262,8 @@ public class Ex_PrintQuotationController {
                             agreementAmount += cd.Charge_Amount__c; 
                         }
                         if(agreementAmount != 0){
-                            strtotalagreementAmountafterDiscount = currencyFormat(Integer.valueOf(agreementAmount));
+                            System.debug('agreementAmount:::: '+agreementAmount);
+                            strtotalagreementAmountafterDiscount = currencyFormat(Integer.valueOf(agreementAmount.setscale(0,RoundingMode.HALF_UP)));
                         }
                         agreementChargeList.add(new chargeDetailWrapper(cd.Name, currencyFormat(Integer.valueOf(cd.Charge_Amount__c)), cd.Charge_Bucket__c));
                         
@@ -274,6 +275,8 @@ public class Ex_PrintQuotationController {
                         
                     }else if(cd.Charge_Bucket__c.equalsIgnoreCase('Other Charges')){
                         if(cd.Charge_Amount__c != null && cd.Charge_Total_Tax__c != null){
+                            System.debug('cd.Charge_Amount__c:: '+cd.Charge_Amount__c);
+                            System.debug('cd.Charge_Total_Tax__c:: '+cd.Charge_Total_Tax__c);
                             chargeAmount = cd.Charge_Amount__c + cd.Charge_Total_Tax__c;
                         }
                         if(cd.Charge_Amount__c != null && cd.Charge_Total_Tax__c != null){
@@ -284,6 +287,7 @@ public class Ex_PrintQuotationController {
                         }
                         
                         otherChargeList.add(new chargeDetailWrapper(cd.Name, currencyFormat(Integer.valueOf(chargeAmount)), cd.Charge_Bucket__c));
+                        System.debug('otherChargeList:: '+otherChargeList);
                     }
                      
                      ShowsectionBTotal = currencyFormat(Integer.valueOf(totalchargeTax + statutoryAmount));

@@ -10,8 +10,8 @@ public class Ex_ReceiptTriggerHandler {
                 }
             } 
         }
-        //if(!boookingInterestDateMap.isEmpty() && boookingInterestDateMap != null)
-            //Ex_InterestCalculateManagementServices.interestCalculate(boookingInterestDateMap);
+        if(!boookingInterestDateMap.isEmpty() && boookingInterestDateMap != null)
+           Ex_InterestCalculateManagementServices.interestCalculate(boookingInterestDateMap);
             //system.debug('boookingInterestDateMap'+boookingInterestDateMap);
     }
     

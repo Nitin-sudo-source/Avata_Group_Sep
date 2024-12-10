@@ -50,7 +50,7 @@ public class Ex_ConstructionStageUpdate {
     public static boolean saveMethod(String options, Date d, Id recordId, List<String> floors, String base64, String filename) {
         //system.debug('options: '+options);
         //system.debug('d: '+d);
-        //system.debug('recordId: '+recordId);
+        system.debug('recordId: '+recordId);
         //system.debug('floors: '+floors);
         Set<Decimal> floorIdSet = new Set<Decimal>();
         Construction_Stage__c cs = new Construction_Stage__c();
@@ -77,7 +77,7 @@ public class Ex_ConstructionStageUpdate {
             }
             
             String queryForUnit = 'SELECT Id, Name, Booking__c, Booking__r.Quotation__c from Unit__c where Booking__c != null AND Project__c = \''
-                + cs.Tower__r.Project__c + '\' AND Sale_Status__c =\'Booked\' AND Tower__c = \'' + cs.Tower__c + '\'';
+                + cs.Tower__r.Project__c + '\' AND Sales_Status__c =\'Booked\' AND Tower__c = \'' + cs.Tower__c + '\'';
             
             if(floorIdSet != null && !floorIdSet.isEmpty()) {
                 queryForUnit += ' AND Floor__c IN: floorIdSet';

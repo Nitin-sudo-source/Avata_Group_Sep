@@ -12,7 +12,7 @@
     </div>
 
 
-    
+
     <div class="body slds-align_absolute-center">
         <!-- Start first page -->
         <template if:true={showFirstPage}>
@@ -22,7 +22,8 @@
 
                 <form class="slds-p-around_medium">
                     <lightning-layout multiple-rows>
-                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" style="width: 95%!important ;">
+                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box"
+                            style="width: 95%!important ;">
                             <label class="required-label">Select Project</label>
                             <lightning-combobox label="Select Project" name="Select Project" required
                                 class="slds-p-bottom_small slds-p-top_small" variant="label-hidden"
@@ -30,7 +31,8 @@
                                 disabled={disabledProject}>
                             </lightning-combobox>
                         </lightning-layout-item>
-                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" style="width: 95%!important ;">
+                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box"
+                            style="width: 95%!important ;">
                             <label class="required-label">Pre-registration Available ?</label>
                             <lightning-combobox label="Pre-registration Available ?" name="Pre-registration Available ?"
                                 class="slds-p-bottom_small slds-p-top_small" variant="label-hidden" value={registration}
@@ -38,14 +40,15 @@
                                 disabled={disableReg}>
                             </lightning-combobox>
                         </lightning-layout-item>
-                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" if:true={showCode} style="width: 95%!important ;">
+                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" if:true={showCode}
+                            style="width: 95%!important ;">
                             <label class="required-label">Pre-registration code</label>
                             <lightning-input type="text" label="Pre-registration code" name="Pre-registration code"
                                 placeholder="Enter Code" variant="label-hidden" value={regCode}
                                 disabled={disabledregcode} onchange={handleRegCode}></lightning-input>
                         </lightning-layout-item>
-                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box"
-                            if:true={showNumber} style="width: 95%!important ;">
+                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" if:true={showNumber}
+                            style="width: 95%!important ;">
                             <label class="required-label">Mobile Number</label>
                             <lightning-input type="tel" label="Mobile" placeholder="e.g.1234567890" maxlength="10"
                                 pattern="[0-9]{10}$" variant="label-hidden" value={storeMobile}
@@ -54,13 +57,13 @@
                                 onchange={handlemobile}></lightning-input>
                         </lightning-layout-item>
 
-                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box"
-                        if:true={showNumber} style="width: 95%!important ;">
-                        <label class="Email">Email</label>
-                        <lightning-input  type="text" field-name="Email__c"  name="Email__c" placeholder="useremail.com" 
-                        value={storeEmail} disabled={disabledEmail}
+                        <lightning-layout-item size="6" class="slds-p-around_medium user-input-box" if:true={showNumber}
+                            style="width: 95%!important ;">
+                            <label class="Email">Email</label>
+                            <lightning-input type="text" field-name="Email__c" name="Email__c"
+                                placeholder="useremail.com" value={storeEmail} disabled={disabledEmail}
                                 onchange={handleEmail} variant="label-hidden"></lightning-input>
-                                </lightning-layout-item>
+                        </lightning-layout-item>
 
                         <!-- <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Email</label>
@@ -71,7 +74,7 @@
                     </lightning-layout>
                 </form>
 
-                <div class="slds-docked-form-footer" >
+                <div class="slds-docked-form-footer">
                     <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error"
                         title="Resolve error" if:true={showValidationPopup}>
                         <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small"
@@ -80,26 +83,26 @@
                     </button>
 
                     <!-- footer buttons -->
-                    <lightning-button type="button" label="Reset"  class="slds-p-around_xx-small custom-grey-button" 
+                    <lightning-button type="button" label="Reset" class="slds-p-around_xx-small custom-grey-button"
                         variant="destructive-text" title="Reset" onclick={handleReset}>Reset</lightning-button>
 
                     <template if:false={hideSearch}>
-                        <template if:false={isQrcustomer}>
+                        <!-- <template if:false={isQrcustomer}> -->
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item size="12" class="slds-p-around_xx-small">
                                     <lightning-button variant="brand" label="Search" title="Search" type="button"
                                         class="slds-align_absolute-center" onclick={handleSearch}></lightning-button>
                                 </lightning-layout-item>
                             </lightning-layout>
-                        </template>
-                        <template if:true={isQrcustomer}>
+                        <!-- </template> -->
+                        <!-- <template if:true={isQrcustomer}>
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item size="12" class="slds-p-around_xx-small">
                                     <lightning-button variant="brand" label="Next" title="Next" type="button"
                                         class="slds-align_absolute-center" onclick={handleSearch}></lightning-button>
                                 </lightning-layout-item>
                             </lightning-layout>
-                        </template>
+                        </template> -->
                     </template><br />
 
 
@@ -153,8 +156,8 @@
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item size="12" class="slds-p-around_xx-small">
                                     <lightning-button variant="brand" label="Verify Code" title="Verify Code"
-                                        type="button" class="slds-align_absolute-center"
-                                        onclick={handleVerifyCode}></lightning-button>
+                                        type="button" class="slds-align_absolute-center" onclick={handleVerifyCode}>
+                                    </lightning-button>
                                 </lightning-layout-item>
                             </lightning-layout>
                         </template>
@@ -213,36 +216,37 @@
                             </div>
                             <table class="slds-table slds-table_col-bordered slds-p-around_medium custom-table">
                                 <thead>
-                           
-                                <tr>
-                                    <th class="slds-box" style="border: 1px solid black;">Customer Name</th>
-                                    <th class="slds-box" style="border: 1px solid black;">Project Name</th>
-                                    <th class="slds-box" style="border: 1px solid black;">Budget Range</th>
-                                    <th class="slds-box" style="border: 1px solid black;">Configuration Required</th>
-                                </tr>
 
-                                <!-- <template for:each={showVprDataArray} for:item="cp"> -->
-                                <tr style="color: black;">
-                                    <td class="slds-box" style="border: 1px solid black;">
-                                        {showVprDataArray.Customer_Name__c}
-                                    </td>
-                                    <td class="slds-box" style="border: 1px solid black;"
-                                        if:true={showVprDataArray.Project__r.Name}>
-                                        {showVprDataArray.Project__r.Name}</td>
-                                    <td class="slds-box" style="border: 1px solid black;">
-                                        {showVprDataArray.Budget_Range__c}
-                                    </td>
-                                    <td class="slds-box" style="border: 1px solid black;">
-                                        {showVprDataArray.Configuration__c}
-                                    </td>
-                                </tr>
-                                <!-- </template> -->
-                            </thead>
-                        </table>
+                                    <tr>
+                                        <th class="slds-box" style="border: 1px solid black;">Customer Name</th>
+                                        <th class="slds-box" style="border: 1px solid black;">Project Name</th>
+                                        <th class="slds-box" style="border: 1px solid black;">Budget Range</th>
+                                        <th class="slds-box" style="border: 1px solid black;">Configuration Required
+                                        </th>
+                                    </tr>
+
+                                    <!-- <template for:each={showVprDataArray} for:item="cp"> -->
+                                    <tr style="color: black;">
+                                        <td class="slds-box" style="border: 1px solid black;">
+                                            {showVprDataArray.Customer_Name__c}
+                                        </td>
+                                        <td class="slds-box" style="border: 1px solid black;"
+                                            if:true={showVprDataArray.Project__r.Name}>
+                                            {showVprDataArray.Project__r.Name}</td>
+                                        <td class="slds-box" style="border: 1px solid black;">
+                                            {showVprDataArray.Budget_Range__c}
+                                        </td>
+                                        <td class="slds-box" style="border: 1px solid black;">
+                                            {showVprDataArray.Configuration__c}
+                                        </td>
+                                    </tr>
+                                    <!-- </template> -->
+                                </thead>
+                            </table>
                         </div><br/><br/>
-                        </template>
                     </template>
-               
+                </template>
+
 
 
                 <template if:false={isQrcustomer}>
@@ -288,7 +292,9 @@
 </template>
 
 
-<template if:false={isQrcustomer}>
+<!-- <template if:false={isQrcustomer}> -->
+
+
     <template if:true={showOpportunityDataFound}>
 
         <div class="msg-container">
@@ -306,22 +312,37 @@
                                     </tr> -->
                     <tr>
                         <th>Name</th>
-                        <th>Sales Manager</th>
-                        <th>Source</th>
-                        <th>Last Visit Date</th>
+                        <th>Mobile Number</th>
+                        <!-- <th>Sales Manager</th>
+                        <th>Source</th> -->
+                        <th>History of Site Visit Dates</th>
+                        <th>Remarks from Site Visits</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <template for:each={opportunityDataFound} for:item="opportunity" for:index="index">
                         <tr key={opportunity.Id}>
                             <td>{opportunity.Name}</td>
-                            <td>{opportunity.Sales_Manager__r.Name}</td>
-                            <td>{opportunity.Source__c}</td>
+                            <td>{opportunity.Mobile__c}</td>
+                            <!-- <td>{opportunity.SalesManager}</td>
+                            <td>{opportunity.Source__c}</td> -->
                             <th>
-                                <lightning-formatted-date-time value={opportunity.Last_SV_Date__c} year="numeric"
+                                 <div style="max-height: 100px; overflow-y: auto; white-space: pre-wrap;">
+                                    <lightning-formatted-rich-text value={opportunity.showSVDate}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                                <!-- {opportunity.SV_Date_History__c} -->
+                                <!-- <lightning-formatted-date-time value={opportunity.Last_SV_Date__c} year="numeric"
                                     month="numeric" day="numeric" hour="2-digit" minute="2-digit"
-                                    time-zone-name="short"></lightning-formatted-date-time>
+                                    time-zone-name="short"></lightning-formatted-date-time> -->
                             </th>
+                            <td>
+                                <div style="max-height: 100px; overflow-y: auto; white-space: pre-wrap;">
+                                    <lightning-formatted-rich-text value={opportunity.FormattedComments}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                            </td>
                             <!-- <td>{opportunity.Owner.Name}</td> -->
                         </tr>
                     </template>
@@ -330,10 +351,13 @@
         </div>
         </div><br /><br /><br />
     </template>
-</template>
+
+<!-- </template> -->
 
 
-<template if:false={isQrcustomer}>
+<!-- <template if:false={isQrcustomer}> -->
+
+
     <template if:true={showLeadDataFound}>
         <div class="msg-container">
             <div class="main">
@@ -363,11 +387,13 @@
                                 <td>{lead.Full_Name__c}</td>
                                 <td>{lead.Owner.Name}</td>
                                 <td>{lead.Lead_Source__c}</td>
-                                <td> <lightning-formatted-date-time value={lead.Presales_Last_Call_Date__c}
+                                <td>
+                                    <lightning-formatted-date-time value={lead.Presales_Last_Call_Date__c}
                                         year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"
                                         time-zone-name="short"></lightning-formatted-date-time>
                                 </td>
-                                <td> <lightning-formatted-date-time value={lead.Presales_Proposed_Visit_Date__c}
+                                <td>
+                                    <lightning-formatted-date-time value={lead.Presales_Proposed_Visit_Date__c}
                                         year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"
                                         time-zone-name="short"></lightning-formatted-date-time>
                                 </td>
@@ -381,16 +407,18 @@
         </div>
         </div><br /><br /><br />
     </template>
-</template>
 
-<template if:false={isQrcustomer}>
+
+<!-- </template> -->
+
+<!-- <template if:false={isQrcustomer}> -->
     <template if:true={nodataFound}>
         <p style="text-align: center;color:white; font-size: 18px;">No Data Available. </p><br /><br />
-
     </template>
-</template>
+<!-- </template> -->
 
 <template if:true={createNewData}>
+
     <div class="slds-docked-form-footer">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
             if:true={showValidationPopup}>
@@ -399,15 +427,28 @@
             <span class="slds-assistive-text">Mandatory Details</span>
         </button>
 
-        <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" class="slds-p-around_xx-small">
-                <lightning-button variant="brand" title="Continue" onclick={handleContinue} type="button"
-                    class="slds-align_absolute-center" label="Continue"></lightning-button>
-            </lightning-layout-item>
-        </lightning-layout>
 
-        <lightning-button type="button" label="Reset" class="slds-p-around_xx-small" variant="destructive-text"
-            title="Reset" onclick={handleReset}>Reset</lightning-button>
+        <template if:false={isRevisit}>
+
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" class="slds-p-around_xx-small">
+                    <lightning-button variant="brand" title="Continue" onclick={handleContinue} type="button"
+                        class="slds-align_absolute-center" label="Continue"></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-button type="button" label="Reset" class="slds-p-around_xx-small" variant="destructive-text"
+                title="Reset" onclick={handleReset}>Reset</lightning-button>
+        </template>
+
+        <template if:true={isRevisit}>
+            <template if:false={showFinalScreen}>
+                <lightning-button variant="brand" title="Submit" onclick={handlesubmit} type="button" label="Submit">
+            </lightning-button>
+            <!-- <lightning-button type="button" label="Reset" class="slds-p-around_xx-small" variant="destructive-text"
+                    title="Reset" onclick={handleReset}>Reset</lightning-button> -->
+            </template>
+        </template>
 
         <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
             class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
@@ -464,15 +505,16 @@
                 <h1 class="head">Basic Details</h1>
             </div> -->
             <center>
-                <div class="slds-align_absolute-center" style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
+                <div class="slds-align_absolute-center"
+                    style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
                     <lightning-formatted-rich-text value={showProjectImage} style='display: block; margin: 0 auto;'>
                     </lightning-formatted-rich-text>
                 </div>
             </center>
-            
-            
-            
-            
+
+
+
+
             <h1 class="form-title">Basic Details</h1>
 
 
@@ -486,7 +528,7 @@
                             onchange={handleChange}></lightning-combobox>
                     </div>
                 </div>
-            
+
                 <!-- Second Row: First Name and Last Name (Side by Side) -->
                 <div class="slds-grid slds-wrap slds-gutters">
                     <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
@@ -502,7 +544,7 @@
                             onchange={handleChange}></lightning-input>
                     </div>
                 </div>
-            
+
                 <!-- Third Row: Email and Mobile (Side by Side) -->
                 <div class="slds-grid slds-wrap slds-gutters">
                     <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
@@ -518,7 +560,7 @@
                             field-name="Mobile__c" name="Mobile__c"></lightning-input>
                     </div>
                 </div>
-            
+
                 <!-- Fourth Row: Age Group and Nationality (Side by Side) -->
                 <div class="slds-grid slds-wrap slds-gutters">
                     <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
@@ -533,7 +575,7 @@
                     </div>
                 </div><br/><br/>
             </lightning-record-edit-form>
-            
+
         </div>
 
 
@@ -552,8 +594,8 @@
             </lightning-button> &nbsp; &nbsp;
 
 
-            <lightning-button variant="brand" title="Next" onclick={handlesecondPageNext} type="button"
-                label="Next"></lightning-button>
+            <lightning-button variant="brand" title="Next" onclick={handlesecondPageNext} type="button" label="Next">
+            </lightning-button>
 
 
             <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
@@ -620,16 +662,17 @@
                 <h1 class="head">Basic Details</h1>
             </div> -->
             <center>
-                <div class="slds-align_absolute-center" style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
+                <div class="slds-align_absolute-center"
+                    style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
                     <lightning-formatted-rich-text value={showProjectImage} style='display: block; margin: 0 auto;'>
                     </lightning-formatted-rich-text>
                 </div>
             </center>
-            
-            
+
+
             <h1 class="form-title">Residential Address</h1>
 
-    <!-- <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+            <!-- <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
         <form class="slds-p-around_medium">
             <lightning-layout multiple-rows>
                 <lightning-layout-item size="6" class="slds-p-around_xx-small">
@@ -667,52 +710,52 @@
 
         </form>
     </lightning-record-edit-form> -->
-    <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
-        <form class="slds-p-around_medium">
-            <!-- Residential Address and Locality Side by Side -->
-            <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="">Residential Address</label>
-                    <lightning-input-field field-name="Residential_Address__c"
-                        value={svWrapper.sv.Residential_Address__c} onchange={handleChange}
-                        variant="label-hidden"></lightning-input-field>
-                </div>
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Locality</label>
-                    <lightning-input-field field-name="Locality__c" value={svWrapper.sv.Locality__c} 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-            </div>
-    
-            <!-- City and State Side by Side -->
-            <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">City</label>
-                    <lightning-input-field field-name="City__c" value={svWrapper.sv.City__c} 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">State</label>
-                    <lightning-input-field field-name="State__c" value={svWrapper.sv.State__c} 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-            </div>
-    
-            <!-- Pincode -->
-            <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Pincode</label>
-                    <lightning-input-field field-name="Pincode__c" value={svWrapper.sv.Pincode__c} 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-            </div>
-            
-            <br /><br />
-        </form>
-    </lightning-record-edit-form>
-    
-    <div class="slds-docked-form-footer">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
+            <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+                <form class="slds-p-around_medium">
+                    <!-- Residential Address and Locality Side by Side -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="">Residential Address</label>
+                            <lightning-input-field field-name="Residential_Address__c"
+                                value={svWrapper.sv.Residential_Address__c} onchange={handleChange}
+                                variant="label-hidden"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Locality</label>
+                            <lightning-input-field field-name="Locality__c" value={svWrapper.sv.Locality__c}
+                                onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                    </div>
+
+                    <!-- City and State Side by Side -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">City</label>
+                            <lightning-input-field field-name="City__c" value={svWrapper.sv.City__c}
+                                onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">State</label>
+                            <lightning-input-field field-name="State__c" value={svWrapper.sv.State__c}
+                                onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                    </div>
+
+                    <!-- Pincode -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Pincode</label>
+                            <lightning-input-field field-name="Pincode__c" value={svWrapper.sv.Pincode__c}
+                                onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                    </div>
+
+                    <br /><br />
+                </form>
+            </lightning-record-edit-form>
+
+            <div class="slds-docked-form-footer">
+                <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
             if:true={showValidationPopup}>
             <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small" title="large size"
                 variant="brand" aria-hidden="true"></lightning-icon>
@@ -720,17 +763,18 @@
         </button>
 
 
-        <lightning-button variant="brand" title="Previous" onclick={handlethirdPagePrevious} type="button"
-            label="Previous"></lightning-button> &nbsp; &nbsp;
+                <lightning-button variant="brand" title="Previous" onclick={handlethirdPagePrevious} type="button"
+                    label="Previous"></lightning-button> &nbsp; &nbsp;
 
 
-        <lightning-button variant="brand" title="Next" onclick={handlethirdPageNext} type="button"
-            label="Next"></lightning-button>
+                <lightning-button variant="brand" title="Next" onclick={handlethirdPageNext} type="button" label="Next">
+                </lightning-button>
 
-        <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
-            class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
-            <button
+                <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
+                    aria-labelledby="dialog-heading-id-3"
+                    class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
+                    style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
+                    <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">
                 <lightning-icon icon-name="utility:close" alternative-text="CLose" size="xx-small" title="large size"
@@ -739,37 +783,163 @@
 
                 <span class="slds-assistive-text">Close dialog</span>
             </button>
-            <header class="slds-popover__header">
-                <div class="slds-media slds-media_center slds-has-flexi-truncate ">
-                    <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-utility-error">
+                    <header class="slds-popover__header">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate ">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-utility-error">
                             <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small"
                                 title="large size" variant="inverse" class="slds-icon slds-icon_x-small"
                                 aria-hidden="true"></lightning-icon>
                         </span>
+                            </div>
+                            <div class="slds-media__body" if:true={showValidationPopup}>
+                                <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-6"
+                                    title="Resolve error">Mandatory Fields</h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-popover__body" id="dialog-body-id-8">
+                        <p if:true={showValidationPopup}> {showValidation}
+                            <!-- <a href="#" title="Learn More">Learn More</a> -->
+                        </p>
                     </div>
-                    <div class="slds-media__body" if:true={showValidationPopup}>
-                        <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-6"
-                            title="Resolve error">Mandatory Fields</h2>
-                    </div>
-                </div>
-            </header>
-            <div class="slds-popover__body" id="dialog-body-id-8">
-                <p if:true={showValidationPopup}> {showValidation}
-                    <!-- <a href="#" title="Learn More">Learn More</a> -->
-                </p>
+                </section>
             </div>
-        </section>
-    </div>
-    </div>
+        </div>
     </div>
 </template>
 <!-- Residential Address -->
 
 
+<!-- Source Details -->
+<template if:false={isRevisit}>
+    <template if:true={showFourthPage}>
+        <div class="body slds-align_absolute-center">
+            <div class="container">
+                <!-- <div class="main">
+                    <h1 class="head">Basic Details</h1>
+                </div> -->
+                <center>
+                    <div class="slds-align_absolute-center"
+                        style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
+                        <lightning-formatted-rich-text value={showProjectImage} style='display: block; margin: 0 auto;'>
+                        </lightning-formatted-rich-text>
+                    </div>
+                </center>
+
+                <h1 class="form-title">Source Details</h1>
+
+                <lightning-record-edit-form density="compact" object-api-name="Lead__c">
+                    <form class="slds-p-around_medium">
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                                <label class="slds-form-element__label">Where did you hear about us !<span
+                                        style="color:red">*</span></label><br>
+                                <lightning-input-field style="width: 100%;" name="Lead_Source__c"
+                                    field-name="Lead_Source__c" variant="label-hidden" class="slds-form-element__label"
+                                    disabled={isSourceNotEditable} value={svWrapper.sv.Lead_Source__c}
+                                    onchange={handleChange}>
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_medium user-input-box slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                                <label class="slds-form-element__label">Lead Sub-Source<span
+                                        style="color:red">*</span></label><br>
+                                <lightning-input-field style="width: 100%;" name="Lead_Sub_Source__c"
+                                    field-name="Lead_Sub_Source__c" variant="label-hidden"
+                                    class="slds-form-element__label" disabled={isSourceNotEditable}
+                                    value={svWrapper.sv.Lead_Sub_Source__c} onchange={handleChange}>
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <template if:true={showChannelPartner}>
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                                    <label class="slds-form-element__label">Channel Partner<span
+                                        style="color:red">*</span></label>
+                                    <c-customlookup-resuable icon-name="standard:account" s-object-api-name="account"
+                                        data-name="Account" project-id={projectId}
+                                        default-record-id={svWrapper.sv.Channel_Partner__c}
+                                        onlookupupdate={lookupRecord} variant="label-hidden"
+                                        placeholder={searchPlaceholder}></c-customlookup-resuable>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={showReferenceName}>
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                                    <label>Reference Name <span style="color: red;">*</span></label>
+                                    <lightning-input type="text" variant="label-hidden" disabled={isSourceNotEditable}
+                                        required field-name="Referrer_Name__c" name="Referrer_Name__c"
+                                        value={svWrapper.sv.Referrer_Name__c} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </template>
+                    </form>
+                </lightning-record-edit-form>
+
+                <div class="slds-docked-form-footer">
+                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
+                    if:true={showValidationPopup}>
+                    <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small" title="large size"
+                        variant="brand" aria-hidden="true"></lightning-icon>
+                    <span class="slds-assistive-text">Mandatory Details</span>
+                </button>
+
+
+                    <lightning-button variant="brand" title="Previous" onclick={handleFourthPagePrevious} type="button"
+                        label="Previous"></lightning-button> &nbsp; &nbsp;
+
+
+                    <lightning-button variant="brand" title="Next" onclick={handleFourthPageNext} type="button"
+                        label="Next"></lightning-button>
+
+                    <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
+                        aria-labelledby="dialog-heading-id-3"
+                        class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
+                        style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
+                        <button
+                        class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
+                        title="Close dialog">
+                        <lightning-icon icon-name="utility:close" alternative-text="CLose" size="xx-small" title="large size"
+                            variant="inverse" class="slds-icon slds-icon_x-small" aria-hidden="true"
+                            onclick={handleclosepopup}></lightning-icon>
+
+                        <span class="slds-assistive-text">Close dialog</span>
+                    </button>
+                        <header class="slds-popover__header">
+                            <div class="slds-media slds-media_center slds-has-flexi-truncate ">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-utility-error">
+                                    <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small"
+                                        title="large size" variant="inverse" class="slds-icon slds-icon_x-small"
+                                        aria-hidden="true"></lightning-icon>
+                                </span>
+                                </div>
+                                <div class="slds-media__body" if:true={showValidationPopup}>
+                                    <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-7"
+                                        title="Resolve error">Mandatory Fields</h2>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-popover__body" id="dialog-body-id-9">
+                            <p if:true={showValidationPopup}> {showValidation}
+                                <!-- <a href="#" title="Learn More">Learn More</a> -->
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>
+<!-- Source Details -->
+
 
 <!-- Employment Details -->
-<template if:true={showFourthPage}>
+<template if:true={showFifthPage}>
     <!-- <div class="mains">
         <div class="main">
             <h1 class="head">Employment Details</h1>
@@ -788,16 +958,17 @@
                 <h1 class="head">Basic Details</h1>
             </div> -->
             <center>
-                <div class="slds-align_absolute-center" style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
+                <div class="slds-align_absolute-center"
+                    style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
                     <lightning-formatted-rich-text value={showProjectImage} style='display: block; margin: 0 auto;'>
                     </lightning-formatted-rich-text>
                 </div>
             </center>
-            
-            
-            
+
+
+
             <h1 class="form-title">Employment Details</h1>
-    
+
 
             <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
                 <form class="slds-p-around_medium">
@@ -805,59 +976,61 @@
                     <div class="slds-grid slds-wrap slds-gutters">
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label class="required-label">Employment Type</label>
-                            <lightning-input-field field-name="Employment_Type__c" value={svWrapper.sv.Employment_Type__c} 
-                                required onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                            <lightning-input-field field-name="Employment_Type__c"
+                                value={svWrapper.sv.Employment_Type__c} required onchange={handleChange}
+                                variant="label-hidden"></lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Company Name</label>
-                            <lightning-input-field field-name="Company_Name__c" value={svWrapper.sv.Company_Name__c} 
+                            <lightning-input-field field-name="Company_Name__c" value={svWrapper.sv.Company_Name__c}
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
                     </div>
-            
+
                     <!-- Industry and Designation Side by Side -->
                     <div class="slds-grid slds-wrap slds-gutters">
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Industry</label>
-                            <lightning-input-field field-name="Industry__c" value={svWrapper.sv.Industry__c} 
+                            <lightning-input-field field-name="Industry__c" value={svWrapper.sv.Industry__c}
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Designation</label>
-                            <lightning-input-field field-name="Designation__c" value={svWrapper.sv.Designation__c} 
+                            <lightning-input-field field-name="Designation__c" value={svWrapper.sv.Designation__c}
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
                     </div>
-            
+
                     <!-- Annual Income and Office Pincode Side by Side -->
                     <div class="slds-grid slds-wrap slds-gutters">
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Annual Income</label>
-                            <lightning-input-field field-name="Annual_Income__c" value={svWrapper.sv.Annual_Income__c} 
+                            <lightning-input-field field-name="Annual_Income__c" value={svWrapper.sv.Annual_Income__c}
                                 onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label class="required-label">Office Pincode</label>
-                            <lightning-input-field field-name="Office_Pincode__c" value={svWrapper.sv.Office_Pincode__c} 
+                            <lightning-input-field field-name="Office_Pincode__c" value={svWrapper.sv.Office_Pincode__c}
                                 required onchange={handleChange} variant="label-hidden"></lightning-input-field>
                         </div>
                     </div>
-            
+
                     <!-- Office Location -->
                     <div class="slds-grid slds-wrap slds-gutters">
                         <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
                             <label>Office Location</label>
-                            <lightning-input-field field-name="Office_Location__c" value={svWrapper.sv.Office_Location__c} 
-                                onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                            <lightning-input-field field-name="Office_Location__c"
+                                value={svWrapper.sv.Office_Location__c} onchange={handleChange} variant="label-hidden">
+                            </lightning-input-field>
                         </div>
                     </div>
-            
+
                     <br /><br />
                 </form>
             </lightning-record-edit-form>
-            
-    <div class="slds-docked-form-footer">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
+
+            <div class="slds-docked-form-footer">
+                <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
             if:true={showValidationPopup}>
             <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small" title="large size"
                 variant="brand" aria-hidden="true"></lightning-icon>
@@ -865,17 +1038,18 @@
         </button>
 
 
-        <lightning-button variant="brand" title="Previous" onclick={handleFourthPagePrevious} type="button"
-            label="Previous"></lightning-button> &nbsp; &nbsp;
+                <lightning-button variant="brand" title="Previous" onclick={handleFifthPagePrevious} type="button"
+                    label="Previous"></lightning-button> &nbsp; &nbsp;
 
-        <lightning-button variant="brand" title="Next" onclick={handleFourthPageNext} type="button"
-            label="Next"></lightning-button>
+                <lightning-button variant="brand" title="Next" onclick={handleFifthPageNext} type="button" label="Next">
+                </lightning-button>
 
 
-        <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
-            class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
-            <button
+                <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
+                    aria-labelledby="dialog-heading-id-3"
+                    class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
+                    style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
+                    <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">
                 <lightning-icon icon-name="utility:close" alternative-text="CLose" size="xx-small" title="large size"
@@ -884,36 +1058,36 @@
 
                 <span class="slds-assistive-text">Close dialog</span>
             </button>
-            <header class="slds-popover__header">
-                <div class="slds-media slds-media_center slds-has-flexi-truncate ">
-                    <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-utility-error">
+                    <header class="slds-popover__header">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate ">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-utility-error">
                             <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small"
                                 title="large size" variant="inverse" class="slds-icon slds-icon_x-small"
                                 aria-hidden="true"></lightning-icon>
                         </span>
+                            </div>
+                            <div class="slds-media__body" if:true={showValidationPopup}>
+                                <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-8"
+                                    title="Resolve error">Mandatory Fields</h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-popover__body" id="dialog-body-id-10">
+                        <p if:true={showValidationPopup}> {showValidation}
+                            <!-- <a href="#" title="Learn More">Learn More</a> -->
+                        </p>
                     </div>
-                    <div class="slds-media__body" if:true={showValidationPopup}>
-                        <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-7"
-                            title="Resolve error">Mandatory Fields</h2>
-                    </div>
-                </div>
-            </header>
-            <div class="slds-popover__body" id="dialog-body-id-9">
-                <p if:true={showValidationPopup}> {showValidation}
-                    <!-- <a href="#" title="Learn More">Learn More</a> -->
-                </p>
+                </section>
             </div>
-        </section>
-    </div>
-    </div>
+        </div>
     </div>
 </template>
 <!-- Employment Details -->
 
 
 <!-- Requirement Details -->
-<template if:true={showFifthPage}>
+<template if:true={showSixthPage}>
     <!-- <div class="mains">
         <div class="main">
             <h1 class="head">Requirement Details</h1>
@@ -932,16 +1106,17 @@
                 <h1 class="head">Basic Details</h1>
             </div> -->
             <center>
-                <div class="slds-align_absolute-center" style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
+                <div class="slds-align_absolute-center"
+                    style="max-width: 200px; width:180px !important;display: flex; justify-content: center; align-items: center;">
                     <lightning-formatted-rich-text value={showProjectImage} style='display: block; margin: 0 auto;'>
                     </lightning-formatted-rich-text>
                 </div>
             </center>
-            
-            
+
+
             <h1 class="form-title">Requirement Details</h1>
 
-    <!-- <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+            <!-- <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
         <form class="slds-p-around_medium">
             <lightning-layout multiple-rows>
                 <lightning-layout-item size="6" class="slds-p-around_xx-small">
@@ -983,63 +1158,60 @@
         </form>
     </lightning-record-edit-form> -->
 
-    <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
-        <form class="slds-p-around_medium">
-            <!-- Configuration Required and Budget Range Side by Side -->
-            <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Configuration Required</label>
-                    <lightning-input-field field-name="Configuration_Required__c" 
-                        value={svWrapper.sv.Configuration_Required__c} required 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Budget Range</label>
-                    <lightning-input-field field-name="Budget_Range__c" 
-                        value={svWrapper.sv.Budget_Range__c} required 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-            </div>
-    
-            <!-- Area Sq Ft and Buying Purpose Side by Side -->
-            <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Area Sq Ft</label>
-                    <lightning-input-field field-name="Area_Sq_Ft__c" 
-                        value={svWrapper.sv.Area_Sq_Ft__c} required 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Buying Purpose</label>
-                    <lightning-input-field field-name="Buying_Purpose__c" 
-                        value={svWrapper.sv.Buying_Purpose__c} required 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-            </div>
-    
-            <!-- Possession Timeframe and Current Resident Status Side by Side -->
-            <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Possession Timeframe Required</label>
-                    <lightning-input-field field-name="Possession_Timeframe_Required__c" 
-                        value={svWrapper.sv.Possession_Timeframe_Required__c} required 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-                <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
-                    <label class="required-label">Current Resident Status</label>
-                    <lightning-input-field field-name="Current_Resident_Status__c" 
-                        value={svWrapper.sv.Current_Resident_Status__c} required 
-                        onchange={handleChange} variant="label-hidden"></lightning-input-field>
-                </div>
-            </div>
-    
-            <br /><br /><br />
-        </form>
-    </lightning-record-edit-form>
-    
+            <lightning-record-edit-form density="compact" object-api-name="Site_Visit__c">
+                <form class="slds-p-around_medium">
+                    <!-- Configuration Required and Budget Range Side by Side -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Configuration Required</label>
+                            <lightning-input-field field-name="Configuration_Required__c"
+                                value={svWrapper.sv.Configuration_Required__c} required onchange={handleChange}
+                                variant="label-hidden"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Budget Range</label>
+                            <lightning-input-field field-name="Budget_Range__c" value={svWrapper.sv.Budget_Range__c}
+                                required onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                    </div>
 
-    <div class="slds-docked-form-footer">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
+                    <!-- Area Sq Ft and Buying Purpose Side by Side -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Area Sq Ft</label>
+                            <lightning-input-field field-name="Area_Sq_Ft__c" value={svWrapper.sv.Area_Sq_Ft__c}
+                                required onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Buying Purpose</label>
+                            <lightning-input-field field-name="Buying_Purpose__c" value={svWrapper.sv.Buying_Purpose__c}
+                                required onchange={handleChange} variant="label-hidden"></lightning-input-field>
+                        </div>
+                    </div>
+
+                    <!-- Possession Timeframe and Current Resident Status Side by Side -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Possession Timeframe Required</label>
+                            <lightning-input-field field-name="Possession_Timeframe_Required__c"
+                                value={svWrapper.sv.Possession_Timeframe_Required__c} required onchange={handleChange}
+                                variant="label-hidden"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-p-around_medium user-input-box">
+                            <label class="required-label">Current Resident Status</label>
+                            <lightning-input-field field-name="Current_Resident_Status__c"
+                                value={svWrapper.sv.Current_Resident_Status__c} required onchange={handleChange}
+                                variant="label-hidden"></lightning-input-field>
+                        </div>
+                    </div>
+
+                    <br /><br /><br />
+                </form>
+            </lightning-record-edit-form>
+
+
+            <div class="slds-docked-form-footer">
+                <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-error" title="Resolve error"
             if:true={showValidationPopup}>
             <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small" title="large size"
                 variant="brand" aria-hidden="true"></lightning-icon>
@@ -1047,16 +1219,17 @@
         </button>
 
 
-        <lightning-button variant="brand" title="Previous" onclick={handlefifthpagePrevious} type="button"
-            label="Previous"></lightning-button> &nbsp;&nbsp;
+                <lightning-button variant="brand" title="Previous" onclick={handlesixthpagePrevious} type="button"
+                    label="Previous"></lightning-button> &nbsp;&nbsp;
 
-        <lightning-button variant="brand" title="Submit" onclick={handlesubmit} type="button"
-            label="Submit"></lightning-button>
+                <lightning-button variant="brand" title="Submit" onclick={handlesubmit} type="button" label="Submit">
+                </lightning-button>
 
-        <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-3"
-            class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
-            style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
-            <button
+                <section if:true={showValidationPopup} aria-describedby="dialog-body-id-5"
+                    aria-labelledby="dialog-heading-id-3"
+                    class="slds-popover slds-popover_error slds-nubbin_bottom-left" role="dialog"
+                    style="position: absolute; bottom: 56px; left: 50%; margin-left: 62px; transform: translateX(-50%); z-index: 9999;">
+                    <button
                 class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
                 title="Close dialog">
                 <lightning-icon icon-name="utility:close" alternative-text="CLose" size="xx-small" title="large size"
@@ -1065,29 +1238,29 @@
 
                 <span class="slds-assistive-text">Close dialog</span>
             </button>
-            <header class="slds-popover__header">
-                <div class="slds-media slds-media_center slds-has-flexi-truncate ">
-                    <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-utility-error">
+                    <header class="slds-popover__header">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate ">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-utility-error">
                             <lightning-icon icon-name="utility:error" alternative-text="Error" size="xx-small"
                                 title="large size" variant="inverse" class="slds-icon slds-icon_x-small"
                                 aria-hidden="true"></lightning-icon>
                         </span>
+                            </div>
+                            <div class="slds-media__body" if:true={showValidationPopup}>
+                                <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-9"
+                                    title="Resolve error">Mandatory Fields</h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-popover__body" id="dialog-body-id-11">
+                        <p if:true={showValidationPopup}> {showValidation}
+                            <!-- <a href="#" title="Learn More">Learn More</a> -->
+                        </p>
                     </div>
-                    <div class="slds-media__body" if:true={showValidationPopup}>
-                        <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-8"
-                            title="Resolve error">Mandatory Fields</h2>
-                    </div>
-                </div>
-            </header>
-            <div class="slds-popover__body" id="dialog-body-id-10">
-                <p if:true={showValidationPopup}> {showValidation}
-                    <!-- <a href="#" title="Learn More">Learn More</a> -->
-                </p>
+                </section>
             </div>
-        </section>
-    </div>
-    </div>
+        </div>
     </div>
 </template>
 <!-- Requirement Details -->
@@ -1103,14 +1276,13 @@
                         <p style="text-align: center;color:#0e3aed;padding:10px;"> </p>
                         <template if:false={isQrcustomer}>
                             <lightning-button variant="brand" title="Please Click here to view Record" value={con.key}
-                                onclick={ClickHere} type="button"
-                                label="Please Click here to view Record"></lightning-button> &nbsp;&nbsp;
+                                onclick={ClickHere} type="button" label="Please Click here to view Record">
+                            </lightning-button> &nbsp;&nbsp;
                         </template>
                     </div>
                 </template>
             </div>
         </div>
-    </div>
     </div>
 </template>
 

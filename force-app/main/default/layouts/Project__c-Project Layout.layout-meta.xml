@@ -34,6 +34,10 @@
                 <behavior>Edit</behavior>
                 <field>Rate_of_Interest_Daily__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Rate_of_Interest__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

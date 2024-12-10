@@ -44,6 +44,8 @@ public class Ex_OpportunityTriggerHandler {
         Set<Id> bookingCampaignIdSet = new Set<Id>();
         Set<Id> convertedCampaignIdSet = new  Set<Id>();
         Set<Id> oppIdSet = new Set<Id>();
+         Set<Id> oppIdSetForSV = new Set<Id>();
+        
         
         for(Opportunity__c oldOpp: oldMap.values()) {
             Opportunity__c newOpp = newMap.get(oldOpp.Id);
@@ -67,6 +69,10 @@ public class Ex_OpportunityTriggerHandler {
             }
             if(oldOpp.SV_Count__c != newOpp.SV_Count__c && newOpp.Campaign__c != null)
                 svCampaignIdSet.add(newOpp.Campaign__c);
+            
+            if(oldOpp.SV_Count__c != newOpp.SV_Count__c)
+                oppIdSetForSV.add(newOpp.Id);
+            
             if(oldOpp.Stage__c != newOpp.Stage__c && newOpp.Stage__c != null &&  newOpp.Stage__c.equalsIgnoreCase('Booked') && newOpp.Campaign__c != null)
                 bookingCampaignIdSet.add(newOpp.Campaign__c);
         }
@@ -76,5 +82,8 @@ public class Ex_OpportunityTriggerHandler {
             Ex_CampaignHandlerServices.updateCampaignDetails(svCampaignIdSet, 'Site Visit');
         if(!bookingCampaignIdSet.isEmpty() && bookingCampaignIdSet != null)
             Ex_CampaignHandlerServices.updateCampaignDetails(bookingCampaignIdSet, 'Booking');
+         if(!oppIdSetForSV.isEmpty() && oppIdSetForSV != null)
+            Ex_SiteVisitHandlerServices.fetchSVDateonOpportunity(oppIdSetForSV);
+        
     }
 }

@@ -235,16 +235,16 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                                     if(priceListMap.get('Basic Charge').Calculation_Area_Type__c.equalsIgnoreCase('Carpet Area')) {
                                         q.Original_Base_Rate__c = (allPriceOriginalInfoMap.get('Basic Charge') / u.Total_carpet_Sq_Ft__c).setscale(2, RoundingMode.HALF_UP);
                                         system.debug('Basic Charge:'+allPriceOriginalInfoMap.get('Basic Charge'));
-                                        q.Modified_Base_Rate__c = (allPriceInfoMap.get('Basic Charge') / u.Total_carpet_Sq_Ft__c).setscale(2, RoundingMode.HALF_UP);
+                                        q.Modified_Base_Rate__c = (allPriceInfoMap.get('Basic Charge') / u.Total_carpet_Sq_Ft__c).setscale(0, RoundingMode.HALF_UP);
                                         q.Basic_Charge_Amount__c = allPriceInfoMap.get('Basic Charge');
                                     } else {
                                         q.Original_Base_Rate__c = (allPriceOriginalInfoMap.get('Basic Charge') / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
-                                        q.Modified_Base_Rate__c = (allPriceInfoMap.get('Basic Charge') / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
+                                        q.Modified_Base_Rate__c = (allPriceInfoMap.get('Basic Charge') / u.Saleable_Area__c).setscale(0, RoundingMode.HALF_UP);
                                         q.Basic_Charge_Amount__c = allPriceInfoMap.get('Basic Charge');
                                     }
                                 } else {
                                     q.Original_Base_Rate__c = (allPriceOriginalInfoMap.get('Basic Charge') / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
-                                    q.Modified_Base_Rate__c = (allPriceInfoMap.get('Basic Charge') / u.Saleable_Area__c).setscale(2, RoundingMode.HALF_UP);
+                                    q.Modified_Base_Rate__c = (allPriceInfoMap.get('Basic Charge') / u.Saleable_Area__c).setscale(0, RoundingMode.HALF_UP);
                                     q.Basic_Charge_Amount__c = allPriceInfoMap.get('Basic Charge');
                                 }
                             }
@@ -285,6 +285,12 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                         if(q.Car_Park_Required_Count__c == null)
                             q.Car_Park_Required_Count__c = 0;
                         q.Car_Park_Required_Count__c += cp.carParkRequiredCount;
+                        
+                    }
+                    if(cp.carParkAmount > 0){
+                        if(q.Car_Park_Amount__c == null)
+                            q.Car_Park_Amount__c = 0;
+                        q.Car_Park_Amount__c += cp.carParkAmount * cp.carParkRequiredCount;
                     }
                 }
             }

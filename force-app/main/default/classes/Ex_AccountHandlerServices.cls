@@ -21,31 +21,14 @@ public class Ex_AccountHandlerServices {
         }
     }
     
-   /* public static void duplicationCheckOnCP(List<Account> accountList) {
-        Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>> CPduplicateWrapperMap = new Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
-        
-        CPduplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckCPAcccount(accountList);
-        System.debug('CPduplicateWrapperMap::'+CPduplicateWrapperMap);
-        
-        for(Account a: accountList) {
-            if(CPduplicateWrapperMap.containsKey(a)) {
-                for(Ex_DuplicationHandlerServices.duplicateWrapper dw: CPduplicateWrapperMap.get(a)) {
-                    if(!test.isRunningTest())
-                        a.addError('Duplicate CP Account Found with Name: '+dw.dupAccount.Name+' Owner Name: '+ dw.dupAccount.Owner.Name +'. Record Id is '+dw.dupAccount.Id);
-                }
-            }else{
-                if(System.label.CP_Approver != null){
-                   a.CP_Approver__c =  System.label.CP_Approver;
-                }
-            }
-        }
-    }*/
-    
+      
     public static void insertDocument(List<Account> accountList) {
         List<Document__c> cpDocumentList = new List<Document__c>();
-        
+        System.debug('Processing accounts: ' + accountList);
         for(Account acc : accountList) {
+            System.debug('Processing account: ' + acc);
             String customValues = CP_Document__c.getValues(acc.RERA_Available__c).Document_Required__c;
+             System.debug('CP_Document__c fetched: ' + customValues);
             List<String> sList = customValues.split(',');
             
             for(String s : sList) {

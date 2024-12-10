@@ -177,6 +177,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
                     this.showSpinner = false;
                 } else if (error) {
                     console.error('Error In getUnitConfigurationMapDetails: ', error);
+                    this.unitConfigurationMap = null;
                 }
             })
             console.log('unitConfigurationMap: ' + JSON.stringify(this.unitConfigurationMap));
@@ -196,8 +197,10 @@ export default class Ex_InventoryMatrix extends LightningElement {
         getUnitFloorMapDetails({ towerId: this.storeTowerId })
             .then(data => {
                 if (data) {
+                    if(data != null){
                     console.log('Unit Map: '+JSON.stringify(data));
                     this.originalUnitFloorMap = data;
+
                     for (let floor in data) {
                         console.log('floor: '+floor);
                         this.unitList = data[floor];
@@ -230,9 +233,12 @@ export default class Ex_InventoryMatrix extends LightningElement {
                     console.log('Unit Count: ', this.unitCount);
                     console.log('unitFloorMap: ' + JSON.stringify(this.unitFloorMap));
                     console.log('unitFloorMap: ' + JSON.stringify(this.unitFloorMap));
-                } else if (error) {
+                 }
+                 else if (error) {
                     console.error('Error In getUnitFloorMapDetails: ', error);
                 }
+             }
+             
             })
     }
     

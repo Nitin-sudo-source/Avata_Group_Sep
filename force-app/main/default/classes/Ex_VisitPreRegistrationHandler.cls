@@ -22,9 +22,11 @@ public class Ex_VisitPreRegistrationHandler {
         
         if(!vprLeadList.isEmpty() && vprLeadList != null){
             Ex_VisitPreRegistrationHandlerServices.createVPRLead(vprLeadList);
+            Ex_VisitPreRegistrationHandlerServices.duplicationCheck(vprLeadList);
         }
         if(!vprCPList.isEmpty() && vprCPList != null){
             Ex_VisitPreRegistrationHandlerServices.createVPRLead(vprCPList);
+            Ex_VisitPreRegistrationHandlerServices.duplicationCheck(vprCPList);
         }
     }
     

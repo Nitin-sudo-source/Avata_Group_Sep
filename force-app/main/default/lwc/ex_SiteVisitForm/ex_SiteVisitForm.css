@@ -230,11 +230,12 @@ span{
 .main {
   display: flex;
   justify-content: space-between;
-  padding-left: 10vh;
-  padding-right: 10vh;
+  padding: 1.5vh 10vh;
   border-bottom: groove;
   background-color: #37A481;
-  padding: 1.5vh;
+  position: relative;
+  width: auto;
+  box-sizing: border-box;
 }
 
 .heads{

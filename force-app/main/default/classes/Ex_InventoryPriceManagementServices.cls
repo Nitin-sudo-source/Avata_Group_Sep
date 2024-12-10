@@ -214,11 +214,14 @@ public class Ex_InventoryPriceManagementServices {
                         Decimal amount = 0;
                         Decimal sgst = 0;
                         Decimal cgst = 0;
-                        
+                        System.debug('carParkPrice::::::::::::: '+carParkPrice);
                         if(priceListMap.containsKey(priceList)) {
                             if(priceListMap.get(priceList).Charge_Name__c.equalsIgnoreCase('Parking Charges')) {
                                 avAmount += carParkPrice;
                                 amount = carParkPrice;
+                                System.debug('carParkPrice::::::::::::: '+carParkPrice);
+                                System.debug('priceListMap::::::::::::: '+priceListMap.get('Basic Charge').GST__c);
+                                
                                 sgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
                                 cgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
                             } else {

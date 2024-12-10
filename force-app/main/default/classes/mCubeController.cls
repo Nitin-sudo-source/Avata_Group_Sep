@@ -24,6 +24,33 @@ global without sharing class mCubeController {
         
     }
     
+    @AuraEnabled(cacheable=true)
+    public static List<CP_Project__c> getProjects() {
+        List<CP_Project__c> Projects =[select id,Name,	Project_Name__c from CP_Project__c];
+        return Projects;
+    }
+    
+   // method to get DID numbers from cp_leads --> Cp_projects-->DID1,DID2
+    @AuraEnabled(cacheable=true)
+    public static List<String> getTheObjectDetails(Id recId) {
+        // Retrieve the SObject type from the record Id
+        String sObjName = recId.getSObjectType().getDescribe().getName();
+        
+        if (sObjName == 'CP_Lead__c') {
+            // Query the CP_Lead__c record along with related CP_Project__r fields
+            CP_Lead__c cpLead = [SELECT id, Name, CP_Project__r.DID_1__c, CP_Project__r.DID_2__c
+                                 FROM CP_Lead__c
+                                 WHERE id = :recId
+                                 AND CP_Project__c != null
+                                 LIMIT 1];  // LIMIT 1 to avoid issues with multiple records
+            
+            // Return the DID_1__c and DID_2__c values in a List
+            return new List<String>{cpLead.CP_Project__r.DID_1__c, cpLead.CP_Project__r.DID_2__c};
+                } else {
+                    // Return null if the record is not of type CP_Lead__c
+                    return null;
+                }
+    }
     
     
     
@@ -133,9 +160,11 @@ global without sharing class mCubeController {
     }
     
     @auraenabled
-    webservice static boolean clickToCall(String recordId) { 
-        
-        string  mcubeObjectName = id.valueof( recordId).getSObjectType().getDescribe().getName() ;  
+    webservice static boolean clickToCall(string recordId,string Project) { 
+        system.debug('Recordid:' + recordId);
+        system.debug('Project : '+ Project);
+        //String mcubeObjectName = recordId.getSObjectType().getDescribe().getName();
+        string  mcubeObjectName = id.valueof(recordId).getSObjectType().getDescribe().getName() ;  
         MCUBE_Object_Api__c mcubeObject=[select id,name,Campaign_Field_API__c, Source_Field_API__c, Field_to_Compare_Mobile_Incoming_Number__c,LandingNumber__c from MCUBE_Object_Api__c where name =:mcubeObjectName  limit 1];
         String condtn='Id='+'\''+recordId+'\'';
         String xQuery='Select id,'+mcubeObject.Field_to_Compare_Mobile_Incoming_Number__c+ ' from '+mcubeObjectName+' where '+condtn;
@@ -197,7 +226,12 @@ global without sharing class mCubeController {
             // Add your form data
             requestBody += boundary + '\r\n';
             requestBody += 'Content-Disposition: form-data; name="refid"\r\n\r\n';
-            requestBody += l[0].get('Id')+'\r\n';  
+            requestBody += l[0].get('Id')+'\r\n'; 
+            
+            // Add your form data
+            requestBody += boundary + '\r\n';
+            requestBody += 'Content-Disposition: form-data; name="gid"\r\n\r\n';
+            requestBody += Project +'\r\n'; 
             
             // Add your form data
             requestBody += boundary + '\r\n';
@@ -211,7 +245,7 @@ global without sharing class mCubeController {
             
             System.debug(requestBody);
         }else{
-            url  =   'http://mcube.vmc.in/api/outboundcall?apikey='+api1.Value__c  +'&exenumber='+u.mobilePhone+'&custnumber='+m+'&refid='+l[0].get('Id')+'&url='+api2.Value__c +'/calland?refid='+l[0].get('Id');
+            url  =   'http://mcube.vmc.in/api/outboundcall?apikey='+api1.Value__c  +'&exenumber='+u.mobilePhone+'&custnumber='+m+'&refid='+l[0].get('Id')+'&gid='+Project+'&url='+api2.Value__c +'/calland?refid='+l[0].get('Id');
         }
         
         request.setEndpoint(url);
@@ -269,7 +303,7 @@ global without sharing class mCubeController {
                 // Handle inbound call when executive is null
                 if (cw.executive == null) {
                     if (cw.dialstatus == 'CONNECTING') {
-                        String xQuery = 'SELECT Id FROM ' + mcubeObject.Name + ' WHERE ' + mcubeObject.Field_to_Compare_Mobile_Incoming_Number__c + '=\'' + cw.callfrom + '\'';
+                        String xQuery = 'SELECT Id,ownerId FROM ' + mcubeObject.Name + ' WHERE ' + mcubeObject.Field_to_Compare_Mobile_Incoming_Number__c + '=\'' + cw.callfrom + '\'';
                         List<sObject> inboundList = Database.query(xQuery); 
                         
                         List<User> usersList = [SELECT Id FROM User WHERE MobilePhone LIKE :cw.empnumber LIMIT 1];
@@ -306,7 +340,7 @@ global without sharing class mCubeController {
                             t.Subject = 'Inbound Call';
                             t.CallType = 'Inbound';
                             t.Call_ID__c = cw.callid;
-                            t.Virtual_Number__c =  cw.landingNumber;
+                            t.Virtual_Number__c =  cw.clicktocalldid;
                             t.Mobile__c = cw.callfrom;
                             t.Call_Start_DateTime__c = Datetime.valueOf(cw.starttime).addHours(-5).addMinutes(-30);
                             t.Call_End_DateTime__c = Datetime.valueOf(cw.endtime).addHours(-5).addMinutes(-30);
@@ -326,20 +360,20 @@ global without sharing class mCubeController {
                             }
                             
                             try {
-                               /* if(u.id != null && u.id != ''){
-                                   //t.ownerid=u.Id; 
-                                }*/
+                                /* if(u.id != null && u.id != ''){
+//t.ownerid=u.Id; 
+}*/
                                 
                                 insert t;
                                 //String ldownerid =(String)l.get('OwnerId');
                                 //system.debug(ldownerid);
-                               // if(ldownerid!= u.Id){
-                                   // sendNotification(cw.callfrom, t.Id, u.Id, 'Task',callDeligated);
-                                    
-                               // }else{
-                                    sendNotification(cw.callfrom, l.Id, u.Id, mcubeObject.Name,callDeligated);
-                                    
-                               // }
+                                // if(ldownerid!= u.Id){
+                                // sendNotification(cw.callfrom, t.Id, u.Id, 'Task',callDeligated);
+                                
+                                // }else{
+                                sendNotification(cw.callfrom, l.Id, u.Id, mcubeObject.Name,callDeligated);
+                                
+                                // }
                                 
                                 System.debug('task created:' + t);
                             } catch (Exception ex) {
@@ -419,13 +453,23 @@ global without sharing class mCubeController {
                     t.ActivityDate = System.today();
                     
                     if (mcubeObject.Name == 'Lead__c') {
+                        // Query the Lead to get the OwnerId
+                        Lead__c leadRecord = [SELECT OwnerId FROM Lead__c WHERE Id = :cw.refid LIMIT 1];
                         t.RecordTypeId = Schema.SObjectType.Task.getRecordTypeInfosByName().get('Presales Call').getRecordTypeId();
                         t.WhatId = cw.refid;
+                        t.OwnerId = leadRecord.OwnerId;
+                        System.debug('t.OwnerId:' + t.OwnerId);
                     }
+                    
                     if (mcubeObject.Name == 'Account') {
+                        // Query the Account to get the OwnerId
+                        Account accountRecord = [SELECT OwnerId FROM Account WHERE Id = :cw.refid LIMIT 1];
                         t.RecordTypeId = Schema.SObjectType.Task.getRecordTypeInfosByName().get('Presales Call').getRecordTypeId();
                         t.WhatId = cw.refid;
+                        t.OwnerId = accountRecord.OwnerId;
+                        System.debug('t.OwnerId:' + t.OwnerId);
                     }
+                    
                     try {
                         insert t;
                         System.debug('task created:' + t.id);
@@ -455,7 +499,7 @@ global without sharing class mCubeController {
                         }
                         //Added By Nitin as Dicussed with Akshay
                         if(task.CallType == 'Outbound' && cw.dialstatus != null && (cw.dialstatus == 'NOANSWER' || cw.dialstatus == 'CANCEL')){
-                            task.Subject = 'Missed Call';  
+                            task.Subject = 'Missed Call'; 
                         }
                         if(cw.filename != null){
                             task.Audio_File__c = cw.filename;   

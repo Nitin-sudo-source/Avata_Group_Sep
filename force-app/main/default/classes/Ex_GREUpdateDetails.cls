@@ -14,8 +14,8 @@ public class Ex_GREUpdateDetails {
     }
     
     @AuraEnabled(cacheable=true)
-    public static list<sObject> fetchLookupData(string searchKey , string sObjectApiName, String projectId) { 
-        System.debug('projectId: '+projectId);
+    public static list<sObject> fetchLookupData(string searchKey , string sObjectApiName/*, String projectId*/) { 
+        //System.debug('projectId: '+projectId);
         System.debug('sObjectApiName '+sObjectApiName);
         List <sObject> returnList = new List < sObject > ();
         Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Channel_Partner').getRecordTypeId();

@@ -1,6 +1,6 @@
 import { LightningElement ,api,track} from 'lwc';
 import demandobject from '@salesforce/schema/Demand__c';
-import demand from '@salesforce/apex/Ex_Demandaction.demandrecord';
+import demand from '@salesforce/apex/Ex_DemandAction.demandrecord';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 

@@ -27,7 +27,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Proposed_Re_visit_Date__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -69,7 +69,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Next_Follow_up_Date__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>

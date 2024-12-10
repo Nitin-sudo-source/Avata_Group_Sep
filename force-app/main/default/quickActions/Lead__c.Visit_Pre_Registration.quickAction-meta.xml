@@ -51,7 +51,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Site_Visit_Date__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
