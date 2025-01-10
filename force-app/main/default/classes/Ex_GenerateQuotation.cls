@@ -353,8 +353,6 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                 }
                 
                 if(!chargeDetailsList.isEmpty() && chargeDetailsList != null){
-                    
-                    
                     for (Charge_Details__c chDetail : chargeDetailsList) {
                         if (chDetail.Charge_Bucket__c != null && chDetail.Charge_Bucket__c.equalsIgnoreCase('Agreement Value')) {
                             system.debug('Inside chDetail:: ');
@@ -362,7 +360,6 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                         }
                     }
                 }
-                
                 
                 Quotation__c quo = [SELECT Id, Opportunity__c, Opportunity__r.OwnerId FROM Quotation__c WHERE Id = :qId];
                 System.debug('Quotation quo : '+ quo);
@@ -397,7 +394,8 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
                 if(!managementTmList.isEmpty() && managementTmList != null){
                     managementApprover = managementTmList[0].User__c;
                 }
-                
+                System.debug('Modified_Base_Rate__c: '+q.Modified_Base_Rate__c);
+                System.debug('level1Approver: '+level1Approver);
                 if(u.SM_Threshold__c != null && q.Modified_Base_Rate__c != null && u.TL_Threshold__c != null){
                     //if(u.SM_Threshold__c < q.Modified_Base_Rate__c && q.Modified_Base_Rate__c < u.TL_Threshold__c) {
                     if (q.Modified_Base_Rate__c >= u.TL_Threshold__c && q.Modified_Base_Rate__c < u.SM_Threshold__c) {

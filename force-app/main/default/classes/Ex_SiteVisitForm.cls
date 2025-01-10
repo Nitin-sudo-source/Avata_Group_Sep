@@ -817,6 +817,7 @@ leadList[0].Project__c = pList[0].Id;*/
                     l.Last_Name__c = sv.Last_Name__c;
                     l.Mobile__c = sv.Mobile__c;
                     l.Email__c = sv.Email__c;
+                    l.IsConverted__c = true;
                     
                     
                     //Address Details

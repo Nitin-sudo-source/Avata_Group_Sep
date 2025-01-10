@@ -41,6 +41,7 @@ public class TestEx_GenerateQuotation {
         insert cp3; 
         
         Team__c te1=new Team__c();
+        te1.Team_Type__c = 'Quotation Approval Team';
         te1.Project__c=pro.id;
         insert te1;
        // User u11=new User();
@@ -91,6 +92,7 @@ public class TestEx_GenerateQuotation {
         ps.Tower__c = tower.Id;
         ps.Is_Editable__c = true;
         ps.Active__c = true;
+        ps.Number_of_Milestone__c = 20;
         insert ps;
         returnMap.put('Payment Scheme', ps.Id);
         
@@ -321,8 +323,14 @@ public class TestEx_GenerateQuotation {
         opp.Project__c = returnMap.get('Project');
         insert opp;
         
+        Quotation__c quote = new Quotation__c();
+        quote.Opportunity__c = opp.Id;
+        insert quote;
+        Quotation__c q = Ex_InventoryPriceManagementServices.getQuotationInfo(quote.Id);
         Opportunity__c op = Ex_GenerateQuotation.getOppDetails(opp.Id);
         Unit__c u = Ex_GenerateQuotation.getUnitDetails(returnMap.get('Unit'));
+        Map<String, Team_Member__c> approvalTeam =  Ex_InventoryPriceManagementServices.getApprovalTeamMemberDetails(u.project__c, 'Quotation Approval Team');
+
         List<Payment_Scheme__c> psList = Ex_GenerateQuotation.getPaymentSchemeDetails(u.Tower__c);
         List<Ex_InventoryPriceManagementServices.CarParkWrapper> carParkList = Ex_GenerateQuotation.getCarParkDetails(u.Project__c, u.Tower__c);
         Map<String, List<String>> priceListGroupMap = Ex_GenerateQuotation.getPriceListGroupMapDetails(u.Id);

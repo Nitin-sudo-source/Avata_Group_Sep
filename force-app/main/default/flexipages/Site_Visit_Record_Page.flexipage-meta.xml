@@ -7,10 +7,10 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Edit</value>
+                            <value>Site_Visit__c.SM_Assignment</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Delete</value>
+                            <value>Site_Visit__c.Complete_Sitevist</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Site_Visit__c.GRE_Update_Details</value>
@@ -23,30 +23,10 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Site_Visit__c.Complete_Sitevist</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Is_Sales_Manager_Assigned__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.SV_Completed__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                            </visibilityRule>
+                            <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Site_Visit__c.SM_Assignment</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.Is_Sales_Manager_Assigned__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                            </visibilityRule>
+                            <value>Delete</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -136,6 +116,40 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.GRE__c</fieldItem>
                 <identifier>RecordGRE_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Sales_Assignment_Date__c</fieldItem>
+                <identifier>RecordSales_Assignment_Date__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Request_Body__c</fieldItem>
+                <identifier>RecordRequest_Body__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Response_Body__c</fieldItem>
+                <identifier>RecordResponse_Body__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Error_Body__c</fieldItem>
+                <identifier>RecordError_Body__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Is_SMS_Send__c</fieldItem>
+                <identifier>RecordIs_SMS_Send__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c852aad4-8d0d-473c-8fc2-825c295ccd52</name>
@@ -992,6 +1006,16 @@
                 <identifier>RecordCurrent_Resident_Status_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Employment_Type__c</fieldItem>
+                <identifier>RecordEmployment_Type_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c7b1f1ac-46bd-4850-bb5a-b1303681f1b3</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1437,6 +1461,36 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Site_Visit__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Histories</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-4c0ecfbe-cff0-46b9-be04-ac7d4e1517aa</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1450,6 +1504,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>detailTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4c0ecfbe-cff0-46b9-be04-ac7d4e1517aa</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>SV History</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <name>maintabs</name>

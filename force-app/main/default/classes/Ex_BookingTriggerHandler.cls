@@ -2,12 +2,19 @@ public class Ex_BookingTriggerHandler {
     public static void afterInsert(List<Booking__c> bList) {
         Map<Id, Booking__c> quotationBookingMap = new Map<Id, Booking__c>();
         Set<Id> towerIdSet = new Set<Id>();
+        Set<Id> bkIdSet = new Set<Id>();
         
         for(Booking__c b: bList) {
             if(b.Booking_Date__c != null && b.Tower__c != null) {
                 quotationBookingMap.put(b.Quotation__c, b);
                 towerIdSet.add(b.Tower__c);
             }
+            if(b.Project__c != null){
+                bkIdSet.add(b.Id);
+            }
+        }
+        if(!bkIdSet.isEmpty() && bkIdSet != null){
+            Ex_SMSTriggerHandlerServices.sendBulkMessage('Booking__c', bkIdSet);
         }
         if(quotationBookingMap != null && !towerIdSet.isEmpty())
             Ex_BookingHanldlerServices.updatePaymentMilestoneDueDate(quotationBookingMap, towerIdSet);
@@ -51,7 +58,7 @@ public class Ex_BookingTriggerHandler {
         
         if (isBatchReq2) {
             if (!Test.isRunningTest()){
-                Database.executeBatch(new Ex_DemandRaiseBatch(),1);
+              //  Database.executeBatch(new Ex_DemandRaiseBatch(),1);
             }
         }
         

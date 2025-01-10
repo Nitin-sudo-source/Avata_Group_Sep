@@ -161,9 +161,10 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>SMS</label>
     <nameField>
-        <label>SMS Name</label>
+        <displayFormat>SM-{000000}</displayFormat>
+        <label>SMS No</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>SMSs</pluralLabel>
     <searchLayouts></searchLayouts>

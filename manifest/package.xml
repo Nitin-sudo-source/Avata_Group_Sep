@@ -54,28 +54,7 @@
     </types>
     <types>
         <members>*</members>
-        <members>Quotation__c</members>
-        <members>Booking__c</members>
-        <members>Charge_Details__c</members>
-        <members>Tower__c</members>
-        <members>Unit__c</members>
-        <members>Pricing_List__c</members>
-        <members>Payment_Scheme__c</members>
-        <members>Payment_Scheme_Milestone__c</members>
-        <members>Payment_Milestone__c</members>
-        <members>Document__c</members>
-        <members>Appicant__c</members>
-        <members>Receipt__c</members>
-        <members>Blocking_Details__c</members>
-        <members>Car_Park_Required__c</members>
-        <members>Construction_Stage__c</members>
-        <members>Car_Park__c</members>
-        <members>CP_Lead__c</members>
-        <members>CP_Project__c</members>
-        <members>Discount__c</members>
-        <members>Discount_Applied__c</members>
-        <members>Legal_Entity__c</members>
-        <members>Visit_Pre_Registration__c</members>
+        
         <name>CustomObject</name>
     </types>
     <types>

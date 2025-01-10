@@ -33,6 +33,8 @@ global class Ex_RESTCTIAgentServices {
         List<CP_Lead__c> cpleadList = new List<CP_Lead__c>();
         
         Id ownerId = null;
+        String TLAgentId = '';
+        String TLAgentMobile = '';
         
         fromnumber = RestContext.request.params.get('fromnumber');
         landingnumber = RestContext.request.params.get('landingnumber');
@@ -49,7 +51,8 @@ global class Ex_RESTCTIAgentServices {
                 if(fromnumber.length() > 10){
                     fromnumber = fromnumber.substring(fromnumber.length()-10);
                 }
-                cpleadList = [Select Id , Name, Mobile__c, Sourcing_Manager__c,OwnerId FROM CP_Lead__c
+                cpleadList = [Select Id , Name, Mobile__c, Sourcing_Manager__c, Project__r.Pre_Sales_TL__c, Project__r.Pre_Sales_TL__r.MobilePhone, 
+                              Project__r.Pre_Sales_TL__r.Agent_Id__c, OwnerId FROM CP_Lead__c
                               Where CP_Project__c =:cpprList[0].Id AND ((Mobile__c =:fromnumber  OR Phone__c =:fromnumber))];
                 
                 system.debug('cpleadList '+cpleadList);
@@ -59,6 +62,10 @@ global class Ex_RESTCTIAgentServices {
                     else*/
                         ownerId = cpleadList[0].OwnerId;
                         recordId = cpleadList[0].Id;
+                    if(cpleadList[0].Project__r.Pre_Sales_TL__c != null && cpleadList[0].Project__r.Pre_Sales_TL__r.Agent_Id__c != null && cpleadList[0].Project__r.Pre_Sales_TL__r.MobilePhone != null){
+                        TLAgentId = cpleadList[0].Project__r.Pre_Sales_TL__r.Agent_Id__c;
+                        TLAgentMobile = cpleadList[0].Project__r.Pre_Sales_TL__r.MobilePhone;
+                    }
                 }else{
                     //if no cp lead then create new
                     if(cpprList[0].Id!= null)
@@ -85,11 +92,16 @@ global class Ex_RESTCTIAgentServices {
                     
                     try{
                         insert Cl;
-                        List<CP_Lead__c> getCPLeadList = [Select Id, OwnerId from CP_Lead__c where Id =: Cl.Id];
+                        List<CP_Lead__c> getCPLeadList = [Select Id, OwnerId, Project__r.Pre_Sales_TL__c, Project__r.Pre_Sales_TL__r.MobilePhone, 
+                              Project__r.Pre_Sales_TL__r.Agent_Id__c from CP_Lead__c where Id =: Cl.Id];
                         system.debug('getCPLeadList: '+getCPLeadList);
                         if(!getCPLeadList.isEmpty() && getCPLeadList != null){
                             ownerId = getCPLeadList[0].OwnerId;
                             recordId = getCPLeadList[0].Id;
+                            if(getCPLeadList[0].Project__r.Pre_Sales_TL__c != null && getCPLeadList[0].Project__r.Pre_Sales_TL__r.Agent_Id__c != null && getCPLeadList[0].Project__r.Pre_Sales_TL__r.MobilePhone != null){
+                                TLAgentId = getCPLeadList[0].Project__r.Pre_Sales_TL__r.Agent_Id__c;
+                                TLAgentMobile = getCPLeadList[0].Project__r.Pre_Sales_TL__r.MobilePhone;
+                            }
                         }
                     } catch(Exception ex) {
                         system.debug('Error: '+ex.getMessage());
@@ -173,6 +185,11 @@ global class Ex_RESTCTIAgentServices {
                     r.agentNo = userList[0].MobilePhone;
                     if(String.isNotBlank(recordId))
                         r.recordId = recordId;
+                    if(String.isNotBlank(TLAgentId) && String.isNotBlank(TLAgentMobile)){
+                        r.TLAgentId = TLAgentId;
+                        r.TLAgentMobile = TLAgentMobile;
+                    }
+
                 } else {
                     r.agentId = null;
                     r.agentNo = null;
@@ -194,6 +211,8 @@ global class Ex_RESTCTIAgentServices {
         webservice String AgentId;
         webservice String AgentNo;
         webservice String recordId;
+        webservice String TLAgentId;
+        webservice String TLAgentMobile;
         
     }
 }

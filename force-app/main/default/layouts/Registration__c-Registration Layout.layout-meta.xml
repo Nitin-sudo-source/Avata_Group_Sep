@@ -16,6 +16,10 @@
                 <behavior>Edit</behavior>
                 <field>Booking__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ready_Reckoner__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

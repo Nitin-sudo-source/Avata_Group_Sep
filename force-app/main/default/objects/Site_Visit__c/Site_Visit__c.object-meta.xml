@@ -177,6 +177,7 @@
         <excludedStandardButtons>PrintableListView</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Site_Visit_Count__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Is_Sales_Manager_Assigned__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Opportunity__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>

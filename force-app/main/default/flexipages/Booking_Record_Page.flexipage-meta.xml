@@ -16,6 +16,9 @@
                             <value>CustomButton.Booking__c.Print_Booking</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Booking__c.Booking_Checklist</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Booking__c.Change_AV_Details</value>
                         </valueListItems>
                         <valueListItems>
@@ -30,16 +33,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Booking__c.Update_Loan_Details</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Booking__c.Booking_Checklist</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.Welcome_Call_Done__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Booking__c.Booking_Cancellation</value>

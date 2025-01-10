@@ -7,11 +7,20 @@
         <locationY>444</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>SMS_Creation</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
                 <elementReference>$Record.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -34,7 +43,6 @@
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
         <offset>0</offset>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
     <constants>
@@ -73,10 +81,10 @@
             <label>Email is present in ORG Wide Email Addresses</label>
         </rules>
     </decisions>
-    <description>Added is converted condition</description>
+    <description>Set Sender Type as OrgWideEmailAddress</description>
     <environments>Default</environments>
     <interviewLabel>Email : {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Email : Thanks Email to customer on Lead Creation</label>
+    <label>Email &amp; SMS: Thanks Email to customer on Lead Creation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -96,6 +104,44 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>SMS_Creation</name>
+        <label>SMS Creation</label>
+        <locationX>836</locationX>
+        <locationY>525</locationY>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>SMSBodyForLeadCreation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>$Record.Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Remarks__c</field>
+            <value>
+                <elementReference>Remarks</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Template_Id__c</field>
+            <value>
+                <stringValue>1707173255048469561</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SMS__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_Org_Wide_Email_Address</name>
         <label>Get Org Wide Email Address</label>
@@ -153,16 +199,28 @@
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Dear {!$Record.First_Name__c} {!$Record.Last_Name__c},
+        <text>Hi, {!$Record.First_Name__c} {!$Record.Last_Name__c},
 
-Thank you for reaching out to Avant Group. We have received your inquiry regarding {!$Record.Project__r.Name} and our team is eager to assist you. A dedicated representative will contact you shortly to understand your requirements better. Meanwhile, you can explore more about our website www.avantinfra.com 
+Thanks for contacting Avant Group!
 
-Regards, 
-Avant Group</text>
+We are assigning a dedicated query manager for you. Kindly expect a call back from us shortly. Meanwhile, you can explore our projects in Jogeshwari East, Goregaon and Pawna on www.avantinfra.com
+
+Best Regards,
+Team Avant</text>
     </textTemplates>
     <textTemplates>
         <name>EmailSubject</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Thank You for Your Inquiry.</text>
+        <text>Thanks for contacting Avant Group!</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Remarks</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>SMS Trigger Point : When New Lead is Created With {!$Record.Mobile__c} &amp; Email {!$Record.Email__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>SMSBodyForLeadCreation</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Thank you for your valuable interest in our esteemed project. We are delighted to have the opportunity to assist you. A dedicated representative will be reaching out shortly to provide personalized guidance and address any specific inquiries you may have. In the meantime, feel free to explore comprehensive details about the project website: www.avantinfra.com. Warm regards, Avant Infra Team</text>
     </textTemplates>
 </Flow>

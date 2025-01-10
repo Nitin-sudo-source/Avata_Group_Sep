@@ -1,10 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>API_Key_SMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>API_Key_SMS</shortDescription>
+        <value>cabd6f8f22fa6a8107c627a8c48bac82</value>
+    </labels>
+    <labels>
         <fullName>CP_Approver</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CP Approver</shortDescription>
         <value>005IS000000LEL2YAO</value>
+    </labels>
+    <labels>
+        <fullName>End_Point_Url</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End Point Url</shortDescription>
+        <value>https://sms.mcube.com/api/smsservices.php</value>
+    </labels>
+    <labels>
+        <fullName>TransactionId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TransactionId</shortDescription>
+        <value>&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>campaignid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>campaignid</shortDescription>
+        <value>MCUBE</value>
+    </labels>
+    <labels>
+        <fullName>channel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>channel</shortDescription>
+        <value>Trans</value>
+    </labels>
+    <labels>
+        <fullName>senderid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>senderid</shortDescription>
+        <value>AAVANT</value>
+    </labels>
+    <labels>
+        <fullName>shorturl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>shorturl</shortDescription>
+        <value>NO</value>
+    </labels>
+    <labels>
+        <fullName>template_Sv</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>template_sv</shortDescription>
+        <value>1707173255071952011</value>
+    </labels>
+    <labels>
+        <fullName>templatebooking</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>templatebooking</shortDescription>
+        <value>1707173255078143790</value>
+    </labels>
+    <labels>
+        <fullName>templateid_Lead</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>templateid_Lead</shortDescription>
+        <value>1707173255048469561</value>
+    </labels>
+    <labels>
+        <fullName>templateid_Lead_NoAnswer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>templateid_Lead_NoAnswer</shortDescription>
+        <value>1707173255055684422</value>
+    </labels>
+    <labels>
+        <fullName>templateid_Lead_Prospect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>templateid_Lead_Prospect</shortDescription>
+        <value>1707173255065216866</value>
     </labels>
 </CustomLabels>

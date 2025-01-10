@@ -14,13 +14,13 @@
     <aura:attribute name="callstatus" type="object"  />
     <div>
         <lightning:button variant="success" label="View Details" title="Success" onclick="{! c.navigateToRecord }"/>
-        
         <lightning:recordForm aura:id="editform"
                               recordId="{!v.recordId}"
                               objectApiName="{!v.objectName}"
                               layoutType="Compact"
                               columns="2"
-                              mode="edit" onsuccess="{!c.onsuccess}" />    
+                              mode="edit"
+                              onSuccess="{!c.handleSuccess}" />    
         
     </div>
     

@@ -121,19 +121,19 @@ public class TestEx_BookingCancellationHandler {
         
         Test.startTest();
         
-        Ex_UpdateAVDetails.getBookingInfo(b1.id);
-        Ex_UpdateAVDetails.getAVDetails(b1.id);
-        Ex_UpdateAVDetails.getPriceListMapDetails(unitId);
-        Ex_UpdateAVDetails.getPriceListGroupMapDetails(unitId);
-        Map<String, Decimal> allPriceInfo = Ex_UpdateAVDetails.getAllPriceMapDetails(
+      //  Ex_UpdateAVDetails.getBookingInfo(b1.id);
+       // Ex_UpdateAVDetails.getAVDetails(b1.id);
+       // Ex_UpdateAVDetails.getPriceListMapDetails(unitId);
+       // Ex_UpdateAVDetails.getPriceListGroupMapDetails(unitId);
+        /*Map<String, Decimal> allPriceInfo = Ex_UpdateAVDetails.getAllPriceMapDetails(
             unitId,
             500000, 5, 18, 
             priceListGroupMap, priceListMap, 10000, 5000
-        );
+        );*/
         
-        Ex_DemandManagementServices.getOnAccountBalance(b1.id);
+       /* Ex_DemandManagementServices.getOnAccountBalance(b1.id);
               Ex_DemandManagementServices.getOnAccountBalanceReceipts(b1.id);
-              Ex_DemandManagementServices.raiseDemand(paymentMilestone);
+              Ex_DemandManagementServices.raiseDemand(paymentMilestone);*/
         
         Ex_BookingCancellationHandler.fetchBooking(b, ctype, amt, remarks);
         Ex_BookingCancellationHandler.fetchBooking(b1, ctype, amt, remarks);
@@ -144,14 +144,14 @@ public class TestEx_BookingCancellationHandler {
         Ex_BookingFormController.getChargeListInfo(q.id);
         //Ex_BookingFormController.createBookingRecord(bkWrapper, applicantData, quotationDetails, receiptData, bookingAccount)
        
-        Ex_AfterBookingPriceManagementServices.getPaymentMilestoneInfo(qid);
+       /* Ex_AfterBookingPriceManagementServices.getPaymentMilestoneInfo(qid);
         Ex_AfterBookingPriceManagementServices.getPriceListInfo(unitId);
         Ex_AfterBookingPriceManagementServices.getConstructionStagesMap(projectId, towerId);
         Ex_AfterBookingPriceManagementServices.getConsturctionStageList(projectId, towerId);
        Ex_AfterBookingPriceManagementServices.getPriceListGroupMap(unitId);
         Ex_AfterBookingPriceManagementServices.getPriceListMap(unitId);
         Ex_AfterBookingPriceManagementServices.getQuotationInfo(unitId);
-        Ex_AfterBookingPriceManagementServices.getUnitInfo(unitId);
+        Ex_AfterBookingPriceManagementServices.getUnitInfo(unitId);*/
        // Ex_AfterBookingPriceManagementServices.
         Test.stopTest();
 

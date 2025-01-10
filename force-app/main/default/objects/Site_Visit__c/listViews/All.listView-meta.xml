@@ -4,6 +4,7 @@
     <columns>NAME</columns>
     <columns>Opportunity__c</columns>
     <columns>Project__c</columns>
+    <columns>Site_Visit_Count__c</columns>
     <columns>Site_Visit_Date__c</columns>
     <columns>Is_Preregister_Visit__c</columns>
     <columns>Proposed_Re_visit_Date__c</columns>

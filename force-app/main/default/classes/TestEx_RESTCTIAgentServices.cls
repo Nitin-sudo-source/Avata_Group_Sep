@@ -103,4 +103,54 @@ public class TestEx_RESTCTIAgentServices {
         
         
     }
+    
+    static testMethod void testCPProject() {
+        
+        User user = [SELECT Id, Agent_Id__c, MobilePhone FROM User WHERE Id = :UserInfo.getUserId()];
+        user.Agent_Id__c = 'AGENT123';
+        user.MobilePhone = '9090902345';
+        update user;
+        
+        Project__c p = new Project__c();
+        p.Name = 'Nitin P';
+        p.Pre_Sales_TL__c = UserInfo.getUserId();
+        insert p;
+        
+        CP_Project__c cp = new CP_Project__c();
+        cp.Project_Name__c = p.Id;
+        cp.DID_1__c = '09090909344';
+        cp.DID_2__c = '9090902345';
+        
+        insert cp;
+        
+        CP_Lead__c cpl = new CP_Lead__c();
+        cpl.Mobile__c = '8989898888';
+        cpl.CP_Project__c = cp.Id;
+        cpl.ownerId = UserInfo.getUserId();
+        cpl.Project__c = p.Id;
+        insert cpl;
+        
+        // Set up the RestContext parameters
+        RestContext.request = new RestRequest();
+        RestContext.request.addParameter('fromnumber', '8989898888');
+        RestContext.request.addParameter('landingnumber', '09090909344');
+        RestContext.response = new RestResponse();
+        
+         // Set up the RestContext parameters
+        RestContext.request = new RestRequest();
+        RestContext.request.addParameter('fromnumber', '8989898899');
+        RestContext.request.addParameter('landingnumber', '09090909344');
+        RestContext.response = new RestResponse();
+        
+        // Execute the method
+        Test.startTest();
+        Ex_RESTCTIAgentServices.REST_result result = Ex_RESTCTIAgentServices.getAgentId();
+        Test.stopTest();
+        
+        
+        
+        
+    }
+    
+    
 }

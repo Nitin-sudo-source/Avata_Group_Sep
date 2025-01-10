@@ -86,18 +86,18 @@ public class TestEx_DuplicaTionHandlerServices {
         test.startTest();
         Map<Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = new Map<Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
         duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheck(leadList);
-       // Ex_LeadConversionServices.convertLead(leadList2);
-       // Ex_LeadConversionPopup.isChecked(leadList[0].Id);
+        // Ex_LeadConversionServices.convertLead(leadList2);
+        // Ex_LeadConversionPopup.isChecked(leadList[0].Id);
         test.stopTest();
         
     }
     @isTest
     public static void ConvertLeadTest(){
-          Project__c p = new Project__c();
+        Project__c p = new Project__c();
         p.Name = 'Test Project';
         insert p;
         
-         Campaign__c c2 = new Campaign__c();
+        Campaign__c c2 = new Campaign__c();
         c2.Name = 'Test Project';
         c2.Start_Date__c = system.today();
         //   c2.End_Date__c = system.today().addDays(4);
@@ -124,10 +124,10 @@ public class TestEx_DuplicaTionHandlerServices {
             Mobile__c = '1122334455',
             Project__c = p.Id, 
             Lead_Source__c='Google',
-        Lead_Sub_Source__c = 'Google Search');
+            Lead_Sub_Source__c = 'Google Search');
         insert l11;
         
-    
+        
         String RecTypeId= Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
         Account a1 = new Account( Salutation = 'Mr.' ,FirstName = 'Test', LastName = 'Lead 1', PersonMobilePhone = '1122334455' ,RecordTypeId  = RecTypeId);
         insert a1;
@@ -204,10 +204,10 @@ public class TestEx_DuplicaTionHandlerServices {
         accList.add(a2);
         
         Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = new Map<Account, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
-       // duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckAcccount(accList);
+        // duplicateWrapperMap = Ex_DuplicationHandlerServices.duplicationCheckAcccount(accList);
         
     }
-     @isTest
+    @isTest
     public static void testOpportunityDuplicateCheck() {
         List<Opportunity__c> oppList = new List<Opportunity__c>();
         
@@ -228,10 +228,10 @@ public class TestEx_DuplicaTionHandlerServices {
         insert o2; 
         Opportunity__c o3 = new Opportunity__c(Name = 'Test1', Stage__c = 'In Follow-up', Project__c = p1.Id,Account__c = a2.id);
         update o2; 
-            }   
+    }   
     
     
-   
+    
     
     @isTest
     public static void accountEmailDuplicate() {
@@ -291,7 +291,7 @@ public class TestEx_DuplicaTionHandlerServices {
         c2.Actual_Visits__c = 0 ;
         
         insert c2;
-       // c2.Approver_Status__c = 'Approved';
+        // c2.Approver_Status__c = 'Approved';
         update c2;
         
         List<Opportunity__c> oppList = new List<Opportunity__c>();
@@ -303,9 +303,9 @@ public class TestEx_DuplicaTionHandlerServices {
         c3.Campaign_Code__c = '123456';
         c3.Start_Date__c = system.today();
         c3.Project__c = p.Id;
-       
+        
         insert c3;
-       // c2.Approver_Status__c = 'Approved';
+        // c2.Approver_Status__c = 'Approved';
         update c3;
         
         String RecTypeId= Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
@@ -328,11 +328,11 @@ public class TestEx_DuplicaTionHandlerServices {
         o2.Campaign__c = c2.id;
         update o2 ;
         
-       /* Site_Visit__c sv = new Site_Visit__c();
-        sv.Site_Visit_Count__c = 2 ;
-        sv.Opportunity__c = o1.Id ;
-     //   sv.Comment__c = 'Test' ;
-        insert sv ;*/
+        /* Site_Visit__c sv = new Site_Visit__c();
+sv.Site_Visit_Count__c = 2 ;
+sv.Opportunity__c = o1.Id ;
+//   sv.Comment__c = 'Test' ;
+insert sv ;*/
         
         
         Campaign_Performance__c camP = new Campaign_Performance__c();
@@ -366,7 +366,7 @@ public class TestEx_DuplicaTionHandlerServices {
                                        new Ex_CampaignBatchClass());
         
         Map<Opportunity__c, List<Opportunity__c>> result = new Map<Opportunity__c, List<Opportunity__c>>();
-        //result = Ex_DuplicationHandlerServices.duplicationCheckOpportunity(oppList);
+        result = Ex_DuplicationHandlerServices.duplicationCheckOpportunity(oppList);
         
     }
     
@@ -393,9 +393,9 @@ public class TestEx_DuplicaTionHandlerServices {
         
         Opportunity__c o2 = new Opportunity__c(Name = 'Test1', Stage__c = 'In Follow-up', Project__c = p.Id,Account__c = a3.id);
         oppList.add(o2);
-      
+        
         Map<Opportunity__c, List<Opportunity__c>> result = new Map<Opportunity__c, List<Opportunity__c>>();
-        //result = Ex_DuplicationHandlerServices.duplicationCheckOpportunity(oppList);
+        result = Ex_DuplicationHandlerServices.duplicationCheckOpportunity(oppList);
         
     }
     
@@ -417,19 +417,82 @@ public class TestEx_DuplicaTionHandlerServices {
     }
     
     @isTest
-    public static void testAfterUpdateOpportunity() {
-        // Create test data for afterUpdate scenario
-        Map<Id, Opportunity__c> oldMap = new Map<Id, Opportunity__c>();
-        Map<Id, Opportunity__c> newMap = new Map<Id, Opportunity__c>();
-        // Add test data to oldMap and newMap
+    public static void testCPLeadDup() {
         
-        // Call the method
+        Project__c p = new Project__c();
+        p.Name = 'Test Project';
+        p.CRM_Head__c = UserInfo.getUserId();
+        insert p;
+        
+        CP_Document__c cpd = new CP_Document__c();
+        cpd.Name = 'Yes';
+        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd;
+        
+        CP_Document__c cpd2 = new CP_Document__c();
+        cpd2.Name = 'No';
+        cpd2.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd2;
+        
+        Account cpacc = new Account();
+        cpacc.OwnerId = userInfo.getUserId();
+        cpacc.Name = 'Last Name';
+        cpacc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
+        cpacc.Phone = '9011722426';
+        cpacc.Email__c = 'prasad.alamwar@test.com';
+        cpacc.PAN_No__c = '676747';
+        cpacc.MahaRERA_Registration_No__c = '112233';
+        cpacc.RERA_Available__c = 'Yes';
+        insert cpacc;
+        
+        Account cpacc1 = new Account();
+        cpacc1.OwnerId = userInfo.getUserId();
+        cpacc1.Name = 'Last Name';
+        cpacc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
+        cpacc1.Phone = '9011722426';
+        cpacc1.Email__c = 'prasad.alamwar@test.com';
+        cpacc1.PAN_No__c = '676747';
+        cpacc1.MahaRERA_Registration_No__c = '112233';
+        
+        cpacc1.RERA_Available__c = 'Yes';
+        insert cpacc1;
+        
+        List<Account> accList = new List<Account>();
+        accList.add(cpacc1);
+        accList.add(cpacc);
+        
+        
+        CP_Lead__c cpl1=new CP_Lead__c();
+        cpl1.Channel_Partner_Name__c = cpacc.Id;
+        cpl1.Project__c = p.Id;
+        cpl1.Mobile__c = '8889898111';
+        cpl1.Phone__c = '8887776766';
+        cpl1.Email__c = 'nitinc77@gmail.com';
+        cpl1.Alternate_Email__c = 'nitinc77@gmail.com';
+        // cpl.CP_Project__c = cpp.id;
+        insert cpl1;
+        
+        
+        CP_Lead__c cpl=new CP_Lead__c();
+        cpl.Channel_Partner_Name__c = cpacc.Id;
+        cpl.Project__c = p.Id;
+        cpl.Mobile__c = '8889898111';
+        cpl.Phone__c = '8887776766';
+        cpl.Email__c = 'nitinc77@gmail.com';
+        cpl.Alternate_Email__c = 'nitinc77@gmail.com';
+        insert cpl;
+        List<CP_Lead__c> cpList = new List<CP_Lead__c>();
         Test.startTest();
-        //Ex_OpportunityTriggerHandler.afterUpdate(oldMap, newMap);
+        cpList.add(cpl);
+        cpList.add(cpl1);
+        Ex_DuplicationHandlerServices.duplicationCheckCPAcccount(accList);
+        Ex_DuplicationHandlerServices.duplicationCheckCPLead(cpList);
         Test.stopTest();
     }
     
     
- 
-
+    
+    
+    
+    
 }

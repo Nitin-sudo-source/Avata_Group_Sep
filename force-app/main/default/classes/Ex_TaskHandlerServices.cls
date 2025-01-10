@@ -391,4 +391,147 @@ public class Ex_TaskHandlerServices {
         }
         return stageMap;
     }
+
+    // Send Project Brochure to Customer when Lead stage is 'Prospect' and Sub Stage is 'Hot'
+    public static void sendProjectBrochureEmail(Set<Id> leadIdSet) {
+        
+        // Collect Leads with Project and Email
+        List<Lead__c> leads = [ SELECT Id, Name, Email__c, Project__c, Project__r.Name, 
+                                        Project__r.Project_Address__c, First_Name__c, Last_Name__c
+                                FROM Lead__c 
+                                WHERE Id IN: leadIdSet AND
+                                      Project__c != null  AND
+                                      Email__c != null];
+        
+        
+        // Project Brochures
+        Set<Id> projectIDSet = new Set<Id>();
+        for (Lead__c lead : leads) {
+            projectIDSet.add(lead.Project__c);
+        }
+        Map<String, Blob> projectBrochures = getProjectBrochuresInBLOB(projectIDSet);
+        if (projectBrochures.size() == 0) {
+            System.debug('No Project Brochures found');
+            return; 
+        }
+
+        // Send Email to Customer
+        List<Messaging.SingleEmailMessage> emailMessages = new List<Messaging.SingleEmailMessage>();
+        emailMessages = createEmailMessages(leads, projectBrochures);
+
+        System.debug('emailMessages: ' + emailMessages);
+        if (emailMessages.size() > 0) {
+            Messaging.SendEmailResult[] results = Messaging.sendEmail(emailMessages);
+            for (Messaging.SendEmailResult result : results) {
+                if (!result.isSuccess()) {
+                    for (Messaging.SendEmailError error : result.getErrors()) {
+                        System.debug('The following error has occurred: ' + error.getMessage());
+                    }
+                }
+            }
+        }
+    
+        
+    }
+
+    public static List<Messaging.SingleEmailMessage> createEmailMessages(List<Lead__c> leads, Map<String, Blob> projectBrochures) {
+        
+        List<Messaging.SingleEmailMessage> emailMessages = new List<Messaging.SingleEmailMessage>();
+        for (Lead__c lead : leads) {
+
+            Messaging.SingleEmailMessage emailMessage = new Messaging.SingleEmailMessage();
+            emailMessage.setSubject('Thank you for showing interest in our project');
+            emailMessage.setPlainTextBody('' + 
+                                    'Hi ' + lead.First_Name__c + ' ' + lead.Last_Name__c + ',\n\n' +
+                                    'We are excited to introduce '+ lead.Project__r.Name + ', your access to affordable luxury right on ' + lead.Project__r.Project_Address__c + '.\n\n' +
+                                    'As requested, I am sharing the project brochure with you and will be happy to assist you with any further queries. Please do allow me the liberty to call you later to take your feedback and possibly book a site visit for you.\n\n' +
+                                    'Look forward to speaking with you again soon.\n\n' +
+                                    'Best Regards,\n' +
+                                    'Team Avant.');  
+            emailMessage.setWhatId(lead.Id);
+            emailMessage.setToAddresses(new String[] {lead.Email__c});
+            emailMessage.setSaveAsActivity(false);
+            
+            // Get Org Wide Email Address
+            String orgWideEmailAddress = getOrgWideEmailAddress();
+            if(orgWideEmailAddress != null && orgWideEmailAddress != ''){
+                emailMessage.setOrgWideEmailAddressId(orgWideEmailAddress);
+            }
+
+            // Attach Project Brochure
+            Messaging.EmailFileAttachment emailAttachment = getEmailAttachmentFromVersionData(projectBrochures.get(lead.Project__c), 'ProjectBrochure.pdf');
+
+            emailMessage.setFileAttachments(new Messaging.EmailFileAttachment[] {emailAttachment});
+            emailMessages.add(emailMessage);
+
+        }
+
+        return emailMessages;
+    }
+
+    public static Messaging.EmailFileAttachment getEmailAttachmentFromVersionData(Blob versionData, String filename) {
+        Messaging.EmailFileAttachment emailAttachment = new Messaging.EmailFileAttachment();
+        emailAttachment.setFileName(filename);
+        emailAttachment.setBody(versionData);
+
+        System.debug('emailAttachment: ' + emailAttachment);
+        return emailAttachment;
+    }
+
+    public static String getOrgWideEmailAddress(){
+        String fromEmail = 'info@avantinfra.com';
+        String orgWideEmailAddress = '';
+
+        List<OrgWideEmailAddress> orgWideEmailAddresses = [SELECT Id, Address FROM OrgWideEmailAddress WHERE Address = :fromEmail];
+        if(orgWideEmailAddresses.size() > 0){
+            orgWideEmailAddress = orgWideEmailAddresses[0].Id;
+        }
+
+        System.debug('orgWideEmailAddress: ' + orgWideEmailAddress);
+        return orgWideEmailAddress;
+    }
+
+    public static Map<String, Blob> getProjectBrochuresInBLOB(Set<Id> projectIDSet) {
+
+        // Store all Project Brochures
+        Map<String, Blob> projectBrochures = new Map<String, Blob>();
+
+
+        // Get ContentDocumentLink for all documents related to Project
+        List<ContentDocumentLink> contentDocumentLinks = [SELECT Id, ContentDocumentId, LinkedEntityId
+                                                          FROM ContentDocumentLink 
+                                                          WHERE LinkedEntityId IN :projectIDSet];
+        
+        Map<String, String> projectToContentIDMapping = new Map<String, String>();
+        for (ContentDocumentLink contentDocumentLink : contentDocumentLinks) {
+            projectToContentIDMapping.put(contentDocumentLink.LinkedEntityId, contentDocumentLink.ContentDocumentId);
+        }
+        System.debug('projectToContentIDMapping: ' + projectToContentIDMapping);
+
+
+        // Get ContentVersion for all ContentDocumentId
+        Map<String, Blob> contentLinkToBLOBMappings = new Map<String, Blob>();
+        List<ContentVersion> contentVersions = [SELECT Id, Title, VersionData, ContentDocumentId
+                                                FROM ContentVersion 
+                                                WHERE ContentDocumentId IN : projectToContentIDMapping.values()];
+        System.debug('contentVersions: ' + contentVersions);
+        for (ContentVersion contentVersion : contentVersions) {
+            contentLinkToBLOBMappings.put(contentVersion.ContentDocumentId, contentVersion.VersionData);
+        }
+        System.debug('contentLinkToBLOBMappings: ' + contentLinkToBLOBMappings);
+
+        // Map Project to ContentVersion
+        for (String projectID : projectToContentIDMapping.keySet()) {
+            String contentVersionID = projectToContentIDMapping.get(projectID);
+            Blob contentVersion = contentLinkToBLOBMappings.get(contentVersionID);
+
+            System.debug('contentVersionID' + contentVersionID);
+            System.debug('contentVersion' + contentVersion);
+
+            projectBrochures.put(projectID, contentVersion);
+        }
+        System.debug('projectBrochures: ' + projectBrochures);
+
+        return projectBrochures;
+    }
 }

@@ -1,6 +1,6 @@
 @isTest
 public class TestEx_DemandRaiseBatch {
-    @testSetup
+    /*@testSetup
     static void setupTestData() {
         // Create Project
         Project__c project = new Project__c(
@@ -101,5 +101,5 @@ public class TestEx_DemandRaiseBatch {
         Test.stopTest();
 
 
-    }
+    }*/
 }

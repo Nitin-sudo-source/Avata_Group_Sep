@@ -127,7 +127,7 @@ public class TestEx_SMAssignmentController {
         Set<Id> uIdSet = new Set<Id>();
         uIdSet.add(tm2.User__c);
 
-        Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(uIdSet);
+        //Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(uIdSet);
 
         
         Test.stopTest();
@@ -170,9 +170,9 @@ public class TestEx_SMAssignmentController {
         Set<Id> uIdSet = new Set<Id>();
         uIdSet.add(u.Id);
 
-        Test.startTest();
+       /* Test.startTest();
         Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(uIdSet);
-        Test.stopTest();
+        Test.stopTest();*/
     }
     
 

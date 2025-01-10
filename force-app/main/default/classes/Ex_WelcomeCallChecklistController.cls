@@ -210,8 +210,7 @@ public with sharing class Ex_WelcomeCallChecklistController {
                         
                         if (item.Section__c == 'Agreement Value and Total Cost of the Unit' && OCValue != null){
                             if (parts[0].contains('Total Other Charges')) {
-                                String totalOtherCharges = parts[1].trim();
-                                
+                                String totalOtherCharges = parts[1].trim();                                
                                 String formattedValue = (OCValue+ OCTax).format();
                                 if (!formattedValue.equals(totalOtherCharges)) {
                                     item.Item__c = 'Total Other Charges - ' + formattedValue + '/-';

@@ -286,7 +286,7 @@
                         </th>
                     </tr>
                 </table>
-                <lightning-tabset active-tab-value={activeTabValue} aria-live="polite">
+                <lightning-tabset  aria-live="polite">
                     <template for:each={getApplicantData} for:item="applicant" for:index="index">
                         <lightning-tab key={applicant.key} class="slds-tabs_default" label={applicant.key}
                             icon-name="standard:client">
@@ -656,7 +656,7 @@
                         </th>
                     </tr>
                 </table>
-                <lightning-tabset active-tab-value={activeTabValue} aria-live="polite">
+                <lightning-tabset  aria-live="polite">
                     <template for:each={getReceiptData} for:item="receipt" for:index="index">
                         <lightning-tab key={receipt.key} class="slds-tabs_default" label={receipt.key}
                             icon-name="standard:contract_payment">

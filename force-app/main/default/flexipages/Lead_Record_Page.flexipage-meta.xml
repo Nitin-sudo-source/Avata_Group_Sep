@@ -20,6 +20,9 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Lead__c.Call_Customer</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
@@ -27,6 +30,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Lead__c.Visit_Pre_Registration</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Clone</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -175,6 +181,48 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Employment_Type__c</fieldItem>
                 <identifier>RecordEmployment_Type__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Request_Body__c</fieldItem>
+                <identifier>RecordRequest_Body__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Response_Body__c</fieldItem>
+                <identifier>RecordResponse_Body__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Error_Body__c</fieldItem>
+                <identifier>RecordError_Body__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.IS_SMS_Send_Before_24hrs__c</fieldItem>
+                <identifier>RecordIS_SMS_Send_Before_24hrs__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.IS_Send_Before_2hrs__c</fieldItem>
+                <identifier>RecordIS_Send_Before_2hrs__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-38bd8a32-99c4-410d-90e6-1509d1dd33da</name>

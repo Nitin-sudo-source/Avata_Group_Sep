@@ -119,6 +119,7 @@ acc.BillingPostalCode = l.PostalCode__c;*/
                 for(Task t: leadTaskMap.get(l.Id)) {
                     t.WhatId = leadPersonContactMap.get(l.Id);
                     t.WhatId = op.Id;
+                    
                     taskUpdateList.add(t);
                 }
             }

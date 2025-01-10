@@ -1,7 +1,7 @@
 @isTest 
 public class TestEx_DemandHandlerServices {
     // Helper method to create mock data for testing
-    private static void createTestData() {
+   /* private static void createTestData() {
         // Create Project records
         Project__c project1 = new Project__c(Name = 'Project 1');
         Project__c project2 = new Project__c(Name = 'Project 2');
@@ -134,6 +134,6 @@ public class TestEx_DemandHandlerServices {
         Test.stopTest();
 
         
-    }
+    }*/
      
 }

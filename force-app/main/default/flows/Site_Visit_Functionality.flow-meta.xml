@@ -4,8 +4,8 @@
     <decisions>
         <name>IsSVComment</name>
         <label>Is SV Comment</label>
-        <locationX>571</locationX>
-        <locationY>302</locationY>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Sales_Manager_Assigned</name>
@@ -68,7 +68,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Opportunity_on_SV_creation</targetReference>
+                <targetReference>update_Account</targetReference>
             </connector>
             <label>Is SV Comment</label>
         </rules>
@@ -85,7 +85,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -98,10 +98,10 @@
     <recordUpdates>
         <name>update_Account</name>
         <label>update Account</label>
-        <locationX>739</locationX>
-        <locationY>153</locationY>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
         <connector>
-            <targetReference>IsSVComment</targetReference>
+            <targetReference>Update_Opportunity_on_SV_creation</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -242,8 +242,8 @@
     <recordUpdates>
         <name>Update_Opportunity_on_SV_creation</name>
         <label>Update Opportunity on SV creation</label>
-        <locationX>800</locationX>
-        <locationY>377</locationY>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -431,8 +431,8 @@
     <recordUpdates>
         <name>Update_SalesManager</name>
         <label>Update SalesManager</label>
-        <locationX>317</locationX>
-        <locationY>439</locationY>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -463,10 +463,10 @@
         <object>Opportunity__c</object>
     </recordUpdates>
     <start>
-        <locationX>168</locationX>
-        <locationY>25</locationY>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>update_Account</targetReference>
+            <targetReference>IsSVComment</targetReference>
         </connector>
         <filterLogic>(1 AND 2 AND 3 ) OR (3 AND 4 AND 5)</filterLogic>
         <filters>
@@ -508,5 +508,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

@@ -29,8 +29,9 @@ public class Ex_BookingHanldlerServicesTest {
 
         // Create test data for Opportunity__c
         Opportunity__c opportunity = new Opportunity__c(
+            
             Booking__c = booking.Id,
-            Stage__c = 'Prospecting'
+            Stage__c = 'In Follow-up'
         );
         insert opportunity;
 

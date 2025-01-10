@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <decisions>
+        <name>check_Call_Status_iS_No_Answer</name>
+        <label>check Call Status iS No Answer</label>
+        <locationX>109</locationX>
+        <locationY>315</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_has_not_answered_a_call</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Call_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NOANSWER</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SMS_Creation</targetReference>
+            </connector>
+            <label>Customer has not answered a call</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>SMS: {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SMS: Customer has not answered a call</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>SMS_Creation</name>
+        <label>SMS Creation</label>
+        <locationX>404</locationX>
+        <locationY>371</locationY>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>get_Lead.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>SMSBody</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>get_Lead.Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Remarks__c</field>
+            <value>
+                <elementReference>SMSRemarks</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Template_Id__c</field>
+            <value>
+                <stringValue>1707173255055684422</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SMS__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>get_Lead</name>
+        <label>get Lead</label>
+        <locationX>109</locationX>
+        <locationY>75</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>check_Call_Status_iS_No_Answer</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsConverted__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>330</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>get_Lead</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.Name} == &quot;Presales Call&quot; &amp;&amp;
+{!$Record.WhatId} != null &amp;&amp;
+ISPICKVAL({!$Record.Call_Status__c}, &quot;NOANSWER&quot;)</filterFormula>
+        <object>Task</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>SMSBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear {!get_Lead.First_Name__c} {!get_Lead.Last_Name__c}, I trust this message finds you well. I recently attempted to reach you by phone to discuss your interest in {!get_Lead.Project__r.Name}, but it seems we missed each other. In the meantime, I invite you to explore further details about our project at your convenience: https://www.avantinfra.com. We truly appreciate your trust in Avant Builder and are excited about the prospect of a successful relation. Should you have any questions or need assistance, please don’t hesitate to reach out. Best regards, {!$Record.Agent_Number__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>SMSRemarks</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>SMS Trigger Point: Customer has not answered a call</text>
+    </textTemplates>
+</Flow>

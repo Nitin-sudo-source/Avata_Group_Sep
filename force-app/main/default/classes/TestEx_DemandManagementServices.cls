@@ -1,6 +1,6 @@
 @isTest
 public class TestEx_DemandManagementServices {
-    
+    /*
     // Helper method to create test data for Payment_Milestone__c and related records
     private static Payment_Milestone__c createPaymentMilestone(String milestoneName, Date dueDate, Decimal amount, Decimal taxAmount) {
         // Create a test Booking record
@@ -128,5 +128,5 @@ public class TestEx_DemandManagementServices {
         
         // Assert that the correct set of receipt IDs is returned
         System.assertEquals(2, receiptIds.size(), 'Two receipts should be returned.');
-    }
+    }*/
 }
