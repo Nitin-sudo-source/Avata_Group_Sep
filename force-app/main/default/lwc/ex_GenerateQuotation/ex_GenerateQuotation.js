@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 22-01-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 import { LightningElement, api, wire, track } from 'lwc';
 import getOppDetails from '@salesforce/apex/Ex_GenerateQuotation.getOppDetails';
 import getUnitDetails from '@salesforce/apex/Ex_GenerateQuotation.getUnitDetails';
@@ -184,7 +191,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
                 this.updatedDiscountGroupMap = JSON.parse(JSON.stringify(data));
 
                 this.discountGroupMap = []; // Clear the discountGroupMap before populating it
-
+                //this.updatedDiscountGroupMap = [];
                 for (let group in this.updatedDiscountGroupMap) {
                     const discountList = this.updatedDiscountGroupMap[group];
                     const updatedDiscountList = [];
@@ -199,9 +206,8 @@ export default class Ex_GenerateQuotation extends LightningElement {
                     });
 
                     this.discountGroupMap.push({ key: group, value: updatedDiscountList });
+                    console.log('discountGroupMap: '+JSON.stringify(this.discountGroupMap));
                 }
-            // } else if (error) {
-            //     console.log('Error In getDiscountGroupMap: ', error);
             }
         })
         .catch(error => {
@@ -369,6 +375,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
                     const newObj = { ...this.updatedDiscountGroupMap[key][index], [eventName]: value };
                     this.updatedDiscountGroupMap = { ...this.updatedDiscountGroupMap };
                     this.updatedDiscountGroupMap[key][index] = newObj;
+                    console.log('updatedDiscount: '+ JSON.stringify(this.updatedDiscountGroupMap));
                     this.isQuotationModified = true;
                     this.applyDiscount();
                     this.getAllPriceMap();
@@ -581,6 +588,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
     // }
 
     applyDiscount() {
+        // changes nitin
         this.totalDiscountAmount = 0;
         this.appliedDiscountList = [];
 
@@ -589,6 +597,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
 
             for (let d in discountList) {
                 if (discountList[d].Applied__c) {
+
                     if (discountList[d].Discount_Type__c === 'Lumpsum') {
                         discountList[d].Total__c = discountList[d].Amount__c;
                         console.log('Lumpsum Discount Total: ' + discountList[d].Total__c);
@@ -596,6 +605,8 @@ export default class Ex_GenerateQuotation extends LightningElement {
                             this.totalDiscountAmount += discountList[d].Total__c;
                         }
                         this.appliedDiscountList.push(discountList[d]);
+                        
+
                     } else if (discountList[d].Discount_Type__c === 'PSF') {
                         discountList[d].Total__c = (discountList[d].PSF_Amount__c * this.unit.Saleable_Area__c);
                         console.log('PSF Discount Total: ' + discountList[d].Total__c);
@@ -605,7 +616,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
                         this.appliedDiscountList.push(discountList[d]);
                     } else if (discountList[d].Discount_Type__c === 'Percentage') {
                         if(discountList[d].Deduct_From__c === 'Basic Charge') {
-                            discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value Without Car Park']) / 100);
+                              discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Agreement Value Without Car Park']) / 100);
                         } else if(discountList[d].Deduct_From__c === 'Floor Rise') {
                             discountList[d].Total__c = ((discountList[d].Percentage_of_AV__c * this.allPriceInfoMap['Floor Rise']) / 100);
                         }
@@ -617,10 +628,16 @@ export default class Ex_GenerateQuotation extends LightningElement {
 
                     }                    
                 }
+                
             }
         }
         console.log('totalDiscountAmount: ' + this.totalDiscountAmount);
     }
+
+    
+    
+    
+    
 
     
     getAllPriceMap() {

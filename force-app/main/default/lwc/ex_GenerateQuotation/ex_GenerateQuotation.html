@@ -2,8 +2,8 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-11-2024
-  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  @last modified on  : 22-01-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
 	<div class="mains">
@@ -15,8 +15,8 @@
 
 		</div>
 
-        <template if:false={isError}>
-		<!-- <div class="container2"> -->
+		<template if:false={isError}>
+			<!-- <div class="container2"> -->
 			<div class="box3">
 				<div class="mains">
 					<div class="main">
@@ -31,8 +31,8 @@
 					</div>
 				</div>
 			</div>
-		<!-- </div> -->
-        </template>
+			<!-- </div> -->
+		</template>
 
 		<div if:true={isSpinner} class="spinner-container">
 			<div class="loader"></div>
@@ -44,192 +44,207 @@
 		</template>
 
 
-        <template if:false={isError}>
-            <template if:true={showPaymentScheduleData}>
-		<div class="container">
-			<div class="box">
-				<div class="mains">
-					<div class="main">
-						<lightning-icon size="small" icon-name="standard:home"></lightning-icon>
-						<label class="head" style="font-size:14px"> Unit Details</label>
-					</div>
+		<template if:false={isError}>
+			<template if:true={showPaymentScheduleData}>
+				<div class="container">
+					<div class="box">
+						<div class="mains">
+							<div class="main">
+								<lightning-icon size="small" icon-name="standard:home"></lightning-icon>
+								<label class="head" style="font-size:14px"> Unit Details</label>
+							</div>
 
-					<template for:each={unitdetails} for:item="u">
-						<table key={u.Id} class="unit-table">
-							<tbody>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Unit Number</td>
-									<td style="text-align:left; font-size: 10px;">{u.Name}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Project</td>
-									<td if:true={unit.Tower__r.Project__r} style="text-align:left; font-size: 10px;">
-										{u.Tower__r.Project__r.Name}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Floor</td>
-									<td style="text-align:left; font-size: 10px;">{u.Floor__c}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Tower</td>
-									<td if:true={unit.Tower__r} style="text-align:left; font-size: 10px;">
-										{u.Tower__r.Name}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Opportunity</td>
-									<td style="text-align:left; font-size: 10px;">{opp.Name}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Configuration</td>
-									<td style="text-align:left; font-size: 10px;">{u.Configuration_Type__c}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">Carpet Area</td>
-									<td style="text-align:left; font-size: 10px;">{u.Total_carpet_Sq_Ft__c}</td>
-								</tr>
-								<tr>
-									<td style="text-align:left; font-size: 10px;" class="property">All Inc. Value</td>
-									<template if:true={getAllInValueChangeStatus}>
-										<td style="text-align:left; font-size: 10px; color:red;"><b>{getAllInValue}</b></td>
-									</template>
-									<template if:false={getAllInValueChangeStatus}>
-										<td style="text-align:left; font-size: 10px;"><b>{getAllInValue}</b></td>
-									</template>
-	
-								</tr>
-								<!-- <tr>
+							<template for:each={unitdetails} for:item="u">
+								<table key={u.Id} class="unit-table">
+									<tbody>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Unit Number
+											</td>
+											<td style="text-align:left; font-size: 10px;">{u.Name}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Project</td>
+											<td if:true={unit.Tower__r.Project__r}
+												style="text-align:left; font-size: 10px;">
+												{u.Tower__r.Project__r.Name}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Floor</td>
+											<td style="text-align:left; font-size: 10px;">{u.Floor__c}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Tower</td>
+											<td if:true={unit.Tower__r} style="text-align:left; font-size: 10px;">
+												{u.Tower__r.Name}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Opportunity
+											</td>
+											<td style="text-align:left; font-size: 10px;">{opp.Name}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Configuration
+											</td>
+											<td style="text-align:left; font-size: 10px;">{u.Configuration_Type__c}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">Carpet Area
+											</td>
+											<td style="text-align:left; font-size: 10px;">{u.Total_carpet_Sq_Ft__c}</td>
+										</tr>
+										<tr>
+											<td style="text-align:left; font-size: 10px;" class="property">All Inc.
+												Value</td>
+											<template if:true={getAllInValueChangeStatus}>
+												<td style="text-align:left; font-size: 10px; color:red;">
+													<b>{getAllInValue}</b>
+												</td>
+											</template>
+											<template if:false={getAllInValueChangeStatus}>
+												<td style="text-align:left; font-size: 10px;"><b>{getAllInValue}</b>
+												</td>
+											</template>
+
+										</tr>
+										<!-- <tr>
 									<td style="text-align:left; font-size: 10px;" class="property">Saleable Area</td>
 									<td style="text-align:left; font-size: 10px;">{u.Saleable_Area__c}</td>
 								</tr> -->
-								<!-- <tr>
+										<!-- <tr>
 									<td style="text-align:left; font-size: 10px;" class="property">Custodian Type</td>
 									<td style="text-align:left; font-size: 10px;">{u.Custodian_Type__c}</td>
 								</tr> -->
-							</tbody>
-						</table>
-					</template>
-				</div>
-			</div>
-
-			<div class="box">
-				<div class="mains">
-					<div class="main">
-						<lightning-icon size="small" icon-name="custom:custom31"></lightning-icon>
-						<label class="head" style="font-size:14px">Additional Car Park Allotment</label>
-					</div>
-					<table class="car-park-table">
-						<thead>
-							<tr>
-								<th class="car-park-header">Type</th>
-								<th class="car-park-header">Available Count</th>
-								<th class="car-park-header">Amount</th>
-								<th class="car-park-header">Required Count</th>
-							</tr>
-						</thead>
-						<tbody>
-							<template for:each={carParkList} for:item="cp" for:index="index">
-								<tr key={cp.carParkType}>
-									<td style="font-size: 10px;">{cp.carParkType}</td>
-									<td class="" style="text-align:center;">{cp.carParkAvailableCount}</td>
-									<td class="align-right">{cp.carParkAmountString}</td>
-									<td style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
-										<template if:true={editPaymentScheduleMode}>
-											<lightning-formatted-number value={cp.carParkRequiredCount}>
-											</lightning-formatted-number>
-										</template>
-										<template if:false={editPaymentScheduleMode}>
-											<lightning-input type="number" value={cp.carParkRequiredCount}
-												data-index={index} name="carParkRequiredCount" onchange={handleChange}>
-											</lightning-input>
-										</template>
-									</td>
-								</tr>
+									</tbody>
+								</table>
 							</template>
-							<tr>
-								<td colspan="2" class="total-cell"><b>Total Car Park Amount</b></td>
-								<td colspan="2" class="align-right"><b>{totalCarParkAmountString}</b></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-
-			<div class="box" style="flex: 0 1 75%!important;">
-				<div class="mains">
-					<div class="main">
-						<lightning-icon size="small" icon-name="standard:volume_discounts"></lightning-icon>
-						<label class="head" style="font-size:14px">Discounts</label>
+						</div>
 					</div>
-					<table>
-						<tr>
-							<th
-								style="padding-top: 2px;padding-bottom: 2px; background-color: #cae2df ;color:black; font-size: 10px;">
-								Discount Reason
-							</th>
-							<th
-								style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
-								Discount Category
-							</th>
-							<th
-								style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
-								Lumpsum Amount
-							</th>
-							<th
-								style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
-								PSF
-							</th>
-							<th
-								style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
-								Percentage
-							</th>
-							<th
-								style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
-								Action
-							</th>
-						</tr>
-						<tbody>
-							<template for:each={discountGroupMap} for:item="key">
-								<tr key={key}>
-									<td colspan="6"
-										style="font-weight: bold;padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
-										{key.key}
-									</td>
-								</tr>
 
-								<template for:each={key.value} for:item="d" for:index="index">
-									<tr key={d.Id}>
-										<td
-											style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
-											<lightning-formatted-text data-index={index} value={d.Discount_Reason__c}>
-											</lightning-formatted-text>
-										</td>
-										<td
-											style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
-											<lightning-formatted-text data-index={index} value={d.Discount_Category__c}>
-											</lightning-formatted-text>
-										</td>
-										<td
-											style="padding-top: 2px;padding-bottom: 2px;text-align:right; font-size: 10px;">
-											<template if:true={d.isLumpsum}>
-												<template if:true={d.Editable__c}>
-													<template if:true={editPaymentScheduleMode}>
-														<lightning-formatted-number data-index={index}
-															value={d.Amount__c}></lightning-formatted-number>
-													</template>
-													<template if:false={editPaymentScheduleMode}>
-														<lightning-input type="number" data-value-id={key.key}
-															data-index={index} value={d.Amount__c} name="Amount__c"
-															onblur={handleChange}></lightning-input>
-													</template>
-												</template>
-												<template if:false={d.Editable__c}>
-													<lightning-formatted-number data-index={index} value={d.Amount__c}>
+					<div class="box">
+						<div class="mains">
+							<div class="main">
+								<lightning-icon size="small" icon-name="custom:custom31"></lightning-icon>
+								<label class="head" style="font-size:14px">Additional Car Park Allotment</label>
+							</div>
+							<table class="car-park-table">
+								<thead>
+									<tr>
+										<th class="car-park-header">Type</th>
+										<th class="car-park-header">Available Count</th>
+										<th class="car-park-header">Amount</th>
+										<th class="car-park-header">Required Count</th>
+									</tr>
+								</thead>
+								<tbody>
+									<template for:each={carParkList} for:item="cp" for:index="index">
+										<tr key={cp.carParkType}>
+											<td style="font-size: 10px;">{cp.carParkType}</td>
+											<td class="" style="text-align:center;">{cp.carParkAvailableCount}</td>
+											<td class="align-right">{cp.carParkAmountString}</td>
+											<td
+												style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+												<template if:true={editPaymentScheduleMode}>
+													<lightning-formatted-number value={cp.carParkRequiredCount}>
 													</lightning-formatted-number>
 												</template>
-											</template>
-										</td>
-										<!-- <td
+												<template if:false={editPaymentScheduleMode}>
+													<lightning-input type="number" value={cp.carParkRequiredCount}
+														data-index={index} name="carParkRequiredCount"
+														onchange={handleChange}>
+													</lightning-input>
+												</template>
+											</td>
+										</tr>
+									</template>
+									<tr>
+										<td colspan="2" class="total-cell"><b>Total Car Park Amount</b></td>
+										<td colspan="2" class="align-right"><b>{totalCarParkAmountString}</b></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+
+					<div class="box" style="flex: 0 1 75%!important;">
+						<div class="mains">
+							<div class="main">
+								<lightning-icon size="small" icon-name="standard:volume_discounts"></lightning-icon>
+								<label class="head" style="font-size:14px">Discounts</label>
+							</div>
+							<table>
+								<tr>
+									<th
+										style="padding-top: 2px;padding-bottom: 2px; background-color: #cae2df ;color:black; font-size: 10px;">
+										Discount Reason
+									</th>
+									<th
+										style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
+										Discount Category
+									</th>
+									<th
+										style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
+										Lumpsum Amount
+									</th>
+									<th
+										style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
+										PSF
+									</th>
+									<th
+										style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
+										Percentage
+									</th>
+									<th
+										style="padding-top: 2px;padding-bottom: 2px; background-color:  #cae2df;color:black; font-size: 10px;">
+										Action
+									</th>
+								</tr>
+								<tbody>
+									<template for:each={discountGroupMap} for:item="key">
+										<tr key={key}>
+											<td colspan="6"
+												style="font-weight: bold;padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+												{key.key}
+											</td>
+										</tr>
+
+										<template for:each={key.value} for:item="d" for:index="index">
+											<tr key={d.Id}>
+												<td
+													style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+													<lightning-formatted-text data-index={index}
+														value={d.Discount_Reason__c}>
+													</lightning-formatted-text>
+												</td>
+												<td
+													style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+													<lightning-formatted-text data-index={index}
+														value={d.Discount_Category__c}>
+													</lightning-formatted-text>
+												</td>
+												<td
+													style="padding-top: 2px;padding-bottom: 2px;text-align:right; font-size: 10px;">
+													<template if:true={d.isLumpsum}>
+														<template if:true={d.Editable__c}>
+															<template if:true={editPaymentScheduleMode}>
+																<lightning-formatted-number data-index={index}
+																	value={d.Amount__c}></lightning-formatted-number>
+															</template>
+															<template if:false={editPaymentScheduleMode}>
+																<lightning-input type="number" data-value-id={key.key}
+																	data-index={index} value={d.Amount__c}
+																	name="Amount__c"
+																	onblur={handleChange}></lightning-input>
+															</template>
+														</template>
+														<template if:false={d.Editable__c}>
+															<lightning-formatted-number data-index={index}
+																value={d.Amount__c}>
+															</lightning-formatted-number>
+														</template>
+													</template>
+												</td>
+												<!-- <td
 											style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
 											<template if:true={d.isPSF}>
 												<template if:true={d.Editable__c}>
@@ -252,116 +267,116 @@
 												</template>
 											</template>
 										</td> -->
-										<td
-                                            style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
-                                            <template if:true={d.isPSF}>
-                                                <template if:true={d.Editable__c}>
-                                                    <template if:true={editPaymentScheduleMode}>
-                                                        <lightning-formatted-number data-index={index}
-                                                            value={d.PSF_Amount__c}></lightning-formatted-number>
-                                                    </template>
-                                                    <template if:false={editPaymentScheduleMode}>
-                                                        <lightning-input type="number" data-value-id={key.key}
-                                                            data-index={index} value={d.PSF_Amount__c}
-                                                            name="PSF_Amount__c" step="0.01" onblur={handleChange}>
-                                                        </lightning-input>
-                                                    </template>
-                                                </template>
-                                                <template if:false={d.Editable__c}>
-                                                    <lightning-formatted-number data-index={index}
-                                                        value={d.PSF_Amount__c}></lightning-formatted-number>
-                                                </template>
-                                            </template>
-                                        </td>
+												<td
+													style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+													<template if:true={d.isPSF}>
+														<template if:true={d.Editable__c}>
+															<template if:true={editPaymentScheduleMode}>
+																<lightning-formatted-number data-index={index}
+																	value={d.PSF_Amount__c}></lightning-formatted-number>
+															</template>
+															<template if:false={editPaymentScheduleMode}>
+																<lightning-input type="number" data-value-id={key.key}
+																	data-index={index} value={d.PSF_Amount__c}
+																	name="PSF_Amount__c" step="0.01"
+																	onblur={handleChange}>
+																</lightning-input>
+															</template>
+														</template>
+														<template if:false={d.Editable__c}>
+															<lightning-formatted-number data-index={index}
+																value={d.PSF_Amount__c}></lightning-formatted-number>
+														</template>
+													</template>
+												</td>
 
-										<td
-											style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
-											<template if:true={d.isPercentage}>
-												<template if:true={d.Editable__c}>
-													<template if:true={editPaymentScheduleMode}>
-														<lightning-formatted-number data-index={index}
-															value={d.Percentage_of_AV__c}>
-														</lightning-formatted-number>
+												<td
+													style="padding-top: 2px;padding-bottom: 2px;text-align:left; font-size: 10px;">
+													<template if:true={d.isPercentage}>
+														<template if:true={d.Editable__c}>
+															<template if:true={editPaymentScheduleMode}>
+																<lightning-formatted-number data-index={index}
+																	value={d.Percentage_of_AV__c}>
+																</lightning-formatted-number>
+															</template>
+															<template if:false={editPaymentScheduleMode}>
+																<lightning-input type="number" data-value-id={key.key}
+																	step="0.01" min="0" data-index={index}
+																	value={d.Percentage_of_AV__c}
+																	name="Percentage_of_AV__c" onblur={handleChange}>
+																</lightning-input>
+															</template>
+														</template>
+														<template if:false={d.Editable__c}>
+															<lightning-formatted-number data-index={index}
+																value={d.Percentage_of_AV__c}></lightning-formatted-number>
+														</template>
 													</template>
-													<template if:false={editPaymentScheduleMode}>
-														<lightning-input type="number" data-value-id={key.key}
-															 step="0.01"
-                                                             min="0"
-															data-index={index} value={d.Percentage_of_AV__c}
-															name="Percentage_of_AV__c" onblur={handleChange}>
-														</lightning-input>
-													</template>
-												</template>
-												<template if:false={d.Editable__c}>
-													<lightning-formatted-number data-index={index}
-														value={d.Percentage_of_AV__c}></lightning-formatted-number>
-												</template>
-											</template>
-										</td>
-										<td style="padding-top: 2px;padding-bottom: 2px; font-size: 10px;">
-											<template if:true={editPaymentScheduleMode}>
-												<lightning-input type="checkbox" data-value-id={key.key}
-													data-index={index} value={d.Applied__c} disabled="true">
-												</lightning-input>
-											</template>
-											<template if:false={editPaymentScheduleMode}>
-												<lightning-input type="checkbox" data-value-id={key.key}
-													data-index={index} value={d.Applied__c} name="Applied__c"
-													onchange={handleChange}></lightning-input>
-											</template>
-										</td>
+												</td>
+			<td style="padding-top: 2px;padding-bottom: 2px;font-size: 10px;">
+				<!-- <template if:true={editPaymentScheduleMode}>
+					<lightning-input type="checkbox" data-value-id={key.key}
+						data-index={index} value={d.Applied__c} disabled="true">
+							</lightning-input>
+				</template> -->
+					<!-- <template if:false={editPaymentScheduleMode}> -->
+						<lightning-input type="checkbox" data-value-id={key.key}
+							data-index={index} value={d.Applied__c} name="Applied__c"
+								onchange={handleChange}></lightning-input>
+					<!-- </template> -->
+			</td>
+		</tr>
+	</template>
+</template>
+									<tr>
+										<td colspan="4" class="total-cell"><b>Total Discount Applied</b></td>
+										<td colspan="2" class="align-right"><b>{totalDiscountAmountString}</b></td>
 									</tr>
-								</template>
-							</template>
-							<tr>
-								<td colspan="4" class="total-cell"><b>Total Discount Applied</b></td>
-								<td colspan="2" class="align-right"><b>{totalDiscountAmountString}</b></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<br/>
-				
-
-					<div class="mains">
-						<div class="main">
-							<lightning-icon size="small" icon-name="standard:discounts"></lightning-icon>
-							<label class="head" style="font-size:14px">Applied Discount</label>
+								</tbody>
+							</table>
 						</div>
-						<table>
-							<tbody>
-								<tr>
-									<th
-										style="text-align:center;width: 5%;padding-top: 3px;padding-bottom: 3px; background-color: #cae2df;color:black; font-size: 10px;">
-										Discount Name
-									</th>
-									<th
-										style="text-align:center;width: 5%;padding-top: 3px;padding-bottom: 3px; background-color:  #cae2df;color:black; font-size: 10px;">
-										Discount Amount
-									</th>
-								</tr>
+						<br />
 
-								<template for:each={appliedDiscountList} for:item="dis">
-									<tr key={dis}>
-										<td style="text-align:center; font-size: 10px;">
-											<lightning-formatted-text value={dis.Discount_Reason__c}>
-											</lightning-formatted-text>
-										</td>
-										<td style="text-align:center; font-size: 10px;">
-											<lightning-formatted-number value={dis.Total__c}>
-											</lightning-formatted-number>
-										</td>
+
+						<div class="mains">
+							<div class="main">
+								<lightning-icon size="small" icon-name="standard:discounts"></lightning-icon>
+								<label class="head" style="font-size:14px">Applied Discount</label>
+							</div>
+							<table>
+								<tbody>
+									<tr>
+										<th
+											style="text-align:center;width: 5%;padding-top: 3px;padding-bottom: 3px; background-color: #cae2df;color:black; font-size: 10px;">
+											Discount Name
+										</th>
+										<th
+											style="text-align:center;width: 5%;padding-top: 3px;padding-bottom: 3px; background-color:  #cae2df;color:black; font-size: 10px;">
+											Discount Amount
+										</th>
 									</tr>
-								</template>
-							</tbody>
-						</table>
-					</div>
 
-				
-			</div>
-		</div>
-        </template>
-    </template>
+									<template for:each={appliedDiscountList} for:item="dis">
+										<tr key={dis}>
+											<td style="text-align:center; font-size: 10px;">
+												<lightning-formatted-text value={dis.Discount_Reason__c}>
+												</lightning-formatted-text>
+											</td>
+											<td style="text-align:center; font-size: 10px;">
+												<lightning-formatted-number value={dis.Total__c}>
+												</lightning-formatted-number>
+											</td>
+										</tr>
+									</template>
+								</tbody>
+							</table>
+						</div>
+
+
+					</div>
+				</div>
+			</template>
+		</template>
 	</div>
 
 
@@ -464,13 +479,13 @@
 									<tr key={ch.key} if:true={ch.isTotal}>
 										<td style="text-align:left; font-size: 10px;">
 											<b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
-														value={ch.chargeName}></lightning-formatted-text></b>
+													value={ch.chargeName}></lightning-formatted-text></b>
 											<b><lightning-formatted-text if:false={ch.isChange}
-														value={ch.chargeName}></lightning-formatted-text></b>
+													value={ch.chargeName}></lightning-formatted-text></b>
 										</td>
 										<td style="text-align:right; font-size: 10px;">
 											<b><lightning-formatted-text
-														value={ch.originalAmountString}></lightning-formatted-text></b>
+													value={ch.originalAmountString}></lightning-formatted-text></b>
 										</td>
 										<!-- <template if:false={hideRate}>
 												<td style="text-align:right; font-size: 10px;">
@@ -480,14 +495,14 @@
 											</template> -->
 										<td style="text-align:right; font-size: 10px;">
 											<b><lightning-formatted-text
-														value={ch.originalTaxString}></lightning-formatted-text></b>
+													value={ch.originalTaxString}></lightning-formatted-text></b>
 										</td>
 
 										<td style="text-align:right; font-size: 10px;">
 											<b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
-														value={ch.modifiedAmountString}></lightning-formatted-text></b>
+													value={ch.modifiedAmountString}></lightning-formatted-text></b>
 											<b><lightning-formatted-text if:false={ch.isChange}
-														value={ch.modifiedAmountString}></lightning-formatted-text></b>
+													value={ch.modifiedAmountString}></lightning-formatted-text></b>
 										</td>
 										<!-- <template if:false={hideRate}>
 												<td style="text-align:right; font-size: 10px;">
@@ -499,9 +514,9 @@
 											</template>-->
 										<td style="text-align:right; font-size: 10px;">
 											<b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
-														value={ch.modifiedTaxString}></lightning-formatted-text></b>
+													value={ch.modifiedTaxString}></lightning-formatted-text></b>
 											<b><lightning-formatted-text if:false={ch.isChange}
-														value={ch.modifiedTaxString}></lightning-formatted-text></b>
+													value={ch.modifiedTaxString}></lightning-formatted-text></b>
 										</td>
 									</tr>
 								</template>
@@ -688,44 +703,28 @@
 							<lightning-icon size="medium" icon-name="standard:form"></lightning-icon>
 							<label class="head" style="font-size:14px !important;">Payment Schedule</label>
 							<template if:true={isPaymentScheduleEnable}>
-								<lightning-button 
-									class="payment-button"
-									icon-name="utility:breadcrumbs" 
-									if:false={editPaymentScheduleMode}
-									label="Edit Schedule" 
-									onclick={editPaymentSchedule}
-									variant="brand">
+								<lightning-button class="payment-button" icon-name="utility:breadcrumbs"
+									if:false={editPaymentScheduleMode} label="Edit Schedule"
+									onclick={editPaymentSchedule} variant="brand">
 								</lightning-button>
-								
-								<lightning-button 
-									class="payment-button update-button"
-									icon-name="utility:breadcrumbs" 
-									if:true={editPaymentScheduleMode}
-									label="Update Schedule" 
-									onclick={updatePaymentSchedule}
-									variant="brand">
+
+								<lightning-button class="payment-button update-button" icon-name="utility:breadcrumbs"
+									if:true={editPaymentScheduleMode} label="Update Schedule"
+									onclick={updatePaymentSchedule} variant="brand">
 								</lightning-button>
-								
-								<lightning-button 
-									class="payment-button update-button"
-									icon-name="utility:breadcrumbs" 
-									if:true={editPaymentScheduleMode}
-									label="Confirm Schedule" 
-									onclick={confirmPaymentSchedule}
-									variant="brand">
+
+								<lightning-button class="payment-button update-button" icon-name="utility:breadcrumbs"
+									if:true={editPaymentScheduleMode} label="Confirm Schedule"
+									onclick={confirmPaymentSchedule} variant="brand">
 								</lightning-button>
-								
-								<lightning-button 
-									class="payment-button"
-									icon-name="utility:breadcrumbs" 
-									if:true={editPaymentScheduleMode}
-									label="Cancel Schedule" 
-									onclick={cancelPaymentSchedule}
-									variant="brand">
+
+								<lightning-button class="payment-button" icon-name="utility:breadcrumbs"
+									if:true={editPaymentScheduleMode} label="Cancel Schedule"
+									onclick={cancelPaymentSchedule} variant="brand">
 								</lightning-button>
 							</template>
 						</div>
-						
+
 
 						<div class="panel-collapse collapse in" style="overflow-x:auto;">
 							<div class="panel-body table-responsive">
@@ -812,9 +811,9 @@
 														</lightning-formatted-text>
 													</td>
 													<td style="text-align:right; font-size: 10px;">
-                                                            <lightning-formatted-text value={pmw.totalString}>
-                                                            </lightning-formatted-text>
-                                                      
+														<lightning-formatted-text value={pmw.totalString}>
+														</lightning-formatted-text>
+
 													</td>
 													<!-- <td style="text-align:right; font-size: 10px;">
 														<template if:true={pmw.isTDSVisible}>
@@ -929,7 +928,7 @@
 													style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
 													Total
 												</th>
-												 <!-- <th
+												<!-- <th
 													style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
 													TDS
 												</th>  -->
@@ -950,11 +949,11 @@
 															onchange={handleChange}></lightning-input>
 													</td>
 													<td style="text-align:right; font-size: 10px;">
-															<lightning-input type="number" data-index={index}
-																value={pmw.pm.Number_of_Days__c} name="Number_of_Days__c"
-																onchange={handleChange}>
-															</lightning-input>
-														
+														<lightning-input type="number" data-index={index}
+															value={pmw.pm.Number_of_Days__c} name="Number_of_Days__c"
+															onchange={handleChange}>
+														</lightning-input>
+
 													</td>
 													<td style="text-align:left; font-size: 10px;">
 														<lightning-combobox data-index={index} class="custom-combobox"
@@ -1044,11 +1043,11 @@
 														</lightning-formatted-text>
 													</td>
 													<td style="text-align:right; font-size: 10px;">
-                                                       
+
 														<lightning-formatted-text value={pmw.totalString}>
 														</lightning-formatted-text>
 													</td>
-													 <!-- <td style="text-align:right; font-size: 10px;">
+													<!-- <td style="text-align:right; font-size: 10px;">
 														<template if:true={pmw.isTDSVisible}>
 															<lightning-formatted-text
 																value={pmw.isTDSAmountString}>
@@ -1062,7 +1061,8 @@
 														<a href="#" name="add" onclick={handleChange} data-index={index}
 															style="font-size:18px;color:green !important">+</a> &nbsp;
 														<a href="#" name="remove" onclick={handleChange}
-															data-index={index} style="font-size:18px;color:red !important">-</a>
+															data-index={index}
+															style="font-size:18px;color:red !important">-</a>
 													</td>
 												</tr>
 											</template>
