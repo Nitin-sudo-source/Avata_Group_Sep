@@ -1,0 +1,1131 @@
+<apex:page renderAs="pdf" controller="Ex_PrintBookingFormController"  docType="html-5.0" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false" showHeader="false">
+
+    <html>
+        <head>
+           
+            <style type="text/css">
+                @page {
+                size:A4 portrait;
+                border: 8px solid #e1b580;
+                margin: 4mm;
+                /*@bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }*/
+                }
+               
+               
+                
+
+                body { font-family: 'Arial Unicode MS'; }
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                font-size:12px;
+                }
+                body { font-family: 'Arial Unicode MS'; }
+                
+                
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:center;
+                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                }
+                .mainTable tr{
+                page-break-inside: avoid;
+                
+                }  
+                .box{
+                0.5px solid black border;
+                }
+                .boxTable{
+                border-collapse: collapse;
+                width:100%;
+                font-size:12px;
+                }
+                .boxTable th{
+                padding: 2px;
+                }
+                .boxTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                
+                }
+                .boxTable tr{
+                page-break-inside: avoid;
+                
+                }  
+                .sfdc_richtext img{
+                height: 750px;
+                width: 700px;
+                border: 0;
+                }
+                .rich1 .sfdc_richtext img{
+                height: 200px;
+                width: 700px;
+                border: 0;
+                }
+                .divh {
+                max-width: 120px;
+                min-width: 100px;
+                text-align:center;
+                margin-left:40%;
+                }
+                .footer{
+                padding-top: 5px;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                font-size:10px;
+                border-top: 2px solid #e1b580;
+                 margin: 4mm;
+                
+                }
+                
+              
+                .newpage {
+                page-break-before: always;
+                }
+                
+                @page {
+                @bottom-center { content: element(footer); }
+                }
+                
+                .newpage:last-of-type .footer {
+                display: none;
+                }
+               
+
+                
+            </style>
+            <script>
+          
+            </script>
+        </head>
+        <body>
+            
+            <div>  
+                <p style="text-align:center;padding:8px;border:1px solid black;background-color:#e1b580;font-size:12px;">
+                    &nbsp;
+                </p>
+                <table style="width:100%;">
+                    <tr>
+                        <th style="text-align:left;font-size:12px;font-weight:bold;width:70%;">Form No: <b style="color:#e1b580"> _______________</b></th>
+                        <td style="text-align:right;font-size:12px;font-weight:bold;">Date: <b style="color:#e1b580">________________</b></td>
+                        
+                    </tr>
+                </table>
+                <div style="text-align:Center;">
+                    <apex:outputField value="{!bklist[0].Project__r.Booking_form_Logo__c}"></apex:outputField> 
+                </div>
+                <div class="divh" style="text-align:left;padding:8px;border:1px solid black;background-color:#e1b580;font-size:14px;color:white;text-transform:uppercase;">
+                    <b>Booking Form</b>
+                </div>
+                
+                
+                
+                
+            </div>
+            <div style="page-break-before: always;">  
+                
+                <p style="text-align:center;padding:8px;border:1px solid black;background-color:#e1b580;font-size:14px;color:white;text-transform:uppercase;">
+                    <b>Booking Form</b>
+                </p>  
+                <p style="text-align:center;padding:10px;font-size:10px;">
+                    Please Use CAPITAL LETTERS Only for filling the details below
+                </p>
+                <table class="mainTable">
+                    <tr>
+                        <th colspan="2">
+                            <b>DETAILS OF APPLICANTS</b><br/>
+                            Primary Applicant
+                        </th>
+                    </tr>
+                </table><br/>
+                
+                <table class="boxTable">
+                    <tr>
+                        <th>Title</th>
+                        <th> Mr.</th>
+                        <th>
+                            <apex:outputPanel rendered="{!apList[0].Applicant_Title__c == 'Mr.'}">
+                                <b style="font-size:18px;">&#x2611;</b>
+                            </apex:outputPanel>
+                        </th>
+                        <th>
+                            <apex:outputPanel rendered="{!apList[0].Applicant_Title__c != 'Mr.'}">
+                                <b style="font-size:18px;"> &#9744;</b>
+                            </apex:outputPanel>
+                        </th>
+                        <th> Mrs.</th>
+                        <th>
+                            <apex:outputPanel rendered="{!apList[0].Applicant_Title__c == 'Mrs.'}">
+                                <b style="font-size:18px;">&#x2611;</b>
+                            </apex:outputPanel>
+                        </th>
+                        <th>
+                            <apex:outputPanel rendered="{!apList[0].Applicant_Title__c != 'Mrs.'}">
+                                <b style="font-size:18px;">   &#9744;</b>
+                            </apex:outputPanel>
+                        </th>
+                        
+                        <th> Ms.</th>
+                        <th>
+                            <apex:outputPanel rendered="{!apList[0].Applicant_Title__c == 'Ms.'}">
+                                 <b style="font-size:18px;">&#x2611;</b>  
+                            </apex:outputPanel>
+                        </th>
+                        <th>
+                            <apex:outputPanel rendered="{!apList[0].Applicant_Title__c != 'Ms.'}">
+                                 <b style="font-size:18px;"> &#9744;</b>
+                            </apex:outputPanel>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width:1.2%;">Name</th>
+                        <td colspan="9">{!apList[0].Applicant_Title__c} &nbsp; {!apList[0].Name}</td>
+                    </tr> 
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:16%;">Date of Birth</th>
+                        <td><u>
+                            
+                            <apex:outputText value="{0, date, dd / MM / yyyy}"><apex:param value="{!apList[0].DOB__c}" /></apex:outputText></u></td>
+                        
+                        
+                        <th>Date of Anniversary</th>
+                        <td><u> <apex:outputText value="{0, date, dd / MM / yyyy}"><apex:param value="{!apList[0].Anniversary_Date__c}" /></apex:outputText></u> </td>
+                        
+                    </tr> 
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:25%">RESIDENTIAL STATUS
+                        </th>
+                        
+                        <th>Mumbai Resident
+                        </th>
+                        <th style="font-size:12px;">
+                            <apex:outputPanel rendered="{!showMumbaiResident == true}">
+                                <b style="font-size:18px;">&#x2611;</b>
+                            </apex:outputPanel>
+                        </th>
+                        <th style="font-size:12px;">
+                            <apex:outputPanel rendered="{!showMumbaiResident == false}">
+                                <b style="font-size:18px;"> &#9744;</b>
+                            </apex:outputPanel>
+                        </th>
+                        
+                        <th>Non-Mumbai Resident
+                        </th>
+                        
+                        <th style="font-size:12px;">
+                            <apex:outputPanel rendered="{!showNonMumbaiResident == true}">
+                                <b style="font-size:18px;"> &#x2611;</b>
+                            </apex:outputPanel>
+                        </th>
+                        <th style="font-size:12px;">
+                            <apex:outputPanel rendered="{!showNonMumbaiResident == false}">
+                                <b style="font-size:18px;"> &#9744;</b>
+                            </apex:outputPanel>
+                        </th>
+                        
+                        <th>Non-Resident Indian</th>
+                        <th style="font-size:12px;">
+                            <apex:outputPanel rendered="{!showNonMumbaiResidentIndian == true}">
+                                <b style="font-size:18px;"> &#x2611;</b>
+                            </apex:outputPanel>
+                        </th>
+                        <th style="font-size:12px;">
+                            <apex:outputPanel rendered="{!showNonMumbaiResidentIndian == false}">
+                                <b style="font-size:18px;"> &#9744;</b>
+                            </apex:outputPanel>
+                        </th>
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="text-transform:uppercase;">Permanent Address</th>
+                        <td>{!apList[0].Permanent_Address__c}</td>
+                    </tr>
+                </table><br/>
+            
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:5%;">City</th>
+                        <td>{!apList[0].City__c}</td>
+                        
+                        
+                        
+                        
+                        <th>Pin Code</th>
+                        <td>{!apList[0].PIN__c}</td>
+                        
+                        
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:5%;">State</th>
+                        <td>{!apList[0].State__c}</td>
+                        
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:16%;">Aadhar Card No.</th>
+                        <td>{!apList[0].Aadhar_Number__c}</td>
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:20%;">Mobile No *(Mandatory)</th>
+                        <td>{!apList[0].Mobile_Number__c}</td>
+                        
+                        
+                        
+                        
+                        <th>PAN No</th>
+                        <td>{!apList[0].PAN_Number__c}</td>
+                        
+                        
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:16%;">Email *(Mandatory)</th>
+                        <td>{!apList[0].Applicant_Email__c}</td>
+                        
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="text-transform:uppercase;">Communication Address</th>
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:16%;">H.No. &amp; Building</th>
+                        <td> {!apList[0].Mailing_Address__c}</td>
+                        
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:16%;">Street Name</th>
+                        <td> NA </td>
+                        
+                    </tr>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:20%;">Locality (Incl. landmark)</th>
+                        <td> NA
+                        </td>
+                        
+                    </tr>
+                </table><br/>
+                <div style="page-break-before: always;font-size:12px;"> 
+                    <p style="text-align:center;padding:8px;border:1px solid black;background-color:#e1b580;font-size:14px;color:white;text-transform:uppercase;">
+                        <b>Booking Form</b>
+                    </p> 
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:5%;">City</th>
+                        <td>{!apList[0].Mailing_City__c}</td>
+                        
+                        <th>Pin Code</th>
+                        
+                        <td>{!apList[0].Mailing_Pincode__c}</td>
+                        
+                        
+                    </tr>
+                </table><br/>
+                
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:5%;">State</th>
+                        <td>{!apList[0].Mailing_State__c}</td>
+                        
+                    </tr>
+                    </table><br/>
+                    <apex:variable var="rowNum" value="{!0}" /> 
+                    <apex:repeat value="{!viewAppList}" var="ap" >
+                        <br/>
+                        <table class="boxTable">
+                            <tr>
+                                <th style="background-color:#e1b580;">Co-Applicant -  <apex:variable var="rowNum" value="{!rowNum}"/>
+                                </th>
+                            </tr>
+                            
+                        </table><br/>
+                        <table class="boxTable">
+                            <tr>
+                                <th style="width:1.2%;">Name</th>
+                                <td>{!ap.name}</td>
+                                
+                            </tr> 
+                        </table><br/>
+                        <table class="boxTable">
+                            <tr>
+                                <th style="width:16%;">Date of Birth</th>
+                                <td><u> <apex:outputText value="{0, date, dd / MM / yyyy}"><apex:param value="{!ap.dob}" /></apex:outputText></u></td>
+                                
+                            </tr>
+                        </table><br/>
+                        <table class="boxTable">
+                            <tr>
+                                <th style="width:25%">RESIDENTIAL STATUS
+                                </th>
+                                
+                                <th>Mumbai Resident
+                                </th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!ap.residentStatus == 'Mumbai Resident'}">
+                                        <b style="font-size:18px;">   &#x2611;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!ap.residentStatus != 'Mumbai Resident'}">
+                                        <b style="font-size:18px;">  &#9744;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                
+                                <th>Non-Mumbai Resident
+                                </th>
+                                
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!ap.residentStatus == 'Non-Mumbai Resident'}">
+                                        <b style="font-size:18px;">   &#x2611;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!ap.residentStatus != 'Non-Mumbai Resident'}">
+                                        <b style="font-size:18px;">   &#9744;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                
+                                <th>Non-Resident Indian</th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!ap.residentStatus == 'Non-Resident Indian'}">
+                                        <b style="font-size:18px;">   &#x2611;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!ap.residentStatus != 'Non-Resident Indian'}">
+                                        <b style="font-size:18px;">   &#9744;</b>
+                                    </apex:outputPanel>
+                                </th>
+                            </tr>
+                        </table><br/>
+                        <table class="boxTable">
+                            <tr>
+                                <th style="width:16%;">Aadhar Card No.</th>
+                                <td>{!ap.aadhar}</td>
+                                
+                            </tr>
+                        </table><br/>
+                        <table class="boxTable">
+                            <tr>
+                                <th style="width:20%;">Mobile No *(Mandatory)</th>
+                                <td>{!ap.mobile}</td>
+                                
+                                <th>PAN No</th>
+                                <td>{!ap.pan}</td>
+                            </tr>
+                        </table><br/>
+                    </apex:repeat>
+                    
+                </div>
+               <!-- <div style="page-break-before: always;">
+                    
+                    <p style="text-align:center;padding:8px;border:1px solid black;background-color:#e1b580;font-size:14px;color:white;text-transform:uppercase;">
+                        <b>Booking Form</b>
+                    </p> 
+                </div>-->
+                    
+                    <table class="boxTable">
+                        <tr>
+                            <th style="width:20%;">2. APPLICANT DETAILS</th>
+                        </tr>
+                        <tr>
+                            <th style="width:10%;">Flat No.</th>
+                            <th style="width:20%;"><u>{!bkList[0].Unit__r.Name}</u></th>
+                            
+                            <th  style="width:10%;">Wing</th>
+                            <th  style="width:15%;"><u>{!bkList[0].Unit__r.Tower__r.Name}</u></th>
+                            <th></th>
+                            <th  style="width:10%;">Floor</th>
+                            <th  style="width:10%;"><u>{!bkList[0].Unit__r.Floor__c}</u></th>
+                            
+                        </tr>
+                    </table><br/>
+                    <table class="boxTable">
+                        <tr>
+                            <th>Typology &nbsp; <u>{!bkList[0].Unit__r.Configuration__c} </u></th>
+                        </tr>
+                    </table><br/>
+                    <b><hr/></b>
+                    <table class="boxTable">
+                        <tr>
+                            <th style="width:28%;">3. TYPE OF APPLICANT</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            
+                            <th style="width:25%;">Salaried</th>
+                            <th> 
+                                <apex:outputPanel rendered="{!showSelfEmployed == true}">
+                                    <b style="font-size:18px;">    &#x2611;</b>
+                                </apex:outputPanel>
+                            </th>
+                            <th> 
+                                <apex:outputPanel rendered="{!showSelfEmployed == false}">
+                                    <b style="font-size:18px;">    &#9744;</b>
+                                </apex:outputPanel>
+                            </th>
+                            <th style="width:25%;">Self-Employed</th>
+                            <th>
+                                <apex:outputPanel rendered="{!showSalaried == true}">
+                                    <b style="font-size:18px;">   &#x2611;</b>
+                                </apex:outputPanel>
+                            </th>
+                            <th> 
+                                <apex:outputPanel rendered="{!showSalaried == false}">
+                                    <b style="font-size:18px;">   &#9744;</b>
+                                </apex:outputPanel>
+                            </th>
+                            
+                            <th style="width:20%;">Designation</th>
+                            <th style="width:20%;"><u>{!apList[0].Designation__c}</u></th>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th style="width:20%;font-size:12px;">Office Address</th>
+                            <th style="width:60%;font-size:12px;"><u>{!apList[0].Mailing_Address__c}</u></th>
+                        </tr>
+                    </table><br/>
+                    <table class="boxTable">
+                        <tr>
+                            <th style="width:15%;">Individual Buyer</th>
+                             <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!apList[0].Type_Of_Applicant__c == 'Individual Buyer'}">
+                                        <b style="font-size:18px;">  &#x2611;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!apList[0].Type_Of_Applicant__c != 'Individual Buyer'}">
+                                        <b style="font-size:18px;"> &#9744;</b>
+                                    </apex:outputPanel>
+                                </th>
+                           <th style="width:15%;">Corporate Buyer</th>  
+                             <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!apList[0].Type_Of_Applicant__c == 'Corporate Buyer'}">
+                                        <b style="font-size:18px;">  &#x2611;</b>
+                                    </apex:outputPanel>
+                                </th>
+                                <th style="font-size:12px;">
+                                    <apex:outputPanel rendered="{!apList[0].Type_Of_Applicant__c != 'Corporate Buyer'}">
+                                        <b style="font-size:18px;">  &#9744;</b>	
+                                    </apex:outputPanel>
+                                </th>
+                        </tr>
+                    </table><br/>
+                    <table class="boxTable">
+                        <tr>
+                            <th style="width:24%;">4. PURPOSE OF PROPERTY </th>
+                            <td>{!bkList[0].Opportunity__r.Buying_Purpose__c}</td>
+                        </tr>
+                    </table><br/>
+                    
+                    <table class="boxTable">
+                        <tr>
+                            <th style="width:24%;">5. PAYMENT TERMS </th>
+                            <td>{!bkList[0].Mode_of_Funding__c}</td>
+                        </tr>
+                    </table>
+                </div><br/><br/>
+           
+            <div style="page-break-before: always;">  
+                <table class="boxTable">
+                    <th style="width:25%;"> 7. APPLICATION SOURCE</th>
+                    <td style="font-weight:bold">{!bkList[0].Opportunity__r.Lead_Source__c}</td>
+                </table><br/>
+               
+                <apex:outputPanel rendered="{!showChannelPartner == true}">
+                    <table class="boxTable">
+                        <th style="width:25%;">CHANNEL PARTNER DETAILS</th>
+                    </table><br/>
+                </apex:outputPanel>
+                  <apex:outputPanel rendered="{!showChannelPartner == true}">
+                <table class="boxTable">
+                    <th style="width:25%;">
+                        RERA ID
+                    </th>
+                    <td> 
+                        {!bkList[0].Channel_partner__r.MahaRERA_Registration_No__c}
+                        
+                    </td>
+                </table><br/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showChannelPartner == true}">
+                    <table class="boxTable">
+                        <th style="width:25%;">
+                            Channel Partner /Firm Name
+                            
+                        </th>
+                        <td>   
+                            {!bkList[0].Channel_partner__r.Name}
+                        </td>                    
+                    </table><br/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showChannelPartner == true}">
+                    <table class="boxTable">
+                        <th style="width:25%;">
+                            Channel Partner Mobile No
+                        </th>
+                        <td>  
+                            {!bkList[0].Channel_partner__r.Owner_Mobile_No__c}
+                            
+                        </td>                    
+                    </table>
+                </apex:outputPanel>
+                <br/>
+                <table>
+                    <th style="font-size:12px;"><p align="Justify"><b>8.DECLARATION &amp; SIGNATURE </b>
+                        I have read and understood the terms and conditions conatined in this booking form and the same are acceptable to me and herby agree to be bound by the same.
+                        I confirm that all the details on this page have been filled by me or at my instance and i have thereafter digned the booking form.
+                        I herby confirm that the details provided in this booking form are true and accurate.
+                        I also agree to pay TDS on my own and submit the respective challan to the developeralogn with respective payments.                               
+                        </p></th>
+                </table><br/>
+                <table class="boxTable">
+                    <tr>
+                        <th style="width:25%;">Date of Application</th>
+                        <td><b>{!LEFT(TEXT(DAY(bkList[0].Booking_date__c)), 2)}/{!LEFT(TEXT(MONTH(bkList[0].Booking_date__c)), 2)}/{!YEAR(bkList[0].Booking_date__c)}</b>
+                        </td>
+                    </tr> </table><br/>
+               
+                <table class="boxTable">
+                     <tr>
+                        <td style="width:25%;text-align:left;font-size:10px;">&nbsp;<br/>&nbsp;</td>
+                        <th> </th>
+                         <apex:outputPanel rendered="{!showChannelPartner == false}" style="font-size:10px;">
+                             <td style="width:25%;text-align:left;" >
+                             </td>
+                         </apex:outputPanel>
+                         <td style="width:25%;text-align:left;" >
+                             <apex:outputPanel rendered="{!showChannelPartner == true}" style="font-size:10px;">
+                                 &nbsp;<br/>&nbsp;
+                             </apex:outputPanel>
+                         </td>
+                    </tr>
+                    <tr>
+                        <th style="width:25%;text-align:left;font-size:10px;">Signature of Primary Applicant</th>
+                        <th></th>
+                            <th style="width:25%;text-align:right;">
+                                <apex:outputPanel rendered="{!showChannelPartner == true}" style="font-size:10px;">
+                                    Signature of Channel Partner (IF Applicable)
+                                </apex:outputPanel>
+                            </th>                        
+                    </tr>
+                </table><br/>
+                <table>
+                    <tr>
+                        <th style="width:30%; text-align:left; font-size:12px;">
+                            Received By <b>{!bkList[0].Opportunity__r.Sales_Manager__r.Name}</b> on
+                            <b>{!LEFT(TEXT(DAY(bkList[0].Booking_date__c)), 2)}/{!LEFT(TEXT(MONTH(bkList[0].Booking_date__c)), 2)}/{!YEAR(bkList[0].Booking_date__c)}</b>
+                        </th>
+                        <td style="width:25%;text-align:right;font-size:12px;">
+                             <apex:outputPanel rendered="{!showChannelPartner == true}">________________________________
+                            </apex:outputPanel></td>
+                    </tr>
+                    <tr>
+                        <th style="width:30%;text-align:left;font-size:8px;"> Name of Sales Manager</th>
+                        <th style="width:25%;text-align:right;font-size:8px;">
+                            <apex:outputPanel rendered="{!showChannelPartner == true}">Name of Sales Manager(2)</apex:outputPanel></th>
+                    </tr>
+                </table>
+            </div>
+            
+            <div style="page-break-before: always;font-size:12px;"> 
+                <p style="text-align:center;padding:8px;border:1px solid black;background-color:#e1b580;font-size:12px;">
+                    TERMS &amp; CONDITIONS: 
+                </p>
+                <p align="Justify">
+                    1. I / We understand and agree that this is an application for booking / reservation for the said Flat / Property and I / We are paying application money for the 
+                    same, along with this application. I / We agree that if my / our application is approved. I / We will pay SDR within 20 days of booking / Self-funded amount to 
+                    be paid before registration / Property (including the application money paid) plus taxes as applicable, within a period of 30 days from the date of this 
+                    application.
+                </p>
+                <p align="Justify">
+                    2. I / We assure that, I / We shall comply with all the conditions herein and shall pay to the Promoter the installments as specified by the Promoter from time 
+                    to time. I / We hereby agree, declare, and undertake that any delay in payment of any amount / installments under any circumstances shall be paid to the 
+                    Promoter together with interest at the State Bank of India's Highest Marginal Cost of Lending Rate plus 2% per annum or other such rate as may be prescribed 
+                    under the applicable laws, until realization of the cheques / payment.
+                </p>
+                <p align="Justify">
+                    3. I /We understand and acknowledge that in case of the Promoter's refusal / non-allotment of the Flat / Property for any reason whatsoever, I/We shall be 
+                    entitled only to a refund of the application money without any interest, compensation, or damages. I/We shall have no claim of any nature whatsoever against 
+                    the Flat / Project / Builder / Developer for non-allotment and / or withdrawal of the allotment.
+                </p> <p align="Justify">
+                4. I / We have clearly understood that this application does not constitute an agreement to sell / Allotment Letter, and I / We are not entitled to the provisional 
+                and / or final allotment of Flat / Property not withstanding that the Promoter may have issued a receipt in acknowledgment of the application money. In any 
+                event the Promoter can dispose the Flat, in any manner whatsoever without intimation to me / us at any time prior to a registered agreement for sale being 
+                entered into.
+                </p> <p align="Justify">
+                5. I / We understand that based on this application, there is no deemed allotment unless allotment is confirmed by the Promoter in writing through its duly 
+                authorized signatory.
+                </p> <p align="Justify">
+                6. I / We hereby agree and declare that in case I / We desire to cancel the said application for booking for whatsoever reasons, then the amount(s) paid by me 
+                / us to the Promoter prior to Registration of the unit shall not be refunded and same shall stand forfeited by the Promoter as and by way of liquidated damages. 
+                In case booking is done through broker/s and the broker has received commission or any monetary benefit, I / We agree that I / We shall reimburse the 
+                Promoter the entire amount paid to the broker and Flat. I / We undertake not to raise any claim or dispute against the Promoter in this regard.
+                </p> <p align="Justify">
+                7. I agree to adhere to the payment schedule. If I / We do not pay the aforesaid amount as stipulated, I / we agree that this application for booking shall 
+                automatically stand cancelled, and the application money shall stand forfeited as mentioned herein above.
+                </p> <p align="Justify">
+                8. Timely payment shall be the essence of each installment as stated in the schedule of payments. I / We agree to abide by the Promoter terms allotment of 
+                sale and agree to sign the agreement for sale when called upon by the Promoter. I / We are aware that, in case I / We do not sign the same within the stipulated 
+                period or fail to make payment as demanded, my / our entire application money paid hereunder shall be forfeited by the Promoter as mentioned herein above, 
+                and I / We shall no claim in the proposed allotment in any manner whatsoever.
+                
+                </p> <p align="Justify">
+                9. I / We agree to pay the following, as demanded by the Promoter: a) Applicable stamp duty and registration charges on agreement value / market value. b) 
+                All Central Goods and Services Tax, State Goods, education cess, VAT / WCT tax existing and / or new or any other levies, taxes, cess, surcharge, TDS, etc., or 
+                may be called by whatever name / terminology which is or may become payable at any time herein after. I / We hereby acknowledge and declare that the 
+                payment of taxes under this sub-clause shall be my / our sole responsibility. c) Charges for the clubhouse membership, development and infrastructure 
+                charges, other charges for legal, share money, application, entrance fee, formation and registration of society / condominium, society maintenance, 
+                proportionate share of property taxes for building under construction, debris charges and purchase price of the Flat and similar amounts as and when called 
+                upon the Promoter.
+                </p> </div>
+                   <div style="page-break-before: always;font-size:12px;"> 
+                
+                <p align="Justify">
+                10. In case of a real estate project where the benefit of input tax credit is available under the prevailing GST laws, the consideration amount is arrived at after 
+                considering the benefit of input tax credit under GST laws.
+                </p> <p align="Justify">
+                11. I / We assume the responsibility of lodging the stamped documents for registration in compliance with the applicable laws and to forthwith inform the 
+                Promoter to enable the Promoter to admit execution thereof.
+                </p> <p align="Justify">
+                12. I / We understand that the terms and conditions contained here shall be deemed to form part of the application and I/We shall strictly comply with these 
+                terms and conditions. I / We understand all designs, measurement, specifications mentioned with respect to the said Flat are tentative and subject to changes.
+                
+                </p> <p align="Justify">
+                13. Documents generally required for disbursement a housing loan shall be made available onIy after execution of agreement
+                
+                </p> <p align="Justify">
+                14. I / We declare and confirm that all the details stated by me in this booking form are true and correct. I / We undertake to inform the Promoter of any future 
+                changes related to the information and details shown in this Booking Form.
+                
+                </p> <p align="Justify">
+                15. I / We understand that all correspondence will be made with me / us at the address for correspondence on this booking form, and I/ We state and agree 
+                that all communications addressed to me / us at the given addresses shall be deemed to be received by me / us whether the same is acknowledged or not. 
+                I/We undertake that any change in address will have to be notified in writing to Promoter at its registered office and acknowledgment obtained for such 
+                change. Correspondence may be made to any of the mediums, viz. Email or Post.
+                </p> <p align="Justify">
+                16. In the event, the Allotee(s) desire/s to cancel the booking of the said flat for any reason whatsoever, then the developer shall be entitled to forfeit an amount 
+                equivalent to 10% of the NET Consideration Value. The Allottee shall also pay to the developer at the time of Cancellation, the additional cost/ charges already 
+                borne by the developer. The developer shall not be liable to refund GST and other taxes paid or payable.
+                </p> <p align="Justify">
+                17. I /We agree to accept and execute the allotment letter and agreement for sale and all other documents required to be executed under the Real Estate 
+                (Regulation and Development) Act 2016 or such other law as may be applicable from time to time, in the format provided by the Promoter and when required.
+                </p> <p align="Justify">
+                18. I / We agree and confirm that all disputes / issues arising out of this transaction will be subject to the exclusive jurisdiction of courts at Mumbai / Navi 
+                Mumbai / Thane.
+                </p>
+                <p align="Justify">
+                    19. I / We hereby give my / our irrevocable consent to become member of a body of the Organisation / Society to be formed in accordance with the terms &amp; 
+                    conditions as stipulated in the agreement for sale and execute necessary documents as and when required.
+                </p><br/>
+            </div>
+            
+            <table>
+                <tr>
+                    <th style="font-size:12px;width:45%;">I accept to the terms and conditions:</th>
+                    <td style="font-size:12px;width:35%;">____________________________________</td>
+                    <td style="font-size:12px;width:35%;">____________________________________</td>
+                </tr>
+                <tr>
+                    <th style="font-size:12px;width:35%;text-align:center;">Name</th>
+                    <td style="font-size:12px;width:35%;">Primary Applicant</td>
+                    <td style="font-size:12px;width:35%;">Co- Applicant</td>
+                </tr>
+            </table><br/>
+            <table>
+                <tr>
+                    <th style="font-size:12px;width:35%;text-align:center;"> Signature</th>
+                    <td style="font-size:12px;width:35%;">____________________________________</td>
+                    <td style="font-size:12px;width:35%;">____________________________________</td>
+                </tr>
+                <tr>
+                    <th style="font-size:12px;width:35%;"></th>
+                    <td style="font-size:12px;width:35%;">Primary Applicant</td>
+                    <td style="font-size:12px;width:35%;">Co- Applicant</td>
+                </tr>
+            </table>
+           <div class="footer">
+               <p style="text-align:left;width:25%;height:20px;;padding:4px;border: 0.5px solid black;">
+                     &nbsp;
+               </p>
+               <p style="text-align:left;">
+                   Signature of Applicant <br/>
+                   &nbsp;<br/>
+                   Name of Sales Manager(1)
+               </p>
+             <!-- <span id="pageNum"></span>-->
+            </div>
+            <div style="page-break-before: always;font-family:'Times New Roman';"> 
+                <div style="text-align:Center;" class="rich1">
+                    <apex:outputField style="text-align:Center;" value="{!bklist[0].Project__r.Booking_Form_B_Image__c}" ></apex:outputField> 
+                </div>
+                <p style="text-align:center;font-size:16px;">
+                   <b style="font-family:'Times New Roman';"> Sales Partner Deal Authentication Form </b><br/>
+                    (Details to be filled by customer)
+                </p>
+                <p style="font-family:'Times New Roman';font-size:16px;text-align:left;">
+                   <b> Customer Details</b>
+                </p>
+                <table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+                    <tr>
+                        <td style="width:18%;">Customer Name:
+                        </td>
+                        <td style="width:80%;">
+                            <p>
+                              Nitin Choudhary
+                            <hr/>  
+                            </p>
+                        </td>
+                    </tr> 
+        </table>
+            <table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+                 <tr>
+                        <td style="width:18%;">Mobile No:
+                        </td>
+                        <td style="width:35%;">
+                            <p>
+                                <hr/> 
+                            </p>
+                           
+                        </td>
+                        <td style="width:10%;">Email ID:
+                        </td>
+                        <td>
+                          <p>
+                               <hr/>
+                            </p> 
+                        </td>
+                    </tr>  
+            </table>
+                    <table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+                        
+
+                    <tr>
+                        <td style="width:20%;">Booking form No:
+                        </td>
+                        <td style="width:80%;">
+                          <p>
+                               <hr/>
+                            </p> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;">Date:
+                        </td>
+                        <td style="width:80%;">
+                            <p>
+<hr/>                                
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <p style="font-family:'Times New Roman';font-size:16px;text-align:left;">
+                    <b> Sales Partner Details</b>
+                </p>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;font-size:12px;">Sales Partner Name
+                        </td>
+                        <td style="">
+                           <p>
+                               <hr/>
+                            </p> 
+                        </td>
+                    </tr>  
+                    <tr>
+                        <td style="width:20%;font-size:12px;">RERA No
+                        </td>
+                        <td style="">
+                            <p>
+                                 <hr/>
+                            </p>
+                           
+                        </td>
+                    </tr>  
+                </table>
+  <table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+                        
+
+                    <tr>
+                        <td style="width:2%;"><p>
+                            I,
+                            </p> 
+                        </td>
+                        <td style="width:80%;"><br/>
+                          <p aligh="Justify">
+                               <hr/>            would like to  acknowledge that the above mentioned Sales Partner has fully assisted me with mybooking in Satyam Developers,Kharghar 
+
+                            </p> 
+                        </td>
+                    </tr>
+</table><br/><br/>
+
+              
+<table>
+    <tr>
+        <td style="width:10%;"><hr/></td>
+        <td style="width:10%;"><hr/></td>
+        <td style="width:10%;"><hr/></td>
+    </tr>
+    <tr>
+        <td style="width:10%;">Customer Sign</td>
+        <td style="width:10%;">Sales Manager Sign</td>
+        <td style="width:10%;">Sales Partner Sign</td>
+    </tr>
+    
+</table>
+             
+            </div>
+<div style="page-break-before: always;font-family:'Times New Roman';"> 
+     <div style="text-align:Center;" class="rich1">
+                    <apex:outputField value="{!bklist[0].Project__r.Booking_Form_B_Image__c}" ></apex:outputField> 
+                </div>
+    <p style="text-align:center;font-size:16px;">
+        <b style="font-family:'Times New Roman';"><u> BOOKING ACKNOWLEDGEMENT FORM </u></b><br/><br/>
+    </p>
+    <p style="text-align:left;font-size:16px;">
+        Serial No: __________________
+    </p>
+    <p style="text-align:left;font-size:16px;">
+        Unit No: __________________
+    </p><p style="text-align:left;font-size:16px;">
+        Date of Booking: __________________
+    </p><p style="text-align:left;font-size:16px;">
+        Booking Amount: __________________
+    </p><p style="text-align:left;font-size:16px;">
+       Instrumment No: __________________
+    </p>
+    <p style="text-left:center;font-size:16px;">
+        Transaction No: __________________
+    </p><br/><br/><br/>
+    <p style="text-align:right;font-size:16px;">
+        __________________ 
+    </p>
+    <p style="text-align:right;font-size:16px;">
+        Sales Head 
+    </p>
+</div>
+       
+
+<div style="font-family:'Times New Roman';" class="newpage"> 
+   <!-- <p style="text-align:center;font-size:8px;">
+        <apex:image style="" url="{!$Resource.BookingFormBImagePDF}" width="300" height="120"/>
+    </p>-->
+                <div style="text-align:Center;" class="rich1">
+                    <apex:outputField value="{!bklist[0].Project__r.Booking_Form_B_Image__c}" ></apex:outputField> 
+                </div>
+    <p style="text-align:left;font-size:14px;">
+    Date: ______________
+    </p>
+    <p style="text-align:center;font-size:14px;">
+    What in a Name ?Everything.we would love to know yours 
+    </p>
+    <table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+        <tr>
+            <th style="width:12%;">First Name</th>
+            <td><p>
+                <hr/>
+                </p></td>
+            <th style="width:12%;">Last Name</th>
+            <td><p>
+                <hr/>
+                </p></td>
+        </tr>
+    </table>
+ <p style="text-align:center;font-size:14px;">
+    It is small world.We would like to keep in touch
+    </p>
+<table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+        <tr>
+            <th style="width:12%;">Mobile:</th>
+            <td><p>
+                <hr/>
+                </p></td>
+            <th style="width:12%;">Address:</th>
+            <td><p>
+                <hr/>
+                </p></td>
+ <th style="width:12%;">Email Id:</th>
+            <td><p>
+                <hr/>
+                </p></td>
+        </tr>
+    </table>
+<p style="text-align:center;font-size:14px;padding:8px;border:1px solid #e1b580;background-color:#e1b580;" >
+    Your friends and family deserve to be a part of #NEXTLEVEL, Kharghar Central 
+
+</p>
+ <p style="width:100%;">
+       Which of your friends, family or colleagues would like to own a home which is Thoughtfully Designed for a Stress-Free Life 
+    </p> 
+<table  style="width:100%;padding:8px;font-family:'Times New Roman';font-size:12px;">
+  
+    <tr>
+        <th style="width:10%;padding:8px;">
+            Mumbai
+        </th>
+        <td style="width:10%;padding:8px;">
+            Name
+        </td>
+        <td style="width:10%;padding:8px;">
+            Mobile No
+        </td>
+        <td style="width:10%;padding:8px;">
+            Email Id
+        </td>
+        <td style="width:10%;padding:8px;">
+            Location
+        </td>
+    </tr>
+    <tr>
+    <td style="width:10%;padding:8px;">Family
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Friend
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Collague
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+        <th style="width:10%;padding:8px;">
+            India
+        </th>
+        <td style="width:10%;padding:8px;">
+        Name
+        </td>
+         <td style="width:10%;padding:8px;">
+        Mobile No
+        </td>
+         <td style="width:10%;padding:8px;">
+        Email Id
+        </td>
+         <td style="width:10%;padding:8px;">
+        Location
+        </td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Family
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Friend
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Collague
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+</table><br/><br/>
+</div>
+<div class="newpage">
+ <table style="width:100%;font-family:'Times New Roman';font-size:12px;">
+     <tr>
+        <th style="width:10%;padding:8px;">
+            NRI
+        </th>
+        <td style="width:10%;padding:8px;">
+        Name
+        </td>
+         <td style="width:10%;padding:8px;">
+        Mobile No
+        </td>
+         <td style="width:10%;padding:8px;">
+        Email Id
+        </td>
+         <td style="width:10%;padding:8px;">
+        Location
+        </td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Family
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Friend
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+     <tr>
+    <td style="width:10%;padding:8px;">Collague
+        </td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+        <td style="width:10%;padding:8px;"><hr/></td>
+    </tr>
+    </table><br/><br/>
+<table>
+    <tr>
+        <th style="width:30%;padding:8px;text-align:left;">Customer Signatur <br/><br/>
+            <hr/></th>
+        <td style="width:30%;padding:8px;text-align:right;">
+            Sales Manager Name &amp; Signature <br/><br/> <hr/>
+        </td>
+    </tr>
+</table>
+</div>
+
+
+        </body>
+    </html>
+</apex:page>

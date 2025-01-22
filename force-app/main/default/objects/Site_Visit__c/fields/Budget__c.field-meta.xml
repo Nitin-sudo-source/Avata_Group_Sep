@@ -3,201 +3,77 @@
     <fullName>Budget__c</fullName>
     <label>Budget</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Budget of 50 to 75 lakhs</fullName>
+                <fullName>Budget less than 20 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 50 to 75 lakhs</label>
+                <label>Budget less than 20 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 75 lac to 1Cr.</fullName>
+                <fullName>Budget of 20 to 30 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 75 lac to 1Cr.</label>
+                <label>Budget of 20 to 30 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 1 to 1.25 Cr.</fullName>
+                <fullName>Budget of 30 to 40 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 1 to 1.25 Cr.</label>
+                <label>Budget of 30 to 40 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 1.25 to 1.50 Cr.</fullName>
+                <fullName>Budget of 40 to 50 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 1.25 to 1.50 Cr.</label>
+                <label>Budget of 40 to 50 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 1.50 to 1.75 Cr.</fullName>
+                <fullName>Budget of 50 to 60 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 1.50 to 1.75 Cr.</label>
+                <label>Budget of 50 to 60 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 1.75 to 2.00 Cr.</fullName>
+                <fullName>Budget of 60 to 70 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 1.75 to 2.00 Cr.</label>
+                <label>Budget of 60 to 70 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 2.00 to 2.25 Cr.</fullName>
+                <fullName>Budget of 70 to 80 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 2.00 to 2.25 Cr.</label>
+                <label>Budget of 70 to 80 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 2.25 to 2.50 Cr.</fullName>
+                <fullName>Budget of 80 to 90 lakhs</fullName>
                 <default>false</default>
-                <label>Budget of 2.25 to 2.50 Cr.</label>
+                <label>Budget of 80 to 90 lakhs</label>
             </value>
             <value>
-                <fullName>Budget of 2.50 to 2.75 Cr.</fullName>
+                <fullName>Budget of 90 lac to 1Cr.</fullName>
                 <default>false</default>
-                <label>Budget of 2.50 to 2.75 Cr.</label>
+                <label>Budget of 90 lac to 1Cr.</label>
             </value>
             <value>
-                <fullName>Budget of 2.75 to 3.00 Cr.</fullName>
+                <fullName>Budget of 1Cr to 1.5 Cr.</fullName>
                 <default>false</default>
-                <label>Budget of 2.75 to 3.00 Cr.</label>
+                <label>Budget of 1Cr to 1.5 Cr.</label>
             </value>
             <value>
-                <fullName>Budget of 3.00 to 3.25 Cr.</fullName>
+                <fullName>Budget of 1.5Cr to 2 Cr.</fullName>
                 <default>false</default>
-                <label>Budget of 3.00 to 3.25 Cr.</label>
+                <label>Budget of 1.5Cr to 2 Cr.</label>
             </value>
             <value>
-                <fullName>Budget of 3.25 to 3.50 Cr.</fullName>
+                <fullName>Budget of 2 Cr to 3 Cr.</fullName>
                 <default>false</default>
-                <label>Budget of 3.25 to 3.50 Cr.</label>
+                <label>Budget of 2 Cr to 3 Cr.</label>
             </value>
             <value>
-                <fullName>Budget of 3.50 to 3.75 Cr.</fullName>
+                <fullName>Budget 3 Cr.+</fullName>
                 <default>false</default>
-                <label>Budget of 3.50 to 3.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 3.75 to 4.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 3.75 to 4.00 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 4.00 to 4.25 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 4.00 to 4.25 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 4.25 to 4.50 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 4.25 to 4.50 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 4.50 to 4.75 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 4.50 to 4.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 4.75 to 5.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 4.75 to 5.00 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 5.00 to 5.25 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 5.00 to 5.25 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 5.25 to 5.50 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 5.25 to 5.50 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 5.50 to 5.75 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 5.50 to 5.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 5.75 to 6.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 5.75 to 6.00 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 6.00 to 6.25 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 6.00 to 6.25 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 6.25 to 6.50 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 6.25 to 6.50 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 6.50 to 6.75 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 6.50 to 6.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 6.75 to 7.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 6.75 to 7.00 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 7.00 to 7.25 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 7.00 to 7.25 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 7.25 to 7.50 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 7.25 to 7.50 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 7.50 to 7.75 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 7.50 to 7.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 7.75 to 8.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 7.75 to 8.00 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 8.00 to 8.25 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 8.00 to 8.25 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 8.25 to 8.50 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 8.25 to 8.50 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 8.50 to 8.75 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 8.50 to 8.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 8.75 to 9.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 8.75 to 9.00 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 9.00 to 9.25 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 9.00 to 9.25 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 9.25 to 9.50 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 9.25 to 9.50 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 9.50 to 9.75 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 9.50 to 9.75 Cr.</label>
-            </value>
-            <value>
-                <fullName>Budget of 9.75 to 10.00 Cr.</fullName>
-                <default>false</default>
-                <label>Budget of 9.75 to 10.00 Cr.</label>
+                <label>Budget 3 Cr.+</label>
             </value>
         </valueSetDefinition>
     </valueSet>

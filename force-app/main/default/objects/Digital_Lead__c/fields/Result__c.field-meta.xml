@@ -3,7 +3,7 @@
     <fullName>Result__c</fullName>
     <label>Result</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -26,14 +26,14 @@
                 <label>New Enquiry Against Account</label>
             </value>
             <value>
-                <fullName>New Enquiry Against Opportunity</fullName>
-                <default>false</default>
-                <label>New Enquiry Against Opportunity</label>
-            </value>
-            <value>
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
+            </value>
+            <value>
+                <fullName>New Enquiry Against Opportunity</fullName>
+                <default>false</default>
+                <label>New Enquiry Against Opportunity</label>
             </value>
         </valueSetDefinition>
     </valueSet>

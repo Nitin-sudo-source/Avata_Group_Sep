@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Modified_AV_Rate__c</fullName>
+    <formula>IF((ISPICKVAL(Charge_Bucket_1__c, &apos;Agreement Value&apos;)),Charge_Bucket_1_Amount__c /  Unit__r.Saleable_Area__c,
+IF((ISPICKVAL(Charge_Bucket_2__c, &apos;Agreement Value&apos;)),Charge_Bucket_2_Amount__c /  Unit__r.Saleable_Area__c,
+IF((ISPICKVAL(Charge_Bucket_3__c, &apos;Agreement Value&apos;)),Charge_Bucket_3_Amount__c /  Unit__r.Saleable_Area__c,
+IF((ISPICKVAL(Charge_Bucket_4__c, &apos;Agreement Value&apos;)),Charge_Bucket_4_Amount__c /  Unit__r.Saleable_Area__c,
+IF((ISPICKVAL(Charge_Bucket_5__c, &apos;Agreement Value&apos;)),Charge_Bucket_5_Amount__c /  Unit__r.Saleable_Area__c,0)))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Modified AV Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

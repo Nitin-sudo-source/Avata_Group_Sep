@@ -3,21 +3,28 @@
     <fullName>Opportunity_Stage__c</fullName>
     <label>Opportunity Stage</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
+            <value>
+                <fullName>Lost</fullName>
+                <default>false</default>
+                <label>Lost</label>
+            </value>
             <value>
                 <fullName>In Follow-up</fullName>
                 <default>false</default>
                 <label>In Follow-up</label>
             </value>
             <value>
-                <fullName>Closed Lost</fullName>
+                <fullName>Booked</fullName>
                 <default>false</default>
-                <label>Closed Lost</label>
+                <isActive>false</isActive>
+                <label>Booked</label>
             </value>
         </valueSetDefinition>
     </valueSet>

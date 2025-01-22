@@ -3,7 +3,6 @@
     <fullName>Receipt_Number__c</fullName>
     <externalId>false</externalId>
     <formula>(Booking__r.Project__r.Name) &amp; &apos;/&apos; &amp; Left(Booking__r.Tower__r.Name ,2) &amp; &apos;-&apos; &amp; Booking__r.Name &amp; &apos;/&apos; &amp; TEXT(Receipt_Date__c) &amp; &apos;/&apos; &amp; Name</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Receipt Number</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

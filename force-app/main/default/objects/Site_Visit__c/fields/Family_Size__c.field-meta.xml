@@ -8,6 +8,33 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Family_Size</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Joint Family</fullName>
+                <default>false</default>
+                <label>Joint Family</label>
+            </value>
+            <value>
+                <fullName>Nuclear Family without Elders</fullName>
+                <default>false</default>
+                <label>Nuclear Family without Elders</label>
+            </value>
+            <value>
+                <fullName>Nuclear Family with Elders</fullName>
+                <default>false</default>
+                <label>Nuclear Family with Elders</label>
+            </value>
+            <value>
+                <fullName>Siblings Living Together</fullName>
+                <default>false</default>
+                <label>Siblings Living Together</label>
+            </value>
+            <value>
+                <fullName>Singles/Friends Living Together</fullName>
+                <default>false</default>
+                <label>Singles/Friends Living Together</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

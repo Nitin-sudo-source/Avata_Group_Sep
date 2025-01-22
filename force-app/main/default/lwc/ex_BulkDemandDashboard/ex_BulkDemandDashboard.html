@@ -1,0 +1,222 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 16-01-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<template>
+    <!-- <lightning-card> -->
+    <div class="container2">
+        <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Processing...</div>
+        </div>
+        <div class="mains">
+            <!-- <div class="main">
+                <center>
+                    <lightning-icon size="medium" icon-name="standard:list_email"></lightning-icon>
+                    <label class="head" style="text-align:center; !important;">Bulk Email Demand Dashboard</label>
+                </center>
+            </div> -->
+            <div class="highlights slds-clearfix slds-page-header slds-page-header_record-home">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <!-- <span class="slds-icon_container slds-icon-standard-email"> -->
+                                 <!-- <lightning-icon icon-name="action:email" alternative-text="email" title="email"></lightning-icon> -->
+
+                                <lightning-icon size="medium" 
+                                    icon-name="action:email"></lightning-icon>
+
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h1>
+                                            <span>Demand</span>
+                                            <span class="slds-page-header__title slds-truncate" title="Bulk Email Dashboard">Bulk Email Dashboard</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control">
+                            </div>
+                            <div class="slds-page-header__control">
+                                <ul class="slds-button-group-list">
+                                    <template if:true={showTable}>
+                                        <li>
+                                            <lightning-button label="Bulk Sent Mail" variant="neutral"
+                                                icon-position="left" icon-name="utility:email"
+                                                onclick={updateEmailSent}>
+                                            </lightning-button>
+
+                                        </li>
+                                    </template>
+                                    <li>
+                                        <lightning-button icon-position="left" label="Fetch Demands"
+                                            icon-name="action:filter" onclick={fetchDocumentRecords}></lightning-button>
+                                    </li>
+                                    <li>
+                                        <lightning-button icon-position="left" label="Reset"
+                                            icon-name="action:reset_password" onclick={handleReset}></lightning-button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__row slds-page-header__row_gutters">
+                    <div class="slds-page-header__col-details">
+                        <ul class="slds-page-header__detail-row">
+                            
+
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Record Per Page">Record Per Page</div>
+                                <div class="slds-truncate" title="Record Per Page">
+                                    <select id="recordsPerPage" onchange={handleRecordsPerPageChange} style="width: 100px;">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                                </div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Page">Page
+                                    <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+
+                                    </div>
+                                </div>
+                                <div class="slds-truncate" title="No of Pages Per Record">{currentPage} of {totalPages}
+                                </div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="No of Demand Selection">
+                                <p>No of Demand Selected:  <strong>{arraySize}</strong></p>
+                            </div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title=""></div>
+                                <div class="slds-truncate" title="">
+                                    <button class="slds-button slds-button_neutral" title="Go To Previous Page"
+                            disabled={isPreviousDisabled} onclick={handlePreviousPage}>&lt;</button>
+                                    <button class="slds-button slds-button_neutral" title="Go To Next Page"
+                            disabled={isNextDisabled} onclick={handleNextPage}>&gt;</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div><br/>
+            
+
+            <table style="overflow-x:auto !important;">
+                <tr>
+                    <!-- <th>Select Project</th> -->
+                    <th colspan="2" style="text-align:left !important;">
+                        <lightning-combobox aria-label="Project" label="Project" varient="standard" aria-labelledby="Project" value={projectId} options={projectOptions} aria-placeholder="Select Project" placeholder="Select Project" onchange={handleProjectChange}>
+                        </lightning-combobox>
+                    </th>
+                    <!-- <th>Select Tower</th> -->
+                    <th colspan="2" style="text-align:left !important;">
+                        <lightning-combobox value={towerId}  aria-label="Tower" label="Tower" varient="standard" aria-labelledby="Tower" aria-placeholder="Tower" placeholder="Select Tower" options={towerOptions} onchange={handleTowerChange}>
+                        </lightning-combobox>
+                    </th>
+                    <!-- <th>
+                        Select Milestone Type
+                    </th> -->
+                    <th colspan="2" style="text-align:left !important;">
+                        <lightning-combobox value={csId} options={csOptions} aria-label="Milestone Type" label="Milestone Type" varient="standard" aria-labelledby="Milestone Type" aria-placeholder="Select Milestone Type" placeholder="Select Milestone Type" onchange={handleCSChange}>
+                        </lightning-combobox>
+                    </th>
+                    <!-- <th>Demand Type</th> -->
+                    <th colspan="2" style="text-align:left !important;">
+                        <lightning-combobox placeholder="Select view" aria-label="View" label="View" varient="standard" aria-labelledby="View" options={demandOptions} value={selectedValue}
+                            onchange={handleViewChange}></lightning-combobox>
+                    </th>
+
+                </tr>
+                
+                <template if:true={showTable}>
+                    <template if:true={currentPageData}>
+                        <tr>
+                            <th>
+                                <lightning-input onchange={handleAllSelected} data-key="allCheckbox"
+                                    checked={selectAllcheckBox} type="checkbox-button" name="SelectAll"></lightning-input>
+                            </th>
+                            <th>
+                                Serial No
+                            </th>
+                            <th>
+                                Customer Name
+                            </th>
+                            <th>
+                                Unit
+                            </th>
+                            <th>  Demand No
+                            </th>
+                            <th>
+                                Milestone Name
+                            </th>
+                            <th> Invoice Date
+                            </th>                            
+                            <th> Sent Mail
+                            </th>
+                        </tr>
+
+                        <template for:each={currentPageData} for:item="rec" for:index="index">
+                            <tr key={rec.Id}>
+                                <td style="text-align:center !important;">
+                                    <lightning-input  type="checkbox-button" data-name={rec.contentDocumentId}
+                                        data-key={rec.demandId} onchange={handleChange} data-id="checkbox"
+                                        name="headerCheckbox" variant="label-hidden" checked={rec.isSelected}>
+                                    </lightning-input>
+                                </td>
+                                <td> {rec.serialNumber}
+                                </td>
+                                <td> {rec.customerName}
+                                </td>
+                                <td>
+                                    <lightning-formatted-text value={rec.UnitName} data-id={rec.demandId}
+                                    >
+                                </lightning-formatted-text>
+                                    
+                                </td>
+                                <td>
+                                    <lightning-formatted-text value={rec.demandName} data-id={rec.demandId}
+                                        onclick={opendemand} style="color: blue;cursor:pointer !important">
+                                    </lightning-formatted-text>
+                                </td>
+                                <td> {rec.milestoneName}
+                                </td>
+                                <td>
+                                    <lightning-formatted-date-time value={rec.invoiceDate} year="2-digit" month="short"
+                                        day="2-digit"></lightning-formatted-date-time>
+                                </td>                        
+                               
+                                <td style="text-align:center !important;"> <template if:true={rec.isDownloaded}>
+                                    </template>
+                                    <template if:false={rec.isDownloaded}>
+                                        <!-- <a href={rec.url}> -->
+                                        <lightning-button-icon icon-name="utility:email" variant="border-filled"
+                                            data-key={rec.demandId} data-index={index} onclick={handledownloadcheck}>
+                                        </lightning-button-icon>
+                                        <!-- </a> -->
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                </template>
+            </table>
+            </div>
+            <!-- </lightning-card> -->
+
+        </div>
+    </div>
+</template>

@@ -3,7 +3,6 @@
     <fullName>Mobile__c</fullName>
     <externalId>false</externalId>
     <formula>Account__r.PersonContact.MobilePhone</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Mobile</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

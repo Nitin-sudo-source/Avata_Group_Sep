@@ -1,29 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>sendNotification</name>
-        <label>sendNotification</label>
-        <locationX>840</locationX>
-        <locationY>408</locationY>
+        <name>send_Notification</name>
+        <label>send Notification</label>
+        <locationX>637</locationX>
+        <locationY>399</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
-                <elementReference>CustomNotification.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
-            <value>
-                <elementReference>notifiybody</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Opportunity Follow Up Reminder</stringValue>
+                <elementReference>Custom_Notification.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -33,20 +21,31 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Opportunity Follow Up Reminder</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>notificationbody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>targetId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
         <nameSegment>customNotificationAction</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Assign</name>
         <label>Assign</label>
-        <locationX>987</locationX>
-        <locationY>321</locationY>
+        <locationX>870</locationX>
+        <locationY>328</locationY>
         <assignmentItems>
             <assignToReference>owner</assignToReference>
             <operator>Add</operator>
@@ -55,7 +54,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>sendNotification</targetReference>
+            <targetReference>send_Notification</targetReference>
         </connector>
     </assignments>
     <environments>Default</environments>
@@ -81,10 +80,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>CustomNotification</name>
-        <label>CustomNotification</label>
-        <locationX>934</locationX>
-        <locationY>111</locationY>
+        <name>Custom_Notification</name>
+        <label>Custom Notification</label>
+        <locationX>793</locationX>
+        <locationY>135</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign</targetReference>
@@ -94,7 +93,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>OpportunityFollowupNotification</stringValue>
+                <stringValue>OpportunityNextFollowupNotificationReminder</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -102,16 +101,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>490</locationX>
+        <locationX>401</locationX>
         <locationY>48</locationY>
         <object>Opportunity__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
-            <name>schedule</name>
+            <name>Schedule</name>
             <connector>
-                <targetReference>CustomNotification</targetReference>
+                <targetReference>Custom_Notification</targetReference>
             </connector>
-            <label>schedule</label>
+            <label>Schedule</label>
             <offsetNumber>-15</offsetNumber>
             <offsetUnit>Minutes</offsetUnit>
             <recordField>Sales_Next_Follow_up_Date__c</recordField>
@@ -121,7 +120,7 @@
     </start>
     <status>Active</status>
     <textTemplates>
-        <name>notifiybody</name>
+        <name>notificationbody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>Opportunity Follow up Notification {!$Record.Sales_Next_Follow_up_Date__c} to {!$Record.Name}</text>
     </textTemplates>

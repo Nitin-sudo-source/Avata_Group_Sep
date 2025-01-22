@@ -1,0 +1,375 @@
+<apex:page renderAs="pdf" controller="Ex_BookingFormBController"  docType="html-5.0" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false" showHeader="false">
+    
+    <html>
+        <head>
+            
+            <style type="text/css">
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                font-size:12px;
+                }
+                
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:left;
+                
+                page-break-inside: avoid;
+                text-transform: uppercase;
+                width:30%;
+                
+                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                page-break-inside: avoid;
+                text-transform: uppercase;
+                
+                }
+                .mainTable tr{
+                page-break-inside: avoid;
+                
+                }
+                @page { 
+                size:A4 portrait;
+                border: 0.5px solid black;
+                margin: 2mm;
+                }   
+                
+            </style>
+        </head>
+        <body>
+            <p style="text-align:center;font-size:8px;">
+                <apex:image style="" url="{!$Resource.logo}" width="145" height="120"/>
+            </p>
+            <p style="text-align:center;font-size:14px;">
+                <b>BOOKING FORM- "B"</b>
+            </p>
+            <table class="mainTable">
+                <tr>
+                    <th colspan="2" style="text-align:center;background-color:  #b7c5e1;">
+                        CLIENT DETAILS 
+                    </th>
+                  
+                </tr>
+                <tr>
+                    <th>Applicant Name</th>   
+                    <td>{!bklist[0].Primary_Applicant_Name__c}</td>
+                </tr>
+                <tr>
+                    <th>Co-Applicant Name</th>   
+                    <td ><apex:variable var="rowNum" value="{!0}" /> 
+                        <apex:repeat value="{!viewAppList}" var="ap" >
+                            {!ap.Name}  {!ap.age}
+                            <br />
+                        </apex:repeat>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address</th>   
+                    <td>{!apList[0].Permanent_Address__c} ,{!apList[0].City__c},{!apList[0].State__c},{!apList[0].PIN__c} </td>
+                </tr>
+                <tr>
+                    <th>Contact No</th>   
+                    <td>{!apList[0].Mobile_Number__c}</td>
+                </tr>
+                <tr>
+                    <th>Email Id</th>   
+                    <td>{!apList[0].Applicant_Email__c}</td>
+                </tr>
+                <tr>
+                    <th>pan no of applicant</th>   
+                    <td>{!apList[0].PAN_Number__c}</td>
+                </tr>
+                <tr>
+                    <th>pan no of co-applicant</th>   
+                    <td><apex:variable var="rowNum" value="{!0}" /> 
+                        <apex:repeat value="{!viewAppList}" var="ap" >
+                            {!ap.pan}
+                            <br/>
+                        </apex:repeat></td>
+                </tr>
+                <tr>
+                    <th>applicant aadhar no.</th>   
+                    <td>{!apList[0].Aadhar_Number__c}</td>
+                </tr>
+                <tr>
+                    <th>co-appliant aadhar no.</th>   
+                    <td>
+                        <apex:variable var="rowNum" value="{!0}" /> 
+                        <apex:repeat value="{!viewAppList}" var="ap" >
+                            {!ap.aadhar}
+                            <br/>
+                        </apex:repeat></td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:center;background-color:  #b7c5e1;" >Project Details</th>
+                </tr>
+                <tr>
+                    <th>Project Name
+                    </th>
+                    <td>{!bkList[0].Project__r.Name}</td>
+                </tr>
+                <tr>
+                    <th>Flat No
+                    </th>
+                    <td>{!bkList[0].Unit__r.Name}</td>
+                </tr>
+                <tr>
+                    <th>Building
+                    </th>
+                    <td>{!bkList[0].Unit__r.Tower__r.Name}</td>
+                </tr>
+                <tr>
+                    <th>Phase
+                    </th>
+                    <td>{!bkList[0].Unit__r.Tower__r.Phase__c}</td>
+                </tr>
+                <tr>
+                    <th>Apartment Type
+                    </th>
+                    <td>{!bkList[0].Unit__r.Configuration__c}</td>
+                </tr>
+                <tr>
+                    <th>carpet Area(Sq.mtr)
+                    </th>
+                    <td>{!bkList[0].Unit__r.RERA_Carpet_Area_Sq_Mtr__c}</td>
+                </tr>
+                <tr>
+                    <th>Balcony Area (Sq.mtr)
+                    </th>
+                        <td>{!bkList[0].Unit__r.Deck_Area__c}(Sq.mtr)</td>
+                </tr>
+                <tr>
+                    <th>Floor No
+                    </th>
+                    <td>{!bkList[0].Unit__r.Floor__c}</td>
+                </tr>
+                <tr>
+                    <th>Parking No and level
+                    </th>
+                    <td>NOT DESIGNATED</td>
+                </tr>
+                <tr>
+                    <th>Parking Quantity
+                    </th>
+                 <td>{!bkList[0].Unit__r.Car_Park_Count_1__c}</td>
+                </tr>
+                <tr>
+                    <th>Parking Clause
+                    </th>
+                    <td>INCLUDED IN AGREEMENT VALUE</td>
+                </tr>
+                <tr >
+                    <th colspan="2" style="text-align:center;background-color:  #b7c5e1;">Cheque Details
+                    </th>
+                    
+                </tr>
+                <tr>
+                    <th>Received Amount</th>
+                    
+                    <td><apex:variable var="rowNum" value="{!0}" /> 
+                       
+                        <apex:repeat value="{!receiptWrapperList}" var="rc">
+                        
+                                {!rc.receiptAmount}
+                          
+                        </apex:repeat>
+                      
+                        <p>
+                            <b>{!showReceiptAmount}</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>CHEQUE/RTGS/RRFE NUMBER</th>
+                    <td><apex:variable var="rowNum" value="{!0}" /> 
+                        <apex:repeat value="{!receiptWrapperList}" var="rc" >
+                            {!rc.showPaymode}
+                        </apex:repeat></td>
+                </tr>
+                <tr>
+                    <th>BANK NAME</th>
+                    <td>{!receiptBankName}</td>
+                </tr>
+                <tr>
+                    <th>DATE</th>
+                    <td>
+                        <apex:variable var="rowNum" value="{!0}" /> 
+                        <apex:repeat value="{!receiptWrapperList}" var="rc">
+                            <apex:outputText value="{0, date, dd-MM-yyyy}">
+                                <apex:param value="{!rc.recDate}"/>
+                            </apex:outputText> ,
+                        </apex:repeat>
+                     
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:center;background-color:  #b7c5e1;" >Payment Terms</th>
+                </tr>
+              
+                <tr>
+                    <th>Subvention/Regular/Other</th>
+                    <td><apex:outputPanel rendered="{!bkList[0].Type_of_Booking__c != null}">
+                        {!bkList[0].Type_of_Booking__c} ({!getpercentageasperLedger} % RECEived as per Ledger )
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Preferred Bank for Home Loan</th>
+                    <td>{!bkList[0].Preferred_Bank_for_Home_loan__c}</td>
+                </tr>
+                <tr>
+                    <th>Loan Saction Status</th>
+                    <td> 
+                        SANCTIONED {!showSanctionedAmount}
+                       
+                    </td>
+                </tr>
+                 <tr>
+                    <th>ROC Required By</th>
+                    <td>{!bkList[0].ROC_Required__c}</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:center;background-color:  #b7c5e1;" >Registration Details</th>
+                </tr>
+                <tr>
+                    <th>
+                        Agreement Value
+                    </th>
+                    <td>
+                       {!showAv}
+                    </td>
+                </tr>
+                 <tr>
+                    <th>
+                       Stamp Duty @7%
+                    </th>
+                    <td>
+                       {!showStampAmount}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                       Registration Charges
+                    </th>
+                    <td>
+                       {!showRegistrationAmount}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th>
+                      SDR Payment Status
+                    </th>
+                    <td>
+                      {!bkList[0].SDR_Payment_Status__c}
+                    </td>
+                </tr>
+                 <tr>
+                    <th>
+                      GST
+                    </th>
+                    <td>
+                      {!showGst}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                       Legal  Charges
+                    </th>
+                    <td>
+                       {!showgetlegalAmount}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                      Advance maintenance 24 months GST 18%
+                    </th>
+                   
+                    <td>
+                        <apex:outputPanel rendered="{!showAdvanceMaintenance == ''}">
+                            MAINTENANCE
+                        </apex:outputPanel>  
+                        <apex:outputPanel rendered="{!showAdvanceMaintenance != ''}">
+                            {!showAdvanceMaintenance}
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:center;background-color:  #b7c5e1;">Purchaser Document</th>
+                </tr>
+                <tr>
+                <th>Pan Card Copy</th>
+                    <td>{!bkList[0].Photographs_6_copy__c}</td>
+                </tr>
+                <tr>
+                <th>Aadhar Card Copy</th>
+                    <td>{!bkList[0].Photographs_6_copy__c}</td>
+                </tr>
+                <tr>
+                <th>Photographs 6 Copy</th>
+                    <td>{!bkList[0].Photographs_6_copy__c}</td>
+                </tr>
+            </table>
+            <div style="">  <br/>
+                <!--<table class="mainTable">
+                    <tr>
+                        <th colspan="2" style="text-align:center;background-color:  #b7c5e1;">Other Charges</th>
+                    </tr>
+                    <tr>
+                        <th>Parking CHarges</th>
+                        <td>NA</td>
+                    </tr>
+                     <tr>
+                        <th>Club House Charges</th>
+                        <td>NA</td>
+                    </tr>
+                     <tr>
+                        <th>GST @18% on CHS &amp; Car parking charges</th>
+                        <td>NA</td>
+                    </tr>
+                </table>-->
+                <p style="font-size:12px;">
+                    DATED- <apex:outputText value="{0, date, dd/MMMM/yyyy}">
+                    <apex:param value="{!receiptDate}" />
+                    </apex:outputText>
+
+                </p>
+                <table style="font-size:12px;line-height:2.5;width:70%;">
+                    <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">1)Prepared by CRM.</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                     <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">2)Checked by CRM Manager</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                     <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">3)Checked by CRM Head</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                    <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">4)Checked by Sales</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                     <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">5)Approved by Director.</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                    <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">5)Agreement Prepared by.</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                    <tr>
+                        <th style="text-transform:Uppercase;text-align:left;padding:10px;">5)Agreement Checked by.</th>
+                        <td style="text-transform:Uppercase;text-align:right;padding:10px;">SIGN &nbsp;&nbsp; &nbsp; &nbsp; __________________________</td>
+                    </tr>
+                </table>
+            </div>
+        </body>
+    </html>
+    
+</apex:page>

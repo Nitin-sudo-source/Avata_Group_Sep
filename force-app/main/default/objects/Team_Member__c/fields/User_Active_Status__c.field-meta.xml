@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>User_Active_Status__c</fullName>
-    <formula>User__r.IsActive</formula>
+    <formula>IF(AND(User__c !=null, User__r.IsActive = true), true,false)</formula>
     <label>User Active Status</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

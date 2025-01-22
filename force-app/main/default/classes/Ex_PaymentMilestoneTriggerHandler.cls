@@ -5,13 +5,11 @@ public class Ex_PaymentMilestoneTriggerHandler {
         for(Payment_Milestone__c oldPM: oldMap.values()) {
             Payment_Milestone__c newPM = newMap.get(oldPM.Id);
             
-            if(oldPM.Is_Due__c != newPM.Is_Due__c && newPM.Is_Due__c){
+            if(oldPM.Is_Due__c != newPM.Is_Due__c && newPM.Is_Due__c)
                 isBatchReq = true;
-                system.debug('inside true::::'+isBatchReq);
-            }
-        } 
+        }
         
         if(isBatchReq)
-            Database.executeBatch(new Ex_DemandRaiseBatch(),1); // Calling Batch Class
+            Database.executeBatch(new Ex_DemandRaiseBatch()); // Calling Batch Class
     }
 }

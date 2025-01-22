@@ -1,0 +1,97 @@
+<apex:page renderAs="pdf" controller="Ex_PrintReceiptController" docType="html-5.0" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" sidebar="false" showHeader="false">
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <style type="text/css">
+                body {
+                font-family: "Times New Roman", Times, serif;
+                font-size: 16px;
+                }
+                
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                }
+                
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:left;
+                
+                
+                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                
+                }
+                
+            </style>
+            <body>
+                <table>
+                    <tr>
+                        <th style="text-align:left; color: #002244;font-size:24px;width:80%">
+                            Satyam Infra Reality LLP <p align="Justify" style="font-size:12px;">
+                            1204/1205/1206, Maithili's Signet , Plot No .39/4, sector- 30A, Vashi, Navi Mumbai- 400705, GST No, 27AECFS1643D1ZB. Tel: 022-27811000, E-Mail - <a value="val">accounts@satyaminfra.com</a>  
+                            </p>
+                        </th>
+                        <th></th>
+                        <td style="text-align:right">
+                            <apex:image style="" url="{!$Resource.logo}" width="150" height="100"/>
+                        </td>
+                    </tr>
+                </table><br/>
+                <hr/>
+                <table>
+                    <tr >
+                        <td style="text-align:left;width:80%;"> <b>Receipt No :</b> <u> {!rList[0].Receipt_Number__c} </u> </td>
+                        <th style="text-align:right">Date</th>
+                        <td style="text-align:right;width:10%;"><u> <apex:outPutText value="{0,date,dd-MM-yyyy}">  <apex:param value="{!rList[0].Receipt_Date__c}"/></apex:outPutText></u></td>
+                    </tr>
+                    </table>
+                
+                    <p  style="font-size:16px;Padding:2px;">
+                    <b>Received with Thanks From Mr./Mrs./Ms</b> {!rList[0].Booking__r.Primary_Applicant_Name__c}   <br/><hr/>
+
+                    <b>The Sum of </b> {!amountInWords} Only. <br/><hr/>
+                    <b>by {!rList[0].Payment_Mode__c}</b> {!rList[0].Transaction_ID__c}. &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <b>Dated </b>  <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                    <apex:param value="{!rList[0].Receipt_Date__c}"/></apex:outPutText> <br/><hr/>
+                    <b>Drawn on </b> {!rList[0].Bank_Name__c}.<br/><hr/>
+                    <b>Part/Full on A/c. Towards</b> NA<br/> <hr/>
+                    <b>Project </b>{!rList[0].Booking__r.Project__r.Name}<br/> <hr/>
+                    <b>Building No</b> {!rList[0].Booking__r.Tower__r.Name}  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<b>Floor </b> {!rList[0].Booking__r.Unit__r.Floor__c} &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                    <b>Flat No.</b>  {!rList[0].Booking__r.Unit__r.Name}.  <hr/>
+                </p> 
+                
+                <p  style="font-size:16px;Padding:2px; line-height: 2;">
+                    <b>Remarks :</b>&nbsp;{!rList[0].Transaction_ID__c} Dated&nbsp; <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                    <apex:param value="{!rList[0].Receipt_Date__c}"/> </apex:outPutText> {!rList[0].Bank_Name__c}.
+                    Received with Thanks From Mr./Mrs./Ms {!rList[0].Booking__r.Primary_Applicant_Name__c}.
+                    {!rList[0].Booking__r.Unit__r.Name} {!rList[0].Booking__r.Tower__r.Name}.
+                </p>
+             <hr/>
+            <br/><br/>
+                 
+                <table style="font-size:14px;">
+                    <tr>
+                        <th style="width:60%;text-align:left">Rs.{!showTotalAmount} </th>
+                        <th style="width:35%;text-align:right">For SATYAM INFRA REALITY LLP</th>
+                    </tr>
+                    <tr>
+                        
+                    </tr>
+                    <tr> 
+                        <th style="width:60%; text-align:left">
+                            (Cheques are subject to realization)
+                        </th>
+                        <th style="width:30%;text-align:right">
+                            <p>  Authorized Signatory </p>
+                        </th>
+                    </tr>
+                </table>
+            </body>
+        </head>
+    </html>
+</apex:page>

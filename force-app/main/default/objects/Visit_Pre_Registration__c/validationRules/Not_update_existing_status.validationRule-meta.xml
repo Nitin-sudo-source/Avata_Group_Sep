@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_update_existing_status</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(TEXT(PRIORVALUE( Status__c )) =  TEXT(Status__c), ISPICKVAL(Status__c, &apos;cancelled&apos;))</errorConditionFormula>
+    <errorMessage>Pre-Registration is already cancelled</errorMessage>
+</ValidationRule>

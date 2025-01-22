@@ -1,0 +1,32 @@
+<template>
+    <!-- <lightning-button label="Open Confirmation Modal" onclick={openModal}></lightning-button> -->
+    
+    <template if:true={loading}>
+        <div class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--small slds-is-relative">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+                
+                <!-- additional element to show the text under the spinner -->
+                <p class="slds-spinner-text">Hang on...</p>
+            </div>
+        </div>
+    </template>
+
+    <template if:false={loading}>
+        <div class={modalBackdropClass} onclick={closeModal}></div>
+        
+        <section if:true={isModalOpen} class="modal-container">
+            <div class="modal-body">
+                <p style="font-size:14px;font-weight:600;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');">
+                    Are you sure you want to Delete this Template?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <lightning-button style="margin:5px;" label="Cancel" onclick={handleCancel}></lightning-button>
+                <lightning-button style="margin:5px;" label="Confirm" variant="brand" onclick={handleConfirm}></lightning-button>
+            </div>
+        </section>
+    </template>
+</template>

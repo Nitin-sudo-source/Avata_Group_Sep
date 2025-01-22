@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fieldOverrides>
-        <field>End_Date__c</field>
-        <formula>Campaign__c.End_Date__c</formula>
-    </fieldOverrides>
     <label>Stop Campaign</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <quickActionLayout>
@@ -11,17 +7,11 @@
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Name</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-        </quickActionLayoutColumns>
-        <quickActionLayoutColumns>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
                 <field>End_Date__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
+        <quickActionLayoutColumns/>
     </quickActionLayout>
     <type>Update</type>
 </QuickAction>

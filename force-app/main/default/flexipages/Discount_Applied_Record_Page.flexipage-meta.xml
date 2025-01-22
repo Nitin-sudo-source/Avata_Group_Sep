@@ -79,7 +79,7 @@
     <masterLabel>Discount Applied Record Page</masterLabel>
     <sobjectType>Discount_Applied__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeSimpleViewTemplate</name>
+        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>

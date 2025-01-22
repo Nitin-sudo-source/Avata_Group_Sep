@@ -2,10 +2,11 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Channel_Partner__c</columns>
-    <columns>CREATED_DATE</columns>
-    <columns>DID_1__c</columns>
-    <columns>DID_2__c</columns>
+    <columns>CP_Account__c</columns>
+    <columns>Project__c</columns>
+    <columns>SPOC_Name__c</columns>
+    <columns>Stage__c</columns>
+    <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

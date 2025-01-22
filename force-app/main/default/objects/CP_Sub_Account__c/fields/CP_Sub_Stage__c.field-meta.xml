@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_Sub_Stage__c</fullName>
+    <label>CP Sub Stage</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>CP_Stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>High Potential</fullName>
+                <default>false</default>
+                <label>High Potential</label>
+            </value>
+            <value>
+                <fullName>Low Potential</fullName>
+                <default>false</default>
+                <label>Low Potential</label>
+            </value>
+            <value>
+                <fullName>Walkin Active</fullName>
+                <default>false</default>
+                <label>Walkin Active</label>
+            </value>
+            <value>
+                <fullName>Sourcing Active</fullName>
+                <default>false</default>
+                <label>Sourcing Active</label>
+            </value>
+            <value>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+                <label>Inactive</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Prospect</controllingFieldValue>
+            <valueName>High Potential</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prospect</controllingFieldValue>
+            <valueName>Low Potential</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Active</controllingFieldValue>
+            <valueName>Walkin Active</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Active</controllingFieldValue>
+            <valueName>Sourcing Active</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Inactive</controllingFieldValue>
+            <valueName>Inactive</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

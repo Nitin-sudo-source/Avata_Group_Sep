@@ -1,0 +1,178 @@
+.boxa, .boxb, .boxc{
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  margin: 10px;
+  
+}
+
+.boxd{
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    margin: 0px !important;
+  
+}
+
+.box:hover{
+  background-color: #28646c;
+  color: #fff;
+  border: 1px solid white;
+}
+
+.clicked {
+  background-color: #28646c;
+  color: #fff;
+  border: 1px solid white;
+}
+
+.span{
+  border: 1px solid #ccc !important; 
+  border-right:20px solid transparent !important;
+  border-left:20px solid transparent !important;
+  margin: 20px;
+}
+/* 
+.box:focus {
+  background-color: #007bff;
+  color: #fff;  
+  outline: none;
+} */
+
+.active {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid black;
+}
+
+*{
+  margin: 0px !important;
+}
+.body{
+  margin: 0px !important;
+  padding: 0px !important;
+  display: flex;
+  max-height: 150vh;
+  justify-content: center;
+  align-items: center;
+  background-color: white; /*#d2be5f;*/
+  background-size: cover;
+}
+
+.sideblock{
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px grey;
+  border: 1px solid white;
+  height: 485px;
+}
+
+img{
+  /*height: 485px;
+  object-fit: fill;
+  width: 30%;*/
+  width: 100px !important;
+  height: 100px !important  ;
+}
+
+.container{
+  width: 100%;
+  max-width: 750px;
+  /* background: #2f2f2f; */
+  background: silver;
+  padding: 28px;
+  margin: 0px 28px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px grey;
+}
+
+.btn{
+  display: block;
+  width: 70%;
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  color: rgb(209, 209, 209);
+  background: #9b9050;
+}
+
+.cn{
+  display: block;
+  width: 70%;
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  color: rgb(209, 209, 209);
+  background: #9b9050;
+}
+
+.btn:hover{
+  background: #ECB800;
+  color: rgb(255, 255, 255);
+}
+
+.cn:hover{
+  background: #ECB800;
+  color: black;
+}
+
+
+
+.form-title{
+  font-size: 26px;
+  font-weight: 600px;
+  text-align: center;
+  padding-bottom: 6px;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  border-bottom: 1px solid white;
+}
+
+.user-input-box{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-bottom: 15px;
+}
+
+.user-input-box label{
+  width: 95%;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 5px;
+}
+
+.user-input-box lightning-input,lightning-slider,lightning-input-field {
+  width: 95%;
+  border-radius: 7px;
+
+}
+
+lightning-combobox{
+  width: 95%;
+  border-radius: 7px;
+}
+
+lightning-slider{
+  color: white;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+span{
+  margin: 10px !important;
+}

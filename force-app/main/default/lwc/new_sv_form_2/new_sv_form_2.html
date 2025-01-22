@@ -1,0 +1,541 @@
+<template>
+	<!--First Page-->
+	<lightning-card>
+		<template if:true={showFirstPage}>
+			<div class="body">
+				<div class="container">
+					<!-- <center><img src={logo} width="150px" height="220px"></center> -->
+					<h1 class="form-title">New Site Visit Form </h1>
+					<div class="slds-p-around_medium user-input-box">
+						<label>Select Project</label>
+						<lightning-combobox name="Select Project" placeholder="Select Project" options={project}
+							value={Projectoptions} onchange={handleProjectChange} disabled={disableProject}></lightning-combobox>
+					</div>
+					<div class="slds-p-around_medium user-input-box">
+						<label>Pre-registration Available?<span style="color:red">*</span></label>
+						<lightning-combobox name="Pre-registration Available?" value={registration}
+							placeholder="Please Select" options={options} onchange={handleRegistration}
+							disabled={disableReg}>
+						</lightning-combobox>
+					</div>
+					<template if:true={showCode}>
+						<div class="slds-p-around_medium user-input-box">
+							<label>Pre-registration code</label>
+							<lightning-input type="text" value={regCode} disabled={disabledregCode} placeholder="e.g.SCP0000" maxlength="10"
+								required onchange={handleRegCode}></lightning-input>
+						</div>
+						<div class="slds-align_absolute-center" style="margin: 20px;">
+							<button title="Verify Code" onclick={handleVerifyCode} style="margin: 20px !important;"
+                                class="btn">Verify Code</button>
+						</div>
+						<template if:true={showCpData}>
+							<table style="border: 2px solid black;border-collapse: collapse;">
+								<thead>
+									<tr style="color: black;">
+										<th class="slds-box" style="border: 1px solid black;">Customer Name</th>
+										<template if:true={cpName}>
+											<th class="slds-box" style="border: 1px solid black;">CP Name</th>
+										</template>
+										<template if:true={source}>
+											<th class="slds-box" style="border: 1px solid black;">Lead Source</th>
+										</template>
+										<th class="slds-box" style="border: 1px solid black;">Budget</th>
+										<th class="slds-box" style="border: 1px solid black;">Configuration Required
+										</th>
+										<template if:true={showMobile}>
+											<th class="slds-box" style="border: 1px solid black;">Lead</th>
+										</template>
+										<template if:true={hideMobile}>
+											<th class="slds-box" style="border: 1px solid black;">SPOC</th>
+										</template>
+										<template if:true={ownerName}>
+											<th class="slds-box" style="border: 1px solid black;">Lead Owner</th>
+										</template>
+									</tr>
+								</thead>
+								<tbody>
+									<template for:each={cpData} for:item="cp">
+										<tr key={cp.Id} style="color: black;">
+											<td class="slds-box" style="border: 1px solid black;">{cp.Customer_Name__c}
+											</td>
+											<template if:true={cpName}>
+												<td class="slds-box" style="border: 1px solid black;">{cpName}</td>
+
+											</template>
+											<template if:true={source}>
+												<td class="slds-box" style="border: 1px solid black;">{source}</td>
+											</template>
+											<td class="slds-box" style="border: 1px solid black;">{cp.Budget__c}</td>
+											<td class="slds-box" style="border: 1px solid black;">
+												{cp.Configuration_required__c}</td>
+											<template if:true={showMobile}>
+												<td class="slds-box" style="border: 1px solid black;">{cp.Lead__r.Name}
+												</td>
+											</template>
+											<template if:true={hideMobile}>
+												<td class="slds-box" style="border: 1px solid black;">{cp.SPOC__c}</td>
+											</template>
+											<template if:true={ownerName}>
+												<td class="slds-box" style="border: 1px solid black;">{ownerName}</td>
+											</template>
+
+										</tr>
+									</template>
+								</tbody>
+							</table>
+						</template>
+						<template if:true={createNewData}>
+							<div class="slds-align_absolute-center" style="margin: 20px !important;">
+								<button title="Continue" onclick={handleContinue}
+                                    class="cn slds-align_absolute-center">Continue</button>
+							</div>
+							<div class="slds-align_absolute-center" style="margin: 20px !important;">
+								<button title="Reset" onclick={handleReset}
+                                    class="cn slds-align_absolute-center">Reset</button>
+							</div>
+						</template>
+					</template>
+					<template if:true={showNumber}>
+						<div class="slds-p-around_medium user-input-box">
+							<label>Enter Mobile Number</label>
+							<lightning-input class="reqInpFld1" type="text" value={mobile} placeholder="e.g.1234567890"
+								maxlength="10" required pattern="[0-9]{10}$" disabled={disableMobile}
+								message-when-pattern-mismatch="Please enter a valid mobile" onblur={handleMobile}>
+							</lightning-input>
+						</div>
+						<div class="slds-align_absolute-center" style="margin: 20px;">
+							<button title="Search" onclick={handleSearch} style="margin: 20px !important;"
+                                class="btn">Search</button>
+						</div>
+						<template if:true={showAccountDataFound}>
+							<div style="text-align: center; background-color: #0c6faa;">
+								<label style="font-size: 16px;">Account Found</label>
+							</div>
+							<lightning-datatable class="slds-table_col-bordered slds-p-around_medium"
+								columns={accountColumns} data={accountDataFound} key-field="Id" hide-checkbox-column>
+							</lightning-datatable>
+							<br>
+                        </template>
+							<template if:true={showLeadDataFound}>
+								<div style="text-align: center; background-color: #0c6faa;">
+									<label style="font-size: 16px;">Lead Found</label>
+								</div>
+								<lightning-datatable class="slds-table_col-bordered slds-p-around_medium"
+									columns={leadColumns} data={leadDataFound} key-field="Id" hide-checkbox-column>
+								</lightning-datatable>
+								<br>
+                        </template>
+								<template if:true={showOpportunityDataFound}>
+									<div style="text-align: center; background-color: #0c6faa;">
+										<label style="font-size: 16px;">Opportunity Found</label>
+									</div>
+									<lightning-datatable class="slds-table_col-bordered slds-p-around_medium"
+										columns={opportunityColumns} data={opportunityDataFound} key-field="Id"
+										hide-checkbox-column>
+									</lightning-datatable>
+									<br>
+                        </template>
+									<template if:true={isLoading}>
+										<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+										</lightning-spinner>
+									</template>
+									<template if:true={visible}>
+										<p style="text-align: center;color:white; font-size: 18px;">No Data Available.
+										</p><br>
+                        </template>
+										<template if:true={createNewData}>
+											<div class="slds-align_absolute-center" style="margin: 20px !important;">
+												<button title="Continue" onclick={handleContinue}
+                                    class="cn slds-align_absolute-center">Continue</button>
+											</div>
+											<div class="slds-align_absolute-center" style="margin: 20px !important;">
+												<button title="Reset" onclick={handleReset}
+                                    class="cn slds-align_absolute-center">Reset</button>
+											</div>
+										</template>
+									</template>
+				</div>
+			</div>
+		</template>
+		<!--------------------------------------------------- Basic Details -------------------------------------------------------------------->
+		<template if:true={secondPage}>
+			<div class="body">
+				<div class="container">
+					<center>
+						<div style="width:400px">
+							<lightning-formatted-rich-text value={projectimage}></lightning-formatted-rich-text>
+						</div>
+					</center>
+					<h1 class="form-title">Basic Details</h1>
+					<div class="slds-p-around_medium user-input-box">
+						<label>Salutation</label>
+						<lightning-combobox name="Salutation" required value={salute} placeholder="--None--"
+							options={salutation} onchange={handleSalutation}>
+						</lightning-combobox>
+					</div>
+					<div style="display: flex;">
+						<div class="slds-p-around_medium user-input-box" style="width:48%">
+							<label>Enter First Name</label>
+							<lightning-input type="text" value={handleName} required onchange={handleNameChange}>
+							</lightning-input>
+						</div>
+						<div class="slds-p-around_medium user-input-box" style="width:48%">
+							<label>Enter Last Name</label>
+							<lightning-input type="text" value={lastName} required onchange={handleLastNameChange}>
+							</lightning-input>
+						</div>
+					</div>
+					<template if:false={hideEmailMobile}>
+						<div style="display: flex;">
+							<div class="slds-p-around_medium user-input-box" style="width:48%">
+								<label>Enter Email Id</label>
+								<lightning-input type="text" value={email} placeholder="someone@domain.com"
+									onchange={handleEmailOnSecondPage} disabled></lightning-input>
+							</div>
+							<div class="slds-p-around_medium user-input-box" style="width:48%">
+								<label>Mobile Number</label>
+								<lightning-input type="text" value={mobile} required onchange={handleMobile}
+									disabled={disableMobile}></lightning-input>
+							</div>
+						</div>
+					</template>
+					<template if:true={hideEmailMobile}>
+						<div style="display: none;">
+							<div class="slds-p-around_medium user-input-box" style="width:48%">
+								<label>Enter Email Id</label>
+								<lightning-input type="text" value={email} placeholder="someone@domain.com"
+									onchange={handleEmailOnSecondPage}></lightning-input>
+							</div>
+							<div class="slds-p-around_medium user-input-box" style="width:48%">
+								<label>Mobile Number</label>
+								<lightning-input type="text" value={mobile} required onchange={handleMobile}>
+								</lightning-input>
+							</div>
+						</div>
+					</template>
+					<template if:false={showSendOTP}>
+						<div class="slds-align_absolute-center" style="margin: 20px;">
+							<button title="Send OTP" onclick={handleSendOTPButton} style="margin: 20px !important;"
+                                class="btn">Send OTP</button>
+						</div>
+					</template>
+					<template if:true={regenerateOTP}>
+						<div class="slds-align_absolute-center" style="margin: 20px;">
+							<button title="Resend OTP" onclick={handleSendOTPButton} style="margin: 20px !important;"
+                                class="btn">Resend OTP</button>
+						</div>
+					</template>
+					<template if:true={OTPverified}>
+						<div class="slds-p-around_medium user-input-box">
+							<label>Enter OTP</label>
+							<lightning-input type="text" disabled={disableVerifyOTP} value={EnteredOTP} onchange={handleEnteredOTP}></lightning-input><br>
+                        </div>
+							<template if:true={OTPGenerated}>
+								<div style="color: white;margin-left:20px !important;">
+									OTP Send Successfully 
+									<!-- : {randomNumber} -->
+								</div>
+							</template><br>
+							<template if:false={disableVerifyOTP}>
+								<div class="slds-align_absolute-center" style="margin: 20px !important;">
+									<button title="Verify OTP" onclick={handleVerifyOTPButton} class="btn">
+                                    Verify OTP</button>
+								</div>
+							</template>
+					</template>
+					<template if:true={showButtons}>
+						<lightning-button variant="brand" label="Next" title="Next" onclick={handleNext}
+							style="float: right; padding-right: 40px;">
+						</lightning-button>
+						<lightning-button variant="brand" label="Previous" title="Previous" onclick={handlePrevious}
+							style="float: left;padding-left: 20px;">
+						</lightning-button>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!------------------------------------------------------- Residential Address ---------------------------------------------------------------->
+		<template if:true={thirdPage}>
+			<div class="body">
+				<div class="container">
+					<center>
+						<div style="width:400px">
+							<lightning-formatted-rich-text value={projectimage}></lightning-formatted-rich-text>
+						</div>
+					</center>
+					<h1 class="form-title">Residential Address</h1>
+					<lightning-record-edit-form object-api-name="Site_Visit__c">
+						<div class="slds-p-around_medium user-input-box">
+							<label>City Type</label>
+							<lightning-input-field field-name="City_Type__c" value={selectedCityType}
+								onchange={handleCityType} variant="label-hidden"></lightning-input-field>
+						</div>
+						<div style="display: flex;">
+							<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+								
+									<label>Country</label>
+								<lightning-input-field field-name="Country__c" value={selectedCountry}
+									onchange={handleCountryChange} variant="label-hidden">
+								</lightning-input-field>
+							</div>
+							<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+								
+									<label>City Name</label>
+								<lightning-input-field field-name="City_Name__c" value={selectedCityName}
+									onchange={handleCityNamePicklist} variant="label-hidden">
+								</lightning-input-field>
+							</div>
+						</div>
+						<div style="display: flex;">
+							<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+								<!-- <template if:true={localityRequired}>
+									<label><span style="color: red;">*</span>Locality</label>
+								</template> -->
+									<label>Locality</label>
+								<lightning-input-field field-name="Locality__c" value={selectedLocality}
+									onchange={handleLocality} variant="label-hidden">
+								</lightning-input-field>
+							</div>
+							<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+								<label>Locality Details</label>
+								<lightning-input-field field-name="Locality_details__c" value={selectedLocalityDetails}
+									onchange={handleLocalityDetailsPicklist} variant="label-hidden">
+								</lightning-input-field>
+							</div>
+						</div>
+					</lightning-record-edit-form>
+					<lightning-button variant="brand" label="Next" title="Next" onclick={handleNextOnThirdPage}
+						style="float:right; padding-right: 40px;"></lightning-button>
+					<lightning-button variant="brand" label="Previous" title="Previous"
+						onclick={handlePreviousOnThirdPage} style="float:left; padding-left: 20px;"></lightning-button>
+					<br><br>
+                </div>
+				</div>
+		</template>
+		<!------------------------------------------------------- Source Details -------------------------------------------------------------------->
+		<template if:true={fourthPage}>
+			<div class="body">
+				<div class="container">
+					<center>
+						<div style="width:400px">
+							<lightning-formatted-rich-text value={projectimage}></lightning-formatted-rich-text>
+						</div>
+					</center>
+					<template if:true={isLoading}>
+						<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+						</lightning-spinner>
+					</template>
+					<lightning-record-edit-form object-api-name="Site_Visit__c">
+						<template if:true={hideMedia}>
+							<div style="display:block;">
+								<h1 class="form-title">Source Details</h1><br>
+								<div class="slds-p-around_medium user-input-box">
+									<label>Where did you hear about us?</label>
+									<template if:false={isSourceNotEditable}>
+										<lightning-input-field style="font-size: 16px;" field-name="Lead_Source__c"
+											variant="Label-hidden" name="Lead_Source__c" value={media} disabled="true"
+											onchange={handleMedia}></lightning-input-field>
+									</template>
+									<template if:true={isSourceNotEditable}>
+										<lightning-input-field style="font-size: 16px;" field-name="Lead_Source__c"
+											variant="Label-hidden" name="Lead_Source__c" value={media} onchange={handleMedia}>
+										</lightning-input-field>
+									</template>
+								</div>
+
+								<template if:false={isSourceNotEditable}>
+									<template if:true={cp}>
+										<div class="slds-p-around_medium user-input-box">
+											<label>Channel Partner</label>
+											<lightning-input style="font-size: 16px;" field-name="Channel_Partner__c"
+												variant="label-hidden" name="Channel_Partner__c" value={showCPName}
+												onchange={handlechannelpartner} disabled></lightning-input>
+											<!--<lightning-combobox placeholder="Select Channel Partner" onchange={handlechannelpartner} options={allChannelPartners} 
+                                                            value={channelpartner} disabled></lightning-combobox>-->
+										</div>
+									</template>
+								</template>
+
+								<template if:true={isSourceNotEditable}>
+									<template if:true={cp}>
+										<div class="slds-p-around_medium user-input-box">
+											<label>Channel Partner</label>
+											<lightning-input style="font-size: 16px;" field-name="Channel_Partner__c"
+												variant="label-hidden" name="Channel_Partner__c" placeholder="Search Channel Partner"
+												value={showCPName} onchange={handlechannelpartner}>
+											</lightning-input>
+											<!--<lightning-combobox placeholder="Select Channel Partner" onchange={handlechannelpartner} options={allChannelPartners} 
+                                                            value={channelpartner} disabled></lightning-combobox>-->
+										</div>
+										<template if:true={showCPLookup}>
+											<div style="margin-left : 10px;margin-right : 50px; background: #ffff;">
+												<ul class="slds-list_vertical-space">
+													<template for:each={cpList} for:item="actObj">
+														<li key={actObj.Id} onclick={handleParentSelection}
+															data-value={actObj.CP_Account__r.Id} data-id={actObj.Id} data-label={actObj.CP_Account__r.Name}
+															class="slds-p-around_small slds-text-link"
+															style="cursor: pointer;">
+															{actObj.CP_Account__r.Name}
+														</li>
+													</template>
+												</ul>
+											</div>
+										</template>
+									</template>
+								</template>
+							</div>
+						</template>
+						<template if:false={hideMedia}>
+							<h1 class="form-title">Source Details</h1><br>
+							<div class="slds-p-around_medium user-input-box">
+								<label>Where did you hear about us?</label>
+								<template if:false={isSourceNotEditable}>
+									<lightning-input-field style="font-size: 16px;" field-name="Lead_Source__c"
+										variant="Label-hidden" name="Lead_Source__c" value={media} disabled="true"
+										onchange={handleMedia}></lightning-input-field>
+								</template>
+								<template if:true={isSourceNotEditable}>
+									<lightning-input-field style="font-size: 16px;" field-name="Lead_Source__c"
+										variant="Label-hidden" name="Lead_Source__c" value={media} onchange={handleMedia}>
+									</lightning-input-field>
+								</template>
+							</div>
+							<template if:true={cp}>
+								<template if:false={isSourceNotEditable}>
+									<div class="slds-p-around_medium user-input-box">
+										<label>Channel Partner</label>
+										<lightning-input style="font-size: 16px;" field-name="Channel_Partner__c"
+											variant="label-hidden" name="Channel_Partner__c" value={showCPName}
+											onchange={handlechannelpartner} disabled></lightning-input>
+										<!-- <lightning-combobox placeholder="Channel Partner" onchange={handlechannelpartner} options={allChannelPartners}
+                                                        value={channelpartner}></lightning-combobox> -->
+									</div>
+								</template>
+								<template if:true={isSourceNotEditable}>
+									<div class="slds-p-around_medium user-input-box">
+										<label>Channel Partner</label>
+										<lightning-input style="font-size: 16px;" field-name="Channel_Partner__c"
+											variant="label-hidden" name="Channel_Partner__c" value={showCPName}  placeholder="Search Channel Partner"
+											onchange={handlechannelpartner}></lightning-input>
+										<!-- <lightning-combobox placeholder="Channel Partner" onchange={handlechannelpartner} options={allChannelPartners}
+                                                        value={channelpartner}></lightning-combobox> -->
+									</div>
+								</template>
+							</template>
+                                 <template if:true={showCPLookup}>
+											<div style="margin-left : 10px;margin-right : 50px; background: #ffff;">
+												<ul class="slds-list_vertical-space">
+													<template for:each={cpList} for:item="actObj">
+													<li key={actObj.Id} onclick={handleParentSelection}
+															data-value={actObj.CP_Account__r.Id} data-id={actObj.Id} data-label={actObj.CP_Account__r.Name}
+															class="slds-p-around_small slds-text-link"
+															style="cursor: pointer;">
+															{actObj.CP_Account__r.Name}
+														</li>
+													</template>
+												</ul>
+											</div>
+								</template>
+						</template>
+						<template if:true={acc}>
+							<div style="display: flex;">
+								<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+									<label>Referrer Name</label>
+									<lightning-input type="text" value={referrerName} onchange={handleReferrerName}>
+									</lightning-input>
+								</div>
+								<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+									<label>Referrer Existing Project Name</label>
+									<lightning-input type="text" value={referrerExistingProject}
+										onchange={handleReferrerExistingProject}></lightning-input>
+								</div>
+							</div>
+							<div style="display: flex;">
+								<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+									<label>Referrer Existing Unit Number</label>
+									<lightning-input type="text" value={referrerExistingUnitNumber}
+										onchange={handleReferrerExistingUnitNumber}></lightning-input>
+								</div>
+								<div class="slds-p-around_medium user-input-box" style="width: 48%;">
+									<label>Referrer Mobile Number</label>
+									<lightning-input type="text" value={referrerMobile} onchange={handleReferrerMobile}>
+									</lightning-input>
+								</div>
+							</div>
+						</template>
+						<lightning-button variant="brand" label="Next" title="Next" onclick={handleNextOnfourthPage}
+							style="float:right; padding-right: 40px;"></lightning-button>
+						<lightning-button variant="brand" label="Previous" title="Previous"
+							onclick={handlePreviousOnfourthPage} style="float: left; padding-left: 20px;">
+						</lightning-button><br><br><br>
+                    </lightning-record-edit-form>
+				</div>
+			</div>
+		</template>
+		<!------------------------------------------------------- Requirement Details ---------------------------------------------------------------->
+		<template if:true={fifthPage}>
+			<div class="body">
+				<div class="container">
+					<center>
+						<div style="width:400px">
+							<lightning-formatted-rich-text value={projectimage}></lightning-formatted-rich-text>
+						</div>
+					</center>
+					<h1 class="form-title">Requirement Details</h1><br>
+					<div class="slds-p-around_medium user-input-box">
+						<label>Please state the configuration you are interested in?</label>
+						<lightning-combobox style="width:100% !important;" value={config} placeholder="--Select--"
+							options={configOptions} onchange={handleConfig}>
+						</lightning-combobox>
+					</div>
+					<lightning-button variant="brand" label="Finish" title="Finish" onclick={handleSubmitOnFifthPage}
+						style="float:right; padding-right: 40px;"></lightning-button>
+					<lightning-button variant="brand" label="Previous" title="Previous"
+						onclick={handlePreviousOnFifthPage} style="float:left; padding-left: 20px;"></lightning-button>
+					<br><br>
+                </div>
+				</div>
+				<template if:true={isLoading}>
+					<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+					</lightning-spinner>
+				</template>
+		</template>
+		<!------------------------------------------------------- Thank You Page -------------------------------------------------------------------->
+		<template if:true={showSuccessMessage}>
+			<div class="body">
+				<div class="container">
+					<div class="slds-p-around_medium slds-align_absolute-center user-input-box">
+						<p style="font-size: 27px;">Thank You..!!!</p><br>
+						<p style="font-size: 27px;">Your Site Visit {svNaame} Has Been Created Successfully</p><br>
+						<p style="color: blue; font-size: 27px; cursor: pointer;" onclick={handleCheckHere}>Click Here
+						</p>
+					</div>
+					<div class="slds-align_absolute-center" style="margin: 20px !important;">
+						<button title="Close" onclick={handleclose} style="margin: 20px !important;" class="btn">Close</button>
+					</div>
+				</div>
+			</div>
+		</template>
+		<template if:true={showErrorMessage}>
+			<div class="body">
+				<div class="container">
+					<div class="slds-p-around_medium slds-align_absolute-center user-input-box">
+						<!-- <label>{messages}</label> 
+                        <label>{errorMessages}</label>-->
+						<span class="slds-assistive-text">Error</span>
+						<h2>Error</h2>
+						<ul>
+							<!-- <template for:each={errorMessages} for:item="error">
+                                <li key={error}>{error}</li>
+                            </template> -->
+							<p>{errorMessages}</p>
+						</ul>
+					</div>
+					<div class="slds-align_absolute-center" style="margin: 20px !important;">
+						<button title="Close" onclick={handleclose} style="margin: 20px !important;" class="btn">Close</button>
+					</div>
+				</div>
+			</div>
+		</template>
+	</lightning-card>
+</template>

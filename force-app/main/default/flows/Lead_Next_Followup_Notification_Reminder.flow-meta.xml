@@ -3,27 +3,15 @@
     <actionCalls>
         <name>Sendnotification</name>
         <label>Sendnotification</label>
-        <locationX>1143</locationX>
-        <locationY>278</locationY>
+        <locationX>799</locationX>
+        <locationY>301</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
-                <elementReference>CustomNotificationtype.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
-            <value>
-                <elementReference>notificationbody</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Lead Next Follow up Reminder</stringValue>
+                <elementReference>getCustomNotification.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -33,20 +21,31 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Lead Next Follow up Reminder</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>notificationbody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>targetId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
         <nameSegment>customNotificationAction</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Assign</name>
         <label>Assign</label>
-        <locationX>953</locationX>
-        <locationY>283</locationY>
+        <locationX>535</locationX>
+        <locationY>312</locationY>
         <assignmentItems>
             <assignToReference>owner</assignToReference>
             <operator>Add</operator>
@@ -81,10 +80,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>CustomNotificationtype</name>
-        <label>CustomNotificationtype</label>
-        <locationX>944</locationX>
-        <locationY>93</locationY>
+        <name>getCustomNotification</name>
+        <label>getCustomNotification</label>
+        <locationX>211</locationX>
+        <locationY>342</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign</targetReference>
@@ -94,7 +93,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>LeadNextFollowupNotification</stringValue>
+                <stringValue>LeadNextFollowupNotificationReminder</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -102,14 +101,22 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>490</locationX>
+        <locationX>401</locationX>
         <locationY>48</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Presale_Next_Follow_up_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>Lead__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <name>Schedule</name>
             <connector>
-                <targetReference>CustomNotificationtype</targetReference>
+                <targetReference>getCustomNotification</targetReference>
             </connector>
             <label>Schedule</label>
             <offsetNumber>-15</offsetNumber>

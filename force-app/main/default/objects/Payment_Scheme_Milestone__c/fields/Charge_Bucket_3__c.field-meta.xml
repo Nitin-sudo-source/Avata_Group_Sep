@@ -8,6 +8,23 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Charge_Bucket</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Agreement Value</fullName>
+                <default>false</default>
+                <label>Agreement Value</label>
+            </value>
+            <value>
+                <fullName>Other Charges</fullName>
+                <default>false</default>
+                <label>Other Charges</label>
+            </value>
+            <value>
+                <fullName>Statutory Charges</fullName>
+                <default>false</default>
+                <label>Statutory Charges</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,0 +1,19 @@
+<apex:page showHeader="false" sidebar="false">
+    <title>Satyam</title>
+    <apex:includeLightning />  
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:ResourceLink", function()
+                   {
+                       $Lightning.createComponent("c:staticResourceLink",
+                                                  { 
+                                                      paramValue: '{!$CurrentPage.parameters.qString}'
+                                                  },
+                                                  "LightningComponentid",
+                                                  function(cmp) {
+                                                   
+                                                      //console.log('LWC Componenet added in VF page');
+                                                  });
+                   });
+    </script>
+</apex:page>

@@ -16,12 +16,12 @@
                 <componentInstanceProperties>
                     <name>icon</name>
                     <type>decorator</type>
-                    <value>fallback</value>
+                    <value>call</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
                     <type>decorator</type>
-                    <value>Call</value>
+                    <value>Phone</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>scrollable</name>
@@ -33,8 +33,8 @@
                     <type>decorator</type>
                     <value>340</value>
                 </componentInstanceProperties>
-                <componentName>CallPanel</componentName>
-                <identifier>CallPanel</identifier>
+                <componentName>opencti:softPhone</componentName>
+                <identifier>opencti_softPhone</identifier>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>
@@ -44,7 +44,7 @@
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
-    <masterLabel>PreSales App UtilityBar</masterLabel>
+    <masterLabel>Presales App UtilityBar</masterLabel>
     <template>
         <name>one:utilityBarTemplateDesktop</name>
         <properties>

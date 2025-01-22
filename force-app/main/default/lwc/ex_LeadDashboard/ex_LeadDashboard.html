@@ -1,0 +1,346 @@
+<template>
+	<div style="display: flex; flex-direction: column; flex-grow: 1;">
+		<!-- class="slds-p-around_medium custom-card" -->
+		<div class="header">
+			<!-- <img src={imagePath} alt="Image description" class="slds-m-right_small image-style"> -->
+			<img src={whatsappIcon} alt="Whatsapp Icon" class="whatsapp-icon">
+			<h1 class="header-text">Whatsapp Bulk Assignment</h1>
+		</div>
+
+		<lightning-card style="background-color: #e60000;">
+			<div class="slds-grid slds-gutters" style="margin-left: 2vh; margin-right: 2vh;">
+    <div class="slds-col slds-size_1-of-4">
+        <label>Object</label>
+        <strong>
+            <lightning-combobox label="Object" placeholder="Select Object" value={object} onchange={handleObject} options={ObjectOptions} variant="label-hidden"></lightning-combobox>
+        </strong>
+    </div>
+
+    <div class="slds-col slds-size_1-of-4">
+        <label>Project</label>
+        <lightning-record-edit-form object-api-name="Lead__c">
+            <strong>
+                <lightning-input-field field-name="Project__c" value={projectFilter} onchange={handleProjectChange} variant="label-hidden"></lightning-input-field>
+            </strong>
+        </lightning-record-edit-form>
+    </div>
+
+    <template if:true={showtempcategory}>
+        <div class="slds-col slds-size_1-of-4">
+            <label>Template Category</label>
+            <strong>
+                <lightning-combobox label="Template Category" placeholder="Select Category" value={category} onchange={handlecategory} options={categoryList} variant="label-hidden"></lightning-combobox>
+            </strong>
+        </div>
+    </template>
+
+    <div class="slds-col slds-size_1-of-4">
+        <template if:true={notemplates}>
+            <div style="color: #e60000; font-weight: bold; width: fit-content; text-align: center;">
+                No Template Available For Selected Category!
+            </div>
+        </template>
+
+        <template if:true={viewtemplates}>
+            <label>Template</label>
+            <strong>
+                <lightning-combobox label="Template" placeholder="Select Template" value={selectedtemplate} onchange={handleselectedtemplate} options={templateList} variant="label-hidden"></lightning-combobox>
+            </strong>
+        </template>
+    </div>
+</div>
+
+<template if:true={viewdata}>
+   <div class="mainfilter slds-grid slds-wrap">
+    <div class="slds-col slds-size_1-of-4 slds-p-around_small" style=" padding-left: 23px;padding-right:8px;">
+        <label>Start Date</label>
+        <strong>
+            <lightning-input type="datetime-local" label="Start Date" value={startDate} onchange={handleStartDateChange} variant="label-hidden"></lightning-input>
+        </strong>
+        <p if:true={showStartDateError} class="slds-text-color_error">Please select start date.</p>
+    </div>
+    <div class="slds-col slds-size_1-of-4 slds-p-around_small" style=" padding-left: 16px;padding-right: 14px;">
+        <label>End Date</label>
+        <strong>
+            <lightning-input type="datetime-local" label="End Date" value={endDate} onchange={handleEndDateChange} variant="label-hidden"></lightning-input>
+        </strong>
+        <p if:true={showEndDateError} class="slds-text-color_error">Please fill end date.</p>
+    </div>
+    <div class="slds-col slds-size_1-of-4 slds-p-around_small" style=" padding-left: 10px;padding-right: 19px;">
+        <template if:true={islead}>
+            <lightning-record-edit-form object-api-name="Lead__c">
+                <label>Lead Status</label>
+                <strong>
+                    <lightning-input-field field-name="Lead_Stage__c" value={Status} onchange={handleStatus} variant="label-hidden"></lightning-input-field>
+                </strong>
+            </lightning-record-edit-form>
+        </template>
+        <template if:true={isopp}>
+            <lightning-record-edit-form object-api-name="Opportunity__c">
+                <label>Opportunity Status</label>
+                <strong>
+                    <lightning-input-field field-name="Opportunity_Stage__c" value={Status} onchange={handleStatus} variant="label-hidden"></lightning-input-field>
+                </strong>
+            </lightning-record-edit-form>
+        </template>
+        <template if:true={isbooking}>
+            <lightning-record-edit-form object-api-name="Booking__c">
+                <label>Booking Status</label>
+                <strong>
+                    <lightning-input-field field-name="Booking_Stage__c" value={Status} onchange={handleStatus} variant="label-hidden"></lightning-input-field>
+                </strong>
+            </lightning-record-edit-form>
+        </template>
+    </div>
+    <div class="slds-col slds-size_1-of-4 slds-p-around_small" style=" padding-left: 10px;padding-right: 23px;">
+        <lightning-record-edit-form object-api-name="Lead__c">
+            <label>Owner Name</label>
+            <strong>
+                <lightning-input-field field-name="Presales_Manager__c" value={ownername} onchange={handleownerchange} variant="label-hidden"></lightning-input-field>
+            </strong>
+        </lightning-record-edit-form>
+    </div>
+</div>
+
+
+
+
+					
+
+					<div
+						style="display: flex; justify-content: center; align-items: center; margin-top: 2vh; margin-bottom: 2vh;">
+						
+						<lightning-button class="button" label="Apply Filter" onclick={applyFilter} variant="brand"
+							icon-name="utility:filter"></lightning-button>
+					</div>
+
+
+				
+
+				<!--<div>
+					<div class="slds-grid slds-gutters" style="margin-left: 2vh; margin-right: 2vh; margin-top: 2vh;">
+						<lightning-record-edit-form object-api-name="Lead__c">
+							<div style="display:flex; width:100%">
+								<template if:true={islead}>
+									<div style="width: 608px;padding-left: 12px;">
+										<label>Lead Status</label>
+										<strong><lightning-input-field field-name="Lead_Stage__c" value={Status} onchange={handleStatus} variant="label-hidden"></lightning-input-field></strong>
+									</div>
+								</template>
+								<lightning-record-edit-form object-api-name="Opportunity__c">
+									<template if:true={isopp}>
+										<div style="width: 608px;padding-left: 12px;">
+											<label> Opportunity Status</label>
+											<strong><lightning-input-field field-name="Opportunity_Stage__c" value={Status} onchange={handleStatus} variant="label-hidden"></lightning-input-field></strong>
+										</div>
+
+									</template>
+
+								</lightning-record-edit-form>
+
+								<lightning-record-edit-form object-api-name="Booking__c">
+									<template if:true={isbooking}>
+										<div style="width: 608px;padding-left: 12px;">
+											<label> Booking Status</label>
+											<strong><lightning-input-field field-name="Booking_Stage__c" value={Status} onchange={handleStatus} variant="label-hidden"></lightning-input-field></strong>
+										</div>
+
+									</template>
+
+								</lightning-record-edit-form>
+
+
+								<div style="width: 716px;padding-left: 22px;padding-right: 98px;">
+									<label>Owner Name</label>
+
+									<strong><lightning-input-field field-name="Presales_Manager__c" value={ownername} onchange={handleownerchange} variant="label-hidden"></lightning-input-field></strong>
+
+
+								</div>
+
+
+							</div>
+
+						</lightning-record-edit-form>
+
+					</div>
+
+					<div
+						style="display: flex; justify-content: center; align-items: center; margin-top: 2vh; margin-bottom: 2vh;">
+						
+						<lightning-button class="button" label="Apply Filter" onclick={applyFilter} variant="brand"
+							icon-name="utility:filter"></lightning-button>
+					</div>
+				</div> -->
+
+
+				<template if:true={filteredLeads}>
+					<lightning-icon icon-name="Utility:record_alt" alternative-text="Records" size="xx-small"
+						variant="inverse"></lightning-icon>
+
+					<!-- Main Div to display the Pop up -->
+					<div class="slds-grid slds-gutters" style="margin-left: 2vh; margin-right: 2vh;">
+
+						<div class="slds-size_1-of-2"
+							style="border: 1px solid #c2c2c2; border-radius: var(--lwc-borderRadiusMedium,0.25rem); background-color: white; margin-right: 2px;">
+							<div class="slds-modal__header main slds-text-align_left">
+								<lightning-icon size="medium" icon-name="standard:document_preview"></lightning-icon>
+								<label class="head">Template Preview</label>
+							</div>
+							<div style="margin: 5px;padding:15px;">
+								<strong><label>Template</label></strong>
+								<pre class="wrapped-text">{samplePreview}</pre>
+							</div>
+						</div>
+
+						<!--<div class=" slds-size_1-of-2"
+							style="border: 1px solid #c2c2c2;border-radius: var(--lwc-borderRadiusMedium,0.25rem); background-color: white; margin-right: 2px;">
+							<div class="slds-modal__header main slds-text-align_left">
+								<lightning-icon size="medium" icon-name="standard:document_preview"></lightning-icon>
+								<label class="head">Template Preview</label>
+							</div>
+							<div style="margin: 5px;">
+								
+								<strong><label>Template</label></strong>
+								
+								<pre>{samplePreview}</pre>
+								
+							</div>
+						</div>-->
+
+						<!-- To display Sample Records without Button -->
+						<div class=" slds-size_1-of-2"
+							style="border: 1px solid #c2c2c2;border-radius: var(--lwc-borderRadiusMedium,0.25rem);background-color: white; margin-left: 2px;">
+							<div class="slds-modal__header main slds-text-align_left">
+								<lightning-icon size="medium" icon-name="standard:record"></lightning-icon>
+								<label class="head">Sample Records</label>
+							</div>
+							<div>
+								<lightning-datatable class="myTable" key-field="Id" data={SampleRecords}
+									show-row-number-column row-number-offset={rowOffset} columns={columns}
+									hide-checkbox-column>
+								</lightning-datatable>
+							</div>
+						</div>
+
+					</div>
+
+					<div style="display: flex; flex-direction: column; align-items: center; margin-right: 7vw;">
+						<h2
+							style="padding: 1vh; font-size: large; font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');font-weight: bold;">
+							Total No of Records .: {totalsize}</h2>
+						<!-- <h2 style="padding: 1vh; font-size: large; font-family: math, sans-serif;"> Selected No of Records .: {selectedsize}</h2> -->
+					</div>
+
+					<!-- <div style="display: flex; justify-content: center; align-items: center; margin-top: 2vh; margin-bottom: 2vh;">
+                    <lightning-button style="margin-right: 5px;" label="Preview Sample Records" onclick={showSampleRecordButton} variant="brand" icon-name="utility:preview"></lightning-button>
+                </div> -->
+
+					<div class="slds-p-around_medium">
+						<div if:true={showSuccessMessage} class="success-msg">
+							<i class="fa fa-check"></i>
+							Bulk Message Sent Successfully
+						</div>
+						<!-- <p >Bulk Message Sent Successfully</p> -->
+					</div>
+				</template>
+				<div if:true={sendbtn}
+					style="display: flex; justify-content: center; align-items: center; margin-top: 2vh; margin-bottom: 2vh;">
+					<lightning-button class="button" label="Send" onclick={handleSubmit} variant="brand"
+						icon-name="utility:send"></lightning-button>
+				</div>
+			</template>
+
+		</lightning-card>
+	</div>
+
+	<!-- Display the Template -->
+	<template if:true={showTemplate}>
+		<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header main slds-text-align_left">
+					<lightning-icon size="medium" icon-name="standard:document_preview"></lightning-icon>
+					<label class="head">Preview</label>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<lightning-record-view-form record-id={selectedtemplate} object-api-name="Whatsapp_Template__c">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<strong><label>Template</label></strong>
+								<lightning-output-field field-name="Template__c" variant="label-hidden">
+								</lightning-output-field>
+								<!-- <lightning-output-field field-name="Website"></lightning-output-field> -->
+							</div>
+							<!-- <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Industry"></lightning-output-field>
+                                <lightning-output-field field-name="AnnualRevenue"></lightning-output-field>
+                            </div> -->
+						</div>
+					</lightning-record-view-form>
+
+				</div>
+				<div class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCloseTemplate}>Cancel</button>
+				</div>
+
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+
+	<!-- Display Sample Record -->
+	<template if:true={showSampleRecord}>
+		<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header main slds-text-align_left">
+					<lightning-icon size="medium" icon-name="standard:record"></lightning-icon>
+					<label class="head">Sample Records</label>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+
+					<lightning-datatable class="myTable" key-field="Id" data={SampleRecords} show-row-number-column
+						row-number-offset={rowOffset} columns={columns} hide-checkbox-column>
+					</lightning-datatable>
+
+				</div>
+				<div class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCloseSampleRecord}>Cancel</button>
+				</div>
+
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+
+	<!-- Show the Spinner -->
+	<template if:true={showSpinner}>
+		<div>
+			<lightning-spinner alternative-text={helpText} size={size} class={spinnerClass} variant={variant}
+				data-text={helpText}></lightning-spinner>
+		</div>
+	</template>
+
+</template>
+
+<!-- <div class="filter-container">
+            <div class="upper-div">
+                <div>
+                    <strong><lightning-input type="date" label="Start Date" value={startDate} onchange={handleStartDateChange}></lightning-input></strong>
+                    <p if:true={showStartDateError} class="slds-text-color_error">Please select start date.</p>
+                </div>
+                <div>
+                    <strong><lightning-input type="date" label="End Date" value={endDate} onchange={handleEndDateChange}></lightning-input></strong>
+                    <p if:true={showEndDateError} class="slds-text-color_error">Please fill end date.</p>
+                </div>
+                <div>
+                    <lightning-record-edit-form object-api-name="Lead">
+                        <strong><lightning-input-field field-name="Project__c" value={projectFilter} onchange={handleProjectChange}></lightning-input-field></strong>
+                    </lightning-record-edit-form>
+                </div>
+            </div>
+            <div class="lower-div">
+                <lightning-button class="button" label="Apply Filter" onclick={applyFilter} variant="brand" icon-name="utility:filter"></lightning-button>
+            </div>
+        </div> -->

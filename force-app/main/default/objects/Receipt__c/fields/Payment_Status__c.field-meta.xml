@@ -7,7 +7,53 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>Payment_Status</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Payment Successful</fullName>
+                <default>false</default>
+                <label>Payment Successful</label>
+            </value>
+            <value>
+                <fullName>Payment Failed - Insufficient Funds</fullName>
+                <default>false</default>
+                <label>Payment Failed - Insufficient Funds</label>
+            </value>
+            <value>
+                <fullName>Payment Failed – Signature mismatch</fullName>
+                <default>false</default>
+                <label>Payment Failed – Signature mismatch</label>
+            </value>
+            <value>
+                <fullName>Payment Failed – PDC</fullName>
+                <default>false</default>
+                <label>Payment Failed – PDC</label>
+            </value>
+            <value>
+                <fullName>Payment Failed – Stop payment by client</fullName>
+                <default>false</default>
+                <label>Payment Failed – Stop payment by client</label>
+            </value>
+            <value>
+                <fullName>Payment Failed – Overwriting</fullName>
+                <default>false</default>
+                <label>Payment Failed – Overwriting</label>
+            </value>
+            <value>
+                <fullName>Payment Failed – Amount Mismatch</fullName>
+                <default>false</default>
+                <label>Payment Failed – Amount Mismatch</label>
+            </value>
+            <value>
+                <fullName>Payment in Process</fullName>
+                <default>false</default>
+                <label>Payment in Process</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

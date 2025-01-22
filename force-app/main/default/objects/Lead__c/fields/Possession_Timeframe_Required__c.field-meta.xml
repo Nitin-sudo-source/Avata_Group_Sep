@@ -7,12 +7,18 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Ready to Move in (RTMI)</fullName>
+                <fullName>RTMI (Ready to Move in)</fullName>
                 <default>false</default>
-                <label>Ready to Move in (RTMI)</label>
+                <label>RTMI (Ready to Move in)</label>
+            </value>
+            <value>
+                <fullName>Under Construction (UC – 6 months to 1 year)</fullName>
+                <default>false</default>
+                <label>Under Construction (UC – 6 months to 1 year)</label>
             </value>
             <value>
                 <fullName>Under Construction (UC – 1 to 2 years)</fullName>

@@ -8,6 +8,53 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Occupation</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Employed in Pvt. company</fullName>
+                <default>false</default>
+                <label>Employed in Pvt. company</label>
+            </value>
+            <value>
+                <fullName>Govt. Employee</fullName>
+                <default>false</default>
+                <label>Govt. Employee</label>
+            </value>
+            <value>
+                <fullName>Shop owner</fullName>
+                <default>false</default>
+                <label>Shop owner</label>
+            </value>
+            <value>
+                <fullName>Professionals like lawyers, doctors, CAs, etc</fullName>
+                <default>false</default>
+                <label>Professionals like lawyers, doctors, CAs, etc</label>
+            </value>
+            <value>
+                <fullName>Retired</fullName>
+                <default>false</default>
+                <label>Retired</label>
+            </value>
+            <value>
+                <fullName>Homemaker / Housewife</fullName>
+                <default>false</default>
+                <label>Homemaker / Housewife</label>
+            </value>
+            <value>
+                <fullName>Freelancer</fullName>
+                <default>false</default>
+                <label>Freelancer</label>
+            </value>
+            <value>
+                <fullName>Business</fullName>
+                <default>false</default>
+                <label>Business</label>
+            </value>
+            <value>
+                <fullName>Professionals</fullName>
+                <default>false</default>
+                <label>Professionals</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

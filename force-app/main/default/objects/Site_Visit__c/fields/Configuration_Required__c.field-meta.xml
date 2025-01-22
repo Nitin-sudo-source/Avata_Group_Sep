@@ -8,6 +8,53 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Configuration_Required</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1 BHK</fullName>
+                <default>false</default>
+                <label>1 BHK</label>
+            </value>
+            <value>
+                <fullName>1.5 BHK</fullName>
+                <default>false</default>
+                <label>1.5 BHK</label>
+            </value>
+            <value>
+                <fullName>2 BHK</fullName>
+                <default>false</default>
+                <label>2 BHK</label>
+            </value>
+            <value>
+                <fullName>3 BHK</fullName>
+                <default>false</default>
+                <label>3 BHK</label>
+            </value>
+            <value>
+                <fullName>4 BHK</fullName>
+                <default>false</default>
+                <label>4 BHK</label>
+            </value>
+            <value>
+                <fullName>5 BHK</fullName>
+                <default>false</default>
+                <label>5 BHK</label>
+            </value>
+            <value>
+                <fullName>Villa</fullName>
+                <default>false</default>
+                <label>Villa</label>
+            </value>
+            <value>
+                <fullName>Shop</fullName>
+                <default>false</default>
+                <label>Shop</label>
+            </value>
+            <value>
+                <fullName>Office</fullName>
+                <default>false</default>
+                <label>Office</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

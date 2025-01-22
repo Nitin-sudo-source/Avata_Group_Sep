@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Template</name>
+        <label>Send Template</label>
+        <locationX>752</locationX>
+        <locationY>127</locationY>
+        <actionName>Ex_WhatsappMessageServicesNew</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>id_templateIdList</name>
+            <value>
+                <stringValue>{!$Record.Id},af7e1428-8548-46a3-90db-5dc6ffca690c</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>Ex_WhatsappMessageServicesNew</nameSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <description>Send Whatsapp Message When Lead is Inserted</description>
+    <environments>Default</environments>
+    <interviewLabel>Send Whatsapp Message {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Whatsapp Message</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>330</locationX>
+        <locationY>49</locationY>
+        <connector>
+            <targetReference>Send_Template</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Mobile__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsConverted__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Lead__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

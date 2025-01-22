@@ -1,0 +1,22 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 13-01-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<template>
+    <lightning-card title="Tell us more about your interests">
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="button-container">
+            <template for:each={picklistValues} for:item="value">
+                <button key={value} class="picklist-button" data-value={value} onclick={handleButtonClick}>
+                    {value}
+                </button>
+            </template>
+        </div>
+        <lightning-button label="Continue" onclick={handleNext} class="next-button"></lightning-button>
+    </lightning-card>
+</template>

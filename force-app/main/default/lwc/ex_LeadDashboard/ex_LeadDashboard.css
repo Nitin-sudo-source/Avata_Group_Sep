@@ -1,0 +1,124 @@
+:host {
+    --header-color: #128c7e;
+    --primary-color: #FFFFFF;
+    --secondary-color: #2b93d8;
+    --chat-color: #dcf8c6;
+    --background-color: #ece5dd;
+    --gray-color: #A5ADB2;
+    --sds-c-card-color-background: #ece5dd;
+}
+
+img {
+    max-height: 7vh;
+}
+
+.custom-card {
+background-color: #128C7E; 
+font-size: 14px;
+color: white;
+}
+
+.header {
+    background-color: var(--header-color);
+    color: white;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    border-top-left-radius: 2vh;
+    border-top-right-radius: 2vh;
+}
+
+.whatsapp-icon {
+    max-height: 7vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+.header-text {
+    font-size: x-large;
+    font-weight: 500;
+    margin-left: 1vh;
+    font-family: math, sans-serif;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+.upper-div {
+    display: flex;
+}
+
+.lower-div {
+    display: flex;
+}
+
+lightning-button.button {
+    --sds-c-button-brand-color-background: #128C7E;
+    --sds-c-button-brand-color-border: #0f7166;
+    --sds-c-button-brand-color-background-hover: #0f7166;
+    --sds-c-button-brand-color-border-hover: #128C7E;
+    --sds-c-button-text-color: #f4f7f9;
+}
+
+/* lightning-button > button {
+    min-height: 6vh;
+    min-width: 14vw;
+} */
+
+.image-style {
+    width: 50px; 
+    height: 50px; 
+}
+
+.spinner-large::after {
+    position: absolute;
+    content: attr(data-text);
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    top: calc(50% + 3em);
+}
+/* 
+label{
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+} */
+
+.head{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');
+    margin: 10px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+.main{
+    background-color: rgb(240, 240, 240);
+    border-bottom: 1px solid #c2c2c2;
+}
+.wrapped-text {
+        width: 850px; /* Adjust this width to get the desired number of words per line */
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .mainfilter{
+        
+    }

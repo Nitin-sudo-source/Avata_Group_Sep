@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Incoming</fullName>
+        <default>true</default>
+        <label>Incoming</label>
+    </customValue>
+    <customValue>
+        <fullName>Spoken Not Pitched</fullName>
+        <default>false</default>
+        <label>Spoken Not Pitched</label>
+    </customValue>
+    <customValue>
+        <fullName>Prospects</fullName>
+        <default>false</default>
+        <label>Prospects</label>
+    </customValue>
+    <customValue>
+        <fullName>Visit confirmed</fullName>
+        <default>false</default>
+        <label>Visit confirmed</label>
+    </customValue>
+    <customValue>
+        <fullName>Visit Done</fullName>
+        <default>false</default>
+        <label>Visit Done</label>
+    </customValue>
+    <customValue>
+        <fullName>Lost</fullName>
+        <default>false</default>
+        <label>Lost</label>
+    </customValue>
+    <masterLabel>Lead Stage</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

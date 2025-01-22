@@ -7,7 +7,43 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>Receipt_Type</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Flat Cost</fullName>
+                <default>false</default>
+                <label>Flat Cost</label>
+            </value>
+            <value>
+                <fullName>Tax</fullName>
+                <default>false</default>
+                <label>Tax</label>
+            </value>
+            <value>
+                <fullName>Stamp Duty</fullName>
+                <default>false</default>
+                <label>Stamp Duty</label>
+            </value>
+            <value>
+                <fullName>Registration Charges</fullName>
+                <default>false</default>
+                <label>Registration Charges</label>
+            </value>
+            <value>
+                <fullName>Other Charges</fullName>
+                <default>false</default>
+                <label>Other Charges</label>
+            </value>
+            <value>
+                <fullName>Interest Flat Cost</fullName>
+                <default>false</default>
+                <label>Interest Flat Cost</label>
+            </value>
+            <value>
+                <fullName>Interest GST</fullName>
+                <default>false</default>
+                <label>Interest GST</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

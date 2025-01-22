@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 15-01-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 public class Ex_PrintBookingPDF {
     public string bId { get; set; }
     public Booking__c bk { get; set; }
@@ -5,10 +12,17 @@ public class Ex_PrintBookingPDF {
     public List<applicant__c> apList { get; set; }
     public List<Receipt__c> rtList { get; set; }
     public List<Car_Park__c> carList { get; set; }
-
     public String amountInWords { get; set; }
     public decimal countOfIds { get; set; }
     public string stringCar { get; set; }
+    public String agreementValue {get;set;}
+    public String projectName {get;set;}
+    public String unitName {get;set;}
+    public String unitFloor {get;set;}
+    public String unitConfi {get;set;}
+    public String unitCarpetArea {get;set;}
+    public String carParkAllotment {get;set;}
+    
 
     public List<String> termsList { get; set; } // Terms list for storing multiple terms
     public List<ApplicantWrapper> ApplicantWrapperList { get; set; }
@@ -23,24 +37,45 @@ public class Ex_PrintBookingPDF {
         rtList = new List<Receipt__c>();
         termsList = new List<String>(); // Initialize the terms list
         ApplicantWrapperList = new List<ApplicantWrapper>();
+        agreementValue = '';
+        unitCarpetArea = '';
+        unitConfi = '';
+        unitFloor = '';
+        unitName = '';
 
         if (bId != null) {
             // Fetch Booking details
             bkList = [
-                SELECT Id, Name, Agreement_Value__c, Project__r.Project_Logo__c, Booking_Date__c, Tower__r.Name,
-                       Unit__r.Name, Unit__r.Configuration_Type__c, Unit__r.RERA_Carpet_Area_Sq_Ft__c, 
-                       Project__r.Booking_Terms_and_Conditions_2__c  // Fetching the terms from Project__c
+                SELECT Id, Name, Primary_Applicant_Address__c, Project__r.Name, Agreement_Value__c, Unit__r.Floor__c, Project__r.Project_Logo__c, Booking_Date__c, Tower__r.Name,
+                       Unit__r.Name, Unit__r.Configuration_Type__c, Unit__r.RERA_Carpet_Area_Sq_Ft__c, Car_Park_Allotment_Count__c, 
+                       Project__r.Booking_Terms_and_Conditions_2__c  
                 FROM Booking__c 
                 WHERE Id = :bId
             ];
 
-            if (!bkList.isEmpty()) {
+            if (!bkList.isEmpty() && bkList != null) {
+
                 Booking__c booking = bkList[0];
-                
-                // Convert Agreement value to words if available
                 if (booking.Agreement_Value__c != null) {
+                    agreementValue = Ex_InventoryPriceManagementServices.currencyFormat(booking.Agreement_Value__c);
                     amountInWords = Ex_NumberToWord.convertNumbertoWords(Integer.valueOf(booking.Agreement_Value__c));
                 }
+                if(booking.Project__c != null){
+                    projectName = booking.Project__r.Name;
+                }
+                if(booking.Unit__c != null){
+                    unitName = booking.Unit__r.Name;
+                }
+                if(booking.Unit__r.Configuration_Type__c != null){
+                    unitConfi = booking.Unit__r.Configuration_Type__c;
+                }
+                if(booking.Unit__r.Floor__c != null){
+                    unitFloor = String.valueOf(booking.Unit__r.Floor__c);
+                }
+                if(booking.Unit__r.RERA_Carpet_Area_Sq_Ft__c != null){
+                    unitCarpetArea = String.valueof(booking.Unit__r.RERA_Carpet_Area_Sq_Ft__c);
+                }
+
 
                 // Fetch Car Park details
                 carList = [SELECT Id FROM Car_Park__c WHERE Booking__c = :bId];
@@ -59,7 +94,7 @@ public class Ex_PrintBookingPDF {
 
                 // Fetch Applicants
                 apList = [
-                    SELECT Id, Name, Applicant_Number__c, Applicant_Title__c, DOB__c, Anniversary_Date__c, 
+                    SELECT Id, Aadhar_Number__c, Name, Applicant_Number__c, Applicant_Title__c, DOB__c, Anniversary_Date__c, 
                            Occupation__c, Mobile__c, Email__c, PAN_Number__c, Permanent_Address__c, 
                            Country__c, State__c, City__c, PIN__c
                     FROM Applicant__c 
@@ -73,6 +108,7 @@ public class Ex_PrintBookingPDF {
                         applicant.Applicant_Title__c,
                         applicant.Applicant_Number__c,
                         applicant.Name,
+                       
                         null, // Gender (not available in the queried fields)
                         applicant.DOB__c,
                         applicant.Anniversary_Date__c,
@@ -89,7 +125,8 @@ public class Ex_PrintBookingPDF {
                         applicant.State__c,
                         applicant.Country__c,
                         applicant.City__c,
-                        applicant.PIN__c
+                        applicant.PIN__c,
+                        applicant.Aadhar_Number__c
                     ));
                 }
 
@@ -122,12 +159,13 @@ public class Ex_PrintBookingPDF {
         public String permCountry { get; set; }
         public String permCity { get; set; }
         public String permPIN { get; set; }
+        public String applicantAadhar {get; set;}
 
         public ApplicantWrapper(String apTitle, String applicantNumber, String applicantName, String applicantGender, 
                                 Date applicantDOB, Date applicantAnivserD, String applicantOccupation, String applicantMobile, 
                                 String applicantPAN, String applicantEmail, String commAddress, String commState, 
                                 String commCountry, String commCity, String commPIN, String permAddress, String permState, 
-                                String permCountry, String permCity, String permPIN) {
+                                String permCountry, String permCity, String permPIN, String applicantAadhar) {
             this.apTitle = apTitle;
             this.applicantNumber = applicantNumber;
             this.applicantName = applicantName;
@@ -148,6 +186,7 @@ public class Ex_PrintBookingPDF {
             this.permCountry = permCountry;
             this.permCity = permCity;
             this.permPIN = permPIN;
+            this.applicantAadhar = applicantAadhar;
         }
     }
 }

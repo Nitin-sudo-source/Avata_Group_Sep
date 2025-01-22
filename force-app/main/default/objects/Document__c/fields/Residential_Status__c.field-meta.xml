@@ -7,7 +7,73 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Type_Of_Applicant__c</controllingField>
         <restricted>true</restricted>
-        <valueSetName>Residential_Status</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Partnership Firm</fullName>
+                <default>false</default>
+                <label>Partnership Firm</label>
+            </value>
+            <value>
+                <fullName>For Company</fullName>
+                <default>false</default>
+                <label>For Company</label>
+            </value>
+            <value>
+                <fullName>Mumbai Resident</fullName>
+                <default>false</default>
+                <label>Mumbai Resident</label>
+            </value>
+            <value>
+                <fullName>Non-Mumbai Resident</fullName>
+                <default>false</default>
+                <label>Non-Mumbai Resident</label>
+            </value>
+            <value>
+                <fullName>Non-Resident Indian</fullName>
+                <default>false</default>
+                <label>Non-Resident Indian</label>
+            </value>
+            <value>
+                <fullName>For NRI</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>For NRI</label>
+            </value>
+            <value>
+                <fullName>Foreign Nationals Of Indian Origin</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Foreign Nationals Of Indian Origin</label>
+            </value>
+            <value>
+                <fullName>Indian National</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Indian National</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Individual Buyer</controllingFieldValue>
+            <valueName>Mumbai Resident</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Individual Buyer</controllingFieldValue>
+            <valueName>Non-Mumbai Resident</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Individual Buyer</controllingFieldValue>
+            <valueName>Non-Resident Indian</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate Buyer</controllingFieldValue>
+            <valueName>Partnership Firm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate Buyer</controllingFieldValue>
+            <valueName>For Company</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

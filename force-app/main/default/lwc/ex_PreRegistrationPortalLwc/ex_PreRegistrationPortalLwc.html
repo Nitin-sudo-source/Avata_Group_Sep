@@ -1,0 +1,132 @@
+<template>
+    <lightning-card>
+        <h1 class="my-heading"><b>Customer Pre-Registration</b></h1>
+        
+        <lightning-record-edit-form object-api-name="Visit_Pre_Registration__c">
+            <div style="Padding:10px;">
+    <table class="Table1Css" style="font-size:12px;">
+        <tr>
+            <th>Please Select Project  <span style="color: red;">*</span></th>
+            <td><lightning-combobox
+                placeholder="Select Project"
+                options={getCPData}
+                value={getCPData}
+                onchange={handleChange}
+                
+        ></lightning-combobox>
+        
+    </td>
+            <th>Customer Name  <span style="color: red;">*</span></th>
+            <td>
+                <lightning-input type="text"  id="customerName" onchange={getCustomerName} class="lightning-input"></lightning-input>
+
+            </td>
+        </tr>
+        <tr>
+            <th>Customer Mobile  <span style="color: red;">*</span></th>
+            <td>
+                <lightning-input type="Phone"  id="customerNo" onchange={getCustomerNumber} class="lightning-input" ></lightning-input>
+                <p if:true={isErrorMsg} style="text-align:left;font-size:12px;color:red;"><i>{isErrorMsg}</i></p>
+            </td>
+            <!-- <td colspan="2">
+            <template if:true={HidesendButton}>
+                <lightning-button variant="success" label="Send OTP" title="Send OTP" onclick={sendOTP} class="slds-m-left_x-small"></lightning-button>
+
+               <button class="buttoncss1" onclick={sendOTP}>Send OTP</button> 
+                </template> &nbsp;
+                    <template if:true={showResendButton}>
+                        <lightning-button variant="success" label="Resend OTP" title="Resend OTP" onclick={sendOTP} class="slds-m-left_x-small"></lightning-button>
+
+                    <button class="buttoncss" onclick={sendOTP}>Resend OTP</button>  
+                </template>
+            </td>-->
+        </tr>
+       <!-- <tr>
+            <th>OTP  <span style="color: red;">*</span></th>
+            <td colspan="1">
+                <lightning-input type="text" id="otp" class="lightning-input" onchange={handlechangeotp}></lightning-input>&nbsp;
+                
+                <p if:true={sendMessage} style="text-align:left;font-size:12px;color:green;"><i><b>{sendMessage}</b></i></p>
+            
+            <p if:true={errorMsg} style="text-align:left;font-size:12px;color:red;"><i><b>{errorMsg}</b></i></p>
+            </td>
+            <td colspan="2">
+                <lightning-button variant="destructive" label="Validate OTP" title="Validate OTP" onclick={ValidateOTP} class="slds-m-left_x-small"></lightning-button>
+
+                 <button class="buttoncss" onclick={ValidateOTP}>Validate OTP</button> 
+            </td>
+        </tr> -->
+        <tr>
+            <th>Budget Range  <span style="color: red;">*</span></th>
+            <td style="text-align:left;"><lightning-input-field type="picklist"
+                variant="label-hidden" field-name="Budget__c"
+                name="Budget__c" data-id="Budget__c"
+                onchange={handleBudget} 
+                ></lightning-input-field>
+                
+        </td>
+        <th>Configuration Required  <span style="color: red;">*</span> </th>
+        <td style="text-align:left;"><lightning-input-field type="picklist"
+            variant="label-hidden" field-name="Configuration_required__c"
+            name="Configuration_required__c" data-id="Configuration_required__c"
+            onchange={handleConfiguration} 
+            ></lightning-input-field></td>
+        </tr>
+        <tr>
+            <th>Visit DateTime  <span style="color: red;">*</span> </th>
+            <td colspan="3" style="text-align:left;"><lightning-input-field type="picklist"
+                variant="label-hidden" field-name="Visit_Date__c"
+                name="Visit_Date__c" data-id="Visit_Date__c" hour12={ampm} hour="2-digit" minute="2-digit"
+                onchange={handleVisitDate} 
+                ></lightning-input-field></td>
+
+        </tr>
+        <tr>
+            <th>Ola Pickup Facility for Customer  <span style="color: red;">*</span></th>
+            <td colspan="3" style="text-align:left;"><lightning-input-field 
+                variant="label-hidden" field-name="Ola_Pickup_Facility__c"
+                name="Ola_Pickup_Facility__c"  data-id="Ola_Pickup_Facility__c" value={getFacility}
+                onchange={handleFacility} 
+                ></lightning-input-field>
+        </td>
+        </tr>
+    </table>
+    </div>
+    </lightning-record-edit-form>
+    <template if:true={showPickup}>
+  <lightning-record-edit-form object-api-name="Ola_Pickup__c">
+    <div style="Padding:10px;">
+    <table class="Table1Css" style="font-size:12px;">
+        <tr>
+            <th colspan="4" style="text-align:center; font-size:14px;border: 1px solid black;padding:8px;    background:  #4fb7b2;
+        color: black; ">
+                Ola Pickup Details
+            </th>
+        </tr>
+        <tr>
+            <th style="text-align:left;">Pickup Location<span style="color: red;">*</span></th>
+            <td style="text-align:left;"><lightning-input-field type="picklist"
+                    variant="label-hidden" field-name="Pickup_Location__c"
+                    name="Pickup_Location__c" data-id="Pickup_Location__c"
+                    onchange={handleLocation} required="true"
+                    ></lightning-input-field>
+            </td>
+            <th style="text-align:left;">Pickup DateTime<span style="color: red;">*</span></th>
+            <td style="text-align:left;"><lightning-input-field 
+                    variant="label-hidden" field-name="Pickup_Datetime__c"
+                    name="Pickup_Datetime__c" data-id="Pickup_Datetime__c" hour12={ampm}
+                     onchange={handlePickupDateTime} hour="2-digit" minute="2-digit"
+                    required="true"></lightning-input-field>
+            </td>
+        </tr>
+    </table>
+    </div>
+    </lightning-record-edit-form>
+</template>
+        <br/>
+        <div class="slds-align_absolute-center" style="font-size: 18px;">
+            <lightning-button variant="success" label="Save" onclick={handleSave}></lightning-button>
+        </div>
+        
+        </lightning-card>
+        </template>

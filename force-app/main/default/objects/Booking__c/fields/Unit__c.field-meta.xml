@@ -4,8 +4,8 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Unit</label>
     <referenceTo>Unit__c</referenceTo>
-    <relationshipLabel>Booking</relationshipLabel>
-    <relationshipName>Booking</relationshipName>
+    <relationshipLabel>Bookings</relationshipLabel>
+    <relationshipName>Bookings</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

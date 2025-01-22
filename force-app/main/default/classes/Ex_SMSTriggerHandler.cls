@@ -3,12 +3,12 @@ public class Ex_SMSTriggerHandler {
          Set<Id> smsIdSet = new Set<Id>();
         
         for(SMS__c s: smsList) {
-            if(s.Id != null && s.Mobile__c != null) {
+            if(s.Id != null && s.Sender_Mobile_No__c != null) {
                 smsIdSet.add(s.Id);
             }
         }   
         if(!smsIdSet.isEmpty() && smsIdSet != null)
-            Ex_SMSTriggerHandlerServices.outboundSMS(smsIdSet);
+            Ex_SMSHandlerServices.outboundSMS(smsIdSet);
     }
 
 }

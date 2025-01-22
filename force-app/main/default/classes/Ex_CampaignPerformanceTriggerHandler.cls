@@ -1,11 +1,10 @@
 //-------------------------------------------//
-//  Project: Avant Infra 
-//  Created By: Exceller Tech
-//  Created Date: 30-08-2024
-//  Author: Sarjerao Deshmukh
+//  Client: Satyam Developers
+//  Created By: Exceller Consultancy
+//  Created Date: 17-10-2023
 //-------------------------------------------//
 public class Ex_CampaignPerformanceTriggerHandler {
-    public static void afterUpdate(Map<Id, Campaign_Performance__c> oldMap, Map<Id, Campaign_Performance__c> newMap) {
+     public static void afterUpdate(Map<Id, Campaign_Performance__c> oldMap, Map<Id, Campaign_Performance__c> newMap) {
         Set<Id> cIdSet = new Set<Id>();
         
         for(Campaign_Performance__c oldCP: oldMap.values()) {
@@ -17,4 +16,5 @@ public class Ex_CampaignPerformanceTriggerHandler {
         if(!cIdSet.isEmpty() && cIdSet != null)
             Ex_CampaignPerformanceHandlerServices.updateCampaignDetails(cIdSet);
     }
+
 }

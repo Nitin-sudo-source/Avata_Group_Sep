@@ -1,0 +1,86 @@
+<template>
+    <lightning-card>
+        <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Please wait...</div>
+        </div>
+        <h1 class="my-heading"><b>Car Park Allotment</b></h1>
+        <template if:true={isError}>
+            <p style="font-size:14px;color:red;text-align:center;"><b>&#9888;<i>{isError}</i></b></p>
+        </template><br />
+        <div style="padding: 10px; width: 50%; margin: 0 auto;">
+            <template if:true={getCPRWrapper}>
+            <table class="mainTablehover">
+                <tr>
+                    <th style="text-align:center">CarPark Type</th>
+                    <th style="text-align:center">Total Required Count</th>
+                    <th style="text-align:center">Alloted Count</th>
+                    <th style="text-align:center">Unalloted Count</th>
+                </tr>
+                <template for:each={getCPRWrapper} for:item="cpr" for:index="rowIndex">
+                    <tr key={cpr.id} data-type={cpr.carparktype} data-row-index={cpr.id} onclick={handleFilter}  >
+                        <td>{cpr.carparktype}</td>
+                        <td> {cpr.totalRequiredCount}</td>
+                        <td>{cpr.allotedCount}</td>
+                        <td>{cpr.unallotedCount}</td>
+                    </tr>
+                </template>
+            </table>
+        </template><br/>
+           
+        </div>
+        <template if:true={getCPRWrapper}>
+        <div class="content">
+            <div class="row">
+                
+                <template if:true={getCarparkData}>
+                    <template for:each={getCarparkData} for:item="floorData" key={floorData.floor}>
+                        <div key={floorData.floor} style="border: 1px solid black; padding: 5px; margin: 5px;">
+                            <div
+                                style="font-weight: bold;color:#0e0e0e;text-shadow: 2px 2px 3px rgb(128, 125, 125);padding: 5px;">
+                                <table class="mainTable">
+                                    <tr>
+                                        <th
+                                            style="text-align:center;color:green ;background-color:whitesmoke !important;">
+                                            Available - {floorData.availableCount}</th>
+                                        <th
+                                            style="text-align:center;color:red ;background-color:whitesmoke !important;">
+                                            Booked - {floorData.bookedCount}</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="centered-text" style="font-size: 20px;"><b>Floor : {floorData.floor}</b></p>
+                            <div class="unit-container-scrollable">
+                                <div class="unit-container">
+                                    <div class="unit-row">
+                                        <template for:each={floorData.carParks} for:item="carPark" key={carPark.Id}>
+                                            <div key={carPark.Id} class="unit-box" data-unit-status={carPark.Status__c}
+                                                data-car-park-number={carPark.Name} data-car-park-type={carPark.Type__c}
+                                                data-key={carPark.Id} onclick={handleCarParkClick}
+                                                style="border: 1px solid black; padding: 10px; margin: 10px;">
+                                                <p>{carPark.Name}</p>
+                                                <p>{carPark.Status__c}</p>
+                                                <p>{carPark.Type__c}</p>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </template>
+                </template>
+            </div>
+        </div>
+        </template>
+        <br />
+        <template if:true={showSave}>
+            <div class="slds-align_absolute-center" style="font-size: 20px;">
+                <lightning-button variant="success" label="Save" onclick={handleSave}></lightning-button>
+            </div>
+        </template>
+        <template if:false={showSave}>
+
+        </template>
+    </lightning-card>
+</template>

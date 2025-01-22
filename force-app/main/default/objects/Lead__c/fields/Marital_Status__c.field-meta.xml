@@ -8,6 +8,23 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Marital_Status</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Married</fullName>
+                <default>false</default>
+                <label>Married</label>
+            </value>
+            <value>
+                <fullName>Un-Married</fullName>
+                <default>false</default>
+                <label>Un-Married</label>
+            </value>
+            <value>
+                <fullName>Widow</fullName>
+                <default>false</default>
+                <label>Widow</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

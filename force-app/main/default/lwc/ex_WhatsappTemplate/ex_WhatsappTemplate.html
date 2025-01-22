@@ -1,0 +1,686 @@
+<template>
+	<!-- Template for New Button  -->
+    <div>
+	<div if:true={showspinner} class="spinner-container">
+		<div class="loader"></div>
+		<div class="wait-text">Please wait...</div>
+	</div>
+	<template if:true={insert}>
+		<div class="msg-container">
+			<div class="main">
+				<div style="display: flex; align-items: center;">
+					<img src={whatsappIcon} alt="Whatsapp Icon" class="whatsapp-icon">
+					<label class="heads" style="color: white; margin-left: 1vh;">Whatsapp Template</label>
+				</div>
+				<lightning-button style="margin: 20px !important;" variant="brand" label="Save" onclick={handlesave}>
+				</lightning-button>
+			</div>
+			<lightning-record-edit-form object-api-name="Whatsapp_Template__c">
+				<div>
+					<div class="details-container">
+						<div
+							style="display: flex; align-items: center; border-top-left-radius: 2vh; border-top-right-radius: 2vh; padding-right: 2vh; border-bottom: 1px solid #c2c2c2; background-color: var(--background-color);">
+							<lightning-icon style="--sds-c-icon-color-foreground-default: #1B96FF;" size="medium"
+								icon-name="utility:form"></lightning-icon>
+							<label class="heads">Details</label>
+						</div>
+						<!-- pattern="[^a-z]" -->
+						<div
+							style="display: flex; border-radius: 2vh; padding-left: 4vh; margin-top: 2vh; margin-bottom: 2vh;">
+							<div style="flex: 1;">
+								<lightning-input title="No spaces allowed" class="name-input" style="width: 20vw;"
+									label="Name" placeholder="Enter Template Name" value={templatename}
+									onchange={handlename}>
+								</lightning-input>
+								<template if:true={clientSideNameError}>
+									<div style="font-size: smaller; color: red; padding-left: 1vh; width: 90%;">Warning:
+										Uppercase letters, spaces, special characters and numbers are not allowed.</div>
+								</template>
+							</div>
+							<div style="flex: 1;">
+								<lightning-input-field class="type-input-field" style="width: 20vw; margin-bottom: 0;"
+									field-name="Type__c" label="Type" value={type} onchange={handletype}
+									variant="label-stacked"></lightning-input-field>
+								<template if:true={clientSideTypeError}>
+									<div style="font-size: smaller; color: red; padding-left: 1vh; width: 90%;">Please
+										select type for the template</div>
+								</template>
+							</div>
+							<div style="flex: 1;">
+								<lightning-combobox class="category-combobox" style="width: 20vw;"
+									label="Template Category" placeholder="Select Category" value={selectedCat}
+									options={categorypicklist} onchange={handleCategoryChange}>
+								</lightning-combobox>
+								<template if:true={clientSideCategoryError}>
+									<div style="font-size: smaller; color: red; padding-left: 1vh; width: 90%;">Please
+										select category for the template</div>
+								</template>
+							</div>
+							<div style="flex: 1;">
+								<lightning-combobox class="object-combobox" style="width: 20vw;" label="Object"
+									placeholder="Select Object" value={selectedValue} options={picklistOptions}
+									onchange={handlePicklistChange}>
+								</lightning-combobox>
+								<template if:true={clientSideObjectError}>
+									<div style="font-size: smaller; color: red; padding-left: 1vh; width: 90%;">Please
+										select object for the template</div>
+								</template>
+							</div>
+						</div>
+						<div
+							style="display: flex; border-radius: 2vh; padding-left: 4vh; margin-top: 2vh; margin-bottom: 2vh;">
+							
+							<div style="flex: 1;">
+
+								<lightning-input-field title="No spaces allowed" class="name-input" style="width: 20vw;"
+									field-name="Template_Kind__c" variant="label-stacked" label="Template Kind" placeholder="Enter Template Kind" value={templatekind}
+									onchange={handlekind}>
+								</lightning-input-field>
+									
+								
+							</div>
+							
+							<template if:true={specificKind}>
+								<div style="flex: 1;">
+									<lightning-input-field class="type-input-field" style="width: 20vw; margin-bottom: 0;"
+										field-name="Project__c" label="Project" value={selectedproject} onchange={handleProject}
+										variant="label-stacked">
+									</lightning-input-field>
+									<div class="error-message" if:true={showprojecterror}>Please select a project.</div>
+									
+								</div>
+							</template>
+						</div>	
+					</div>
+				</div>
+
+				<div class="bottom-row" style="display: flex; align-items: center;">
+					<div class="template-container">
+						<div>
+							<template if:true={nameerror}>
+								<div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Please enter
+									the Template Name</div>
+							</template>
+							<template if:true={temperror}>
+								<div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Please enter
+									the Template</div>
+							</template>
+							<template if:true={wholeerror}>
+								<div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Error occured.
+									Please contact System Administrator!.<br>Error: {errorcontent}</div>
+							</template>
+							<lightning-input-field class="template-input-field" style="margin-top: 20px;"
+								variant="label-hidden" field-name="Template__c" onchange={handlechange} value={temp}
+								hide-label></lightning-input-field>
+							<template if:true={clientSideTemplateError}>
+								<div style="font-size: smaller; color: red; padding-left: 1vh; width: 90%;">Warning:
+									Please enter the content for the template. This field cannot be left blank.</div>
+							</template>
+
+							<template if:true={typefile}>
+								<div class="mains">
+									<div style="display: flex; align-items: center;">
+										<lightning-icon size="x-small" icon-name="action:upload"></lightning-icon>
+										<label class="head" style="color: black; margin-left: 1vh;">Upload File</label>
+									</div>
+
+									<div class="slds-align_absolute-center">
+										<template if:true={image}>
+											<lightning-input class="" type="file" label="Upload File"
+												name="fileUploader" accept=".jpg, .jpeg, .png,"
+												onchange={handleFileUpload}>
+											</lightning-input>
+										</template>
+										<template if:false={image}>
+											<lightning-input class="" type="file" label="Upload File"
+												name="fileUploader" accept=" .pdf, .DOC , DOCX"
+												onchange={handleFileUpload}>
+											</lightning-input>
+										</template>
+									</div>
+
+									<div style="align-items: center;display: flex; " class={messageClass}>{Message}
+									</div>
+								</div>
+							</template>
+						</div>
+					</div>
+
+					<!-- This is for sample text error [before] -->
+					<!-- <template if:true={showSampleTextError}>
+                    <div style="margin: 10px; font-weight: bold; font-size: 10px;color: red;">Please enter Sample Text</div>
+                </template> -->
+
+					<div class="dynamic-container">
+						<div style="border: 1px solid #c2c2c2; border-radius: 2vh">
+							<div class="dynamic-main">
+								<lightning-icon style="--sds-c-icon-color-foreground-default: #1B96FF;" size="medium"
+									icon-name="utility:list"></lightning-icon>
+								<label style="font-size: 1.1rem; font-weight: bold; font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');">Add Dynamic Values</label>
+							</div>
+							<div style="padding: 2vh">
+								<template for:each={variableList} for:item="v" for:index="index">
+									<div key={v} style="display: flex; align-items: center;">
+										<div>
+											<label class="label">{v.label}</label>
+										</div>
+										<div style="flex: 1">
+											<lightning-combobox data-key={index} class="dynamic-field-name-combobox"
+												placeholder="Select Field" value={selectedValue} options={FieldsList}
+												onchange={handleFieldChange}>
+											</lightning-combobox>
+										</div>
+										<div style="flex: 1">
+											<lightning-input style="margin-left: 2vh;" disabled="true" data-key={index}
+												onchange={handlevariable} value={v.value}></lightning-input>
+										</div>
+										<div
+											style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1">
+											<lightning-input class="dynamic-sample-input" style="margin-left: 2vh;"
+												placeholder="E.g. Harshal" data-key={index} onblur={handleSampleText}
+												value={sampleText}></lightning-input>
+											<div class="dynamic-sample-error">
+												<template if:true={clientSideSampleError}>
+													<div class="dynamic-sample-error" data-key={index}
+														style="font-size: smaller; color: red; position: absolute; left: 10%;">
+														Please Enter Sample Text</div>
+												</template>
+											</div>
+										</div>
+										<div>
+											<lightning-icon data-key={index} class="add-icon" size="x-small"
+												icon-name="action:new" onclick={handleAdd}></lightning-icon>
+										</div>
+										<div>
+											<lightning-icon data-key={index} class="delete-icon"
+												style="background-color: gray !important;" size="x-small"
+												icon-name="action:delete" onclick={handleremove}></lightning-icon>
+										</div>
+									</div>
+								</template>
+								<!-- <table>
+                                <tbody>
+                                  <template for:each={variableList} for:item="v" for:index="index">
+                                    <tr key={v}>
+                                      <td><label class="label">{v.label}</label></td>
+                                      <td>
+                                        <lightning-combobox
+                                          data-key={index}
+                                          class="dynamic-field-name-combobox"
+                                          placeholder="Select Field"
+                                          value={selectedValue}
+                                          options={FieldsList}
+                                          onchange={handleFieldChange}
+                                        >
+                                        </lightning-combobox>
+                                      </td>
+                                      <td>
+                                        <lightning-input
+                                          style="margin-left: 2vh;"
+                                          disabled="true"
+                                          data-key={index}
+                                          onchange={handlevariable}
+                                          value={v.value}
+                                        ></lightning-input>
+                                      </td>
+                                      <td>
+                                        <div>
+                                            <lightning-input class="dynamic-sample-input" style="margin-left: 2vh;" placeholder="E.g. Harshal" data-key={index} onblur={handleSampleText} value={sampleText} ></lightning-input>
+                                            <template if:true={clientSideSampleError}>
+                                                <div style="font-size: smaller; color: red; padding-left: 2vh; width: 90%;">Please Enter Sample Text</div>
+                                            </template>
+                                        </div>
+                                      </td>
+                                      <td style="text-align: center; padding-left: 15px">
+                                        <lightning-icon
+                                          data-key={index}
+                                          class="add-icon"
+                                          style="margin-left: 5px; text-align: center"
+                                          size="x-small"
+                                          icon-name="action:new"
+                                          onclick={handleAdd}
+                                        ></lightning-icon>
+                                      </td>
+                                      <td style="text-align: center">
+                                        <lightning-icon
+                                          data-key={index}
+                                          class="delete-icon"
+                                          style="
+                                            margin-left: 5px;
+                                            background-color: gray !important;
+                                            text-align: center;
+                                          "
+                                          size="x-small"
+                                          icon-name="action:delete"
+                                          onclick={handleremove}
+                                        ></lightning-icon>
+                                      </td>
+                                    </tr>
+                                  </template>
+                                </tbody>
+                              </table> -->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- message_action_type -->
+				<template if:true={showMessageActionType}>
+					<div class="dynamic-container" style="margin: 20px;">
+						<div style="border: 1px solid #c2c2c2; border-radius: 2vh">
+							<div class="dynamic-main">
+								<lightning-icon style="--sds-c-icon-color-foreground-default: #1B96FF;" size="medium"
+									icon-name="standard:action_list_component"></lightning-icon>
+								<label style="font-size: 1.1rem; font-weight: bold; font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');">Message Action Type</label>
+							</div>
+							<div style="padding : 10px">
+								<lightning-tabset>
+									<!-- <lightning-tab label="Calls" onactive={showCall}> -->
+									<!-- Call To Action Tab -->
+									<!-- <template if:true={showCTA}>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <lightning-combobox field-name="Type_1__c" label="Type 1" value={Type_1__c} options={CTAOptions} placeholder="Select Call To Action" onblur={handleCallToAction} disabled></lightning-combobox> 
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input style="margin-left: 2vh; width: 90%" type="text" field-name="Title_1__c" label="Title 1" placeholder="Enter Text" value={Title_1__c} onblur={handleCallToAction}></lightning-input> 
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input style="position: relative; margin-left: 2vh; width: 90%" type="text" field-name="Value_1__c" label="Value 1" placeholder="Enter Mobile Number" value={Value_1__c} onfocus={handleCTAPhoneNumberFocus} onblur={handleCallToAction}></lightning-input> 
+                                                            <template if:true={ctaPhoneNumberFocus}>
+                                                                <div class="cta-msg">
+                                                                    <h3>Mobile Number Format: 91xxxxxxxxxx</h3>
+                                                                </div>
+                                                            </template>
+                                                        </td>
+                                                    </tr>                                                    
+                                                </tbody>
+                                            </table> 
+                                        </template>                                    -->
+									<!-- </lightning-tab> -->
+									<lightning-tab label="Calls & URLs" onactive={showCall}>
+										<!-- Call To Action Tab -->
+										<template if:true={showCTA}>
+											<table>
+												<tbody>
+													<tr>
+														<td>
+															<lightning-combobox name="Type_1__c" label="Type 1"
+																value={Type_1__c} options={CTAOptions}
+																placeholder="Select Call To Action"
+																onblur={handleCallToAction}></lightning-combobox>
+														</td>
+														<td>
+															<lightning-input style="margin-left: 2vh; width: 90%"
+																type="text" name="Title_1__c" label="Title 1"
+																placeholder="E.g.Go To or Call Us" value={Title_1__c}
+																onblur={handleCallToAction}></lightning-input>
+														</td>
+														<td>
+															<lightning-input
+																style="position: relative; margin-left: 2vh; width: 90%"
+																type="text" name="Value_1__c" label="Value 1"
+																placeholder="E.g. www.google.com" value={Value_1__c}
+																onfocus={handleCTAPhoneNumberFocus}
+																onblur={handleCallToAction}></lightning-input>
+															<template if:true={ctaPhoneNumberFocus}>
+																<div class="cta-msg">
+																	<h3>Mobile Number Format: 91xxxxxxxxxx</h3>
+																	<h3>URL Format: https://xxxxx OR http://xxxxx</h3>
+																</div>
+															</template>
+														</td>
+														<td>
+															<lightning-icon data-key={index} class="add-icon"
+																style="margin-left: 5px; text-align: center"
+																size="x-small" icon-name="action:new"
+																onclick={handleAddType2}></lightning-icon>
+														</td>
+														<td>
+															<lightning-icon data-key={index} class="delete-icon"
+																style=" margin-left: 5px;background-color: gray !important; text-align: center;"
+																size="x-small" icon-name="action:delete">
+															</lightning-icon> <!-- onclick={handleremove} -->
+														</td>
+													</tr>
+													<template if:true={showType2}>
+														<tr>
+															<td>
+																<lightning-combobox name="Type_2__c" label="Type 2"
+																	value={Type_2__c} options={CTAOptions}
+																	placeholder="Select Call To Action"
+																	onblur={handleCallToAction}></lightning-combobox>
+															</td>
+															<td>
+																<lightning-input style="margin-left: 2vh; width: 90%"
+																	type="text" name="Title_2__c" label="Title 2"
+																	placeholder=" E.g.Go To or Call Us"
+																	value={Title_2__c} onblur={handleCallToAction}>
+																</lightning-input>
+															</td>
+															<td>
+																<lightning-input
+																	style="position: relative; margin-left: 2vh; width: 90%"
+																	type="text" name="Value_2__c" label="Value 2"
+																	placeholder="E.g. www.google.com" value={Value_2__c}
+																	onfocus={handleCTAUrlFocus}
+																	onblur={handleCallToAction}></lightning-input>
+																<template if:true={ctaURLFocus}>
+																	<div class="cta-msg">
+																		<h3>URL Format: https://xxxxx OR http://xxxxx
+																		</h3>
+																	</div>
+																</template>
+															</td>
+															<td>
+																<lightning-icon data-key={index} class="add-icon"
+																	style="margin-left: 5px; text-align: center"
+																	size="x-small" icon-name="action:new">
+																</lightning-icon>
+																<!--onclick={handleAdd} -->
+															</td>
+															<td>
+																<lightning-icon data-key={index} class="delete-icon"
+																	style="
+                                                                    margin-left: 5px;
+                                                                    background-color: gray !important;
+                                                                    text-align: center;
+                                                                    " size="x-small" icon-name="action:delete"
+																	onclick={handleremoveType2}></lightning-icon>
+															</td>
+														</tr>
+													</template>
+
+												</tbody>
+											</table>
+										</template>
+									</lightning-tab>
+									<lightning-tab label="Quick Replies" onactive={showQuickReplies}>
+										<!-- Quick Replies Tab  -->
+										<template if:true={showQR}>
+											<div style="display: flex;">
+												<lightning-input style="margin-left: 2vh; width: 90%" type="text"
+													name="Reply1__c" label="Reply 1" placeholder="E.g. Yes"
+													value={Reply1__c} onblur={handleCallToAction}></lightning-input>
+											</div>
+											<div style="display: flex;">
+												<lightning-input style="margin-left: 2vh; width: 90%" type="text"
+													name="Reply2__c" label="Reply 2" placeholder="E.g. No"
+													value={Reply2__c} onblur={handleCallToAction}></lightning-input>
+											</div>
+										</template>
+									</lightning-tab>
+								</lightning-tabset>
+							</div>
+						</div>
+					</div>
+				</template>
+				<!-- <div class="mta-container">
+                <div class="mta-main">
+                    <lightning-icon size="medium" icon-name="standard:action_list_component"></lightning-icon>
+                    <label style="font-size: 1.1rem; font-weight: bold; font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');">Message Action Type</label>
+                </div>
+                <div>
+                    <lightning-tabset>
+                        <lightning-tab label="Call To Action" onactive={showCallToAction}>
+                            
+                            <template if:true={showCTA}>
+                                <div class="cta-input-container">
+                                    <div style="display: flex;  flex-grow: 1; align-items: center; justify-content: space-around;">
+                                        <div>
+                                            <lightning-combobox field-name="Type_1__c" label="Type 1" value={Type_1__c} options={CTAOptions} placeholder="Select Call To Action" onblur={handleCallToAction}></lightning-combobox> 
+                                        </div>
+                                        <div>
+                                            <lightning-input style="margin-left: 2vh; width: 90%" type="text" field-name="Title_1__c" label="Title 1" placeholder="Enter Text" value={Title_1__c} onblur={handleCallToAction}></lightning-input> 
+                                        </div>
+                                        <div>
+                                            <lightning-input style="position: relative; margin-left: 2vh; width: 90%" type="text" field-name="Value_1__c" label="Value 1" placeholder="Enter Mobile Number" value={Value_1__c} onfocus={handleCTAPhoneNumberFocus} onblur={handleCallToAction}></lightning-input> 
+                                            <template if:true={ctaPhoneNumberFocus}>
+                                                <div class="cta-msg">
+                                                    <h3>Mobile Number Format: 91xxxxxxxxxx</h3>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <div class="cta-icons" style="display: flex; align-items: center; margin-top: 2vh;">
+                                        <lightning-icon data-key={index} class="add-icon"  size="x-small" icon-name="action:new" onclick={handleAddType2}></lightning-icon>
+                                        <lightning-icon data-key={index} class="delete-icon" style=" margin-left: 5px; background-color: gray !important; text-align: center;" size="x-small" icon-name="action:delete" onclick={handleremoveType2}></lightning-icon>
+                                    </div>
+                                </div>
+                                
+                            </template>                                   
+                        </lightning-tab>
+                        <lightning-tab label="Quick Replies" onactive={showQuickReplies}> 
+                        
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div>
+              </div> -->
+			</lightning-record-edit-form>
+		</div>
+	</template>
+
+	<!-- <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <lightning-combobox field-name="Type_1__c" label="Type 1" value={Type_1__c} options={CTAOptions} placeholder="Select Call To Action" onblur={handleCallToAction}></lightning-combobox> 
+                                            </td>
+                                            <td>
+                                                <lightning-input style="margin-left: 2vh; width: 90%" type="text" field-name="Title_1__c" label="Title 1" placeholder="Enter Text" value={Title_1__c} onblur={handleCallToAction}></lightning-input> 
+                                            </td>
+                                            <td>
+                                                <lightning-input style="position: relative; margin-left: 2vh; width: 90%" type="text" field-name="Value_1__c" label="Value 1" placeholder="Enter Mobile Number" value={Value_1__c} onfocus={handleCTAPhoneNumberFocus} onblur={handleCallToAction}></lightning-input> 
+                                                <template if:true={ctaPhoneNumberFocus}>
+                                                    <div class="cta-msg">
+                                                        <h3>Mobile Number Format: 91xxxxxxxxxx</h3>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                            <td>
+                                                <lightning-icon
+                                                    data-key={index}
+                                                    class="add-icon"
+                                                    style="margin-left: 5px; text-align: center"
+                                                    size="x-small"
+                                                    icon-name="action:new"
+                                                    onclick={handleAddType2}
+                                                ></lightning-icon>
+                                            </td>
+                                            <td>
+                                                <lightning-icon
+                                                    data-key={index}
+                                                    class="delete-icon"
+                                                    style=" margin-left: 5px;background-color: gray !important; text-align: center;"
+                                                    size="x-small"
+                                                    icon-name="action:delete"
+                                                    ></lightning-icon>
+                                            </td>
+                                        </tr>
+                                        <template if:true={showType2}>
+                                            <tr>
+                                                <td>
+                                                    <lightning-combobox field-name="Type_2__c" label="Type 2" value={Type_2__c} options={CTAOptions} placeholder="Select Call To Action" onblur={handleCallToAction}></lightning-combobox> 
+                                                </td>
+                                                <td>
+                                                    <lightning-input style="margin-left: 2vh; width: 90%" type="text" field-name="Title_2__c" label="Title 2" placeholder=" E.g.Go To" value={Title_2__c} onblur={handleCallToAction}></lightning-input> 
+                                                </td>
+                                                <td>
+                                                    <lightning-input style="position: relative; margin-left: 2vh; width: 90%" type="text" field-name="Value_2__c" label="Value 2" placeholder="E.g. www.google.com" value={Value_2__c} onfocus={handleCTAUrlFocus} onblur={handleCallToAction}></lightning-input> 
+                                                    <template if:true={ctaURLFocus}>
+                                                        <div class="cta-msg">
+                                                            <h3>URL Format: https://xxxxx OR http://xxxxx</h3>
+                                                        </div>
+                                                    </template>
+                                                </td>
+                                                <td>
+                                                    <lightning-icon
+                                                        data-key={index}
+                                                        class="add-icon"
+                                                        style="margin-left: 5px; text-align: center"
+                                                        size="x-small"
+                                                        icon-name="action:new"
+                                                        
+                                                        ></lightning-icon>
+                                                </td>
+                                                <td>
+                                                    <lightning-icon
+                                                        data-key={index}
+                                                        class="delete-icon"
+                                                        style="
+                                                        margin-left: 5px;
+                                                        background-color: gray !important;
+                                                        text-align: center;
+                                                        "
+                                                        size="x-small"
+                                                        icon-name="action:delete"
+                                                        onclick={handleremoveType2}
+                                                    ></lightning-icon>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        
+                                    </tbody>
+                                </table>  -->
+
+	<!------------------ Template for Edit Button  ---------------------->
+	<template if:false={insert}>
+		<div class="msg-container"
+			style="border: 1px solid #c2c2c2;height: 600px; border-radius: var(--lwc-borderRadiusMedium,0.25rem);margin: 0px; overflow: auto;">
+			<div class="main">
+				<lightning-icon size="medium" icon-name="standard:quick_text"></lightning-icon>
+				<label class="heads">Whatsapp Template</label>
+				<!-- <lightning-helptext style="margin-top: 20px;" content="Add Dynamic values in input and paste on template"></lightning-helptext> -->
+				<lightning-button style="margin: 20px !important;" class="slds-float_right" variant="brand"
+					label="Quick Save" onclick={handlequicksave}></lightning-button>
+			</div>
+			<lightning-record-edit-form style="width: 95% !important;" object-api-name="Whatsapp_Template__c"
+				record-id={recordId}>
+				<div style="width: 97%; max-height: 650px; float: left;display: block; border-radius: 3px;margin: 20px;"
+					class="slds-align_absolute-center, ">
+					<div
+						style="border: 1px solid #c2c2c2;    border-radius: var(--lwc-borderRadiusMedium,0.25rem);margin: 0px;">
+						<div class="main">
+							<lightning-icon size="medium" icon-name="standard:form"></lightning-icon>
+							<label class="heads">Details</label>
+							<!-- <lightning-helptext style="margin-top: 20px;" content="Add Dynamic values in input and paste on template"></lightning-helptext> -->
+						</div>
+						<div style="display: flex;">
+							<!-- <lightning-input-field variant="label-stacked" field-name="Folder__c" onchange={handlefolder} value={folder} disabled></lightning-input-field> -->
+							<lightning-input label="Name" placeholder="Enter Template Name" value={templatename}
+								onchange={handlename} pattern="^\S*$" title="No spaces allowed" required>
+							</lightning-input>
+							<!-- <lightning-input 
+                                label="Header" 
+                                placeholder="Enter Header"  
+                                value={templatename} 
+                                onchange={handleheader}
+                                title="No spaces allowed" >
+                            </lightning-input> -->
+							<lightning-input-field field-name="Type__c" label="Type" value={type} onchange={handletype}
+								variant="label-stacked"></lightning-input-field>
+							<lightning-combobox label="Template Category" placeholder="Select Category"
+								value={selectedCat} options={categorypicklist} onchange={handleCategoryChange}>
+							</lightning-combobox>
+							<lightning-combobox label="Object" placeholder="Select Object" value={selectedValue}
+								options={picklistOptions} onchange={handlePicklistChange}>
+							</lightning-combobox>
+							<!-- <lightning-combobox label="Select Object" placeholder="Select Object" value={selectedValue} 
+                                options={picklistOptions} onchange={handlePicklistChange}>
+                            </lightning-combobox>
+                            <lightning-combobox placeholder="Select Field" label="Select Field" value={selectedValue} 
+                                options={FieldsList} onchange={handleFieldChange}>
+                            </lightning-combobox> -->
+							<!-- <lightning-input label="API Value" value={field}></lightning-input> -->
+						</div>
+					</div>
+				</div>
+				<div style="width: 52%; max-height: 450px; float: left;display: block; border-radius: 3px;margin: 20px; "
+					class="slds-align_absolute-center, ">
+					<div
+						style="border: 1px solid #c2c2c2;padding: 10px; border-radius: var(--lwc-borderRadiusMedium,0.25rem);margin: 0px;">
+						<!-- <template if:true={foldererror}><div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Please enter the folder</div></template> -->
+						<template if:true={nameerror}>
+							<div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Please enter the
+								Template Name</div>
+						</template>
+						<template if:true={temperror}>
+							<div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Please enter the
+								Template</div>
+						</template>
+						<template if:true={wholeerror}>
+							<div style="margin: 10px; font-weight: bold; font-size: 16px;color: red;">Error occured.
+								Please contact System Administrator!.<br>Error: {errorcontent}</div>
+						</template>
+						<lightning-input-field variant="label-hidden" style="margin-top: 20px;" field-name="Template__c"
+							onchange={handlechange} value={temp} hide-label></lightning-input-field>
+						<template if:true={typefile}>
+							<div class="slds-align_absolute-center">
+								<lightning-input class="" type="file" label="Upload File 1" name="fileUploader"
+									accept=".jpg, .jpeg, .png, .pdf " file-field-name="Guest_Record_fileupload__c"
+									file-field-value={encryptedToken} onchange={handleFileUpload} multiple>
+								</lightning-input>
+							</div>
+						</template>
+					</div>
+				</div>
+				<div style="width: 42%; max-height: 450px; float: left;display: block; border-radius: 3px;margin: 20px; "
+					class="slds-align_absolute-center, ">
+					<div
+						style="border: 1px solid #c2c2c2;    border-radius: var(--lwc-borderRadiusMedium,0.25rem);margin: 0px;">
+						<div class="main">
+							<lightning-icon size="medium" icon-name="standard:collection_variable"></lightning-icon>
+							<label class="heads">Add Dynamic Values</label>
+							<!-- <lightning-helptext style="margin-top: 20px;" content="Add Dynamic values in input and paste on template"></lightning-helptext> -->
+						</div>
+						<div style="padding: 10px;">
+							<table>
+								<tbody>
+									<template for:each={variableList} for:item="v" for:index="index">
+										<tr key={v}>
+											<td><label class="label">{v.label}</label></td>
+											<!-- <td>
+                                                <lightning-combobox data-key={index}  placeholder="Select Object" value={selectedValue} 
+                                                    options={picklistOptions} onchange={handlePicklistChange}>
+                                                </lightning-combobox>
+                                            </td> -->
+											<td>
+												<lightning-combobox data-key={index} placeholder="Select Field"
+													value={selectedValue} options={FieldsList}
+													onchange={handleFieldChange}>
+												</lightning-combobox>
+											</td>
+											<td>
+												<lightning-input disabled="true" data-key={index}
+													onchange={handlevariable} value={v.value}></lightning-input>
+											</td>
+											<td style="text-align: center;padding-left: 15px;">
+												<lightning-icon data-key={index}
+													style="margin-left: 5px; text-align: center;" size="x-small"
+													icon-name="action:new" onclick={handleAdd}></lightning-icon>
+											</td>
+											<td style="text-align: center;">
+												<lightning-icon data-key={index}
+													style="margin-left: 5px;background-color: gray !important;text-align: center;"
+													size="x-small" icon-name="action:delete" onclick={handleremove}>
+												</lightning-icon>
+											</td>
+										</tr>
+									</template>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</lightning-record-edit-form>
+		</div>
+	</template>
+    </div>
+	<!--<template if:true={showspinner}>
+		<div class="exampleHolder">
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+	</template>-->
+</template>

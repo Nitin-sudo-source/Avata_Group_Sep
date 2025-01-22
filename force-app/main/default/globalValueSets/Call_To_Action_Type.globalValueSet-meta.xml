@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>PHONE_NUMBER</fullName>
+        <default>false</default>
+        <label>Phone Number</label>
+    </customValue>
+    <customValue>
+        <fullName>URL</fullName>
+        <default>false</default>
+        <label>URL</label>
+    </customValue>
+    <masterLabel>Call To Action Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -151,18 +151,17 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Payment Milestone</label>
     <nameField>
-        <displayFormat>PM-{0000}</displayFormat>
-        <label>Payment Milestone Name</label>
+        <displayFormat>PM-{00000}</displayFormat>
+        <label>Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>

@@ -1,0 +1,73 @@
+<template>
+    <!-- <div style="font-size: 30px; font-weight:bold; background-color: #4da6ff; color:black; display: outline-block; padding: 10px;font-family: Copperplate, 'Copperplate Gothic Light', sans-serif; text-align: center;">
+    </div> -->
+    <p class="my-heading">Welcome Call Details</p>
+
+    <br>
+    <div style="padding-bottom:15px; text-align:center;">
+        <template if:true={showButton}>
+            <button class="button" style="text-align:center;" onclick={generateWelcomeCall}><span>Generate Welcome Call Checklist</span></button>
+
+            <!-- <lightning-button class="slds-align_absolute-center" label="Generate Welcome Call Checklist" variant="success" onclick={generateWelcomeCall}></lightning-button> -->
+        </template>
+    </div>
+    <div style="padding:10px;">
+				 <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Please wait...</div>
+        </div>
+        <template if:true={showDetails}>
+            
+            <div style="float: right;padding:5px;font-weight: bold;">
+                <lightning-input class="slds-p-left_xx-large" type="checkbox" label="Accept All" onchange={handleAllAcceptChange} checked={acceptAll}></lightning-input>
+                <lightning-input class="slds-p-left_xx-large" type="checkbox" label="Reject All" onchange={handleAllRejectChange} checked={rejectAll}></lightning-input>
+            </div>
+            <table style="width:100%" class="Table1Css" >
+                <template for:each={categoryData} for:item="category" for:index="index">
+                    <tr key={category}>
+                        <th colspan="3" >{category.categoryName}</th>
+                        
+                    </tr>
+                    <template for:each={category.items} for:item="item" for:index="idx">
+                        <tr key={item.Id}>
+                            <td  style="border: 0.5px solid black; padding:8px; font-weight: bold;">
+                                <lightning-formatted-text data-key={index} data-idx={idx}  data-index={index} value={item.Description__c}></lightning-formatted-text>
+                            </td>
+                            <td  style="border: 0.5px solid black; padding:8px; font-weight: bold;">
+                                <lightning-formatted-text data-key={index} data-idx={idx}  data-index={index} value={item.Values__c}></lightning-formatted-text>
+                            </td>
+                            <template if:true={item.Accepted__c}>
+                                <td   style="border: 0.5px solid black; padding:8px; font-weight: bold;">
+                                    <lightning-combobox  disabled placeholder="Accepted"></lightning-combobox>
+                                </td>
+                            </template>
+                            <template if:false={item.Accepted__c}>
+                                <td  style="border: 0.5px solid black; padding:8px; font-weight: bold;">
+                                    <lightning-combobox data-key={index} data-idx={idx} value={selectedval} data-index={index} placeholder="Select a Option" options={options} onchange={handleOptions} ></lightning-combobox>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
+                </template>
+            </table><br/>
+           
+            <table class="Table1Css">
+                <th>
+                    Remarks
+                </th>
+                <td>
+                    <b><lightning-input type="text"  required="true" class="slds-align_absolute-center" value={remark} onchange={handleRemarks}></lightning-input></b>         
+                </td>
+
+            </table>
+        <br/>
+           
+            <div style="text-align: center; margin-top:5px !important;">
+                <lightning-button class="topbtn" label="Save" variant="success" onclick={handleSave}></lightning-button>
+            </div>
+        </template>
+    </div>
+    <template if:true={isLoading}>
+        <lightning-spinner variant="brand" size="large" alternative-text="Loading"></lightning-spinner>
+    </template>
+</template>

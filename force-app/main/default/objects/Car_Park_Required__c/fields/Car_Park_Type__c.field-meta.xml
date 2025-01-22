@@ -7,7 +7,28 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>Car_Park_Type</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Podium Parking</fullName>
+                <default>false</default>
+                <label>Podium Parking</label>
+            </value>
+            <value>
+                <fullName>Open Parking</fullName>
+                <default>false</default>
+                <label>Open Parking</label>
+            </value>
+            <value>
+                <fullName>Stack Upper Parking</fullName>
+                <default>false</default>
+                <label>Stack Upper Parking</label>
+            </value>
+            <value>
+                <fullName>Stack Lower Parking</fullName>
+                <default>false</default>
+                <label>Stack Lower Parking</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

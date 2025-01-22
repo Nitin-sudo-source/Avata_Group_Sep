@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_5_Recevied__c</fullName>
+    <formula>Total_AV_Receipts__c  &gt;=  Calculated_Amount_Based_on_RTP__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>It is checked if Agreement Value is Greator or equals to Total AV Receipt * Receipt Amount Threshold</inlineHelpText>
+    <label>Is 5% Recevied</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,47 +1,30 @@
 <template>
     <lightning-card onload={handlereferesh}>
-        <div if:true={isSpinner} class="spinner-container">
-            <div class="loader"></div>
-            <div class="wait-text">Please wait...</div>
-        </div>        <p class="my-heading">CP Account Documents </p>
-        <!-- <div style="text-align: center;">
-            <img style="height: 150px; width:300px" src={Logo} alt="Logo" />
-        </div> -->
-        <!-- <div
+        <!-- <h2 style="text-align: center;font-weight:bold;font-size:18px;">CP Account Documents</h2><br/> -->
+        <p class="my-heading">CP Account Documents </p>
+        <div style="text-align: center;"><img src={Logo} width="150px" height="220px"></div><br>
+        <div
             style="margin:10px; margin-top:0px; background-color:black; border-radius:0.25rem; border: 1.5px solid rgb(0, 0, 0);">
             <h1
-                style="padding:5px;  background-color:#cae2df; color:black;font-weight: bold; text-align:center;font-size: 18px;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                style="padding:5px;  background-color:  #cae2df; color:black;font-weight: bold; text-align:center;font-size: 18px;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                 Upload Documents</h1>
-        </div> -->
+        </div>
 
         <div style="padding:10px;">
             <table class="Table1Css">
                 <tbody>
-                    <tr for:each={cpDocList} for:item="filename" key={filename}  for:index="index">
-                        <template if:true={filename.isUploadedFalse}>
+                    <tr for:each={name} for:item="filename" key={filename}>
                         <th>{filename.Document_Type__c}</th>
-                        <td>
-                            <lightning-input name="fileUploader" data-index={index}
-                            onchange={openFileUpload} type="file"  accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpeg, .jpg"
-                            value={filename.fileUploader}></lightning-input>
-                        <p if:true={filename.filename}>{filename.filename}</p></td>
-                        </template>
+                        <td><lightning-file-upload label="" name="fileUploader" accept={acceptedFormats}
+                                record-id={filename.Id} onuploadfinished={handleUploadFinished} multiple>
+                            </lightning-file-upload> </td>
                     </tr>
-                        <tr for:each={cpDocList} for:item="filename" key={filename}  for:index="index">
-                            <template if:true={filename.isUploadedTrue}>
-                            <td colspan="2" style="font-size: 18px; color:green; font-weight:bold">&#10004; {filename.Document_Type__c}</td>
-                        </template>
-                        </tr>
                 </tbody>
-            </table><br><br>
-            <center if:false={allUploadedTrue}>
-                <lightning-button label="Upload File" variant="success" onclick={uploadData}></lightning-button>
-            </center>
-            
-            <!-- <div if:true={allDocumentsUploaded} style="text-align: center;padding:100px;">
+            </table>
+            <div if:true={allDocumentsUploaded} style="text-align: center;padding:100px;">
                 <p style="font-size: 22px; color:green;font-weight:bold">All Documents are Uploaded &#x2705;</p>
-            </div> -->
+            </div>
         </div>
-        
+
     </lightning-card>
 </template>

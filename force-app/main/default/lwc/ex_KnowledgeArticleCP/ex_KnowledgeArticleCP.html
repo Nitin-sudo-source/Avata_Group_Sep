@@ -1,0 +1,100 @@
+<!-- sldsValidatorIgnore -->
+<template>
+<section>
+    <div class="container" style="margin-top: 20px !important;">
+        <div class="accordion">
+            <template for:each={getQuestionAnswerWrapper} for:item="q" for:index="i">
+            <div class="accordion-item"  id={q.getQueno} key={q.id} >
+                <a class="accordion-link"  href={q.href}>
+                    {q.getQueno} -  {q.queName}
+                    <img class="icon" src={KnowledgeAirticleIcon1}>
+                    <img class="sub" src={KnowledgeAirticleIcon2}>
+                </a>
+                <div class="answer">
+                    <p style="color:#0e0e0e; text-shadow: 2px 2px 3px rgb(128, 125, 125);"> {q.queAns} </p>
+                </div>
+                </div>
+        </template>
+            </div>
+        </div> 
+</section>
+</template>
+
+            
+
+            <!-- <div class="accordion-item" id="question3">
+                <a class="accordion-link" href="#question3">
+                    3. Can I access information related to my registration details ?
+                    <img class="icon" src={icon} onclick={handleclick}>
+                    <img class="sub" src={sub} onclick={handleclick}>
+                </a>
+                <div class="answer">
+                    <p>Within the customer portal , after logging proceed to “My Bookings “ Scroll down to find the
+                        section labeled “ Registration Details “ . Underneath , you’ll find information regarding
+                        your registration for the property. </p>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="question4">
+                <a class="accordion-link" href="#question4">
+                    4.Where can I view updates on the construction stages , such as completion of work ?
+                    <img class="icon" src={icon} onclick={handleclick}>
+                    <img class="sub" src={sub} onclick={handleclick}>
+                </a>
+                <div class="answer">
+                    <p>Once you login to customer portal you are able to view project and construction update. </p>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="question5">
+                <a class="accordion-link" href="#question5">
+                    5. Is there a section for accessing legal documents eg . agreement ?
+                    <img class="icon" src={icon} onclick={handleclick}>
+                    <img class="sub" src={sub} onclick={handleclick}>
+                </a>
+                <div class="answer">
+                    <p>Any kind of documents related to sale and registration are considered to be confidential and
+                        can only be requested to your relationship manager .</p>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="question6">
+                <a class="accordion-link" href="#question6">
+                    6. Can I view my payment history and download receipts ?
+                    <img class="icon" src={icon} onclick={handleclick}>
+                    <img class="sub" src={sub} onclick={handleclick}>
+                </a>
+                <div class="answer">
+                    <p>Certainly to review your payment history and download receipts , log in to the customer
+                        portal . select the “ Receipts' ' tab , where you'll find a record of all payments made .
+                        Click on any receipt and choose the option to “Print “ for downloading . </p>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="question7">
+                <a class="accordion-link" href="#question7">
+                    7.Where can I find my possession checklist ?
+
+                    <img class="icon" src={icon} onclick={handleclick}>
+                    <img class="sub" src={sub} onclick={handleclick}>
+                </a>
+                <div class="answer">
+                    <p> Login to customer portal Click on “possession tab “. once you click on possession you are
+                        able to view the possession checklist , providing a detailed overview of the necessary steps
+                        and requirement.
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="question8">
+                <a class="accordion-link" href="#question8">
+                    8.Where can I check my parking details ?
+
+                    <img class="icon" src={icon} onclick={handleclick}>
+                    <img class="sub" src={sub} onclick={handleclick}>
+                </a>
+                <div class="answer">
+                    <p> After logging to the customer portal Click on “ parking tab” . within the section You are
+                        able to see all the information related to parking arrangement.
+                    </p>
+                </div> -->

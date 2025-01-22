@@ -147,11 +147,10 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Discount_Applied_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
@@ -161,12 +160,12 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Discount Applied</label>
     <nameField>
-        <displayFormat>DA-{0000}</displayFormat>
+        <displayFormat>DA-{000000}</displayFormat>
         <label>Discount Applied Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Discount Applied</pluralLabel>
+    <pluralLabel>Discount Applieds</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

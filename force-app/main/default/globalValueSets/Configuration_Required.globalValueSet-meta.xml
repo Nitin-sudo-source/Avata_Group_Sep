@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>1 RK</fullName>
+        <default>false</default>
+        <label>1 RK</label>
+    </customValue>
+    <customValue>
         <fullName>1 BHK</fullName>
         <default>false</default>
         <label>1 BHK</label>
@@ -14,6 +19,11 @@
         <fullName>2 BHK</fullName>
         <default>false</default>
         <label>2 BHK</label>
+    </customValue>
+    <customValue>
+        <fullName>2.5 BHK</fullName>
+        <default>false</default>
+        <label>2.5 BHK</label>
     </customValue>
     <customValue>
         <fullName>3 BHK</fullName>

@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Project</label>
     <referenceTo>Project__c</referenceTo>
-    <relationshipLabel>Visit Pre Registrations</relationshipLabel>
+    <relationshipLabel>Visit Pre-Registrations</relationshipLabel>
     <relationshipName>Visit_Pre_Registrations</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

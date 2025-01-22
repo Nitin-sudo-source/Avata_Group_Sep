@@ -3,235 +3,13 @@
     <fullName>Lead_Sub_Source__c</fullName>
     <label>Lead Sub Source</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <controllingField>Lead_Source__c</controllingField>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Google Search</fullName>
-                <default>false</default>
-                <label>Google Search</label>
-            </value>
-            <value>
-                <fullName>Google Display</fullName>
-                <default>false</default>
-                <label>Google Display</label>
-            </value>
-            <value>
-                <fullName>YouTube</fullName>
-                <default>false</default>
-                <label>YouTube</label>
-            </value>
-            <value>
-                <fullName>Discovery Ads</fullName>
-                <default>false</default>
-                <label>Discovery Ads</label>
-            </value>
-            <value>
-                <fullName>Lead Gen Form</fullName>
-                <default>false</default>
-                <label>Lead Gen Form</label>
-            </value>
-            <value>
-                <fullName>Instagram</fullName>
-                <default>false</default>
-                <label>Instagram</label>
-            </value>
-            <value>
-                <fullName>Web Conversion</fullName>
-                <default>false</default>
-                <label>Web Conversion</label>
-            </value>
-            <value>
-                <fullName>MagicBricks</fullName>
-                <default>false</default>
-                <label>MagicBricks</label>
-            </value>
-            <value>
-                <fullName>NoBroker</fullName>
-                <default>false</default>
-                <label>NoBroker</label>
-            </value>
-            <value>
-                <fullName>Housing</fullName>
-                <default>false</default>
-                <label>Housing</label>
-            </value>
-            <value>
-                <fullName>99Acres</fullName>
-                <default>false</default>
-                <label>99Acres</label>
-            </value>
-            <value>
-                <fullName>Corporate Website</fullName>
-                <default>false</default>
-                <label>Corporate Website</label>
-            </value>
-            <value>
-                <fullName>ORM</fullName>
-                <default>false</default>
-                <label>ORM</label>
-            </value>
-            <value>
-                <fullName>Jacket</fullName>
-                <default>false</default>
-                <label>Jacket</label>
-            </value>
-            <value>
-                <fullName>Power Jacket</fullName>
-                <default>false</default>
-                <label>Power Jacket</label>
-            </value>
-            <value>
-                <fullName>Full Page</fullName>
-                <default>false</default>
-                <label>Full Page</label>
-            </value>
-            <value>
-                <fullName>Half Page</fullName>
-                <default>false</default>
-                <label>Half Page</label>
-            </value>
-            <value>
-                <fullName>Inserts</fullName>
-                <default>false</default>
-                <label>Inserts</label>
-            </value>
-            <value>
-                <fullName>RJ Mentions</fullName>
-                <default>false</default>
-                <label>RJ Mentions</label>
-            </value>
-            <value>
-                <fullName>Integration</fullName>
-                <default>false</default>
-                <label>Integration</label>
-            </value>
-            <value>
-                <fullName>Show Sponsorship</fullName>
-                <default>false</default>
-                <label>Show Sponsorship</label>
-            </value>
-            <value>
-                <fullName>Advertisement</fullName>
-                <default>false</default>
-                <label>Advertisement</label>
-            </value>
-            <value>
-                <fullName>Billboard</fullName>
-                <default>false</default>
-                <label>Billboard</label>
-            </value>
-            <value>
-                <fullName>Bus Shelter</fullName>
-                <default>false</default>
-                <label>Bus Shelter</label>
-            </value>
-            <value>
-                <fullName>Kiosk</fullName>
-                <default>false</default>
-                <label>Kiosk</label>
-            </value>
-            <value>
-                <fullName>Cantilever</fullName>
-                <default>false</default>
-                <label>Cantilever</label>
-            </value>
-            <value>
-                <fullName>Gantry</fullName>
-                <default>false</default>
-                <label>Gantry</label>
-            </value>
-            <value>
-                <fullName>Mobile Van</fullName>
-                <default>false</default>
-                <label>Mobile Van</label>
-            </value>
-            <value>
-                <fullName>Bus Panel</fullName>
-                <default>false</default>
-                <label>Bus Panel</label>
-            </value>
-            <value>
-                <fullName>Railway Station Boards</fullName>
-                <default>false</default>
-                <label>Railway Station Boards</label>
-            </value>
-            <value>
-                <fullName>In Train Branding</fullName>
-                <default>false</default>
-                <label>In Train Branding</label>
-            </value>
-            <value>
-                <fullName>Standee</fullName>
-                <default>false</default>
-                <label>Standee</label>
-            </value>
-            <value>
-                <fullName>Site Branding</fullName>
-                <default>false</default>
-                <label>Site Branding</label>
-            </value>
-            <value>
-                <fullName>Internal SMS</fullName>
-                <default>false</default>
-                <label>Internal SMS</label>
-            </value>
-            <value>
-                <fullName>External SMS</fullName>
-                <default>false</default>
-                <label>External SMS</label>
-            </value>
-            <value>
-                <fullName>Internal WhatsApp</fullName>
-                <default>false</default>
-                <label>Internal WhatsApp</label>
-            </value>
-            <value>
-                <fullName>External WhatsApp</fullName>
-                <default>false</default>
-                <label>External WhatsApp</label>
-            </value>
-            <value>
-                <fullName>Society Activation</fullName>
-                <default>false</default>
-                <label>Society Activation</label>
-            </value>
-            <value>
-                <fullName>Club Activation</fullName>
-                <default>false</default>
-                <label>Club Activation</label>
-            </value>
-            <value>
-                <fullName>Mall Activation</fullName>
-                <default>false</default>
-                <label>Mall Activation</label>
-            </value>
-            <value>
-                <fullName>Corporate Park Activation</fullName>
-                <default>false</default>
-                <label>Corporate Park Activation</label>
-            </value>
-            <value>
-                <fullName>Direct</fullName>
-                <default>false</default>
-                <label>Direct</label>
-            </value>
-            <value>
-                <fullName>VDNB</fullName>
-                <default>false</default>
-                <label>VDNB</label>
-            </value>
-            <value>
-                <fullName>Cold Calling</fullName>
-                <default>false</default>
-                <label>Cold Calling</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Lead_Sub_Source</valueSetName>
         <valueSettings>
             <controllingFieldValue>Events</controllingFieldValue>
             <valueName>Society Activation</valueName>
@@ -249,8 +27,16 @@
             <valueName>Corporate Park Activation</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Channel Partner</controllingFieldValue>
+            <valueName>Channel Partner</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Direct</controllingFieldValue>
             <valueName>Direct</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reference</controllingFieldValue>
+            <valueName>Reference</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>VDNB</controllingFieldValue>

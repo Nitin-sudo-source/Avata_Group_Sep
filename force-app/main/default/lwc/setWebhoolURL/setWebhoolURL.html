@@ -1,0 +1,79 @@
+<template>
+
+    <div class="msg-container">
+        <div class="main">
+            <div style="display: flex; align-items: center;">
+                <img src={whatsappIcon} alt="Whatsapp Icon" class="whatsapp-icon">
+                <label class="heads" style="color: white; margin-left: 1vh;">Set Webhook URL</label>
+            </div>
+        </div>
+        
+        <div>
+            <div class="details-container">
+                <div style="display: flex; align-items: center; border-top-left-radius: 2vh; border-top-right-radius: 2vh; padding-right: 2vh; border-bottom: 1px solid #c2c2c2; background-color: var(--background-color);">
+                    <lightning-icon style="--sds-c-icon-color-foreground-default: #1B96FF;" size="medium" icon-name="utility:form"></lightning-icon>
+                    <label class="heads">Previous URL's</label>
+                </div>
+                <!-- pattern="[^a-z]" -->
+                <div class="content" style="display: flex; border-radius: 2vh; padding-left: 4vh; margin-top: 2vh; margin-bottom: 2vh;">
+                    
+                    <template if:true={visible}>
+                        <table>
+                            <tbody>
+                                <tr class="tableheader">
+                                    <th>Sr.No</th>
+                                    <th>URL</th>
+                                    <th>Status</th>
+                                    <th>Date Time</th>
+                                </tr>
+                                <template for:each={callbackURLList} for:item="rec">
+
+                                    <tr key={rec}>
+                                        <td>{rec.Name}</td>
+                                        <td>{rec.Webhook_URL__c}</td>
+                                        <td>{rec.Status__c}</td>
+                                        <td>{rec.Created_Date__c}</td>
+                                    </tr>
+
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+
+                    <template if:false={visible}>
+                        <div class="nodata ">No Previous URL Available !</div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="bottom-row" style="display: flex; align-items: center;">
+                <div class="template-container">
+
+                    <lightning-record-edit-form object-api-name="Whatsapp_Template__c">
+                        <div style="margin:20px;">
+                       
+                            <lightning-input-field variant="label-stacked" field-name="Project__c" value={project} onchange={handleProject}></lightning-input-field>
+
+                        </div>
+                    </lightning-record-edit-form>
+
+                    <div style="margin:20px;"> 
+
+                        <lightning-input 
+                            required
+                            label="URL"
+                            value={callbackURL}
+                            onchange={handleURLChange}>
+                        </lightning-input>
+                    </div>
+                    
+                    <div style="align-items: center;margin: 20px !important;text-align: center;">
+                        <lightning-button variant="Destructive" label="Set Webhook URL" onclick={handleSetURL}></lightning-button>
+                    </div>
+                </div>
+                
+              </div>
+        </div>
+     </div>
+    
+</template>

@@ -1,0 +1,57 @@
+<template>
+    <div>
+        <lightning-card  variant="Narrow"  title="Calling Dashboard" icon-name="action:call">
+           
+        <!-- <h1 class="my-heading"><b>Calling Dashboard</b></h1> -->
+        <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Please wait...</div>
+        </div><br/>
+        <!--<table>
+            <th style="text-align:left;"><lightning-card icon-name='action:call'></lightning-card></th>
+            <td style="text-align:left;"><h1 class="my-heading"><b>Calling Dashboard</b></h1></td>
+        </table>-->
+        
+        <template if:true={isError}>
+            <p style="text-align:center;color:red">{isError}</p>
+        </template>
+        
+    <template if:true={getcampList}>
+        <p class="slds-p-horizontal_small" >
+                <lightning-combobox 
+                value={getcampList}
+                placeholder="Select Campaign"
+                options={getcampList}
+                data-label={getcampList.label}
+                onchange={handlecamp}
+                style="text-align:left;"
+                label="Campaign Name"
+                title="Select campaign to call">
+            </lightning-combobox>
+            </p>
+           
+    </template><br/>
+        <table style="width:100%;font-size:18px;" slot="footer">
+            <template for:each={call} for:item="call" for:index="index">
+                <tr key={call}>
+                    <td  style="text-align:center;">
+                        <lightning-badge style="color:green;cursor: pointer;" title="Click to call" variant="border" label={call.maskcallNo}  data-id={call.callNo} icon-name="utility:call"
+                         onclick={handlecall}> 
+                    </lightning-badge> 
+                    </td>
+                    <template if:true={call.maskAlternateNo}>
+                    <td style="text-align:center;">
+                        <lightning-badge style="color:green;cursor: pointer;" title="Click to call" variant="border" label={call.maskAlternateNo} data-id={call.AlternateNo} icon-name="utility:call"
+                        onclick={handlecall}> 
+                     </lightning-badge> 
+                    </td>                    
+                </template>
+                </tr>
+                </template>
+            </table>
+            <template if:true={response}>
+                <p slot="footer" style="text-align:center;font-size:14px;color:red;">{response}</p>
+            </template>
+            </lightning-card>
+</div>
+</template>

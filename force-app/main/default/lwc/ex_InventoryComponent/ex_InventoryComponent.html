@@ -1,0 +1,125 @@
+<template>
+        <template if:true={selectedProjectId}>
+        <template if:false={selectedTowerId}>
+            <template if:false={towerList}>
+                <lightning-card>
+                    <lightning-formatted-text value="No Tower Available"></lightning-formatted-text>
+                </lightning-card>
+            </template>
+		  <template if:true={towerList}>
+			<div class="slds-grid">
+
+				<template for:each={towerList} for:item="t" for:index="index">
+					<div class="slds-col card-size" key={t.Id} data-name="Tower" data-value={t.Id}
+						onclick={handleClick}>
+						<a>
+							<lightning-card title={t.Name}>
+								<div
+									style="object-fit: fill !important; width: 100%; height: 200px; overflow: hidden; position: relative;">
+									<lightning-formatted-rich-text value={t.Tower_Image__c}
+										style="width: 100%; height: 100%;"></lightning-formatted-rich-text>
+								</div>
+							</lightning-card>
+						</a>
+					</div>
+				</template>
+			</div>
+		</template>
+	</template>
+	<template if:true={selectedTowerId}>
+         <template if:false={unitFloorMap}>
+
+            </template>
+		<template if:true={unitFloorMap}>
+			<lightning-card>
+				<lightning-icon icon-name="utility:left" size="small" class="slds-m-right_x-small icon"
+					data-name="PreviousTower" data-value="PreviousTower" onclick={handleClick}
+					style="margin-bottom: 16px; margin-left: 25px;"></lightning-icon>
+				<span style="font-size: 16px !important;"><b>{selectedTowerName}</b></span>
+				<lightning-icon icon-name="utility:refresh" size="small" class="slds-m-right_x-small icon"
+					data-name="Refresh" data-value="Refresh" onclick={handleClick}
+					style="margin-bottom: 16px; float:right; margin-right: 25px;" title="Refresh"></lightning-icon>
+
+				<div
+					style="display: flex; justify-content: center; align-items: center; text-align: center;margin-bottom: 35px;">
+					<!--margin-top: -40px;-->
+					<ul class="legend">
+						<li>
+							<span class="Vacant"></span>
+							<button class="button" type="button" data-name="Unit Status" data-value="Vacant"
+                                    data-filter="Vacant" onclick={handleClick}>Vacant : {vacantCount}</button>
+						</li>
+						<li>
+							<span class="Booked"></span>
+							<button class="button" type="button" data-name="Unit Status" data-value="Booked"
+                                    data-filter="Booked" onclick={handleClick}>Booked : {bookedCount}</button>
+						</li>
+						<li>
+							<span class="Blocked"></span>
+							<button class="button" type="button" data-name="Unit Status" data-value="Blocked"
+                                    data-filter="Blocked" onclick={handleClick}>Blocked : {blockedCount}</button>
+						</li>
+						<!--<li>
+							<span class="BookingInProcess"></span>
+							<button class="button" type="button" data-name="Unit Status"
+                                    data-value="Booking In-Progress" data-filter="Booking In-Progress"
+                                    onclick={handleClick}>Booking In-Progress : {bookingInProcessCount}</button>
+						</li>
+						 <li>
+							<span class="NotForSale"></span>
+							<button class="button" type="button" data-name="Unit Status" data-value="Not for Sale"
+                                    data-filter="Not for Sale" onclick={handleClick}>Not for Sale :
+                                    {notForSaleCount}</button>
+						</li> -->
+					</ul>
+				</div>
+				<br>
+
+				<div
+					style="display: flex; justify-content: center; align-items: center; text-align: center;margin-top: -40px;margin-bottom: 35px;">
+					<template for:each={unitConfigurationMap} for:item="u">
+						<ul key={u}>
+							<li style="padding: 5px;">
+								<button class="button" type="button" data-name="Unit Configuration"
+                                        data-value={u.key} data-filter={u.key} onclick={handleClick}>{u.key}:
+                                        {u.value}</button>
+							</li>
+						</ul>
+					</template>
+				</div>
+			</lightning-card>
+			<br />
+
+			<div class="row">
+				<template for:each={unitFloorMap} for:item="key">
+					<lightning-card key={key.key}>
+						<div class="floor-header">
+							<h3 class="no-wrap">{key.key}</h3>
+						</div>
+						<div class="unit-container-scrollable">
+							<div class="unit-container">
+								<div class="unit-row">
+									<template for:each={key.value} for:item="u">
+										<div key={u.Id} class="unit-box" data-unit-status={u.Sale_Status__c}
+											data-value={u.Id}>
+											<span class="unit-info popup-text" style="margin: 20px; font-size: 12px; display: block; white-space: pre-wrap; word-wrap: break-word !important;">{u.Unit_Info__c}</span>
+											<div class="unit-buttons">
+												<button class="quotation-button" data-value={u.Id}
+                                                        onclick={handleQuotation}>Quotation</button>
+												<button class="blocked-button" data-value={u.Id} onclick={handleBlock}>Block</button>
+											</div>
+											<div class="unit-block-buttons">
+												<button class="blocked-button" data-value={u.Id} onclick={handleBlock}>Unblock</button>
+											</div>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</lightning-card>
+				</template>
+			</div>
+		</template>
+	</template>
+</template>
+</template>

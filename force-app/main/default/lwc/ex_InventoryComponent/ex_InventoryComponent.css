@@ -1,0 +1,244 @@
+.card-size {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    object-fit: fill;
+}
+
+.car-size img {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    object-fit: fill;
+}
+
+div {
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+span {
+    box-sizing: border-box;
+}
+
+.arrow {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    margin: 100px 0 0 100px;
+    width: 100px;
+    height: 100px;
+    border: solid 6px #999;
+    border-radius: 100%;
+    z-index: 1;
+    transition: all .2s linear;
+}
+
+.next {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.legend { 
+    list-style: none; 
+}
+.legend li { 
+    float: left; 
+    margin-right: 10px; 
+}
+.legend span { 
+    border: 1px solid #ccc; 
+    float: left; 
+    width: 15px; 
+    height: 15px; 
+    margin: 2px; 
+}
+
+.legend .Vacant { 
+    background-color: rgb(0, 128, 0); 
+}
+.legend .Booked { 
+    background-color: rgb(255, 0, 0);
+}
+.legend .Blocked { 
+    background-color:#000000;
+}
+.legend .Reserved { 
+    background-color:grey;
+}
+.legend .Refuge { 
+    background-color: rgb(235, 158, 52);
+}
+.legend .LandOwner { 
+    background-color: rgb(52, 162, 235);
+}
+
+.legend .NotforSale { 
+    background-color:  lightpink;
+}
+
+.unit-container-scrollable {
+    max-height: 500px; 
+    overflow-y: auto;
+}
+
+.unit-info {
+    width: 130px; 
+    
+}
+
+.floor-header {
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-top:-16px;
+    background-color: #999;
+    font-weight: bold;
+    border-radius: 2.5px;
+}
+.unit-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 5px;
+}
+
+.unit-row {
+    display: inline-flex;
+    
+}
+
+.unit-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    margin: 8px;
+    font-size: 12px;
+    position: relative;
+    color: whitesmoke;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 3px rgb(128, 125, 125);
+
+    box-shadow: grey 10px 10px 5px;
+   
+  }
+  .unit-box:hover{
+    
+    transform: scale(1.1);
+  }
+  
+  .unit-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: #000000;
+  }
+  .unit-block-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: #000000;
+}
+
+.unit-box[data-unit-status="Vacant"] .unit-buttons button {
+    display: inline-block;
+}
+
+.unit-buttons button {
+  margin-right: 5px;
+  display:none;
+}
+
+.unit-box[data-unit-status="Blocked"] .unit-block-buttons button {
+    display: inline-block;
+}
+.unit-block-buttons button {
+    margin-right: 5px;
+    display:none;
+  }
+
+  .unit-box[data-unit-status="Vacant"] .unit-buttons button {
+    display: inline-block;
+}
+
+
+.unit-box[data-unit-status="Vacant"] {
+    background-color: rgb(0, 128, 0);
+
+}
+
+.unit-box[data-unit-status="Booked"] {
+    background-color: rgb(255, 0, 0);
+}
+.unit-box[data-unit-status="Reserved"] {
+    background-color: grey;
+}
+.unit-box[data-unit-status="Refuge"] {
+    background-color: rgb(235, 158, 52);
+}
+.unit-box[data-unit-status="Land Owner"] {
+     background-color: rgb(52, 162, 235);
+}
+ 
+
+.unit-box[data-unit-status="Blocked"] {
+    background-color: #000000;
+}
+/* .unit-box[data-unit-status="Not For Sale"] {
+    background-color: lightpink;
+} */
+.unit-box[data-unit-status="Booking In-Process"] {
+    background-color: lightpink;
+}
+.icon{
+    background-color:white;
+    color: black;
+    border: 1px solid black;
+}
+
+.img{
+    height: 200px;
+    width: 250px;
+}
+
+/* Custom CSS classes */
+.inventory-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inventory-card {
+    padding: 1rem;
+}
+
+.card-container {
+    display: flex;
+    align-items: center;
+}
+
+.name-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.name-item {
+    margin: 0.5rem;
+}
+
+.name-card {
+    padding: 0.5rem 1rem;
+    background-color: #f2f2f2;
+    border-radius: 0.25rem;
+}
+.unit-info {
+    white-space: pre-line;
+  }

@@ -8,6 +8,23 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Cancellation_Type</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Unit Cancellation</fullName>
+                <default>false</default>
+                <label>Unit Cancellation</label>
+            </value>
+            <value>
+                <fullName>Unit Transfer</fullName>
+                <default>false</default>
+                <label>Unit Transfer</label>
+            </value>
+            <value>
+                <fullName>Miss Sale</fullName>
+                <default>false</default>
+                <label>Miss Sale</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

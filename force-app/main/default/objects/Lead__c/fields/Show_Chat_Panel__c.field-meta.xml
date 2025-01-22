@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Show_Chat_Panel__c</fullName>
+    <formula>IF(
+    OR(
+        Project__r.Name = &quot;Queens Necklace&quot;,
+        Project__r.Name = &quot;Regents Park&quot;
+    ),
+    TRUE,
+    FALSE
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Show Chat Panel</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

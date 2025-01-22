@@ -1,20 +1,18 @@
 //-------------------------------------------//
-//  Project: Avant Infra 
-//  Created By: Exceller Tech
-//  Created Date: 05-09-2024
-//  Author: Sarjerao Deshmukh
+//  Client: Satyam Developers
+//  Created By: Exceller Consultancy
+//  Created Date: 23-10-2023
 //-------------------------------------------//
 public class Ex_DigitalLeadTriggerHandler {
-	public static void afterInsert(List<Digital_Lead__c> dList) {   
-        Set<Id> dLeadId = new Set<Id>(); 
+    public static void afterInsert(List<Digital_Lead__c> dList) {
+        Set<Id> dLeadId = new Set<Id>();
         
-        for(Digital_Lead__c dl: dList) { 
-            if(!dl.Executed__c) {  
+        for(Digital_Lead__c dl: dList) {
+            if(dl.Executed__c)
                 dLeadId.add(dl.Id);
-            }   
         }
         if(!dLeadId.isEmpty() && dLeadId != null)
-            Ex_DigitalLeadHandlerServices.leadProcess(dLeadId);
+            Ex_DigitalLeadHandlerServices.fbLeadProcess(dLeadId);
     }
     
     public static void afterUpdate(Map<Id, Digital_Lead__c> oldMap, Map<Id, Digital_Lead__c> newMap) {
@@ -27,6 +25,7 @@ public class Ex_DigitalLeadTriggerHandler {
                 dLeadId.add(newLead.Id);
         }
         if(!dLeadId.isEmpty() && dLeadId != null)
-            Ex_DigitalLeadHandlerServices.leadProcess(dLeadId);
+            Ex_DigitalLeadHandlerServices.fbLeadProcess(dLeadId);
     }
+    
 }

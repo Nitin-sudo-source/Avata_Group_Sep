@@ -2,10 +2,12 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Today_s_Opportunities</fullName>
     <columns>NAME</columns>
+    <columns>Mobile__c</columns>
+    <columns>Email__c</columns>
+    <columns>Is_Active__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity_Stage__c</columns>
     <columns>Project__c</columns>
-    <columns>Sales_Manager__c</columns>
-    <columns>Stage__c</columns>
-    <columns>Sub_Stage__c</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Mine</filterScope>
     <filters>
@@ -13,5 +15,8 @@
         <operation>equals</operation>
         <value>TODAY</value>
     </filters>
-    <label>Today&apos;s Opportunities</label>
+    <label>Today’s Opportunities</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
 </ListView>

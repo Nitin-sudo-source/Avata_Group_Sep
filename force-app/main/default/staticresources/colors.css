@@ -1,0 +1,15 @@
+
+.myTable table>thead .slds-cell-fixed.slds-has-button-menu {
+  background-color: #B2BEB5;
+  border: 2px solid #B2BEB5;
+  color: black;
+  font-size: 14px;
+}
+
+.slds-th__action:focus,
+.slds-th__action:hover {
+    outline: 0;
+    background-color: #B2BEB5;
+    color: black;
+   
+}

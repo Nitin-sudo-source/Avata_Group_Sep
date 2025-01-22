@@ -1,0 +1,69 @@
+<template>
+	<div class="container">
+		<div if:true={isSpinner} class="spinner-container">
+			<div class="loader"></div>
+			<div class="wait-text">Please wait...</div>
+		</div>
+		<div class="title">
+			<table style="border:none">
+				<thead>
+					<tr>
+						<td style="border:none">
+							<h1>Create Team and Team Members</h1>
+						</td>
+					</tr>
+				</thead>
+			</table>
+		</div><br>
+		<p class="title1">Project Name : <span>{projectName}</span></p><br>
+		<p class="title1">Team Type &nbsp;<span  style="color:red" >*</span></p>
+		<lightning-combobox data-name="Team_Type__c" variant="label-hidden" value={selectedTeamType}
+			placeholder="Select Team Type" options={teamTypepicklistOptions} onchange={handleChange}>
+		</lightning-combobox>
+		<br><br>
+		<table class="user-table" style="width:100%" if:true={showTable}>
+			<thead>
+				<tr>
+					<th style="width:20%">
+						<p>Select All</p>
+						<lightning-input type="checkbox" variant="label-hidden" checked={allCheckbox}
+							data-name="allCheckbox" onchange={handleChange}>
+						</lightning-input>
+					</th>
+					<th style="width:30%">User Name</th>
+					<th style="width:25%">Availability</th>
+					<th style="width:25%">Sequence Number <span  style="color:red" >*</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={userList} for:item="user" for:index="index">
+					<tr key={user.Id}>
+						<td style="text-align:center">
+							<lightning-input class={user.styleClass} type="checkbox" checked={user.singleCheckbox}
+								variant="label-hidden" data-index={index} disabled={user.isDupTeam}
+								data-name="singleCheckbox" onchange={handleChange}>
+							</lightning-input>
+						</td>
+						<td style="text-align:center" class={user.styleClass}>{user.Name}</td>
+						<td style="text-align:center">
+							<lightning-input type="checkbox" checked={user.Availability__c} data-index={index}
+								variant="label-hidden" data-name="Availability__c" onchange={handleChange}>
+							</lightning-input>
+						</td>
+						<td style="text-align:center">
+							<lightning-input class={user.styleClass} type="number" data-index={index}
+								variant="label-hidden" data-name="Sequence_Number__c" value={user.Sequence_Number__c}
+								onchange={handleChange}>
+							</lightning-input>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table><br>
+		<p if:true={showTable}  class="title1">Note : Team members highlighted in red color have already been assigned to the project.</p><br>
+		<center if:true={showTable}>
+			<lightning-button icon-name="utility:breadcrumbs" variant="success" label="Save" onclick={handleSave}>
+			</lightning-button>
+		</center>
+	</div>
+</template>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Martial_Status__c</fullName>
-    <label>Marital Status</label>
+    <label>Martial Status</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -18,6 +19,11 @@
                 <fullName>Un-Married</fullName>
                 <default>false</default>
                 <label>Un-Married</label>
+            </value>
+            <value>
+                <fullName>Widow</fullName>
+                <default>false</default>
+                <label>Widow</label>
             </value>
         </valueSetDefinition>
     </valueSet>

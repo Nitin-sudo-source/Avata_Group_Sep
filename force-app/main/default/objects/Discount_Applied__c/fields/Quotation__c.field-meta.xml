@@ -3,8 +3,8 @@
     <fullName>Quotation__c</fullName>
     <label>Quotation</label>
     <referenceTo>Quotation__c</referenceTo>
-    <relationshipLabel>Discount Applied</relationshipLabel>
-    <relationshipName>Discount_Applied</relationshipName>
+    <relationshipLabel>Discount Applieds</relationshipLabel>
+    <relationshipName>Discount_Applieds</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
     <trackHistory>false</trackHistory>

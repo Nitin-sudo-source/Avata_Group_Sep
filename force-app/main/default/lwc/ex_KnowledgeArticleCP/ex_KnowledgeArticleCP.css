@@ -1,0 +1,112 @@
+*,
+*::before,
+*::after{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: inherit;
+
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+    font-size: 5px;
+    box-sizing: border-box;
+}
+.icon{
+    height: 30px;
+    width: 25px;
+    transform: rotate(90deg);
+}
+
+.sub{
+    height: 20px;
+    width: 20px;
+}
+
+section{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.container{
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.accordion-item{
+    background-color:  #cae2df ;
+    font-weight: bold;
+    color:#0e0e0e;
+    text-shadow: 2px 2px 3px rgb(128, 125, 125);
+    font-size:14px;  
+    border-radius: .4rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: .5rem 2px .5rem rgba(0, 0, 0, 0.1);
+}
+
+.accordion-link{
+    background-color:  #cae2df ;
+    font-weight: bold;
+    color:#0e0e0e;
+    text-shadow: 2px 2px 3px rgb(128, 125, 125);
+    font-size:14px;  
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.accordion-link .sub{
+    display: none !important;
+}
+
+.answer{
+    max-height: 0;
+    overflow: hidden;
+    position: relative;
+    background-color: #fcfcfc;
+    transition: max-height 650ms;
+    font-weight: bold;
+    color:#0e0e0e;
+    text-shadow: 2px 2px 3px rgb(128, 125, 125);
+    font-size:14px;
+  
+}
+
+.answer::before{
+    content: "";
+    position: absolute;
+    width: .6rem;
+    height: 90%;
+    background-color: #8fc460;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.answer p{
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.0rem;
+    padding: 2rem;
+}
+
+.accordion-item:target .answer{
+    max-height: 20rem;
+}
+
+.accordion-item:target .accordion-link .icon{
+    display: none !important;
+}
+
+.accordion-item:target .accordion-link .sub{
+    display: block !important;
+}

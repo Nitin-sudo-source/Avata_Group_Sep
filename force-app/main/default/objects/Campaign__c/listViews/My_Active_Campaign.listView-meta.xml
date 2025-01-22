@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Active_Campaign</fullName>
+    <columns>NAME</columns>
+    <columns>Start_Date__c</columns>
+    <columns>End_Date__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Actual_Leads__c</columns>
+    <columns>IsActive__c</columns>
+    <columns>Actual_Enquiries__c</columns>
+    <columns>Actual_Visits__c</columns>
+    <columns>Actual_Bookings__c</columns>
+    <columns>Campaign_Code__c</columns>
+    <columns>Source__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>OWNER.ALIAS</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>IsActive__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>My Active Campaign</label>
+</ListView>

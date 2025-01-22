@@ -1,0 +1,268 @@
+<!-- mainChatComponent.html -->
+<template>
+    <div class="chat-window-container">
+        <!-- Header Component -->
+        <div class="header-container minimize-icon2" onclick={toggleVisibility}>
+            <div style="display: flex; align-items: center;">
+                <div class="icon-container">
+                    <img src={avatarIconUrl} class="avatar-icon" alt="Avatar">
+                  </div>
+                <span style="font-size: large; padding-left: 0.8vw; color: white; font-weight: bold;">{CustomerName}</span>
+            </div>
+
+            <!-- <span class="notification-badge">1</span> -->
+
+            <div>
+                <lightning-icon size="small" class="minimize-icon" icon-name="utility:chevrondown"></lightning-icon>
+            </div>
+        </div>
+        <div class="slds-chat-bookend">
+          <span class="slds-icon_container slds-icon-utility-chat slds-chat-icon">
+          <svg class="slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+          <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chat"></use>
+          </svg>
+          </span>
+          <p>Chat started by &nbsp;
+            <b>{CustomerName} • {timeRemaining}</b>
+          </p>
+          <!-- <div style="margin-left: 2vh;">
+            <lightning-icon size="x-small" class="minimize-icon" onclick={RefreshWhatsappMessages} icon-name="action:refresh"></lightning-icon>
+        </div> -->
+        </div>
+
+        <!-- Body Component -->
+        <template if:false={filevisible}>
+        <div>
+          <div class="chat-body-container custom-scrollbar">
+              
+          
+              <!-- Chat  Messages -->
+              <section role="log" class="slds-chat">
+                <ul class="slds-chat-list">
+                  <template for:each={allmessages} for:item="msg" for:index="index">
+                    <template if:true={msg.Outbound__c}>
+
+                      <template if:true={msg.Number_Changed__c}>
+                        
+                        <div class="slds-align_absolute-center numchange" key={msg.Id}>Number Changed to {msg.Customer_Phone__c}</div>
+
+                      </template>
+
+                      <li key={msg.Id} class="slds-chat-listitem slds-chat-listitem_outbound">
+                        <div class="slds-chat-message">
+                          <div class="slds-chat-message__body" style="margin-bottom: 10px !important;">
+
+                            <div class="slds-chat-message__text slds-chat-message__text_outbound" >
+
+                              <template if:true={msg.Contains_File__c}>
+
+                                <div class="slds-file slds-has-title fileinchat">
+                                  <figure>
+                                    <a href="#" class="slds-file__crop slds-file__crop_4-by-3">
+                                      <span class="slds-assistive-text">Preview:</span>
+                                      <img src="/assets/images/placeholder-img@16x9.jpg" />
+                                    </a>
+                                    <figcaption class="slds-file__title slds-file__title_card slds-file-has-actions">
+                                      <div class="slds-media slds-media_small slds-media_center">
+                                        <div class="slds-media__figure slds-line-height_reset">
+                                        </div>
+                                        <div>
+                                          <lightning-icon 
+                                              class="docicon"
+                                              icon-name="standard:drafts" 
+                                              alternative-text="File" 
+                                              size="small" 
+                                              title="File"
+                                          ></lightning-icon>
+                                        </div>
+                                        <div class="slds-media__body">
+                                          <span class="slds-file__text slds-truncate file__text" title="File.pdf">{fname}</span>
+                                        </div>
+                                      </div>
+                                    </figcaption>
+                                  </figure>
+                                </div>
+
+                              </template>
+
+                              <span>{msg.Message_Text__c}</span>
+
+                              <template if:true={msg.Interactive__c}>
+                                <div class="interactive">
+                                  <button class="slds-button slds-button_neutral slds-button_stretch" style="margin: 2px !important;width: 100%;" if:true={msg.Title_1__c} 
+                                  data-index={index} onclick={handletitle1} >{msg.Title_1__c}</button><br>
+
+                                  <button class="slds-button slds-button_neutral slds-button_stretch" style="margin: 2px !important;width: 100%;" if:true={msg.Title_2__c} 
+                                  data-index={index} onclick={handletitle2} >{msg.Title_2__c}</button>
+
+                                  <!-- <lightning-button class="custom-button" style="margin: 5px !important;width: 100%;" if:true={msg.Title_1__c} 
+                                    data-index={index} onclick={handletitle1} label={msg.Title_1__c}>
+                                  </lightning-button><br>
+
+                                  <lightning-button class="custom-button" style="margin: 5px !important;width: 100%;" if:true={msg.Title_2__c} 
+                                    data-index={index} onclick={handletitle2} label={msg.Title_2__c}>
+                                  </lightning-button> -->
+                                </div>
+                              </template>
+
+                            </div>
+
+                            <template if:true={msg.Success__c}>
+                              <div class="slds-chat-message__meta" aria-label="said Taylor Watson-Rice at 4:59 PM">{msg.CreatedTime}
+                                                                
+                                <lightning-icon lwc:if={msg.sent} style="margin-left: 5px;" size="xx-small" aria-label="Delivered" class="delivered" icon-name="utility:check"></lightning-icon>
+
+                                <img class="sent" lwc:if={msg.delivered} src={seenlogo}/>
+
+                                <img class="read" lwc:if={msg.read} src={readlogo}/>
+                              </div>
+                            </template>
+                            <template if:false={msg.Success__c}>
+                              <div class="slds-chat-message__meta" aria-label="said Taylor Watson-Rice at 4:59 PM">{msg.CreatedTime}
+                                <lightning-icon style="margin-left: 5px;" size="xx-small" aria-label="Failed" class="failed" icon-name="utility:expired"></lightning-icon>
+                              </div>
+                            </template>
+                          </div>
+                        </div>
+                      </li>
+                    </template>
+
+                    <template if:false={msg.Outbound__c}>
+                      <li key={msg.Id} class="slds-chat-listitem slds-chat-listitem_inbound" >
+                        <div class="slds-chat-message" style="margin-bottom: 10px !important;">
+                          <div class="slds-chat-message__body">
+                            <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                              <template if:true={msg.Contains_File__c}>
+                                <div class="slds-file slds-has-title fileinchat">
+                                  <figure>
+                                    <a href="#" class="slds-file__crop slds-file__crop_4-by-3">
+                                      <span class="slds-assistive-text">Preview:</span>
+                                      <img src="/assets/images/placeholder-img@16x9.jpg" />
+                                    </a>
+                                    <figcaption class="slds-file__title slds-file__title_card slds-file-has-actions">
+                                      <div class="slds-media slds-media_small slds-media_center">
+                                        <div class="slds-media__figure slds-line-height_reset">
+                                        </div>
+                                        <div>
+                                          <lightning-icon 
+                                              class="docicon"
+                                              icon-name="standard:drafts" 
+                                              alternative-text="File" 
+                                              size="x-small" 
+                                              title="File"
+                                              variant="inverse"
+                                          ></lightning-icon>
+                                        </div>
+                                        <div class="slds-media__body">
+                                          <span class="slds-file__text slds-truncate file__text" title="File.pdf">File.pdf</span>
+                                        </div>
+                                      </div>
+                                    </figcaption>
+                                  </figure>
+                                </div>
+    
+                              </template>
+    
+                              <span>{msg.Message_Text__c}</span>
+                            </div>
+                            
+                            <template if:true={msg.Success__c}>
+                              <div class="slds-chat-message__meta" aria-label="said Taylor Watson-Rice at 4:59 PM">{msg.CreatedTime}
+                                <lightning-icon style="margin-left: 5px;" size="xx-small" aria-label="Delivered" class="delivered" icon-name="utility:check"></lightning-icon>
+                              </div>
+                            </template>
+                            <template if:false={msg.Success__c}>
+                              <div class="slds-chat-message__meta" aria-label="said Taylor Watson-Rice at 4:59 PM">{msg.CreatedTime}
+                                <lightning-icon style="margin-left: 5px;" size="xx-small" aria-label="Failed" class="failed" icon-name="utility:expired"></lightning-icon>
+                              </div>
+                            </template>
+                          </div>
+                        </div>
+                      </li>
+                    </template>
+                  </template>
+                </ul>
+              </section>
+          </div>
+
+          <!-- Footer Component -->
+          <div class="chat-input-container">
+              <div class="upload-btn" onclick={handleCancel}>
+                  <lightning-icon size="medium" icon-name="utility:new"></lightning-icon>
+              </div>
+                <div class="chat-input-box">
+                    <lightning-textarea disabled={disableChatWindow}  onblur={handleblur} value={msg} placeholder="Type your message..." name="msg" style="resize: none;"></lightning-textarea>
+                </div>
+              <div class="send-btn" >
+                  <lightning-icon size="medium" icon-name="utility:send" onclick={sendchat}></lightning-icon>
+              </div>
+          </div>
+
+        <div class="overlay" onclick={handleAttachmentClick}></div>
+          <div class="attachment-modal">
+            <div class="template" style="display: none;" onclick={toggleTemplate}>
+              <lightning-combobox class="combobox" placeholder="Select Category" onchange={handlecategory} style="margin: 10px;" options={CategoryOptions}></lightning-combobox>
+                <template if:true={notemplates}><div style="color: red;font-weight: bold;  width: fit-content;text-align: center;">No Template Available for Selected Category !</div></template>
+                <template if:true={viewtemplates}>
+                  <lightning-combobox class="combobox" placeholder="Select Template" onchange={handleselectedtemplate} style="margin: 10px;" options={templateList}></lightning-combobox>
+                </template>
+            </div>
+            <div class="temp" style="display: block;">
+              <!-- 
+              <div class="menu" style="display: flex; flex-direction: column; justify-content: center;">
+                  <div style="display: flex; align-items: center; margin-left: 5%; padding-top: 1vh; padding-bottom: 1vh" onclick={handleDocumentUpload}>
+                      <lightning-icon class="file" size="small" icon-name="utility:file" style="margin-right: 5%;"></lightning-icon>
+                      <h2 style="font-weight: 500;">Document</h2>
+                  </div>
+                  <input style="display: none;" type="file" accept=".txt, .pdf, .docx, .xlsx" onchange={handleFileChange} />
+              </div>
+              <div class="menu" style="display: flex; flex-direction: column; justify-content: center;">
+                <div style="display: flex; align-items: center; margin-left: 5%; padding-top: 1vh; padding-bottom: 1vh">
+                    <lightning-icon class="image" size="small" icon-name="utility:image" style="margin-right: 5%;"></lightning-icon>
+                    <h2 style="font-weight: 500;">Images</h2>
+                </div>
+              </div>
+               -->
+              <div class="menu" style="display: flex; flex-direction: column; justify-content: center;">
+                  <div style="display: flex; align-items: center; margin-left: 5%; padding-top: 1vh; padding-bottom: 1vh" onclick={toggleTemplate}>
+                      <lightning-icon class="text_template" size="small" icon-name="utility:text_template" style="margin-right: 5%;"></lightning-icon>
+                      <h2 style="font-weight: 500;">Templates</h2>
+                  </div>
+              </div>
+            </div>
+              <div style="display: flex; justify-content: center; padding-top: 1.5vh; padding-bottom: 1.5vh; color: #2b93d8;">
+                <h2 class="cancel-btn" onclick={handleCancel}>Cancel</h2>
+              </div>
+          </div>
+        </div>
+        </template>
+
+      <template if:true={filevisible}>
+        <div class="filepage">
+          <div class="chat-body-container custom-scrollbar filebody" if:true={visible}>
+
+            <div class="file-close-icon-container">
+              <lightning-icon icon-name="utility:close" alternative-text="Close" size="small" onclick={handleFileClose}></lightning-icon>
+            </div>
+            <div class="file-icon-container">
+              <img src={fileIconUrl} class="file-icon" alt="File">
+              <div class="file-overlay">
+                <lightning-icon icon-name="utility:preview" alternative-text="preview" style="--sds-c-icon-color-foreground-default: rgb(100, 96, 96);" size="medium"></lightning-icon>
+              </div>
+            </div>
+            <div class="fileuppage">
+              <p style="color: #5274f9;" class="file__text">{fname}</p>
+            </div>
+          </div>
+          <div class="chat-input-container">
+            <div class="chat-input-box">
+                <lightning-textarea placeholder="Add Caption" name="Caption" value={caption} style="resize: none;" onblur={handlecaption}></lightning-textarea>
+            </div>
+            <div class="send-btn">
+                <lightning-icon size="medium" icon-name="utility:send" onclick={sendatt}></lightning-icon>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+</template>

@@ -16,6 +16,11 @@
                 <label>Valid</label>
             </value>
             <value>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+                <label>Cancelled</label>
+            </value>
+            <value>
                 <fullName>Expired</fullName>
                 <default>false</default>
                 <label>Expired</label>

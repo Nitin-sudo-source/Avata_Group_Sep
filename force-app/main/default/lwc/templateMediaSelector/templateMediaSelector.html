@@ -1,0 +1,108 @@
+<template>
+
+    <lightning-card>
+        <div class="background" >
+            <div class="main">
+                <lightning-icon  size="medium" icon-name="standard:template"></lightning-icon>
+                <label class="head">Template Media</label>
+                <!-- <div style="float:right; margin: 20px;margin-left: 10px;">
+                    <lightning-button variant="brand-outline" label="Add Media" icon-name="utility:add" onclick={handleAdd} class="slds-m-left_small "></lightning-button>
+                </div> -->
+            </div>
+
+
+            <!-- <div class={modalClass}>
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Create Media</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-input label="Resource Name" value={resourceName} onchange={handleInputChange}></lightning-input>
+                        <lightning-file-upload label="Upload Resource" onuploadfinished={handleFileUpload}></lightning-file-upload>
+        
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button style="margin: 5px !important;" variant="neutral" label="Cancel" title="Cancel" onclick={handleCancel}></lightning-button>
+                        <lightning-button style="margin: 5px !important;" variant="brand" label="Create" title="Create" onclick={handleCreate}></lightning-button>
+                    </footer>
+                </div>
+            </div>
+            <div class={backdropClass}></div> -->
+            <template lwc:if={errors}>
+                <div class="err">
+                    {errors}
+                </div>
+            </template>
+
+            <div style="margin: 20px; border: 1px solid #c2c2c2;border-radius: var(--lwc-borderRadiusMedium,0.25rem);">
+                <div class="main">
+                  <lightning-icon size="medium" icon-name="standard:shift_pattern_entry"></lightning-icon>
+                  <label class="head">All Media</label>
+                  <div style="float:right; margin: 20px;margin-left: 10px;">
+                    <lightning-button variant="brand" label="Submit" icon-name="utility:save" onclick={handleSubmit} class="slds-m-left_small "></lightning-button>
+                </div>
+                </div>
+
+                <lightning-record-edit-form object-api-name="Campaign__c">
+                    <div style="margin: 20px;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Content Type</th>
+                                    <th>Preview</th>
+                                    <th>Select Template</th>
+                                </tr>
+                                <template for:each={StaticResourceList} for:item="sr" for:index="index">
+                                    <tr key={sr.Id}>
+                                        <td>{sr.Name}</td>
+                                        <td>{sr.ContentType}</td>  
+                                        <td style="padding:8px; text-align:center;" >
+                                            <lightning-button class="button" data-index={index} icon-name="utility:preview" onclick={viewRecord} label="Preview" title="Preview" variant="brand-outline"></lightning-button>
+                                        </td>
+                                        <td>
+                                            <!-- <lightning-input-field variant="label-hidden" data-index={index} value={sr.template__c} field-name="Whatsapp_Template__c" onchange={handlechange}></lightning-input-field> -->
+                                            <div class="slds-p-around_medium user-input-box">
+
+                                                <lightning-input variant="label-hidden" name="Whatsapp_Template_Name__c" type="text" label="Whatsapp Template Name" value={sr.template__c} data-index={index} onchange={handleTemplate}></lightning-input>
+                                                <div>
+                                                    <template if:true={sr.showTemplateResult}>
+                                                        <ul >
+                                                            <template for:each={searchTemplateResult} for:item="wt">
+                                                                <li key={wt.Id} class="slds-listbox__item" data-id={wt.Id} data-name={wt.Whatsapp_Template_Name__c} data-index={index} onclick={handlechange}>
+                                                                    <div style="padding: 0px;" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta">
+                                                                        <span class="slds-media__body" style="display: flex; align-items: center;padding: 0px;">
+                                                                            <lightning-icon 
+                                                                                icon-name="standard:template" 
+                                                                                alternative-text="Connected" 
+                                                                                size="small" 
+                                                                                variant="inverse"
+                                                                                style="margin-right: 5px;"
+                                                                            ></lightning-icon>
+                                                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity" style="font-size: 12px;font-weight: 600;">{wt.Whatsapp_Template_Name__c}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ul>
+                                                    </template>
+                                                </div>
+                                                    
+                                                <div if:true={sr.showTemplateError} class="slds-text-color_error error">Please enter a value</div>
+
+                                            </div>
+                                        </td>                                  
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </lightning-record-edit-form>
+            </div>
+        </div>
+        
+       
+    </lightning-card>
+
+</template>

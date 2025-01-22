@@ -1,0 +1,103 @@
+<template>
+    <lightning-card>
+        <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Please wait...</div>
+        </div>
+        <lightning-record-edit-form object-api-name={objectApi}>
+            <p class="header">Update Completion Date</p><br>
+
+            <div style="Padding:10px;font-size:14px;">
+                <table class="Table1Css">
+                    <tr>
+                        <th>Project</th>
+                        <td>{projectName}</td>
+                        <th>Tower</th>
+                        <td>{Name}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="1">Select Construction Stage</th>
+                        <td colspan="3"> 
+                            <lightning-combobox options={cstage} value={csfetch}
+                                placeholder="--Select Construction Stage--" onchange={handlePhaseChange}
+                                style="font-weight: bold;" >    
+                                <template for:option>
+                                    {option.label}
+                                </template>
+                            </lightning-combobox>
+                        </td>
+                    </tr>
+                    <template if:true={showFloorOption}>
+                        <tr>
+                            <th colspan="1">Select Floor</th>
+                            <td colspan="3">
+                                <lightning-dual-listbox name="Floor" source-label="Available Floor"
+                                    selected-label="Selected Floor" field-level-help="Select your floor "
+                                    options={floorOptions} style="font-weight: bold;" onchange={handleChange}>
+                                </lightning-dual-listbox><br>
+                                <strong>Selected Floor</strong><br />
+                                <span class="slds-form-element__static">{selected}</span>
+                            </td>
+                        </tr>
+                    </template>
+                <template if:true={isConstructionStageSelected}>
+                    <tr>
+                        <th colspan="4" style="Padding:10px !important">
+                <div class="radio-group-container" style="margin-left:27%;">
+                    <template for:each={options} for:item="option">
+                        <div key={option.value}>
+                            <b> <label style=" text-shadow: 1px 1px 2px rgb(128, 125, 125);">
+                                <input
+                                    type="radio"
+                                    name="options"
+                                    value={option.value}
+                                    onchange={handleRadioChange}
+                                />
+                                {option.label}
+                            </label> </b>
+                        </div>
+                    </template>
+                      </div> 
+                      </th>
+                    </tr>
+                    </template>
+                    <template if:true={isExpectedDateSelected}>
+                        <tr>
+                            <th colspan="2">Expected Completion Date</th>
+                            <td colspan="2">
+                                <lightning-input-field field-name="Expected_Completion_Date__c" variant="label-hidden"
+                                    style="font-weight: bold;" onchange={handleexpectedcompletion}>
+                                </lightning-input-field>
+                            </td>
+                        </tr>
+                    </template>
+                    <template if:true={isActualDateSelected}>
+                        <tr>
+                            <th>Actual Completion Date </th>
+                            <td >
+                                <lightning-input-field field-name="Actual_Completion_Date__c" variant="label-hidden"
+                                    style="font-weight: bold;" onchange={handleactualcompletion}>
+                                </lightning-input-field>
+                            </td>
+                            <th>Upload Architect Letter</th>
+                            <td >
+                                <lightning-input type="file"  variant="label-hidden"
+                                    onchange={handleFileChange}>
+                                </lightning-input>
+                                <p if:true={showFileName}>{showFileName}</p>
+                                <template if:true={showSpinner}>
+                                    <lightning-spinner alternative-text="Uploading file..."
+                                        size="medium"></lightning-spinner>
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </table><br /><br />
+                <center>
+                    <lightning-button variant="success" label="Submit" title="Submit"
+                        onclick={handleSaveNew}></lightning-button>
+                </center>
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

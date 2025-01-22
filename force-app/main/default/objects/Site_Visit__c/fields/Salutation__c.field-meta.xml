@@ -8,6 +8,33 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Salutation</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Mr.</fullName>
+                <default>false</default>
+                <label>Mr.</label>
+            </value>
+            <value>
+                <fullName>Ms.</fullName>
+                <default>false</default>
+                <label>Ms.</label>
+            </value>
+            <value>
+                <fullName>Mrs.</fullName>
+                <default>false</default>
+                <label>Mrs.</label>
+            </value>
+            <value>
+                <fullName>Dr.</fullName>
+                <default>false</default>
+                <label>Dr.</label>
+            </value>
+            <value>
+                <fullName>Prof.</fullName>
+                <default>false</default>
+                <label>Prof.</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

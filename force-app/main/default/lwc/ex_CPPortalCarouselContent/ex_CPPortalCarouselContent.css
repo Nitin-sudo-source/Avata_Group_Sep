@@ -1,0 +1,10 @@
+.banner
+{
+    display:block;
+    width:100%;
+    background-repeat:no-repeat;
+    background-position:center bottom;
+    background-size: cover;
+    animation: 2s infinite alternate;
+  
+}

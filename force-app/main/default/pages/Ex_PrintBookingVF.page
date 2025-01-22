@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 15-01-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
 <apex:page controller="Ex_PrintBookingPDF" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
     <html>
         <head>
@@ -5,10 +12,10 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <style type="text/css" media="print">
                 @page {
-                font-family: Times, sans-serif; 
+                font-family: Times, sans-serif, Gotham Book, Arial; 
                 size: A4;
-                margin-top: 1.5in;
-                padding: 2px;
+                margin-top: 1.6in;
+                padding: 4px;
                 /*border: 1px solid black;*/
                 @top-left {
                 content: element(header);
@@ -27,13 +34,14 @@
                 padding-left: 5px;
                 margin-top: 5mm;
                 }
+                
                 div.footer {
                 display: block;
-                text-align: left;
+                padding: 5px;
                 position: running(footer);
-                padding:8px;
                 
                 }
+
                 * {
                 box-sizing: border-box;
                 font-size: 8.5px;
@@ -57,45 +65,50 @@
                 font-size:12px;
                 font-family: 'Arial Unicode MS'; 
                 }
-                
-                hr {
-                border: none;
-                height: 1px;
-                /* Set the hr color */
-                color: #333;  /* old IE */
-                background-color: #333; 
-                /* Modern Browsers */
+                .u{
+                    font-size: 12px;
+                }
+
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                font-size:12px;
                 }
                 
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:left;
+                /* background-color:  #b7c5e1; */
+                page-break-inside: avoid;
                 
-                body {
-                font-size: 12px !important;
                 }
-                table {
-                font-size: 12px !important;
-                width: 100%;
-                }
-                th, td {
-                font-size: 12px !important;
-                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                page-break-inside: avoid;
                 
-                .header-text, .footer-text, .middle-section {
-                font-size: 12px !important;
                 }
+                .mainTable tr{
+                page-break-inside: avoid;
+                
+                }
+
+                
+               
             </style>
             
-            <!--Page 1-->
-            <div>
+<!--Page 1 Start-->
+        <div>
                 <p style="text-align:center;font-size:30px;font-weight:bold;padding:8px;padding-top:20px;color:#484848; margin-top: 1in;">
                     WEH-JVLR JUNCTION <br/> ANDHERI (E)
                 </p>
-                
-                
+            
                 <p style="text-align:center;font-size:30px;font-weight:bold;padding:8px;color:#000000;">
                     | APPLICATION FORM &amp; |<br/> ALLOTMENT 
                 </p>
-            </div>
-            
+           
             <div class="logo" style="text-align:center;padding-left:20px; width:100%; display:inline-block; padding:0px 0px 5px 0px;margin:0px;">
                 <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
             </div>
@@ -105,16 +118,19 @@
             </p>
             
             <div class="footer">
-                <p align="Justify;" style="font-size:10px;">
+                <p align="" style="font-size:10px;">
                     Codename Your Glory is registered in MahaRera as Avant Heritage - V is registered under MahaRERA Registration No.: P51800053527 &amp; is available on
                     website of maharera.mahaonline.gov.in. All the images used in this are for representation purpose only. T&amp;C apply.
-                    <br/><br/></p>
+                </p>
             </div>
+
+        </div>
+<!--Page 1 End-->
             
-            <!--Page 2-->
+            <!--Page 2 Start-->
             <div style="page-break-before: always;">
                 <div class="header">
-                    <div class="logo" style="text-align:right; width:100%; display:inline-block; padding:0px 0px 5px 0px;margin:0px;">
+                    <div class="logo" style="text-align:right; width:100%;">
                         <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
                     </div>
                 </div>
@@ -122,49 +138,55 @@
                     
                     <table style="font-size:12px;">
                         <tr>
-                            <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                            <th style="font-size:12px;">
                                 A) Applicant Details
                             </th>
                             <td></td>
                         </tr>
                         <tr>
                             <!-- 'Name of Applicant' label before the first td -->
-                            <td style="font-size:12px;width: 30%;">Name of Applicant</td>
+                            <td style="font-size:12px;">Name of Applicant</td>
                             <td style="width: 70%;">
-                                <table style="font-size:12px;width: 100%;">
+                                <table style="font-size:12px;">
                                     <apex:variable value="{!1}" var="count" />
                                     <apex:repeat value="{!ApplicantWrapperList}" var="ap">
                                         <!-- First td -->
                                         <tr>
-                                            <td style="font-size:14px;width:100%!IMPORTANT;">
+                                            <td style="font-size:14px;">
                                                 {!count}) 
                                                 <apex:variable value="{!count+1}" var="count" /> 
                                                 <!-- Blank checkboxes for Mr, Mrs, Ms, and M/S -->
                                                 Title: 
-                                                &#9744; Mr. &nbsp;&nbsp; 
-                                                &#9744; Mrs. &nbsp;&nbsp; 
-                                                &#9744; Ms. &nbsp;&nbsp; 
-                                                &#9744; M/S
+                                                <apex:outputText rendered="{!ap.apTitle == 'Mr.'}">
+                                                    &#9745; {!ap.apTitle} &nbsp;&nbsp; <!-- Checked box for Mr -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!ap.apTitle == 'Mrs.'}">
+                                                    &#9745; {!ap.apTitle} &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                 <apex:outputText rendered="{!ap.apTitle == 'Ms.'}">
+                                                    &#9745; {!ap.apTitle} &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!ap.apTitle != 'Mr.'}">
+                                                    &#9744; Mr. &nbsp;&nbsp; <!-- Checked box for Mr -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!ap.apTitle != 'Mrs.'}">
+                                                    &#9744; Mrs. &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                 <apex:outputText rendered="{!ap.apTitle != 'Ms.'}">
+                                                    &#9744; Ms. &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
                                                 <hr/>
                                             </td>                                            
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <!-- First, Middle, and Last Name alignment -->
-                                                <p style="font-size:14px;">
-                                                    First Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {!ap.applicantName}
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p style="font-size:14px;">
-                                                    Middle Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {!ap.applicantName}
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p style="font-size:14px;">
-                                                    Last Name &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {!ap.applicantName}
-                                                </p>
-                                            </td>
+                                            <th>First name</th>
+                                            <th>Middle name</th>
+                                            <th>Last name</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{!ap.applicantName}</td>
+                                            <td>{!ap.applicantName}</td>
+                                            <td>{!ap.applicantName}</td>
                                         </tr>
                                     </apex:repeat>
                                 </table>
@@ -173,26 +195,21 @@
                     </table>
                 </div>
             </div>
+          
             <div>
-                <label style="line-height: 2.5;font-size:12px;">
-                    Residence Address: 
-                    <hr/> 
-                </label>
-                <label style="line-height: 2.5;font-size:12px;">
-                    <hr/> 
-                </label>
-                <tr>
+                <p style="font-size:12px;">
+                    Residence Address: <u style="font-size:14px;">{!bkList[0].Primary_Applicant_Address__c}</u>
+                </p>
+               
+                <!--<tr>
                     <td style="font-size:12px;width: 30%;">
                         <label style="line-height: 2.5; font-size: 12px;">Occupation:</label>
                     </td>
                     <td style="width: 70%;">
-                        &#9744; <span style="font-size: 12px;">Business</span> &nbsp;&nbsp;
-                        &#9744; <span style="font-size: 12px;">Service</span> &nbsp;&nbsp;
-                        &#9744; <span style="font-size: 12px;">Professional</span> &nbsp;&nbsp;
-                        &#9744; <span style="font-size: 12px;">Retired</span>
+                        &#9744; <span style="font-size: 12px;">{!ap.applicantOccupation}</span> &nbsp;&nbsp;
                     </td>
-                </tr>
-                <br/>
+                </tr>-->
+                <!--<br/>
                 <label style="display: block; width: 100%;font-size:12px; line-height: 2.5; text-align: justify;">
                     Details:Organization: ___________________________________ Designation: _________________________________________
                 </label>
@@ -224,32 +241,12 @@
                 </label>
                 <label style="line-height: 2.5;font-size:12px;">
                     Local contact person (with contact no.): ______________________________________________________________________________
-                </label>
-                <br/>
-                <br/>
-                <br/>
-                
-                <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
-                    B)DETAILS OF FLAT ALOTTED 
-                </th>
-                <label style="line-height: 2.5;font-size:12px;">
-                    Project name:Avant Heritage V:_________________ Flat no.:____________Floor___________Configuration______________BHK
-                </label>
-                
-                <label style="line-height: 2.5;font-size:12px;">
-                    RERA carpet area_______________________________________Sq Ft.along with______________________________________Car Park
-                </label> 
-                
-                <label style="line-height: 2.5;font-size:12px;">
-                    Agreement value:Rs.______________________________________________(Rupees___________________________________________
-                </label>
+                </label>-->
+               
                 
                 
-                <label style="line-height: 2.5;font-size:12px;">
-                    ______________________________________________________________________________________________________________only)
-                </label>
                 
-                <tr>
+                <!--<tr>
                     <td style="font-size:12px;width: 30%;">
                         <label style="line-height: 2.5; font-size: 12px;">End use:</label>
                     </td>
@@ -257,10 +254,55 @@
                         &#9744; <span style="font-size: 12px;">Self</span> &nbsp;&nbsp;
                         &#9744; <span style="font-size: 12px;">Investment</span> &nbsp;&nbsp;
                     </td>
-                </tr>
+                </tr>-->
+
+                <table class="mainTable">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Relation With 1st Applicant</th>
+                        <th>Birth Date</th>
+                        <th>Anniversary Date</th>
+                        <th>Pan no.</th>
+                        <th>Aadhar no.</th>
+                    </tr>
+                    <apex:variable value="{!1}" var="apCount" />
+                    <apex:repeat value="{!ApplicantWrapperList}" var="ap">
+                        <tr>
+                            <th> Applicant {!apCount}</th>
+                            <td>NA</td>
+                            <td><apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!ap.applicantDOB}" /> 
+                            </apex:outputText>
+                                </td>
+                            <td><apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!ap.applicantAnivserD}" /> 
+                            </apex:outputText>
+                            </td>
+                            <td>{!ap.applicantPAN}</td>
+                             <td>{!ap.applicantAadhar}</td>
+                             </tr>
+
+
+                    </apex:repeat>
+                </table>
+
+                <p style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                    B) DETAILS OF FLAT ALOTTED 
+                </p>
+                <p style="font-size:12px; padding:4px;  line-height:1.2;">
+                    Project name: <u style="font-size:12px;">{!projectName}</u>&nbsp;&nbsp; 
+                    Flat no: <u style="font-size:12px;">{!unitName}</u>&nbsp;&nbsp; 
+                    Floor: <u style="font-size:12px;">{!unitFloor}</u>&nbsp;&nbsp; 
+                    Configuration: <u style="font-size:12px;">{!unitConfi}</u>
+                    <br/><br/>
+                    RERA carpet area: <u style="font-size:12px;">{!unitCarpetArea}</u> Sq Ft along with 
+                    <u style="font-size:12px;">{!bkList[0].Car_Park_Allotment_Count__c}</u> Car Park
+                    <br/><br/>
+                    Agreement value: Rs. <u style="font-size:12px;">{!agreementValue}</u> (Rupees 
+                    <u style="font-size:12px;">{!amountInWords}</u>)
+                </p>
                 
-                <br/>
-                <br/>
+                
                 <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
                     C)PAYMENT SCHEDULE 
                 </th>

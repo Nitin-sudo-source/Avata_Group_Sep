@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Category__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( TEXT(Lead_Stage__c) &lt;&gt; &apos;Visit Done&apos; , &apos;Lead&apos;,
+IF( TEXT(Lead_Stage__c) = &apos;Visit Done&apos; &amp;&amp;   ISBLANK(ConvertedOpportunityId__r.Booking__c) , &apos;Visit Done&apos;,
+IF( TEXT(Lead_Stage__c) = &apos;Visit Done&apos; &amp;&amp;    NOT(ISBLANK(ConvertedOpportunityId__r.Booking__c)) , &apos;Booked&apos;, &apos; &apos; )))</formula>
+    <label>Customer Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

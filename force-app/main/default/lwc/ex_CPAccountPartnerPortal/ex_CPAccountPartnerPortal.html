@@ -1,0 +1,14 @@
+<template>
+    <template if:true={isModalOpen}>
+        <header class="slds-modal__header">
+
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <p>Do you want to create Partner User?</p>
+        </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={closeModal}>No</button>
+            <button class="slds-button slds-button_brand" onclick={handleCreatePartnerUser}>Yes</button>
+        </footer>
+    </template>
+</template>

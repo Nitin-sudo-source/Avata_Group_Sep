@@ -1,0 +1,21 @@
+<apex:page showHeader="false" sidebar="false" lightningStylesheets="true" standardController="Whatsapp_Template__c">
+    <title>Whatsapp Template</title>
+    <apex:includeLightning />  
+    <div id="LightningComponentid" />    
+    <script>
+    //Aura Component Name
+    $Lightning.use("c:whatsappTemplate", function()
+                   {	
+                       //LWC Component Name
+                       $Lightning.createComponent("c:ex_WhatsappTemplate",
+                                                  { 
+                                                      recordId: '{!$CurrentPage.parameters.id}'
+                                                  },
+                                                  "LightningComponentid",
+                                                  function(cmp) {
+                                                   		
+                                                      //console.log('LWC Componenet added in VF page');
+                                                  });
+                   });
+    </script>
+</apex:page>

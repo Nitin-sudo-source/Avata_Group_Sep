@@ -7,18 +7,52 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Reverse</fullName>
+                <fullName>UnProcessed</fullName>
+                <default>true</default>
+                <label>UnProcessed</label>
+            </value>
+            <value>
+                <fullName>Processed</fullName>
                 <default>false</default>
-                <label>Reverse</label>
+                <label>Processed</label>
+            </value>
+            <value>
+                <fullName>Processed-Finance Submission Pending</fullName>
+                <default>false</default>
+                <label>Processed-Finance Submission Pending</label>
+            </value>
+            <value>
+                <fullName>Processed-Sent for Banking</fullName>
+                <default>false</default>
+                <label>Processed-Sent for Banking</label>
+            </value>
+            <value>
+                <fullName>Dishonored</fullName>
+                <default>false</default>
+                <label>Dishonored</label>
+            </value>
+            <value>
+                <fullName>Cleared</fullName>
+                <default>false</default>
+                <label>Cleared</label>
+            </value>
+            <value>
+                <fullName>Physical Verification Rejected</fullName>
+                <default>false</default>
+                <label>Physical Verification Rejected</label>
             </value>
             <value>
                 <fullName>Delete</fullName>
                 <default>false</default>
                 <label>Delete</label>
+            </value>
+            <value>
+                <fullName>Reverse</fullName>
+                <default>false</default>
+                <label>Reverse</label>
             </value>
         </valueSetDefinition>
     </valueSet>

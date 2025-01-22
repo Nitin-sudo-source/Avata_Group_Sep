@@ -1,0 +1,2 @@
+<apex:page controller="Ex_ScreenPopupCallController" action="{!screenPop}" >
+</apex:page>

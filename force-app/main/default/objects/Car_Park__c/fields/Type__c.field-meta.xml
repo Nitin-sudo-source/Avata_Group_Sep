@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Podium Parking</fullName>
+                <default>false</default>
+                <label>Podium Parking</label>
+            </value>
+            <value>
+                <fullName>Open Parking</fullName>
+                <default>false</default>
+                <label>Open Parking</label>
+            </value>
+            <value>
+                <fullName>Stack Upper Parking</fullName>
+                <default>false</default>
+                <label>Stack Upper Parking</label>
+            </value>
+            <value>
+                <fullName>Stack Lower Parking</fullName>
+                <default>false</default>
+                <label>Stack Lower Parking</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

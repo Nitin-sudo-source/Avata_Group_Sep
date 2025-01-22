@@ -1,0 +1,294 @@
+<apex:page renderAs="pdf" controller="Ex_PrintBookingTermSheetController"  docType="html-5.0" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" sidebar="false" showHeader="false">
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />    
+            <style type="text/css">
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                font-size:12px;
+                }
+                body { font-family: 'Arial Unicode MS'; }
+                
+                
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:center;
+                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                }
+                .mainTable tr{
+                page-break-inside: avoid;
+                
+                }  
+                .box{
+                0.5px solid black border;
+                }
+                .boxTable{
+                border-collapse: collapse;
+                width:100%;
+                font-size:12px;
+                }
+                .boxTable th{
+                padding: 2px;
+                }
+                .boxTable td {
+                padding: 2px;
+                border: 0.5px solid black;
+                
+                }
+                .boxTable tr{
+                page-break-inside: avoid;
+                
+                }  
+                #Step1imgfield .sfdc_richtext img{
+                width: 100px;
+                margin-left: 3%;
+                margin-right: auto;
+                }
+                
+            </style>
+        </head>
+        <body>
+            <div>
+                  
+            <table>
+                <tr>
+                    <th style="text-align:left; width:50% !important;">
+                        <apex:image style="" url="{!$Resource.logo}" width="100" />
+                    </th>
+                    
+                </tr>
+            </table><br/>
+                <table class="mainTable">
+                    <tr>
+                        <th>
+                            Primary Applicant Name
+                        </th>
+                        <th>
+                            Unit No
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <u>
+                                {!tsList[0].Primary_Applicant_Name__c} 
+                            </u>
+                        </th>
+                        <th>
+                            <u>
+                                {!tsList[0].Unit__c}
+                            </u>
+                        </th>
+                    </tr>
+                </table><br/>
+                <table class="mainTable">
+                    <tr>
+                        <th>
+                            Agreement Value
+                        </th>
+                        <th>
+                            <u>
+                                {!tsList[0].Agreement_Value__c} 
+                            </u>
+                        </th>
+                    </tr>
+                </table><br/>
+                <table class="mainTable">
+                    <tr>
+                        <th>
+                            Current Date
+                        </th>
+                        <th>
+                            <ul>
+                                ___%
+                            </ul>
+                        </th>
+                        <th>
+                            Rs.<ul>
+                            
+                            </ul>
+                        </th>
+                    </tr>
+                </table><br/>
+                
+                <apex:outputPanel rendered="{!showCheckBoxSelf == true}">
+                  <table class="mainTable">
+                       <tr>
+                        <th>Self Funding</th>
+                        <th>Yes &nbsp; &#x2611;</th>
+                        <th>No &nbsp; &#9744;</th>
+                        <th>Amount</th>
+                        <td>Rs. {!tsList[0].Self_Funding_Amount__c}</td>
+                    </tr>
+                    </table><br/>
+                </apex:outputPanel>
+                
+                 <apex:outputPanel rendered="{!showCheckBoxHome == true}">
+                  <table class="mainTable">
+                       <tr>
+                        <th>Home Loan</th>
+                        <th>Yes &nbsp; &#x2611;</th>
+                        <th>No &nbsp; &#9744;</th>
+                        <th>Amount</th>
+                        <td>Rs. {!tsList[0].Amount__c}</td>
+                    </tr>
+                    </table><br/>
+                </apex:outputPanel>
+               
+                <table class="mainTable">
+                    <tr>
+                        <th colspan="3" style="background-color:#e1b589;">Payment Summary of Current due to be paid</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Particular
+                        </th>
+                        <th>
+                            Due Amount                        
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Token/ Booking Amount
+                        </td>
+                        <td>
+                            {!tslist[0].Token_Booking_Amount__c}
+                        </td> <td>
+                        <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                            <apex:param value="{!tslist[0].Token_Booking_Amount_Date__c}"/>
+                        </apex:outPutText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Own Contribution (a)
+                        </td>
+                        <td>
+                            {!tslist[0].Own_Contribution_a__c}
+                        </td> <td>
+                        <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                            <apex:param value="{!tslist[0].Own_Contribution_a_Date__c}"/>
+                        </apex:outPutText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Own Contribution (b)
+                        </td>
+                        <td>
+                            {!tslist[0].Own_Contribution_b__c}
+                        </td> <td>
+                        <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                            <apex:param value="{!tslist[0].Own_Contribution_b_Date__c}"/>
+                        </apex:outPutText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Home Loan Contribution
+                            / Self-Funding <p style="font-size:8px;">
+                            
+                            (Current Due Less Own Contribution Less Token Amount) </p>
+                            
+                        </td>
+                        <td>
+                            {!tslist[0].Home_Loan_Contribution_Self_Funding__c}
+                        </td> <td>
+                        <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                            <apex:param value="{!tslist[0].Home_Loan_Date__c}"/>
+                        </apex:outPutText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            GST Amount
+                            <p style="font-size:8px;">
+                                
+                                (On Current Due) </p>
+                            
+                        </td>
+                        <td>
+                            {!tslist[0].GST_Amount__c}
+                        </td> <td>
+                        <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                            <apex:param value="{!tslist[0].GST_Amount_Date__c}"/>
+                        </apex:outPutText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            SDR Amount
+                            
+                        </td>
+                        <td>
+                            {!tslist[0].SDR_Amount__c}
+                        </td> <td>
+                        <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                            <apex:param value="{!tslist[0].SDR_Amount_Date__c}"/>
+                        </apex:outPutText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Registration Date 
+                            
+                        </td>
+                        <td colspan="2" style="text-align:center">
+                            <apex:outPutText value="{0,date,dd-MM-yyyy}">
+                                <apex:param value="{!tslist[0].Registration_Date__c}"/>
+                            </apex:outPutText>
+                            
+                        </td> 
+                    </tr>
+                </table><br/>
+                <p style="font-size:12px;">
+                    <u>SALES FINAL REMARKS :-</u><br/>
+                   <u style="padding:4px"> {!tsList[0].Remarks__c}</u>
+                </p>
+                <table class="mainTable">
+                    <tr>
+                        <th>
+                            Primary Applicant <p style="font-size:8px;">
+                            (Name, Signature and Date)
+                            </p>
+                        </th>
+                        <th>
+                            Signed By Sales Manager 
+                            <p style="font-size:8px;">
+                                (Name, Signature and Date)
+                            </p>
+                        </th>
+                        <th>
+                            Signed By Site Head / TL  
+                            <p style="font-size:8px;">
+                                (Name, Signature and Date)
+                            </p>
+                        </th>
+                        <th>
+                            Signed By CRM 
+                            <p style="font-size:8px;">
+                                (Name, Signature and Date)
+                            </p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td> &nbsp; <br/> &nbsp;
+                        </td>
+                        <td> &nbsp; <br/> &nbsp;
+                        </td> <td> &nbsp; <br/> &nbsp;
+                        </td> <td> &nbsp; <br/> &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </body>
+    </html>
+</apex:page>

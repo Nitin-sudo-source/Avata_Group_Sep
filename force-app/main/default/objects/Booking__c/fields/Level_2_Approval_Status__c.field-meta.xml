@@ -8,6 +8,23 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Booking_Approval_Status</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Approved</fullName>
+                <default>false</default>
+                <label>Approved</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Pending From Approval</fullName>
+                <default>false</default>
+                <label>Pending From Approval</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

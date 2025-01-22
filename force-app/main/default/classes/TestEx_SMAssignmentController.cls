@@ -26,8 +26,6 @@ public class TestEx_SMAssignmentController {
         t.Team_Type__c = 'Sales Team';
         insert t;
         
-        
-        
         Team_Member__c tm = new Team_Member__c();
         tm.Availability__c = true;
         tm.Team__c = t.Id;
@@ -46,47 +44,16 @@ public class TestEx_SMAssignmentController {
                                         where User__c =: tm.User__c AND Id =: tm.Id];
         System.debug('userList: '+userList);
         
-        CP_Document__c cpd = new CP_Document__c();
-        cpd.Name = 'Yes';
-        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
-        insert cpd;
-        
-        CP_Document__c cpd1 = new CP_Document__c();
-        cpd1.Name = 'No';
-        cpd1.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
-        insert cpd1;
-        
-        /*Id cpRtId = Schema.SObjectType.Channel_Partner.getRecordTypeInfosByName().get('CP Mira Road').getRecordTypeId();
-        Channel_Partner__c cpAccount = new Channel_Partner__c(
-            Channel_Partner_Name__c = 'Test CP1',
-            Mobile__c = '1122334455',
-            RERA_Available__c = 'No',
-            Name_as_per_MahaRERA__c = 'GujRERA',
-            MahaRERA_Registration_No__c = '1234',
-            RecordTypeId = cpRtId
-        );
-        insert cpAccount;*/
-        
-        /*CP_Project__c cp=new CP_Project__c();
-        cp.Account__c = cpAccount.Id;
-        cp.Project__c = pr.Id;
-        insert cp;
-        Set<Id> cpProjId = new Set<Id>();
-        cpProjId.add(cp.Id);*/
         
         Site_Visit__c  sv = new Site_Visit__c  ();
         sv.City__c = 'Mumbai';
-        //sv.Country__c = 'India';
+        sv.Country__c = 'India';
         sv.Occupation__c = 'Retired';
-        sv.Project__c = t.Project__c;
+        sv.Project_Name__c = t.Project__c;
         insert sv;
         sv.OwnerId = userList[0].User__r.Id;
-        sv.Comments__c = 'testtt';
-        sv.Site_Visit_Count__c = 2;
+        sv.Comment__c = 'testtt';
         update sv;
-        
-        Set<Id> svIdSet = new Set<Id>();
-        svIdSet.add(sv.Id);
                 
         
         
@@ -95,12 +62,7 @@ public class TestEx_SMAssignmentController {
         Ex_SMAssignmentController.checkUserAvailability(tm.Id);
         Ex_SMAssignmentController.assignSalesManager(sv, userList[0]);
         Ex_SMAssignmentController.getPreferredSalesManager(sv);
-        //Ex_SMAssignmentController.reAssignSalesManager(sv, userList[0], true);
-        //Ex_SMAssignmentController.
-        //Ex_SiteVisitHandlerServices.apexSharingWithSourcingManager(svIdSet);
-        //Ex_SiteVisitHandlerServices.removeSharingWithSourcingManagerOnSV(svIdSet);
         Test.stopTest(); 
-        
         
     }
     
@@ -127,7 +89,7 @@ public class TestEx_SMAssignmentController {
         Set<Id> uIdSet = new Set<Id>();
         uIdSet.add(tm2.User__c);
 
-        //Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(uIdSet);
+        Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(uIdSet);
 
         
         Test.stopTest();
@@ -148,15 +110,12 @@ public class TestEx_SMAssignmentController {
            LanguageLocaleKey = 'en_US',
            LocaleSidKey = 'en_US'
        );
-       
-        project__c pr = createProject();
 
 
         // Create a Sales Team record related to the test User
         Team__c testTeam = new Team__c(
             Name = 'Test Team',
-            Team_Type__c = 'Sales Team',
-            Project__c = pr.Id
+            Team_Type__c = 'Sales Team'
         );
         insert testTeam;
 
@@ -170,10 +129,9 @@ public class TestEx_SMAssignmentController {
         Set<Id> uIdSet = new Set<Id>();
         uIdSet.add(u.Id);
 
-       /* Test.startTest();
+        Test.startTest();
         Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(uIdSet);
-        Test.stopTest();*/
+        Test.stopTest();
     }
-    
 
 }

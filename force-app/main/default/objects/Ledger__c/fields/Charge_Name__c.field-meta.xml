@@ -40,19 +40,9 @@
                 <label>Interest</label>
             </value>
             <value>
-                <fullName>TDS Challan</fullName>
-                <default>false</default>
-                <label>TDS Challan</label>
-            </value>
-            <value>
                 <fullName>Interest GST</fullName>
                 <default>false</default>
                 <label>Interest GST</label>
-            </value>
-            <value>
-                <fullName>TDS</fullName>
-                <default>false</default>
-                <label>TDS</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fieldOverrides>
-        <field>Priority</field>
-        <literalValue>Normal</literalValue>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Status</field>
-        <literalValue>Completed</literalValue>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Subject</field>
-        <formula>&apos;Presales Call&apos;</formula>
-    </fieldOverrides>
     <label>Presales Call</label>
-    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Subject</field>
-                <uiBehavior>Readonly</uiBehavior>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -30,11 +18,11 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Sub_Stage_Reason__c</field>
-                <uiBehavior>Required</uiBehavior>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Proposed_Date_Of_Visit__c</field>
+                <field>Date_of_Visit__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
@@ -45,18 +33,21 @@
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Call_Status__c</field>
-                <uiBehavior>Required</uiBehavior>
+                <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Sub_Stage__c</field>
-                <uiBehavior>Required</uiBehavior>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Next_Follow_Up_Date__c</field>
+                <field>Next_Follow_up_Date__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
@@ -64,5 +55,5 @@
     <targetObject>Task</targetObject>
     <targetParentField>What</targetParentField>
     <targetRecordType>Task.Presales_Call</targetRecordType>
-    <type>Create</type>
+    <type>LogACall</type>
 </QuickAction>

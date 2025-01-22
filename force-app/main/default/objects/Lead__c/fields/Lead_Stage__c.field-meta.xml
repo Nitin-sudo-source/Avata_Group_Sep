@@ -3,43 +3,11 @@
     <fullName>Lead_Stage__c</fullName>
     <label>Lead Stage</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Incoming</fullName>
-                <default>true</default>
-                <label>Incoming</label>
-            </value>
-            <value>
-                <fullName>SNP</fullName>
-                <default>false</default>
-                <label>SNP</label>
-            </value>
-            <value>
-                <fullName>Prospects</fullName>
-                <default>false</default>
-                <label>Prospects</label>
-            </value>
-            <value>
-                <fullName>Visit confirmed</fullName>
-                <default>false</default>
-                <label>Visit confirmed</label>
-            </value>
-            <value>
-                <fullName>Visit Done</fullName>
-                <default>false</default>
-                <label>Visit Done</label>
-            </value>
-            <value>
-                <fullName>Lost</fullName>
-                <default>false</default>
-                <label>Lost</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Lead_Stage</valueSetName>
     </valueSet>
 </CustomField>

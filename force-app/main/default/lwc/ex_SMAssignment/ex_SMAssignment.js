@@ -1,28 +1,14 @@
-import { LightningElement, track, api, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import getSVRecord from '@salesforce/apex/Ex_SMAssignmentController.getSVRecord';
 import getAllSalesManager from '@salesforce/apex/Ex_SMAssignmentController.getAllSalesManager';
 import checkUserAvailability from '@salesforce/apex/Ex_SMAssignmentController.checkUserAvailability';
-import assignSalesManager from '@salesforce/apex/Ex_SMAssignmentController.assignSalesManager';
+import assignSalesManager from '@salesforce/apex/Ex_SMAssignmentController.assignSalesManager'; //getPreferredSalesManager
 import getPreferredSalesManager from '@salesforce/apex/Ex_SMAssignmentController.getPreferredSalesManager';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getUserInfo from '@salesforce/apex/Ex_SMAssignmentController.getUserInfo';
 
 export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
-
-    
-
-    @track showSourcePage = false;
-    @track showotherDetails = false;
-    @track showAssignmentDetails = false;
-    @track svWrapper = { sv: {} };
-    @track getSVWrapperList = [];
-    @track showChannelPartner = false;
-    @track showReferenceName = false;
-    @track isSourceNotEditable = false;
-
-
-    //SM Assignment Variable
-    @track disabledAssignButton = false;
     @api recordId;
     @track svRecord;
     @track getAllSMData = [];
@@ -34,40 +20,31 @@ export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
     @track showMsg = '';
     @track noSMPresent = false;
     @track showPrefferedSM = false;
-    @track isSpinner = false;
+    @track showReassignButton = false;
+    @track reassignchecked = false;
 
 
-    connectedCallback() {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        this.recordId = urlSearchParams.get("recordId");
-        if (this.recordId != null) {
-            this.getSVData();
-            //this.getSVWrapper();
-            this.showAssignmentDetails = true;
+    @wire(getSVRecord, { recordId: '$recordId' })
+    WireContactRecords({ error, data }) {
+        if (data) {
+            this.svRecord = data;
+            console.log('svRecord: ' + JSON.stringify(this.svRecord));
+            if (this.svRecord.Is_Sales_Manager_Assigned__c == true && (this.svRecord.Sales_Manager__c != null || this.svRecord.Sales_Manager__c != '')) {
+                this.IsSMAlreadyAssign = true;
+                //this.showReassignButton = true;
+                this.callReassignMethod();
+            }
+            if (this.svRecord != null) {
+                this.getALLSM();
+                this.getPreferredSM();
+
+            }
+
+            this.error = undefined;
+        } else {
+            this.error = error;
+            this.svRecord = undefined;
         }
-    }
-    
-
-    getSVData() {
-        getSVRecord({ recordId: this.recordId })
-            .then((data) => {
-                if (data) {
-                    this.svRecord = data;
-                    console.log('svRecord: ' + JSON.stringify(this.svRecord));
-                    if (this.svRecord.Is_Sales_Manager_Assigned__c == true && (this.svRecord.Sales_Manager__c != null || this.svRecord.Sales_Manager__c != '')) {
-                        this.IsSMAlreadyAssign = true;
-                    }
-                    if (this.svRecord != null) {
-                        this.getALLSM();
-                        this.getPreferredSM();
-                    }
-
-                    this.error = undefined;
-                } else {
-                    this.error = error;
-                    this.svRecord = undefined;
-                }
-            })
     }
 
     getALLSM() {
@@ -134,7 +111,6 @@ export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
 
 
     assignSM() {
-        this.isSpinner = true;
         assignSalesManager({ svRecord: this.svRecord, salesManager: this.salesManager })
             .then((result) => {
                 this.isSMAssign = result;
@@ -146,8 +122,12 @@ export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
                         variant: 'success'
                     });
                     this.dispatchEvent(toastEvent);
-                    window.location.href = '/' + this.recordId;
-                    this.isSpinner = false;
+                    if (this.reassignchecked) {
+                        this.navigateToListView();
+                    } else {
+                        window.location.href = '/' + this.recordId;
+                    }
+
                 } else {
                     const toastEvent = new ShowToastEvent({
                         title: 'error',
@@ -167,7 +147,6 @@ export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
         this.userId = event.target.value;
         console.log('userId: ' + JSON.stringify(this.userId));
         this.getTeamMemberUserAvailability();
-
     }
 
     handleCancel() {
@@ -178,18 +157,52 @@ export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
                 actionName: 'view'
             }
         });
+
     }
 
-    // callRecordPage(){
-    //     const toastEvent = new ShowToastEvent({
-    //                     title: 'Success',
-    //                     message: 'Sources Details Updated Successfully',
-    //                     variant: 'success'
-    //                 });
-    //                 this.dispatchEvent(toastEvent);
-    //                 window.location.href = '/' + this.recordId;
-    //                 this.isSpinner = false;
-        
-    // }
+      navigateToListView() {
+
+    this[NavigationMixin.Navigate]({
+      type: "standard__objectPage",
+      attributes: {
+        objectApiName: "Site_Visit__C",
+        actionName: "list",
+      },
+      state: {
+       
+        filterName: "Recent", 
+      },
+    });
+  }
+
+
+    callReassignMethod() {
+        console.log('callReassignMethod: ');
+        getUserInfo({}).then(result => {
+            console.log('result: ' + JSON.stringify(result));
+            if (result) {
+                if (result.Profile.Name === "Site Head") {
+                    this.showReassignButton = true;
+                }
+            } else if (error) {
+                console.error(error.body.message);
+            }
+        })
+            .catch(error => {
+                console.log('error: ' + JSON.stringify(error));
+                console.error(error.body.message);
+            });
+    }
+
+
+    changeToggle(event) {
+        this.reassignchecked = !this.reassignchecked;
+        console.log('reassignchecked: ' + JSON.stringify(this.reassignchecked));
+        if (this.reassignchecked) {
+            this.IsSMAlreadyAssign = false;
+        } else {
+            this.IsSMAlreadyAssign = true;
+        }
+    }
 
 }

@@ -1,0 +1,95 @@
+<template>
+   
+    <lightning-record-edit-form record-id= {recordId}
+     object-api-name ={demandobjectapi}>
+      <div style="text-align:center;">
+        <div  style="border: 0.5px solid #0e0d0d;
+        padding: 12px;
+        font-size:18px;
+        text-align: center;
+        background-color:  #cae2df ;
+        font-weight: bold;
+        color:#0e0e0e;
+        text-shadow: 1px 1px 2px rgb(128, 125, 125);
+        ">
+          <p>Demand Actions</p>
+        </div>
+      </div>
+      <br/> <br/>
+    
+       <div  class="radio-group-container" style="margin-left:27%;">
+        <template for:each={options} for:item="option">
+            <div key={option.value}>
+                <b> <label style=" text-shadow: 1px 1px 2px rgb(128, 125, 125);">
+                    <input
+                        type="radio"
+                        name="options"
+                        value={option.value}
+                        onchange={handleRadioChange}
+                    />
+                    {option.label}
+                </label> </b>
+            </div>
+      </template>
+      </div>     
+     <br/>
+    <div style="padding:10px;">
+      <table style="width:100%;">
+        <tr>
+          <th style="border: 0.5px solid #0e0d0d;
+          padding: 4px;
+          font-size:12px;
+          text-align: center;
+          background-color:  #cae2df ;
+          font-weight: bold;
+          color:#0e0e0e;
+          text-shadow: 1px 1px 2px rgb(128, 125, 125);
+          ">
+Remarks
+          </th>
+          <td style="border: 0.5px solid #0e0d0d;
+          padding: 4px;
+          font-size:12px;
+          text-align: center;
+          font-weight: bold;
+          color:#0e0e0e;
+          text-shadow: 1px 1px 2px rgb(128, 125, 125);
+          "> 
+            <b style=" text-shadow: 1px 1px 2px rgb(128, 125, 125);"> <lightning-textarea name="Remarks" placeholder=""  variant="label-hidden" class="my-textarea" onchange={handleremark}></lightning-textarea></b>
+
+          </td>
+        </tr>
+      </table>  </div><br/>
+
+  <div class="buttons" style="text-align:center;">
+   <lightning-button
+        class="slds-m-left_x-small"
+        variant="success"
+        type="submit"
+        name="Save"
+        label="Save"
+        onclick={Save}
+        style="background-color: skyblue;">
+    </lightning-button>
+  &nbsp;&nbsp;&nbsp;
+    <lightning-button
+        class="slds-m-left_x-small;  custom-spinner;"
+        variant="destructive"
+        type="Cancel"
+        name="Cancel"
+        label="Cancel"
+        onclick={navigateToViewDemandPage}
+        style="background-color: skyblue;">
+    </lightning-button>  <br/> <br/>
+
+    <template if:true={isSaving}>
+       <div class="custom-spinner">
+            <lightning-spinner variant="brand" size="medium"></lightning-spinner>
+        </div> 
+
+   <br/><br/>
+</template>
+</div>
+     </lightning-record-edit-form>
+    
+</template>

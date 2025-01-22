@@ -7,7 +7,53 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>Occupation</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Private Service</fullName>
+                <default>false</default>
+                <label>Private Service</label>
+            </value>
+            <value>
+                <fullName>Government Service</fullName>
+                <default>false</default>
+                <label>Government Service</label>
+            </value>
+            <value>
+                <fullName>Professional</fullName>
+                <default>false</default>
+                <label>Professional</label>
+            </value>
+            <value>
+                <fullName>Business</fullName>
+                <default>false</default>
+                <label>Business</label>
+            </value>
+            <value>
+                <fullName>Student</fullName>
+                <default>false</default>
+                <label>Student</label>
+            </value>
+            <value>
+                <fullName>House Wife</fullName>
+                <default>false</default>
+                <label>House Wife</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Self-Employed</fullName>
+                <default>false</default>
+                <label>Self-Employed</label>
+            </value>
+            <value>
+                <fullName>Salaried</fullName>
+                <default>false</default>
+                <label>Salaried</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Project_and_CP_Project_same</fullName>
+    <active>true</active>
+    <description>Lead Project_and_CP_Project_ should be same.</description>
+    <errorConditionFormula>AND(Project__c &lt;&gt; CP_Project__r.Project__c, ISPICKVAL( Lead_Source__c , &apos;Channel Partner&apos;) )</errorConditionFormula>
+    <errorMessage>Lead Project and CP Project Should be same.</errorMessage>
+</ValidationRule>

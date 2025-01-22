@@ -8,6 +8,33 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Possession_Timeframe</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RTMI (Ready to Move in)</fullName>
+                <default>false</default>
+                <label>RTMI (Ready to Move in)</label>
+            </value>
+            <value>
+                <fullName>Under Construction (UC – 6 months to 1 year)</fullName>
+                <default>false</default>
+                <label>Under Construction (UC – 6 months to 1 year)</label>
+            </value>
+            <value>
+                <fullName>Under Construction (UC – 1 to 2 years)</fullName>
+                <default>false</default>
+                <label>Under Construction (UC – 1 to 2 years)</label>
+            </value>
+            <value>
+                <fullName>Under Construction (UC – 2 to 3 years)</fullName>
+                <default>false</default>
+                <label>Under Construction (UC – 2 to 3 years)</label>
+            </value>
+            <value>
+                <fullName>Under Construction (UC – More than 3 years)</fullName>
+                <default>false</default>
+                <label>Under Construction (UC – More than 3 years)</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

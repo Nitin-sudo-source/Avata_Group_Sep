@@ -1,0 +1,299 @@
+<apex:page controller="Ex_PrintDemandController" applyHtmlTag="false" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0" renderAs="PDF">
+    <head>        
+        <style>
+            @page {
+            size:A4 portrait;
+            border: 2px solid black;
+            margin: 8mm;
+            /*@bottom-center {
+            content: "Page " counter(page) " of " counter(pages);
+            }*/
+            }
+           
+            body {
+            font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; 
+            font-weight:normal; 
+            font-size:11px; 
+            text-align: center;
+            mso-line-height-rule: exactly;
+            }
+            h2, p {
+            font-weight: bold;
+            }
+            .infobox {
+            font-size: 100%;
+            }
+            .sfdc_richtext img {
+            border: 0;
+            width: 100px;
+            height:90px;
+            }
+            .RMStyle {
+            border-collapse: collapse;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #104E8B;
+            }
+            .RMStyle th {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #104E8B;
+            background-color:#E2DDD9;
+            align:center;
+            valign:bottom;
+            }
+            /* Padding and font style */
+            .RMStyle td {
+            border-style: solid;
+            border-width: .5px;
+            border-color: #CAD1C3;
+            }
+            .paymenttoStyle th {
+            border-style: solid;
+            border-color: #CAD1C3;
+            background-color:#FFD8D8;
+            align:center;
+            valign:bottom;
+            }
+            .left-align {
+            text-align: right;
+            
+            }
+            .left-alignname {
+            text-align: left;
+            text-color: white;
+            }
+            .paymenttoStyle {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #CAD1C3B;
+            }
+            .demandStyle th {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #CAD1C3;
+            background-color:#fff7f8;
+            padding: 3px;
+            align:center;
+            valign:bottom;
+            }
+            /* Padding and font style */
+            .demandStyle td {
+            border-style: solid;
+            border-width: .5px;
+            border-color: #CAD1C3;
+            padding: 2px;
+            }
+            .demandStyle {
+            border-collapse: collapse;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #CAD1C3;
+            }
+            .dateBold {
+            font-size:12px;
+            font-weight: bold;
+            }
+            @media print {
+            #fontsize {font-size:10px;}
+            
+            }
+            div.fadeMe {
+            opacity:    0.5; 
+            background: #D9E9FF; 
+            width:      100%;
+            height:     100%; 
+            z-index:    1000;
+            top:        0; 
+            left:       0; 
+            position:   fixed; 
+            }
+            
+            .center-table {
+            margin: 0 auto;
+            width: 50%;
+            text-align: center;
+            }
+            
+            h1 {
+            font-size: 34px;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: bold;
+            text-color: white;
+            }
+            
+            
+            
+        </style>
+    </head>
+    <body width="100%">
+        
+        <table class="logotable" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td style="padding-bottom:25px; text-align: left;">
+                    <apex:image style="" url="{!$Resource.logo}" width="150" height="100"/>
+                    <span style="padding-left: 175px; font-size: 24px; font-weight: bold; color: #002244;">Satyam Infra Reality LLP</span>
+                </td>
+            </tr>
+        </table>
+        
+          <hr style="border: 2px solid #000000; margin-top: 10px; margin-bottom: 10px;"/>
+        <tr>
+            <td>
+                <b>
+                    <apex:outputText styleClass="dateBold" style="text-weight:bold; font-size: 13px; text-align: right; padding-left:445px;" value="Date :{0, date, dd MMM,yyyy}">
+                        <apex:param value="{!demandList[0].Invoice_Date__c}" />
+                    </apex:outputText>
+                </b> 
+                <table width="100%" >
+                    <tr width="100%">
+                        <td align="left" width="55%" valign="top">
+                            
+                            <p style="text-align:left; font-size: 13px;"><b>To,</b></p>                      
+                            <apex:outputText style="text-weight:bold; font-size: 13px;" value="{!CustomerPrimaryTitle}{!CustomerPrimaryName}."/>
+                            <p style="text-align:left; font-size: 13px;"><b>Address - </b><span style="font-weight: normal;">{!CustomerAddress} &nbsp; {!getCityStatePin}.</span></p>
+                            <p style="text-align:left; font-size: 13px;"><b>Contact - </b><span style="font-weight: normal;">{!CustomerMobilePhone}</span> / <b>Email Id - </b><span style="font-weight: normal;">{!CustomerEmail}</span></p>
+                            <!--<p style="text-align:left; font-size: 13px;"><b>Email Id - </b><span style="font-weight: normal;">{!CustomerEmail}.</span></p>-->
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr width="100%">
+            <td align="left" width="55%" valign="top">
+                <div>
+                    <p style="text-align:left; font-size:13px"><b>Ref: Flat No. {!UnitName} in {!towerName} located at {!surveyNumber}</b> </p>                       
+                </div>                            
+                <div>
+                    <p style="text-align:left; font-size:13px"><b>Sub: Demand for installments in reference to {!towerName} .</b> </p>                       
+                </div>  
+            </td>
+        </tr>
+        
+        <div>
+            <br/> 
+            <td style="font-size:13px"> Dear Sir/Madam,</td>
+            
+            <div  style="font-size:13px; Text-align:Left;">  
+                This is with reference to your booking of in our project {!towerName} located at {!surveyNumber}.We request you to release the following 
+                amounts ,which is due as per payment schedule.
+            </div>
+        </div><br/>
+        
+        <table width="100%" border="1">
+            <tr>
+                <td class="left-alignname">Agreement Value</td>
+                <td class="left-alignname"></td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Agreement_Value__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Current Due ({!demandList[0].Milestone_Name__c})</td>
+                <td class="left-alignname">{!getTotalper} %</td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Total_Amount_Demanded__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Previous Delay Payment Charges</td>
+                <td class="left-alignname"></td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Total_Interest_Amount__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Total Due</td>
+                <td class="left-alignname"></td>
+                <td class="left-align">Rs.{!ROUND(totalDue,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Payment Received</td>
+                <td class="left-alignname"></td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Total_Amount_Paid__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Balance as on Date</td>
+                <td class="left-alignname"></td>
+                <td class="left-align">Rs.{!ROUND(TotalOutstanding,0)}</td>
+            </tr>
+        </table>
+        <br/> 
+        <table width="100%" border="0">
+            <tr>
+                <th class="left-alignname">Please Issue Cheque/NEFT/RTGS/ for instalment amount in favour of :</th>
+            </tr>
+            <tr>
+                <td class="left-alignname">Account Name &nbsp; </td>
+                <td class="left-alignname">{!demandList[0].Booking__r.Account_Name_Flat_Cost__c}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Bank Name</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.Bank_Name_Flat_Cost__c}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Account Number</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.Account_Number_Flat_Cost__c}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">IFSC Code</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.IFSC_Code_Flat_Cost__c}</td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table width="100%" border="1">
+            <tr>
+                <td class="left-alignname">Current Due Amount of CGST and SGST</td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Total_Tax_Demanded__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Previous Delay Payment Charge</td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Total_Tax_On_Interest_Amount__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Total Due</td>
+                <td class="left-align">Rs.{!ROUND(totalDuetax,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Payment Received</td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Total_Tax_Paid__c,0)}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Balance as on Date</td>
+                <td class="left-align">Rs.{!ROUND(demandList[0].Booking__r.Total_Tax_Remaining__c,0)}</td>
+            </tr>
+        </table>
+        
+        <table width="100%" border="0">
+            <tr>
+                <th class="left-alignname" >Please Issue Cheque/NEFT/RTGS/ for instalment amount in favour of :</th>
+            </tr>
+            <tr>
+                <td class="left-alignname">Account Name</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.Account_Name_Tax__c}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Bank Name</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.Bank_Name_Tax__c}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">Account Number</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.Account_Number_Tax__c}</td>
+            </tr>
+            <tr>
+                <td class="left-alignname">IFSC Code</td>
+                <td class="left-alignname">{!demandList[0].Booking__r.IFSC_Code_Tax__c}</td>
+            </tr>
+        </table>
+        <br/>
+        
+        <div  style="font-size:13px; text-align:Left;"> 
+            You are request to complete the payment within 10 days of this letter to enable us to carry out the work in 
+            progress at vigorous speed.Any delay in payment attracts delayed payment charges as per our agreement terms and conditions.
+        </div>
+        
+        <p style="font-size:13px; text-align:Left;">
+            Thanking You,
+            <br/> For <b>SATYAM INFRA REALITY LLP</b>
+        </p> 
+       
+        <p style="font-size:13px; text-align:Left;">
+            Partner
+        </p>    
+    </body> 
+</apex:page>

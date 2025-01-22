@@ -1,0 +1,56 @@
+<template>
+    <lightning-card>
+        <div style="Padding:10px;">
+        <!-- <div class="slds-align_absolute-center"
+            style="font-size: 20px;font-weight: bold; margin:10px; margin-top:0px;background:#4fb7b2;text-shadow: 2px 2px 5px red; border: 2px solid rgb(0, 0, 0);">
+            <h1
+                style="margin: 10px;text-decoration: underline; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                Collaterals</h1>
+        </div> -->
+    <div style="text-align:center; font-size:16px;border: 1px solid black;padding:8px; background:#4fb7b2; color: black;">
+        Collaterals &nbsp;
+    </div>
+    <br/>
+
+        <lightning-combobox label="Project" value={value} placeholder="Select Project" options={options}
+            onchange={projectCall} class="slds-m-left_medium">
+        </lightning-combobox>
+        <template if:true={value}>
+            <div class="slds-p-around_medium">
+                <table>
+                    <tbody>
+                        <tr style="width: 100%;   background-color: lightgray;text-shadow: 2px 2px 5px lightgray">
+                            <th style="text-align: center;padding: 10px;">Project Name</th>
+                            <th style="text-align: center;padding: 10px;">Title</th>
+                            <th style="text-align: center;padding: 10px;">Description</th>
+                            <th style="text-align: center;padding: 10px;">Files</th>
+                        </tr>
+                        <template if:true={visibleProjects}>
+                            <template for:each={visibleProjects} for:item="file">
+                                <tr key={file}>
+                                    <td style="text-align: center;padding: 10px;">
+                                        {file.projectName}
+                                    </td>
+                                    <td style="text-align: center;padding: 10px;">
+                                        {file.Title}
+                                    </td>
+                                    <td style="text-align: center;padding: 10px;">
+                                        {file.Description}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <a class="slds-button slds-button_brand" style="font-size: 9px;"
+                                            href={file.url}>Download&darr;</a>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+                <div slot="footer" class="slds-var-m-vertical_medium">
+                    <c-pre-next records={notesAtt} record-size="5" onupdate={updateProject}></c-pre-next>
+                </div>
+            </div>
+        </template>
+    </div>
+    </lightning-card>
+</template>

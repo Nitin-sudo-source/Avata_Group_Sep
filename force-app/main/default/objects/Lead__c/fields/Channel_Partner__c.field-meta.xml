@@ -6,15 +6,15 @@
     <lookupFilter>
         <active>true</active>
         <filterItems>
-            <field>Account.RecordType.DeveloperName</field>
+            <field>Account.RecordType.Name</field>
             <operation>equals</operation>
-            <value>Channel_Partner</value>
+            <value>CP Account</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Leads (Channel Partner)</relationshipLabel>
-    <relationshipName>Leads2</relationshipName>
+    <relationshipLabel>Leads</relationshipLabel>
+    <relationshipName>Leads</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

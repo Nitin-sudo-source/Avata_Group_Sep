@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Rate_of_Interest_Daily__c</fullName>
-    <defaultValue>0</defaultValue>
+    <externalId>false</externalId>
+    <formula>Rate_of_Interest__c / 365</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Rate of Interest Daily</label>
-    <precision>5</precision>
+    <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>8</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Number</type>
+    <unique>false</unique>
 </CustomField>

@@ -12,7 +12,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Pending For Approval</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Pending For Approval</label>
             </value>
             <value>

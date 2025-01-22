@@ -1,3 +1,8 @@
+//-------------------------------------------//
+//  Client: Satyam Developers
+//  Created By: Exceller Consultancy
+//  Created Date: 1-12-2023
+//-------------------------------------------//
 @isTest
 public class TestEx_RestWebIntegration {
     @isTest
@@ -14,21 +19,23 @@ public class TestEx_RestWebIntegration {
         c2.Project__c = p.id;
         c2.Start_Date__c = system.today();
         c2.Campaign_Code__c = '123';
+        //   c2.Master_Source__c = 'Digital';
         insert c2;
         c2.Campaign_Code__c = c2.Id;
+        c2.Approver_Status__c = 'Approved';
         update c2;
-        returnMap.put('Child Campaign 1', c2.Id);
+         returnMap.put('Child Campaign 1', c2.Id);
         
         
         Campaign__c c4 = new Campaign__c();
         c4.Name = 'Test Project';
+        //  c4.Active__c = true;
         c4.Project__c = p.id;
         c4.Start_Date__c = system.today();
+        //   c4.End_Date__c = system.today().addDays(60);
         c4.Campaign_Code__c = '123';
+        //  c4.Master_Source__c = 'Digital';
         insert c4;
-        c4.Campaign_Code__c = c4.id;
-        update c4;
-        returnMap.put('Child Campaign 2',c4.Id);
         
         
         Campaign__c c3 = new Campaign__c();
@@ -36,6 +43,8 @@ public class TestEx_RestWebIntegration {
         c3.Project__c = p.id;
         c3.Start_Date__c = system.today();
         c3.Campaign_Code__c = '123';
+        //   c3.Master_Source__c = 'Digital';
+        //   c3.Status__c = 'Completed';
         insert c3;
         
         Campaign_Performance__c cpl = new Campaign_Performance__c();
@@ -47,6 +56,9 @@ public class TestEx_RestWebIntegration {
         cpl.Lead_Count__c = 1;
         update cpl;
         
+        //update c3;
+        
+        
         return returnMap;
     }
     
@@ -55,21 +67,26 @@ public class TestEx_RestWebIntegration {
         Map<String, Id> resultMap = createCampaign();
         
         Ex_RESTWebIntegration.REST_Request req1 = new Ex_RESTWebIntegration.REST_Request();
-        req1.firstName = 'Test Lead';
+        req1.name = 'Test Lead';
         req1.mobile = '1122334455';
         req1.LeadIdentifier = 'Web';
         req1.campaignCode = resultMap.get('Child Campaign 1');
         req1.email = 'lead@test.in';
-            
-            
+        req1.remarks = 'Web Created Lead.';
+        req1.url = 'www.test.com';
+        req1.UTM_Source = 'Google';
+        req1.UTM_Medium = 'Ads';
         
         Ex_RESTWebIntegration.REST_Request req2 = new Ex_RESTWebIntegration.REST_Request();
-        req2.firstName = 'Test Lead';
+        req2.name = 'Test Lead';
         req2.mobile = '1122334455';
         req2.LeadIdentifier = 'Web';
         req2.campaignCode = resultMap.get('Child Campaign 2');
         req2.email = 'lead@test.in';
-
+        req2.remarks = 'Web Created Lead.';
+        req2.url = 'www.test.com';
+        req2.UTM_Source = 'Google';
+        req2.UTM_Medium = 'Ads';
         
         RestRequest req = new RestRequest(); 
         RestResponse res = new RestResponse();  
@@ -91,19 +108,23 @@ public class TestEx_RestWebIntegration {
         
         String RecTypeId= Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
         
-        Account a2 = new Account(Salutation = 'Mr.' ,FirstName = 'Test', LastName = 'Lead 2', PersonMobilePhone = '1122334456', PersonEmail = 'lead2@test.in',RecordTypeId = RecTypeId);
+        Account a2 = new Account(Salutation = 'Mr.' ,FirstName = 'Test', LastName = 'Lead 2', PersonMobilePhone = '1122334456', PersonEmail = 'lead2@test.in', Alternate_Email__c = 'lead@test.in',RecordTypeId = RecTypeId);
         insert a2;
         
-        Opportunity__c op = new Opportunity__c(Name = 'Test1', Stage__c = 'In Follow-up', Campaign__c = resultMap.get('Child Campaign 2'),  Project__c = resultMap.get('Project'), Account__c = a2.id);
+        Opportunity__c op = new Opportunity__c(Name = 'Test1', Opportunity_Stage__c = 'In Follow-up', Site_Visit_Count__c = 1, Campaign__c = resultMap.get('Child Campaign 2'),  Project__c = resultMap.get('Project'), Account__c = a2.id);
         insert op;
         
         Ex_RESTWebIntegration.REST_Request req1 = new Ex_RESTWebIntegration.REST_Request();
-        req1.firstName = 'Test Lead';
-        req1.mobile = '1122334456';
+        req1.name = 'Test Lead';
+        req1.mobile = '1122334455';
         req1.LeadIdentifier = 'Web';
-        req1.campaignCode = resultMap.get('Child Campaign 2');
+        req1.campaignCode = resultMap.get('Child Campaign 1');
         req1.email = 'lead@test.in';
-       
+        req1.remarks = 'Web Created Lead.';
+        req1.url = 'www.test.com';
+        req1.UTM_Source = 'Google';
+        req1.UTM_Medium = 'Ads';
+        
         RestRequest req = new RestRequest(); 
         RestResponse res = new RestResponse();  
         
@@ -127,16 +148,21 @@ public class TestEx_RestWebIntegration {
         Ld.Mobile__c = '7788002233';
         Ld.Email__c = 'Test2@gmail.com';
         Ld.Project__c = resultMap.get('Project');
+        Ld.Description__c = 'Test244';
         Ld.Campaign_Code__c = '1234';
         Ld.Apply_round_robin__c = true;
         insert Ld;
         
         Ex_RESTWebIntegration.REST_Request req1 = new Ex_RESTWebIntegration.REST_Request();
-        req1.firstName = 'Test';
+        req1.name = 'Test';
         req1.mobile = '7788002233';
         req1.LeadIdentifier = 'Web';
         req1.campaignCode = resultMap.get('Child Campaign 1');
         req1.email = 'Test2@gmail.com';
+        req1.remarks = 'Web Created Lead.';
+        req1.url = 'www.test.com';
+        req1.UTM_Source = 'Google';
+        req1.UTM_Medium = 'Ads';
         
         RestRequest req = new RestRequest(); 
         RestResponse res = new RestResponse();  
@@ -149,7 +175,7 @@ public class TestEx_RestWebIntegration {
         Test.startTest();
         Ex_RESTWebIntegration.createLead(req1);
         Test.stopTest();
-    } 
+    }
     @isTest
     public static Project__c createProject() {
         Project__c p = new Project__c();
@@ -174,6 +200,7 @@ public class TestEx_RestWebIntegration {
         tm.Team__c = t.id;
         tm.User__c = UserInfo.getUserId();
         tm.Availability__c = true;
+    //    tm.Is_User_Active__c = true;
         insert tm;
         
         Lead__c Ld = new Lead__c();
@@ -181,6 +208,7 @@ public class TestEx_RestWebIntegration {
         Ld.Mobile__c = '7788002233';
         Ld.Email__c = 'Test2@gmail.com';
         Ld.Project__c = p.id;
+        Ld.Description__c = 'Test244';
         Ld.Campaign_Code__c = '1234';
         Ld.Apply_round_robin__c = true;
         insert Ld;

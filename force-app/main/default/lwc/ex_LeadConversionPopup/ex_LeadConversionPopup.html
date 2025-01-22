@@ -1,27 +1,21 @@
 <template>
-    
     <template if:true={isCheck}>
-        <lightning-card>
-            <div style="text-align:center;">
-    
-                <lightning-record-view-form record-id={recordId} object-api-name={object}>
+        <lightning-card >
+        <div style="text-align:center;">
+           
+                <lightning-record-view-form record-id={recordId} object-api-name={object}> 
+                    <div >
+                    <p class="red slds-align_absolute-center"><b> This Lead is Already Converted.! </b> </p> 
                     <div>
-                        <p class="red slds-align_absolute-center"><b> This Lead is Already Converted.! </b> </p>
-                        <div>
-                            <lightning-formatted-text class="slds-align_absolute-center" value="Converted Account : ">
-                            </lightning-formatted-text>
-                            <lightning-output-field field-name="Converted_Account__c" variant="label-hidden"
-                                class="slds-align_absolute-center"></lightning-output-field>
-                        </div>
-                        <p>
-                            <lightning-formatted-text class="slds-align_absolute-center" value="Converted Opportunity : ">
-                            </lightning-formatted-text>
-                        </p>
-                        <lightning-output-field field-name="Converted_Opportunity__c" variant="label-hidden"
-                            class="slds-align_absolute-center"></lightning-output-field>
+                        <lightning-formatted-text class="slds-align_absolute-center" value="Converted Account : " ></lightning-formatted-text>
+                        <lightning-output-field field-name="ConvertedAccountId__c" variant="label-hidden" class="slds-align_absolute-center"></lightning-output-field>
+                    </div>
+                    <p><lightning-formatted-text class="slds-align_absolute-center" value="Converted Opportunity : "></lightning-formatted-text></p>
+                    <lightning-output-field field-name="ConvertedOpportunityId__c" variant="label-hidden" class="slds-align_absolute-center"></lightning-output-field>
                     </div>
                 </lightning-record-view-form>
-            </div>
-        </lightning-card>
-    </template>
+          
+        </div>
+    </lightning-card>
+        </template>
     </template>

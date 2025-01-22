@@ -6,10 +6,6 @@
     <picklistValues>
         <picklist>Document_Type__c</picklist>
         <values>
-            <fullName>Aadhar Card</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>GST Registration Certificate</fullName>
             <default>false</default>
         </values>
@@ -25,10 +21,6 @@
             <fullName>RERA Certificate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>RERA Competency Certificate</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Residential_Status__c</picklist>
@@ -37,11 +29,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gujarat Resident</fullName>
+            <fullName>Mumbai Resident</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Non-Gujarat Resident</fullName>
+            <fullName>Non-Mumbai Resident</fullName>
             <default>false</default>
         </values>
         <values>
@@ -54,7 +46,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Type_of_Applicant__c</picklist>
+        <picklist>Type_Of_Applicant__c</picklist>
         <values>
             <fullName>Corporate Buyer</fullName>
             <default>false</default>

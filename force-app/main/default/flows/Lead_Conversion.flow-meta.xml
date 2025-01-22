@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>LeadConvert</name>
-        <label>LeadConvert</label>
-        <locationX>165</locationX>
-        <locationY>288</locationY>
-        <actionName>LeadConversionServices</actionName>
+        <name>LeadConversion</name>
+        <label>LeadConversion</label>
+        <locationX>595</locationX>
+        <locationY>201</locationY>
+        <actionName>Ex_LeadConversionServices</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>SuccessMessageLeadConversion</targetReference>
+            <targetReference>Lead_Conversion</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>leadList</name>
             <value>
-                <elementReference>GetLeadRecord</elementReference>
+                <elementReference>get_Lead_Record</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>LeadConversionServices</nameSegment>
-        <versionSegment>1</versionSegment>
+        <nameSegment>Ex_LeadConversionServices</nameSegment>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>59.0</apiVersion>
+    <description>It is used for convert lead calling apex invocable method from flow</description>
     <environments>Default</environments>
     <interviewLabel>Lead Conversion {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Conversion</label>
@@ -44,13 +44,13 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>GetLeadRecord</name>
-        <label>GetLeadRecord</label>
-        <locationX>213</locationX>
-        <locationY>112</locationY>
+        <name>get_Lead_Record</name>
+        <label>get Lead Record</label>
+        <locationX>435</locationX>
+        <locationY>210</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>LeadConvert</targetReference>
+            <targetReference>LeadConversion</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -65,41 +65,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>SuccessMessageLeadConversion</name>
-        <label>SuccessMessageLeadConversion</label>
-        <locationX>526</locationX>
-        <locationY>295</locationY>
+        <name>Lead_Conversion</name>
+        <label>Lead Conversion</label>
+        <locationX>436</locationX>
+        <locationY>353</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>LeadConversion</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Lead Conversion&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Header</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Lead Converison&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>LeadMessage2</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 24px; color: rgb(14, 231, 54);&quot;&gt;Lead is Converted&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Body</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(53, 218, 38); font-size: 16px;&quot;&gt;Lead Converted&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>543</locationX>
+        <locationX>330</locationX>
         <locationY>48</locationY>
         <connector>
-            <targetReference>GetLeadRecord</targetReference>
+            <targetReference>get_Lead_Record</targetReference>
         </connector>
     </start>
     <status>Active</status>
-    <variables>
-        <name>LeadId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

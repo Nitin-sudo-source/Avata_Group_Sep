@@ -11,24 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Home Loan</fullName>
+                <fullName>Self Funding</fullName>
                 <default>false</default>
-                <label>Home Loan</label>
+                <label>Self Funding</label>
             </value>
             <value>
-                <fullName>Sale of Property</fullName>
+                <fullName>Loan</fullName>
                 <default>false</default>
-                <label>Sale of Property</label>
+                <label>Loan</label>
             </value>
             <value>
-                <fullName>Own Contribution</fullName>
+                <fullName>Partial Loan</fullName>
                 <default>false</default>
-                <label>Own Contribution</label>
-            </value>
-            <value>
-                <fullName>All of Above</fullName>
-                <default>false</default>
-                <label>All of Above</label>
+                <label>Partial Loan</label>
             </value>
         </valueSetDefinition>
     </valueSet>

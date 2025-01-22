@@ -1,0 +1,83 @@
+.my-heading {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    background: #1C4E80;
+    color: whitesmoke;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+  }
+  
+  .reaction{
+    text-decoration: underline;
+    color:blue;
+    cursor: pointer;
+    font-weight: bold;
+  
+  }
+  .Table1Css {
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border: 1px solid #0e0d0d;
+  
+  }
+  .Table1Css th {
+    border: 0.5px solid #0e0d0d;
+    padding: 6px;
+    text-align: left;
+    background-color:  #cae2df ;
+    font-weight: bold;
+    color:#0e0e0e;
+    text-shadow: 2px 2px 3px rgb(128, 125, 125);
+    width: 20%;
+  }
+  
+  .Table1Css td {
+    border: 0.5px solid #0e0e0e;
+    padding: 4px;
+    text-align: left;
+    font-weight: bold;
+    text-shadow: 2px 2px 3px rgb(176, 175, 175);
+    width:30%
+  }
+
+  .buttoncss {
+    width: 30%;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    pointer-events: none;
+    background: #6e93f7;
+    transition: all 0.2s ease;
+  }
+  
+  .buttoncss:hover {
+    background: #0e4bf1;
+  }
+
+  .buttoncss1 {
+    width: 30%;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    pointer-events: none;
+    background: #ed8e08;
+    transition: all 0.2s ease;
+  }
+  
+  .buttoncss1:hover {
+    background: #eda859;
+  }

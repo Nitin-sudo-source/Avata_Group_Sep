@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Locality_details__c</fullName>
+    <label>Locality details</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Locality__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Antop Hill</fullName>
+                <default>false</default>
+                <label>Antop Hill</label>
+            </value>
+            <value>
+                <fullName>Bhuleshwar</fullName>
+                <default>false</default>
+                <label>Bhuleshwar</label>
+            </value>
+            <value>
+                <fullName>Byculla</fullName>
+                <default>false</default>
+                <label>Byculla</label>
+            </value>
+            <value>
+                <fullName>Colaba</fullName>
+                <default>false</default>
+                <label>Colaba</label>
+            </value>
+            <value>
+                <fullName>Cumbala Hill</fullName>
+                <default>false</default>
+                <label>Cumbala Hill</label>
+            </value>
+            <value>
+                <fullName>Dadar</fullName>
+                <default>false</default>
+                <label>Dadar</label>
+            </value>
+            <value>
+                <fullName>Dadar east</fullName>
+                <default>false</default>
+                <label>Dadar east</label>
+            </value>
+            <value>
+                <fullName>Dadar west</fullName>
+                <default>false</default>
+                <label>Dadar west</label>
+            </value>
+            <value>
+                <fullName>Fort</fullName>
+                <default>false</default>
+                <label>Fort</label>
+            </value>
+            <value>
+                <fullName>Girgaon</fullName>
+                <default>false</default>
+                <label>Girgaon</label>
+            </value>
+            <value>
+                <fullName>Kalbadevi</fullName>
+                <default>false</default>
+                <label>Kalbadevi</label>
+            </value>
+            <value>
+                <fullName>Kamathipura</fullName>
+                <default>false</default>
+                <label>Kamathipura</label>
+            </value>
+            <value>
+                <fullName>Malabar Hill</fullName>
+                <default>false</default>
+                <label>Malabar Hill</label>
+            </value>
+            <value>
+                <fullName>Matunga</fullName>
+                <default>false</default>
+                <label>Matunga</label>
+            </value>
+            <value>
+                <fullName>Parel</fullName>
+                <default>false</default>
+                <label>Parel</label>
+            </value>
+            <value>
+                <fullName>Lower parel east</fullName>
+                <default>false</default>
+                <label>Lower parel east</label>
+            </value>
+            <value>
+                <fullName>Lower parel west</fullName>
+                <default>false</default>
+                <label>Lower parel west</label>
+            </value>
+            <value>
+                <fullName>Sion</fullName>
+                <default>false</default>
+                <label>Sion</label>
+            </value>
+            <value>
+                <fullName>Tardeo</fullName>
+                <default>false</default>
+                <label>Tardeo</label>
+            </value>
+            <value>
+                <fullName>Umarkhadi</fullName>
+                <default>false</default>
+                <label>Umarkhadi</label>
+            </value>
+            <value>
+                <fullName>Chembur</fullName>
+                <default>false</default>
+                <label>Chembur</label>
+            </value>
+            <value>
+                <fullName>Chembur east</fullName>
+                <default>false</default>
+                <label>Chembur east</label>
+            </value>
+            <value>
+                <fullName>Chembur west</fullName>
+                <default>false</default>
+                <label>Chembur west</label>
+            </value>
+            <value>
+                <fullName>Mankhurd</fullName>
+                <default>false</default>
+                <label>Mankhurd</label>
+            </value>
+            <value>
+                <fullName>Wadala</fullName>
+                <default>false</default>
+                <label>Wadala</label>
+            </value>
+            <value>
+                <fullName>Trombay</fullName>
+                <default>false</default>
+                <label>Trombay</label>
+            </value>
+            <value>
+                <fullName>Bhandup</fullName>
+                <default>false</default>
+                <label>Bhandup</label>
+            </value>
+            <value>
+                <fullName>Bhandup east</fullName>
+                <default>false</default>
+                <label>Bhandup east</label>
+            </value>
+            <value>
+                <fullName>Bhandup west</fullName>
+                <default>false</default>
+                <label>Bhandup west</label>
+            </value>
+            <value>
+                <fullName>Govandi</fullName>
+                <default>false</default>
+                <label>Govandi</label>
+            </value>
+            <value>
+                <fullName>Govandi east</fullName>
+                <default>false</default>
+                <label>Govandi east</label>
+            </value>
+            <value>
+                <fullName>Govandi west</fullName>
+                <default>false</default>
+                <label>Govandi west</label>
+            </value>
+            <value>
+                <fullName>Ghatkopar</fullName>
+                <default>false</default>
+                <label>Ghatkopar</label>
+            </value>
+            <value>
+                <fullName>Ghatkopar east</fullName>
+                <default>false</default>
+                <label>Ghatkopar east</label>
+            </value>
+            <value>
+                <fullName>Ghatkopar west</fullName>
+                <default>false</default>
+                <label>Ghatkopar west</label>
+            </value>
+            <value>
+                <fullName>Kanjurmarg</fullName>
+                <default>false</default>
+                <label>Kanjurmarg</label>
+            </value>
+            <value>
+                <fullName>Kanjurmarg east</fullName>
+                <default>false</default>
+                <label>Kanjurmarg east</label>
+            </value>
+            <value>
+                <fullName>Kanjurmarg west</fullName>
+                <default>false</default>
+                <label>Kanjurmarg west</label>
+            </value>
+            <value>
+                <fullName>Kurla</fullName>
+                <default>false</default>
+                <label>Kurla</label>
+            </value>
+            <value>
+                <fullName>Kurla east</fullName>
+                <default>false</default>
+                <label>Kurla east</label>
+            </value>
+            <value>
+                <fullName>Kurla west</fullName>
+                <default>false</default>
+                <label>Kurla west</label>
+            </value>
+            <value>
+                <fullName>Mulund</fullName>
+                <default>false</default>
+                <label>Mulund</label>
+            </value>
+            <value>
+                <fullName>Nahur</fullName>
+                <default>false</default>
+                <label>Nahur</label>
+            </value>
+            <value>
+                <fullName>Powai</fullName>
+                <default>false</default>
+                <label>Powai</label>
+            </value>
+            <value>
+                <fullName>Vidyavihar</fullName>
+                <default>false</default>
+                <label>Vidyavihar</label>
+            </value>
+            <value>
+                <fullName>Vikhroli</fullName>
+                <default>false</default>
+                <label>Vikhroli</label>
+            </value>
+            <value>
+                <fullName>Andheri</fullName>
+                <default>false</default>
+                <label>Andheri</label>
+            </value>
+            <value>
+                <fullName>Andheri East</fullName>
+                <default>false</default>
+                <label>Andheri East</label>
+            </value>
+            <value>
+                <fullName>Andheri West</fullName>
+                <default>false</default>
+                <label>Andheri West</label>
+            </value>
+            <value>
+                <fullName>Bandra</fullName>
+                <default>false</default>
+                <label>Bandra</label>
+            </value>
+            <value>
+                <fullName>Bandra east</fullName>
+                <default>false</default>
+                <label>Bandra east</label>
+            </value>
+            <value>
+                <fullName>Bandra west</fullName>
+                <default>false</default>
+                <label>Bandra west</label>
+            </value>
+            <value>
+                <fullName>Borivali</fullName>
+                <default>false</default>
+                <label>Borivali</label>
+            </value>
+            <value>
+                <fullName>Borivali West</fullName>
+                <default>false</default>
+                <label>Borivali West</label>
+            </value>
+            <value>
+                <fullName>Dahisar</fullName>
+                <default>false</default>
+                <label>Dahisar</label>
+            </value>
+            <value>
+                <fullName>Dahisar east</fullName>
+                <default>false</default>
+                <label>Dahisar east</label>
+            </value>
+            <value>
+                <fullName>Dahisar west</fullName>
+                <default>false</default>
+                <label>Dahisar west</label>
+            </value>
+            <value>
+                <fullName>Goregaon west</fullName>
+                <default>false</default>
+                <label>Goregaon west</label>
+            </value>
+            <value>
+                <fullName>Goregaon east</fullName>
+                <default>false</default>
+                <label>Goregaon east</label>
+            </value>
+            <value>
+                <fullName>Goregoan</fullName>
+                <default>false</default>
+                <label>Goregoan</label>
+            </value>
+            <value>
+                <fullName>Jogeshwari</fullName>
+                <default>false</default>
+                <label>Jogeshwari</label>
+            </value>
+            <value>
+                <fullName>Jogeshwari east</fullName>
+                <default>false</default>
+                <label>Jogeshwari east</label>
+            </value>
+            <value>
+                <fullName>Jogeshwari west</fullName>
+                <default>false</default>
+                <label>Jogeshwari west</label>
+            </value>
+            <value>
+                <fullName>Juhu</fullName>
+                <default>false</default>
+                <label>Juhu</label>
+            </value>
+            <value>
+                <fullName>Kandivali</fullName>
+                <default>false</default>
+                <label>Kandivali</label>
+            </value>
+            <value>
+                <fullName>Kandivali west</fullName>
+                <default>false</default>
+                <label>Kandivali west</label>
+            </value>
+            <value>
+                <fullName>Kandivali east</fullName>
+                <default>false</default>
+                <label>Kandivali east</label>
+            </value>
+            <value>
+                <fullName>Khar</fullName>
+                <default>false</default>
+                <label>Khar</label>
+            </value>
+            <value>
+                <fullName>Khar danda</fullName>
+                <default>false</default>
+                <label>Khar danda</label>
+            </value>
+            <value>
+                <fullName>Khar east</fullName>
+                <default>false</default>
+                <label>Khar east</label>
+            </value>
+            <value>
+                <fullName>Khar west</fullName>
+                <default>false</default>
+                <label>Khar west</label>
+            </value>
+            <value>
+                <fullName>Malad</fullName>
+                <default>false</default>
+                <label>Malad</label>
+            </value>
+            <value>
+                <fullName>Malad west</fullName>
+                <default>false</default>
+                <label>Malad west</label>
+            </value>
+            <value>
+                <fullName>Santacruz East</fullName>
+                <default>false</default>
+                <label>Santacruz East</label>
+            </value>
+            <value>
+                <fullName>Santacruz West</fullName>
+                <default>false</default>
+                <label>Santacruz West</label>
+            </value>
+            <value>
+                <fullName>Santacruz</fullName>
+                <default>false</default>
+                <label>Santacruz</label>
+            </value>
+            <value>
+                <fullName>Vile Parle</fullName>
+                <default>false</default>
+                <label>Vile Parle</label>
+            </value>
+            <value>
+                <fullName>Apta</fullName>
+                <default>false</default>
+                <label>Apta</label>
+            </value>
+            <value>
+                <fullName>Chunabhatti</fullName>
+                <default>false</default>
+                <label>Chunabhatti</label>
+            </value>
+            <value>
+                <fullName>Cotton Green</fullName>
+                <default>false</default>
+                <label>Cotton Green</label>
+            </value>
+            <value>
+                <fullName>Dockyard Road</fullName>
+                <default>false</default>
+                <label>Dockyard Road</label>
+            </value>
+            <value>
+                <fullName>Guru Tegh Bahadur Nagar</fullName>
+                <default>false</default>
+                <label>Guru Tegh Bahadur Nagar</label>
+            </value>
+            <value>
+                <fullName>Hamrapur</fullName>
+                <default>false</default>
+                <label>Hamrapur</label>
+            </value>
+            <value>
+                <fullName>Jite</fullName>
+                <default>false</default>
+                <label>Jite</label>
+            </value>
+            <value>
+                <fullName>Kasu</fullName>
+                <default>false</default>
+                <label>Kasu</label>
+            </value>
+            <value>
+                <fullName>Khandeshwar</fullName>
+                <default>false</default>
+                <label>Khandeshwar</label>
+            </value>
+            <value>
+                <fullName>Kharghar</fullName>
+                <default>false</default>
+                <label>Kharghar</label>
+            </value>
+            <value>
+                <fullName>King&apos;s Circle</fullName>
+                <default>false</default>
+                <label>King&apos;s Circle</label>
+            </value>
+            <value>
+                <fullName>Mansarovar</fullName>
+                <default>false</default>
+                <label>Mansarovar</label>
+            </value>
+            <value>
+                <fullName>Nagothane</fullName>
+                <default>false</default>
+                <label>Nagothane</label>
+            </value>
+            <value>
+                <fullName>Nidi</fullName>
+                <default>false</default>
+                <label>Nidi</label>
+            </value>
+            <value>
+                <fullName>Panvel</fullName>
+                <default>false</default>
+                <label>Panvel</label>
+            </value>
+            <value>
+                <fullName>Pen</fullName>
+                <default>false</default>
+                <label>Pen</label>
+            </value>
+            <value>
+                <fullName>Rasayani</fullName>
+                <default>false</default>
+                <label>Rasayani</label>
+            </value>
+            <value>
+                <fullName>Reay Road</fullName>
+                <default>false</default>
+                <label>Reay Road</label>
+            </value>
+            <value>
+                <fullName>Roha</fullName>
+                <default>false</default>
+                <label>Roha</label>
+            </value>
+            <value>
+                <fullName>Sewri</fullName>
+                <default>false</default>
+                <label>Sewri</label>
+            </value>
+            <value>
+                <fullName>Somtane</fullName>
+                <default>false</default>
+                <label>Somtane</label>
+            </value>
+            <value>
+                <fullName>Tilak Nagar</fullName>
+                <default>false</default>
+                <label>Tilak Nagar</label>
+            </value>
+            <value>
+                <fullName>Vadala Road</fullName>
+                <default>false</default>
+                <label>Vadala Road</label>
+            </value>
+            <value>
+                <fullName>CBD Belapur</fullName>
+                <default>false</default>
+                <label>CBD Belapur</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Bhandup</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Bhandup east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Bhandup west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Govandi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Govandi east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Govandi west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Ghatkopar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Ghatkopar east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Ghatkopar west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Kanjurmarg</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Kanjurmarg east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Kanjurmarg west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Kurla</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Kurla east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Kurla west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Mulund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Nahur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Powai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Vidyavihar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Vikhroli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Chembur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Chembur east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Chembur west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Mankhurd</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Wadala</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Trombay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Apta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Chunabhatti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Cotton Green</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Dockyard Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Guru Tegh Bahadur Nagar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Hamrapur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Jite</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Kasu</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Khandeshwar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Kharghar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>King&apos;s Circle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Mansarovar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Nagothane</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Nidi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Panvel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Pen</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Rasayani</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Reay Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Roha</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Sewri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Somtane</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Tilak Nagar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Vadala Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>CBD Belapur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Andheri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Andheri East</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Andheri West</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Bandra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Bandra east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Bandra west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Borivali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Borivali West</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Dahisar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Dahisar east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Dahisar west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Goregaon west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Goregaon east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Goregoan</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Jogeshwari</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Jogeshwari east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Jogeshwari west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Juhu</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Kandivali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Kandivali west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Kandivali east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Khar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Khar danda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Khar east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Khar west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Malad</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Malad west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Santacruz East</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Santacruz West</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Santacruz</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Vile Parle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Antop Hill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Bhuleshwar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Byculla</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Colaba</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Cumbala Hill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Dadar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Dadar east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Dadar west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Fort</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Girgaon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Kalbadevi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Kamathipura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Malabar Hill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Matunga</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Parel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Lower parel east</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Lower parel west</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Sion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Tardeo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Umarkhadi</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
