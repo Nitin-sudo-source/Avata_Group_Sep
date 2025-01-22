@@ -3,7 +3,7 @@
     <fullName>Executed__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Executed</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

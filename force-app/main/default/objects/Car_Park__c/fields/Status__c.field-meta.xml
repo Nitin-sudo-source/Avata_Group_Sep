@@ -23,14 +23,7 @@
             <value>
                 <fullName>Blocked</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Blocked</label>
-            </value>
-            <value>
-                <fullName>null</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>null</label>
             </value>
         </valueSetDefinition>
     </valueSet>

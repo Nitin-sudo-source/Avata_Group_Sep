@@ -4,8 +4,8 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Tower</label>
     <referenceTo>Tower__c</referenceTo>
-    <relationshipLabel>Car Parks</relationshipLabel>
-    <relationshipName>Car_Parks</relationshipName>
+    <relationshipLabel>Car Park</relationshipLabel>
+    <relationshipName>Car_Park</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

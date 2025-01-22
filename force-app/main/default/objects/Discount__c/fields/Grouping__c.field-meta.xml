@@ -7,58 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Group 1</fullName>
-                <default>false</default>
-                <label>Group 1</label>
-            </value>
-            <value>
-                <fullName>Group 2</fullName>
-                <default>false</default>
-                <label>Group 2</label>
-            </value>
-            <value>
-                <fullName>Group 3</fullName>
-                <default>false</default>
-                <label>Group 3</label>
-            </value>
-            <value>
-                <fullName>Group 4</fullName>
-                <default>false</default>
-                <label>Group 4</label>
-            </value>
-            <value>
-                <fullName>Group 5</fullName>
-                <default>false</default>
-                <label>Group 5</label>
-            </value>
-            <value>
-                <fullName>Group 6</fullName>
-                <default>false</default>
-                <label>Group 6</label>
-            </value>
-            <value>
-                <fullName>Group 7</fullName>
-                <default>false</default>
-                <label>Group 7</label>
-            </value>
-            <value>
-                <fullName>Group 8</fullName>
-                <default>false</default>
-                <label>Group 8</label>
-            </value>
-            <value>
-                <fullName>Group 9</fullName>
-                <default>false</default>
-                <label>Group 9</label>
-            </value>
-            <value>
-                <fullName>Group 10</fullName>
-                <default>false</default>
-                <label>Group 10</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>Grouping</valueSetName>
     </valueSet>
 </CustomField>

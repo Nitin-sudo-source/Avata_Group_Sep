@@ -8,23 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Self-Use</fullName>
-                <default>false</default>
-                <label>Self-Use</label>
-            </value>
-            <value>
-                <fullName>Investment</fullName>
-                <default>false</default>
-                <label>Investment</label>
-            </value>
-            <value>
-                <fullName>Both</fullName>
-                <default>false</default>
-                <label>Both</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Buying_Purpose</valueSetName>
     </valueSet>
 </CustomField>

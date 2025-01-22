@@ -77,22 +77,10 @@
                             <value>User__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Sequence_Number__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Availability__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>DayOff__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>User_Active_Status__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Last_Assignment_DateTime__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Assignment_Counter__c</value>
+                            <value>Availability__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -116,7 +104,37 @@
                 <identifier>lst_dynamicRelatedList</identifier>
             </componentInstance>
         </itemInstances>
-        <name>relatedTabContent</name>
+        <name>Facet-1ab86a1d-7ef5-466f-9fbb-7a86f4324339</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Team__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Histories</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b8844882-37fe-4c1a-858b-dcecb26e18a8</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -142,14 +160,28 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>relatedTabContent</value>
+                    <value>Facet-1ab86a1d-7ef5-466f-9fbb-7a86f4324339</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Team Members</value>
+                    <value>Team Member</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>relatedListsTab</identifier>
+                <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b8844882-37fe-4c1a-858b-dcecb26e18a8</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Team History</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <name>maintabs</name>

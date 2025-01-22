@@ -8,18 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Amount</fullName>
-                <default>false</default>
-                <label>Amount</label>
-            </value>
-            <value>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-                <label>Percentage</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Charge_Type</valueSetName>
     </valueSet>
 </CustomField>

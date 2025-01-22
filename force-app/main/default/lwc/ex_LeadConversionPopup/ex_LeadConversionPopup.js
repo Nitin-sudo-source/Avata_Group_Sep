@@ -1,14 +1,14 @@
-import { LightningElement , track, api,wire} from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import object from '@salesforce/schema/Lead__c';
 import isChecked from '@salesforce/apex/Ex_LeadConversionPopup.isChecked';
 
 export default class Ex_LeadConversionPopup extends LightningElement {
-    
     @api recordId;
     @track isCheck = false;
     object = object;
    
-     @wire (isChecked,{ID:'$recordId'}) retrieveCheck({data,error}){
+     @wire (isChecked,{ID:'$recordId'}) 
+     retrieveCheck({data,error}){
         let checkArray = [];
         if(data){
             for(let key in data){
@@ -21,6 +21,5 @@ export default class Ex_LeadConversionPopup extends LightningElement {
             this.result = undefined;
         }
     }
-
 
 }

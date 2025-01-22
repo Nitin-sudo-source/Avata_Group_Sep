@@ -1,8 +1,8 @@
-//-------------------------------------------//
-//  Project: Satyam
-//  Created By: Exceller tech
-//  Created Date: 06-11-2023
-//-------------------------------------------//
+/*-------------------------------------------
+  Project: AVANT Group 
+  Created By: Exceller Tech
+  Created Date: 07-11-2024
+//-------------------------------------------*/
 public class Ex_DemandTriggerHandler {
     public static void afterInsert(List<Demand__c> dList) {
         Set<Id> demandIdSet = new Set<Id>();
@@ -10,8 +10,9 @@ public class Ex_DemandTriggerHandler {
         for(Demand__c d: dList) {
             demandIdSet.add(d.Id);
         }
-        if(!demandIdSet.isEmpty() && demandIdSet != null)
+        if(!demandIdSet.isEmpty() && demandIdSet != null){
             Ex_DemandHandlerServices.createDebitLedgerAndUpdateLastDemandNo(demandIdSet);
+        }
     }
     
     public static void afterUpdate(Map<Id, Demand__c> oldMap, Map<Id, Demand__c> newMap) {
@@ -36,6 +37,5 @@ public class Ex_DemandTriggerHandler {
         if(!deletedDemandIdSet.isEmpty() && deletedDemandIdSet != null)
             Ex_DemandHandlerServices.deletedDemandCalculation(deletedDemandIdSet);
     }
-    
     
 }

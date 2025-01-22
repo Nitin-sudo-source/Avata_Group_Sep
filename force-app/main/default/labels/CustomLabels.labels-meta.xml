@@ -1,136 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>CP_Profile_Name</fullName>
+        <fullName>API_Key_SMS</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CP Profile Name</shortDescription>
-        <value>CP Portal</value>
+        <shortDescription>API_Key_SMS</shortDescription>
+        <value>cabd6f8f22fa6a8107c627a8c48bac82</value>
     </labels>
     <labels>
-        <fullName>Developer_Name</fullName>
+        <fullName>CP_Approver</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Developer Name For SMS</shortDescription>
-        <value>METROSATYAM BUILDERS LLP</value>
+        <shortDescription>CP Approver</shortDescription>
+        <value>005IS000000LEL2YAO</value>
     </labels>
     <labels>
-        <fullName>Discount_Maintain_At</fullName>
+        <fullName>End_Point_Url</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Discount Maintain At</shortDescription>
-        <value>Tower</value>
+        <shortDescription>End Point Url</shortDescription>
+        <value>https://sms.mcube.com/api/smsservices.php</value>
     </labels>
     <labels>
-        <fullName>Insert_Receipt</fullName>
+        <fullName>TransactionId</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Insert Receipt</shortDescription>
-        <value>No</value>
+        <shortDescription>TransactionId</shortDescription>
+        <value>&apos;&apos;</value>
     </labels>
     <labels>
-        <fullName>Interest_GST</fullName>
+        <fullName>campaignid</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Interest_GST</shortDescription>
-        <value>18</value>
+        <shortDescription>campaignid</shortDescription>
+        <value>MCUBE</value>
     </labels>
     <labels>
-        <fullName>Line_Break</fullName>
+        <fullName>channel</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Line Break</shortDescription>
-        <value>-</value>
+        <shortDescription>channel</shortDescription>
+        <value>Trans</value>
     </labels>
     <labels>
-        <fullName>Ozonetel_Apikey</fullName>
+        <fullName>senderid</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Ozonetel Apikey</shortDescription>
-        <value>KKbeac805b1c3c3c4aa63f80b53e0045b8</value>
+        <shortDescription>senderid</shortDescription>
+        <value>AAVANT</value>
     </labels>
     <labels>
-        <fullName>Ozontel_SMS_userName</fullName>
+        <fullName>shorturl</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Ozontel SMS userName</shortDescription>
-        <value>-</value>
+        <shortDescription>shorturl</shortDescription>
+        <value>NO</value>
     </labels>
     <labels>
-        <fullName>Ozontel_Username</fullName>
+        <fullName>template_Sv</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Ozontel Username</shortDescription>
-        <value>metrosatyam_llp</value>
+        <shortDescription>template_sv</shortDescription>
+        <value>1707173255071952011</value>
     </labels>
     <labels>
-        <fullName>StartConnect</fullName>
+        <fullName>templatebooking</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>StartConnectPhoneCode</shortDescription>
-        <value>91</value>
+        <shortDescription>templatebooking</shortDescription>
+        <value>1707173255078143790</value>
     </labels>
     <labels>
-        <fullName>StartConnectAudioUrl</fullName>
+        <fullName>templateid_Lead</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>StartConnectAudioUrl</shortDescription>
-        <value>http://123.252.134.146/RECORDINGS/MP3/</value>
+        <shortDescription>templateid_Lead</shortDescription>
+        <value>1707173255048469561</value>
     </labels>
     <labels>
-        <fullName>StartConnectFunction</fullName>
+        <fullName>templateid_Lead_NoAnswer</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>StartConnectFunction</shortDescription>
-        <value>add_lead</value>
+        <shortDescription>templateid_Lead_NoAnswer</shortDescription>
+        <value>1707173255055684422</value>
     </labels>
     <labels>
-        <fullName>StartConnectListId</fullName>
+        <fullName>templateid_Lead_Prospect</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>StartConnectListId</shortDescription>
-        <value>977</value>
-    </labels>
-    <labels>
-        <fullName>StartConnectPass</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>StartConnectPass</shortDescription>
-        <value>StaR181122</value>
-    </labels>
-    <labels>
-        <fullName>StartConnectUrl</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>StartConnectUrl</shortDescription>
-        <value>http://123.252.134.146/admin/api_non_user.php?</value>
-    </labels>
-    <labels>
-        <fullName>StartConnectUser</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>StartConnectUser</shortDescription>
-        <value>EDOTSYS</value>
-    </labels>
-    <labels>
-        <fullName>Template3ForSMS</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Template3ForSMS</shortDescription>
-        <value>1707171040946572319</value>
-    </labels>
-    <labels>
-        <fullName>TemplateSMSforOTP</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>TemplateSMSforOTP</shortDescription>
-        <value>1707171040943471586</value>
-    </labels>
-    <labels>
-        <fullName>Toll_Free_for_SMS</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Toll Free for SMS</shortDescription>
-        <value>0009092345</value>
+        <shortDescription>templateid_Lead_Prospect</shortDescription>
+        <value>1707173255065216866</value>
     </labels>
 </CustomLabels>

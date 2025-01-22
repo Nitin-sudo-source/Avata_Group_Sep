@@ -3,13 +3,13 @@
     <fullName>Lead_Sub_Source__c</fullName>
     <label>Lead Sub Source</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <controllingField>Lead_Source__c</controllingField>
         <restricted>true</restricted>
-        <valueSetName>Lead_Sub_Source</valueSetName>
+        <valueSetName>Sub_Source</valueSetName>
         <valueSettings>
             <controllingFieldValue>Events</controllingFieldValue>
             <valueName>Society Activation</valueName>
@@ -45,10 +45,6 @@
         <valueSettings>
             <controllingFieldValue>Cold Calling</controllingFieldValue>
             <valueName>Cold Calling</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Start Connect</controllingFieldValue>
-            <valueName>Start Connect</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Google</controllingFieldValue>

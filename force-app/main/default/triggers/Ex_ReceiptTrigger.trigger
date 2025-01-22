@@ -1,8 +1,3 @@
-//-------------------------------------------//
-//  Project: Satyam
-//  Created By: Exceller tech
-//  Created Date: 06-11-2023
-//-------------------------------------------//
 trigger Ex_ReceiptTrigger on Receipt__c (before insert, after insert, after update, before delete) {
     if(trigger.isBefore && trigger.isInsert)
         Ex_ReceiptTriggerHandler.beforeInsert(trigger.new);

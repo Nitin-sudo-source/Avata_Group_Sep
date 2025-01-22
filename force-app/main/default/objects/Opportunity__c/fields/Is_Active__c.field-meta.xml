@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_Active__c</fullName>
-    <formula>OR(ISPICKVAL( Opportunity_Stage__c , &apos;In Follow-up&apos;),ISPICKVAL( Opportunity_Stage__c , &apos;Created&apos;))</formula>
+    <formula>IF(OR(ISPICKVAL(Stage__c, &apos;Lost&apos;), ISPICKVAL(Stage__c, &apos;Booked&apos;), ISPICKVAL(Stage__c, &apos;Booking Cancelled&apos;)), false, true)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Active</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

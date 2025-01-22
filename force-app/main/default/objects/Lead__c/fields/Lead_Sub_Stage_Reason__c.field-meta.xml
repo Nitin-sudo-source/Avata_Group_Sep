@@ -7,9 +7,81 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>Lead_Sub_Stages__c</controllingField>
+        <controllingField>Lead_Sub_Stage__c</controllingField>
         <restricted>true</restricted>
-        <valueSetName>Lead_Sub_Stage_Reason</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Looking for Smaller configuration/area</fullName>
+                <default>false</default>
+                <label>Looking for Smaller configuration/area</label>
+            </value>
+            <value>
+                <fullName>Looking for bigger configuration/area</fullName>
+                <default>false</default>
+                <label>Looking for bigger configuration/area</label>
+            </value>
+            <value>
+                <fullName>Looking for RTMI</fullName>
+                <default>false</default>
+                <label>Looking for RTMI</label>
+            </value>
+            <value>
+                <fullName>Looking for early possession</fullName>
+                <default>false</default>
+                <label>Looking for early possession</label>
+            </value>
+            <value>
+                <fullName>After Pitched</fullName>
+                <default>false</default>
+                <label>After Pitched</label>
+            </value>
+            <value>
+                <fullName>Before Pitched</fullName>
+                <default>false</default>
+                <label>Before Pitched</label>
+            </value>
+            <value>
+                <fullName>Switched off, not reachable, not answering</fullName>
+                <default>false</default>
+                <label>Switched off, not reachable, not answering</label>
+            </value>
+            <value>
+                <fullName>Invalid customer contact number</fullName>
+                <default>false</default>
+                <label>Invalid customer contact number</label>
+            </value>
+            <value>
+                <fullName>Invalid Enquiry</fullName>
+                <default>false</default>
+                <label>Invalid Enquiry</label>
+            </value>
+            <value>
+                <fullName>False Enquiry</fullName>
+                <default>false</default>
+                <label>False Enquiry</label>
+            </value>
+            <value>
+                <fullName>Not looking for the property</fullName>
+                <default>false</default>
+                <label>Not looking for the property</label>
+            </value>
+            <value>
+                <fullName>Abusive Clients</fullName>
+                <default>false</default>
+                <label>Abusive Clients</label>
+            </value>
+            <value>
+                <fullName>Channel Partner</fullName>
+                <default>false</default>
+                <label>Channel Partner</label>
+            </value>
+            <value>
+                <fullName>Booked Customers</fullName>
+                <default>false</default>
+                <label>Booked Customers</label>
+            </value>
+        </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
             <valueName>Looking for Smaller configuration/area</valueName>

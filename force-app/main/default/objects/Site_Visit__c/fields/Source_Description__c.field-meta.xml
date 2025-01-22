@@ -2,19 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Source_Description__c</fullName>
     <label>Source Description</label>
-    <required>false</required>
+    <length>131072</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>N/A</fullName>
-                <default>false</default>
-                <label>N/A</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
 </CustomField>

@@ -3,7 +3,7 @@
     <fullName>DayOff__c</fullName>
     <defaultValue>false</defaultValue>
     <label>DayOff</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

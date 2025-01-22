@@ -3,7 +3,7 @@
     <fullName>Pincode__c</fullName>
     <externalId>false</externalId>
     <label>Pincode</label>
-    <length>255</length>
+    <length>28</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

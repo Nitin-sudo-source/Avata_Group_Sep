@@ -8,23 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Self-owned</fullName>
-                <default>false</default>
-                <label>Self-owned</label>
-            </value>
-            <value>
-                <fullName>Staying with Parents</fullName>
-                <default>false</default>
-                <label>Staying with Parents</label>
-            </value>
-            <value>
-                <fullName>Rented</fullName>
-                <default>false</default>
-                <label>Rented</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Current_Resident_Status</valueSetName>
     </valueSet>
 </CustomField>

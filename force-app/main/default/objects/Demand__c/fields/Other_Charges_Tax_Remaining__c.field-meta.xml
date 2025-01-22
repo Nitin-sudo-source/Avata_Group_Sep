@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Other_Charges_Tax_Remaining__c</fullName>
     <externalId>false</externalId>
-    <formula>Other_Charges_Tax_Demanded__c -  Other_Charges_Tax_Paid__c</formula>
+    <formula>Other_Charges_Tax_Demanded__c - Other_Charges_Tax_Paid__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Other Charges Tax Remaining</label>
     <precision>18</precision>

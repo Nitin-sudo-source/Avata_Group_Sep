@@ -50,6 +50,11 @@
         <default>false</default>
         <label>Sindhi</label>
     </customValue>
+    <customValue>
+        <fullName>Jain</fullName>
+        <default>false</default>
+        <label>Jain</label>
+    </customValue>
     <masterLabel>Ethnicity</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

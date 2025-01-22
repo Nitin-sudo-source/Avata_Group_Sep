@@ -1,22 +1,14 @@
-/**
- * @description       : 
- * @author            : nitinSFDC@exceller.SFDoc
- * @group             : 
- * @last modified on  : 14-01-2025
- * @last modified by  : nitinSFDC@exceller.SFDoc
-**/
+// -------------------------------------------
+//   Project: Avant Infra 
+//   Created By: Exceller Tech
+//   Created Date: 06-09-2024
+//   Author: Nitin Choudhary    
+// -------------------------------------------
 public class Ex_SMAssignmentController {
-
     @AuraEnabled(cacheable=false)
-    public static user getUserInfo() {
-        String userId = UserInfo.getUserId(); // current user
-        return [SELECT ID, FirstName, LastName, Name, Title, Profile.Name,  Email From User WHERE ID =: userId LIMIT 1];
-    }
-   
-    @AuraEnabled(cacheable=true)
     public static Site_Visit__c getSVRecord(Id recordId) {
-        Site_Visit__c svRecord = [SELECT Id, OwnerId, Site_Visit_Count__c, Project_Name__r.Name, Project_Name__c, Opportunity__c, Opportunity__r.OwnerId, Opportunity__r.Sales_Manager__c, Sales_Manager__c, Is_Sales_Manager_Assigned__c FROM Site_Visit__c where Id =: recordId];
-        system.debug('InsidesvRecord: '+svRecord);
+        Site_Visit__c svRecord = [SELECT Id, SM_Assignment_Date__c, OwnerId, Site_Visit_Count__c , Opportunity__r.OwnerId, Project__r.Name, Opportunity__c, Sales_Manager__c, Is_Sales_Manager_Assigned__c FROM Site_Visit__c where Id =: recordId];
+        system.debug('InsidesvRecord:::'+svRecord);
         if(svRecord != Null)
             return svRecord;
         else
@@ -25,14 +17,15 @@ public class Ex_SMAssignmentController {
     
     @AuraEnabled
     public static List<Team_Member__c> getAllSalesManager(Site_Visit__c svRecord) {
-        List<Team_Member__c> userList = [Select Id, User__r.Name, DayOff__c, Availability__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
-                                         where Team__r.Project__c =: svRecord.Project_Name__c AND  User_Active_Status__c = true AND DayOff__c = false AND Team__r.Team_Type__c = 'Sales Team'  ORDER BY Last_Assignment_DateTime__c ASC];
+        List<Team_Member__c> userList = [Select Id, User__r.Name, Availability__c, DayOff__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
+                                         where Team__r.Project__c =: svRecord.Project__c AND  User_Active_Status__c = true AND DayOff__c = false AND Team__r.Team_Type__c = 'Sales Team' ORDER BY Last_Assignment_DateTime__c ASC];
         system.debug('Inside:::'+ userList);
         if(!userList.isEmpty() && userList != null){
             return userList;
         }else{
             return null;
         }
+        
     }
     
     @AuraEnabled
@@ -40,7 +33,7 @@ public class Ex_SMAssignmentController {
         List<Team_Member__c> userList = new List<Team_Member__c>();
         if(svRecord.Site_Visit_Count__c > 1){
             userList = [Select Id, User__r.Name, DayOff__c, User__c, Availability__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
-                                             where Team__r.Project__c =: svRecord.Project_Name__c AND  User_Active_Status__c = true AND DayOff__c = false AND Team__r.Team_Type__c = 'Sales Team' AND User__c =: svRecord.Opportunity__r.OwnerId  ORDER BY Last_Assignment_DateTime__c ASC];
+                        where Team__r.Project__c =: svRecord.Project__c AND  User_Active_Status__c = true AND DayOff__c = false AND Team__r.Team_Type__c = 'Sales Team' AND User__c =: svRecord.Opportunity__r.OwnerId  ORDER BY Last_Assignment_DateTime__c ASC];
         }
         system.debug('getPreferredSalesManager: '+ userList);
         if(!userList.isEmpty() && userList != null){
@@ -54,7 +47,7 @@ public class Ex_SMAssignmentController {
     public static Team_Member__c checkUserAvailability(String userId) {
         System.debug('userId: '+userId);
         Team_Member__c salesManager = [Select Id, User__r.Name, Availability__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, DayOff__c, User__c from Team_Member__c
-                                        where ID =: userId AND User_Active_Status__c = true AND Availability__c = true  AND DayOff__c = false  ORDER BY Last_Assignment_DateTime__c ASC limit 1];
+                                       where ID =: userId AND User_Active_Status__c = true AND Availability__c = true  AND DayOff__c = false  ORDER BY Last_Assignment_DateTime__c ASC limit 1];
         system.debug('salesManager: '+salesManager);
         if(salesManager != Null)
             return salesManager;
@@ -74,6 +67,7 @@ public class Ex_SMAssignmentController {
         if(!teamIdset.isEmpty() && teamIdset != null){
             tmList = [Select Id, User__r.Id, Availability__c from Team_Member__c where User__c IN: teamIdset];
         }
+        
         if(!tmList.isEmpty() && tmList != null){
             for(Team_Member__c tm: tmList){
                 if(tm.Availability__c){
@@ -81,26 +75,26 @@ public class Ex_SMAssignmentController {
                     updateTmList.add(tm);
                 }
             }
-        }        
+        }
+       
         System.debug('tmList'+tmList);
         svRecord.Sales_Manager__c = salesManager.User__r.Id;
         svRecord.OwnerId = salesManager.User__r.Id;
         svRecord.Is_Sales_Manager_Assigned__c = true;
-        salesManager.Last_Assignment_DateTime__c = System.now();
-        salesManager.Last_Assignment_Milliseconds__c = System.now().millisecondGMT();
+        svRecord.SM_Assignment_Date__c = DateTime.now();
+        // svRecord.SM_Assignment_Date__c = System.now();
+        salesManager.Last_Assignment_DateTime__c = DateTime.now();
+        salesManager.Last_Assignment_Milliseconds__c = DateTime.now().millisecondGMT();
         if(salesManager.Assignment_Counter__c == null){
             salesManager.Assignment_Counter__c  = 1;
         }else{
-             salesManager.Assignment_Counter__c = salesManager.Assignment_Counter__c + 1;
+            salesManager.Assignment_Counter__c = salesManager.Assignment_Counter__c + 1;
         }
-        //System.debug('Before: '+ salesManager.Availability__c);
-        //salesManager.Availability__c = false;
-        //System.debug('After: '+ salesManager.Availability__c);
         try {
             update svRecord;
             update salesManager;
             if(!updateTmList.isEmpty() && updateTmList != null){
-               update updateTmList; 
+                update updateTmList; 
             }
             System.debug('svRecord: '+svRecord);
             System.debug('salesManager: '+salesManager);
@@ -110,5 +104,5 @@ public class Ex_SMAssignmentController {
             return false;   
         }
     }
-
+    
 }

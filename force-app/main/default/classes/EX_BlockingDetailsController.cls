@@ -1,14 +1,14 @@
 //-------------------------------------------//
 //	Created By: Exceller Tech
-//	Created Date: 09-10-2023
+//	Created Date: 27-09-2024
 //-------------------------------------------//
 public class EX_BlockingDetailsController {
     @AuraEnabled(cacheable=true)
     public static Blocking_Details__c getBlockDetails(string uniId)
     {
         try {
-            Blocking_Details__c blockingDetailList = [select id,Name,Status__c,Blocked_by_token__c,Amount__c,
-                                                      Blocking_Comment__c,Cheque_Number__c from Blocking_Details__c where Unit__c =:  uniId AND Status__c ='Blocked'];
+            Blocking_Details__c blockingDetailList = [select id,Name,Status__c,Blocked_with_token__c,Amount__c,Transaction_ID__c,
+                                                      Blocking_Comments__c from Blocking_Details__c where Unit__c =:  uniId AND Status__c ='Blocked'];
             
             return blockingDetailList;
         } catch(QueryException e) {
@@ -19,7 +19,7 @@ public class EX_BlockingDetailsController {
     @AuraEnabled(cacheable=true)
     public static List<Unit__c> fetchUnits(string uniId)
     {
-        List<Unit__c> unitList = [select id,Name,Tower__r.Name , Project__r.Name /*,Project__r.Blocking_Approvar__c */,Sale_Status__c from Unit__c where Id =:  uniId];
+        List<Unit__c> unitList = [select id,Name,Tower__r.Name , Project__r.Name /*,Project__r.Blocking_Approvar__c */,Sales_Status__c from Unit__c where Id =:  uniId];
         return unitList;
     }
     @AuraEnabled(cacheable=true)
@@ -44,11 +44,12 @@ public class EX_BlockingDetailsController {
     @AuraEnabled
     public static Blocking_Details__c createBlockingRecord(Boolean blockByToken,Integer amount,String blockComment,String chequeNo,String unitName , string oppId ,string MOPpicklistValue)
     {
+        System.debug('Inside CreateBlocking');
         Blocking_Details__c blockInfo=new Blocking_Details__c();
-        blockInfo.Blocked_by_token__c=blockByToken;
+        blockInfo.Blocked_with_token__c=blockByToken;
         blockInfo.Amount__c=amount;
-        blockInfo.Blocking_Comment__c=blockComment;
-        blockInfo.Cheque_Number__c=chequeNo;
+        blockInfo.Blocking_Comments__c=blockComment;
+        blockInfo.Transaction_ID__c = chequeNo;
         blockInfo.Unit__c=unitName;
         blockInfo.Opportunity__c = oppId ;
         blockInfo.Blocking_Requested_By__c = UserInfo.getUserId();
@@ -63,9 +64,9 @@ public class EX_BlockingDetailsController {
         }
         blockInfo.Status__c='Blocked';
         
-        Unit__c unit=[select id,Name,Sale_Status__c /*Project__r.Blocking_Approvar__c*/ from Unit__c where id =: unitName];
+        Unit__c unit=[select id,Name,Sales_Status__c /*Project__r.Blocking_Approvar__c*/ from Unit__c where id =: unitName];
         
-        unit.Sale_Status__c='Blocked';
+        unit.Sales_Status__c='Blocked';
         
      /*   if(unit.Project__r.Blocking_Approvar__c !=null)
         {
@@ -81,10 +82,10 @@ public class EX_BlockingDetailsController {
     public static Blocking_Details__c unblockLogic(String blockId,String unblockComment)
     {
         Blocking_Details__c unblock=[select id,Status__c,Unit__c from Blocking_Details__c where id=:blockId AND Status__c ='Blocked' limit 1];
-        Unit__c unit=[select id,Name,Sale_Status__c,Unit_Blocking_Comment__c from Unit__c where Id=:unblock.Unit__c];
+        Unit__c unit=[select id,Name,Sales_Status__c,Blocking_Comments__c from Unit__c where Id=:unblock.Unit__c];
         unblock.Status__c='Released';
-        unit.Sale_Status__c='Vacant';
-        unit.Unit_Blocking_Comment__c = unblockComment;
+        unit.Sales_Status__c='Vacant';
+        unit.Blocking_Comments__c = unblockComment;
         unit.Opportunity__c = null ;
         update unit;
         update unblock;

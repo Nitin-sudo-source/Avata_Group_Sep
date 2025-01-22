@@ -7,18 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Saleable Area</fullName>
-                <default>false</default>
-                <label>Saleable Area</label>
-            </value>
-            <value>
-                <fullName>Carpet Area</fullName>
-                <default>false</default>
-                <label>Carpet Area</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>Calculation_Area_Type</valueSetName>
     </valueSet>
 </CustomField>

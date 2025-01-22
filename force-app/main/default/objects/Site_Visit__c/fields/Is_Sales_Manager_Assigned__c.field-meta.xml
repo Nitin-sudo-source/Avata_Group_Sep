@@ -3,7 +3,7 @@
     <fullName>Is_Sales_Manager_Assigned__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Is Sales Manager Assigned</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

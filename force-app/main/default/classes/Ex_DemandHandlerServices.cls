@@ -1,8 +1,8 @@
-//-------------------------------------------//
-//  Project: Satyam
-//  Created By: Exceller tech
-//  Created Date: 06-11-2023
-//-------------------------------------------//
+/*-------------------------------------------
+  Project: AVANT Group 
+  Created By: Exceller Tech
+  Created Date: 07-11-2024
+//-------------------------------------------*/
 public class Ex_DemandHandlerServices {
     public static void createDebitLedgerAndUpdateLastDemandNo(Set<Id> demandIdSet) {
         Map<Id, Demand__c> projectDemandMap = new Map<Id, Demand__c>();
@@ -12,7 +12,8 @@ public class Ex_DemandHandlerServices {
         List<Ledger__c> debitLedgerList = new List<Ledger__c>();
         
         dList = [Select Id, Name, Invoice_Date__c, Invoice_Number__c, Agreement_Value_Demanded__c, Agreement_Value_Tax_Demanded__c, 
-                 Booking__c, Booking__r.Project__c, Booking__r.Opportunity__c
+                 Booking__c, Booking__r.Project__c
+                 /*TDS_Value_Demanded__c*/
                  from Demand__c where Id IN: demandIdSet ORDER BY CreatedDate ASC];
         system.debug('dList: '+dList);
         
@@ -29,7 +30,6 @@ public class Ex_DemandHandlerServices {
                     amtLedger.Amount__c = d.Agreement_Value_Demanded__c;
                     amtLedger.Demand__c = d.Id;
                     amtLedger.Booking__c = d.Booking__c;
-                    amtLedger.Opportunity__c = d.Booking__r.Opportunity__c;
                     debitLedgerList.add(amtLedger);
                 }
                 if(d.Agreement_Value_Tax_Demanded__c != null && d.Agreement_Value_Tax_Demanded__c > 0) {
@@ -40,10 +40,20 @@ public class Ex_DemandHandlerServices {
                     taxLedger.Amount__c = d.Agreement_Value_Tax_Demanded__c;
                     taxLedger.Demand__c = d.Id;
                     taxLedger.Booking__c = d.Booking__c;
-                    taxLedger.Opportunity__c = d.Booking__r.Opportunity__c;
                     taxLedger.Tax_Ledger__c = true;
                     debitLedgerList.add(taxLedger);
                 }
+                /*if(d.TDS_Value_Demanded__c != null && d.TDS_Value_Demanded__c > 0) {
+                    Ledger__c tdsamtLedger = new Ledger__c();
+                    tdsamtLedger.Transaction_Date__c = d.Invoice_Date__c;
+                    tdsamtLedger.Charge_Name__c = 'TDS';
+                    tdsamtLedger.Type__c = 'Debit';
+                    tdsamtLedger.Amount__c = d.TDS_Value_Demanded__c;
+                    tdsamtLedger.Demand__c = d.Id;
+                    tdsamtLedger.Booking__c = d.Booking__c;
+                    //tdsamtLedger.Account__c = d.Booking__r.Account__c;
+                    debitLedgerList.add(tdsamtLedger);
+                }*/
             }
             
             if(!projectDemandMap.isEmpty() && projectDemandMap != null) {
@@ -53,10 +63,7 @@ public class Ex_DemandHandlerServices {
                 if(!pList.isEmpty() && pList != null) {
                     for(Project__c p: pList) {
                         if(projectDemandMap.containsKey(p.Id)) {
-                            if(projectDemandMap.get(p.Id).Invoice_Number__c!=null)
-                            {    
-                                p.Last_Demand_No__c = Decimal.valueOf(projectDemandMap.get(p.Id).Invoice_Number__c.remove(p.Name+'-'));
-                            }
+                            p.Last_Demand_No__c = String.valueOf(projectDemandMap.get(p.Id).Invoice_Number__c.remove(p.Name+'-'));
                             updateProjectList.add(p);
                         }
                     }
@@ -116,10 +123,6 @@ public class Ex_DemandHandlerServices {
             d.Other_Charges_Paid__c = 0;
             d.Other_Charges_Tax_Demanded__c = 0;
             d.Other_Charges_Tax_Paid__c = 0;
-            d.Statutory_Charges_Demanded__c = 0;
-            d.Statutory_Charges_Paid__c = 0;
-            d.Statutory_Charges_Tax_Demanded__c = 0;
-            d.Statutory_Charges_Tax_Paid__c = 0;
             d.Total_Amount_Demanded__c = 0;
             d.Total_Amount_Paid__c = 0;
             d.Total_Tax_Demanded__c = 0;
@@ -130,6 +133,7 @@ public class Ex_DemandHandlerServices {
             d.Total_Tax_On_Interest_Amount__c = 0;
             d.Total_Tax_On_Interest_Amount_Paid__c = 0;
             d.Total_Tax_On_Interest_Amount_Waived__c = 0;
+            
             updateDemandList.add(d);
         }
         if(!updateDemandList.isEmpty() && updateDemandList != null)
@@ -209,6 +213,6 @@ public class Ex_DemandHandlerServices {
         } else {
             return null;
         }
-    }
+    }  
     
 }

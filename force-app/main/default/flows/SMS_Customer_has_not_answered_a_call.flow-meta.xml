@@ -130,7 +130,7 @@ ISPICKVAL({!$Record.Call_Status__c}, &quot;NOANSWER&quot;)</filterFormula>
     <textTemplates>
         <name>SMSBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Dear {!get_Lead.First_Name__c} {!get_Lead.Last_Name__c}, I trust this message finds you well. I recently attempted to reach you by phone to discuss your interest in {!get_Lead.Project__r.Name}, but it seems we missed each other. In the meantime, I invite you to explore further details about our project at your convenience: https://www.avantinfra.com. We truly appreciate your trust in Avant Builder and are excited about the prospect of a successful relation. Should you have any questions or need assistance, please don’t hesitate to reach out. Best regards, {!$Record.Agent_Number__c}</text>
+        <text>Dear {{Customer Name}}, I trust this message finds you well. I recently attempted to reach you by phone to discuss your interest in {{Project Name}}, but it seems we missed each other. In the meantime, I invite you to explore further details about our project at your convenience: https://www.avantinfra.com. We truly appreciate your trust in Avant Builder and are excited about the prospect of a successful relation. Should you have any questions or need assistance, please don’t hesitate to reach out. Best regards, {{Agent Name}}</text>
     </textTemplates>
     <textTemplates>
         <name>SMSRemarks</name>

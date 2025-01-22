@@ -380,10 +380,6 @@ public class Ex_BookingFormController {
                 oppList[0].Sub_Stage__c = '';
                 oppList[0].Sub_Stage_Reason__c = '';
             }
-            
-            if (oppList[0].Channel_Partner__c != null) {
-                booking.Channel_Partner__c = oppList[0].Channel_Partner__c;
-            }
             if (oppList[0].CP_Project__c != null) {
                 booking.CP_Project__c = oppList[0].CP_Project__c;
             }
@@ -402,9 +398,6 @@ public class Ex_BookingFormController {
             if (oppList[0].OwnerId != null) {
                 booking.Sales_Manager__c = oppList[0].OwnerId;
             }
-            /*if(quotation.Modified_AV_Value__c != null){
-                oppList[0].Amount__c = quotation.Modified_AV_Value__c;
-            }*/
         }
         
         try {
@@ -769,7 +762,6 @@ public class Ex_BookingFormController {
         cdl.LinkedEntityId = recordId;
         cdl.ShareType = 'V';
         
-        
         ContentDistribution cd = new ContentDistribution();
         if(cdl.ContentDocumentId != null) {
             cd.Name = recordId;
@@ -801,17 +793,10 @@ public class Ex_BookingFormController {
             if(!updateDocList.isEmpty()){
                 update updateDocList;
             }
-            
-            
             return cdl;
         } catch(DMLException e) {
             System.debug(e);
             return null;
         }
-        
-        
-        
-        
     } 
-    
 }

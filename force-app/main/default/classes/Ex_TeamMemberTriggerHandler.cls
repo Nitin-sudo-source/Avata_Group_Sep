@@ -1,10 +1,5 @@
 public class Ex_TeamMemberTriggerHandler {
-    public static void beforeupdate(){
-        Ex_TeamMemberTriggerHandlerServices.testDemo();
-    }
-}
-/*
-  public static void afterUpdate(Map<Id, Team_Member__c> oldMap, Map<Id, Team_Member__c> newMap) {
+    public static void afterUpdate(Map<Id, Team_Member__c> oldMap, Map<Id, Team_Member__c> newMap) {
         Set<Id> tmIdSet = new Set<Id>(); 
         
         for(Team_Member__c oldMember: oldMap.values()) {
@@ -15,5 +10,6 @@ public class Ex_TeamMemberTriggerHandler {
             }
         }
         if(!tmIdSet.isEmpty() && tmIdSet != null) 
-            Ex_TeamMemberTriggerHandlerServices.checkVisitForAssignment(tmIdSet);
-    }*/
+            Ex_TeamMemberHandlerServices.checkVisitForAssignment(tmIdSet);
+    }
+}

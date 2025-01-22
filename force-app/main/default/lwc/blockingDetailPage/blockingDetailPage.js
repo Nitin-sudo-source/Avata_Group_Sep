@@ -59,7 +59,7 @@ export default class BlockingDetailPage extends NavigationMixin(LightningElement
       this.projectName = this.units[0].Project__r.Name;
       this.towerName = this.units[0].Tower__r.Name
       console.log(this.units[0].Sale_Status__c);
-      if (this.units[0].Sale_Status__c == 'Vacant') {
+      if (this.units[0].Sales_Status__c == 'Vacant') {
         this.unitTrue = false;
         this.clickBtn = 'Confirm Blocking'
       } else {
@@ -84,11 +84,11 @@ export default class BlockingDetailPage extends NavigationMixin(LightningElement
       this.blockId = data.Id;
       console.log(' blockId', JSON.stringify(this.blockId));
       console.log(' this.blockData', JSON.stringify(this.blockData));
-      this.blockWithTokenCheckbox = data.Blocked_by_token__c;
+      this.blockWithTokenCheckbox = data.Blocked_with_token__c;
       console.log(this.blockWithTokenCheckbox );
       this.blockAmount = data.Amount__c;
-      this.chequeNo = data.Cheque_Number__c;
-      this.blockComment = data.Blocking_Comment__c;
+      this.chequeNo = data.Transaction_ID__c;
+      this.blockComment = data.Blocking_Comments__c;
     }
   }
 
@@ -139,10 +139,12 @@ export default class BlockingDetailPage extends NavigationMixin(LightningElement
         createBlockingRecord({ blockByToken: this.blockWithTokenCheckbox1, amount: this.blockAmount1, blockComment: this.blockComment, chequeNo: this.chequeNo, unitName: this.uniValue, oppId: this.oppvalue ,MOPpicklistValue :this.MOPpicklistValue})
           .then((result) => {
               this.showToastMsg('Success', 'Blocking record created successfully');
+              console.log('oppValue:::: ',this.oppvalue);
               var compDefinition = {
-                componentDef: "c:ex_InventoryComponent",
+                componentDef: "c:ex_InventoryMatrix",
                 attributes: {
                   oppId: this.oppvalue
+                  // storeProjectId:this.projValue
                 }
               };
               var encodedCompDef = btoa(JSON.stringify(compDefinition));
@@ -184,7 +186,7 @@ export default class BlockingDetailPage extends NavigationMixin(LightningElement
           if (this.unblockComment) {
             this.showToastMsg('Success!!', 'block and unit status updated successfully!');
             var compDefinition = {
-              componentDef: "c:ex_InventoryComponent",
+              componentDef: "c:ex_InventoryMatrix",
               attributes: {
                 oppId: this.oppvalue
               }

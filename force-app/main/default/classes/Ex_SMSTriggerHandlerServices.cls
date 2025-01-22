@@ -41,12 +41,13 @@ public class Ex_SMSTriggerHandlerServices {
                 dataMap.put('url', '');
                 dataList.add(dataMap);
                 
-                if(!Test.isRunningTest()) {
+               
                     payload.put('api', System.label.API_Key_SMS);
                     payload.put('senderid', System.label.senderid);
                     payload.put('campaignid', System.label.campaignid);
                     payload.put('channel', System.label.channel);
                     payload.put('dcs', '0');
+                	payload.put('templateid', tempId);
                     payload.put('shorturl', System.label.shorturl);
                     payload.put('data', dataList);
                     
@@ -56,7 +57,7 @@ public class Ex_SMSTriggerHandlerServices {
                     req.setMethod('POST');
                     req.setHeader('Content-Type', 'application/json');
                     req.setBody(jsonPayload);
-                    
+                     if(!Test.isRunningTest()) {
                     Http http = new Http();
                     HttpResponse res = new HttpResponse();
                     try {

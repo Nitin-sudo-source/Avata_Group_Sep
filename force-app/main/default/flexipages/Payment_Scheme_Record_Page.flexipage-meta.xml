@@ -44,18 +44,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxRecordsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Payment_Scheme__c.Id</value>
                 </componentInstanceProperties>
@@ -64,53 +52,22 @@
                     <value>Payment_Scheme_Milestone__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListDisplayType</name>
-                    <value>ADVGRID</value>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListFieldAliases</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Milestone_Name__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Sequence_No__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Milestone_Type__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Construction_Stage__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>No_of_Days__c</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListLabel</name>
-                    <value>Payment Scheme Milestone</value>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldAlias</name>
-                    <value>__DEFAULT__</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldOrder</name>
-                    <value>Default</value>
-                </componentInstanceProperties>
-                <componentName>lst:dynamicRelatedList</componentName>
-                <identifier>lst_dynamicRelatedList</identifier>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-d59f97d5-5aa7-475c-b67b-2ada1f68806a</name>
+        <name>Facet-c7092192-2895-49b3-b61e-2479353fcc1b</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -136,7 +93,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-d59f97d5-5aa7-475c-b67b-2ada1f68806a</value>
+                    <value>Facet-c7092192-2895-49b3-b61e-2479353fcc1b</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>

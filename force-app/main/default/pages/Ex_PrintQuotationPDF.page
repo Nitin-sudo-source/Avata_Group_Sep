@@ -1,370 +1,377 @@
-<apex:page renderAs="pdf" controller="Ex_PrintQuotationController" docType="html-5.0" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" sidebar="false" showHeader="false">
+<apex:page controller="Ex_PrintQuotationController" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
     <html>
         <head>
-            <Style>
-                .mainTable {
-                border-collapse: collapse;
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style type="text/css" media="print">
+                @page {
+                 font-family: Times, sans-serif; 
+                size: A4;
+                margin-top: 0.5in;
+                padding: 2px;
                 border: 1px solid black;
-                width:100%;
-                font-size:10px;
+                @top-left {
+                content: element(header);
+                }
+                @bottom-left {
+                content: "Page " counter(page) ;
+                }
+                @bottom-right {
+                content: element(footer);
+                }
                 }
                 
-                .mainTable th{
-                padding: 4px;
-                border: 0.5px solid black;
-                text-align:center;
+                .header {
+                position: running(header);
+                font-size: 10px;
+                text-align: left;
+                padding-left: 5px;
+                margin-top: 5mm;
                 }
-                .mainTable td {
-                padding: 4px;
-                border: 0.5px solid black;
-                text-align:center;
+                div.footer {
+                display: block;
+                text-align: right;
+                position: running(footer);
                 }
-                .mainTable tr{
+                * {
+                box-sizing: border-box;
+                font-size: 10px;
+                }
+                body { 
+                font-family: Times, sans-serif; 
+                margin: 0; 
+                padding: 0; 
+                }
+                
+                table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 5px 0;
+                }
+                th, td {
+                border: 0.5px solid black;
+                padding: 4px;
+                text-align: left;
+                font-size: 10px;
                 page-break-inside: avoid;
-                
                 }
                 
+                tr{
+                 page-break-inside: avoid;
+                }
                 
-                
-            </Style>
+                th {
+                background-color: #DCDCDC;
+                font-weight: bold;
+                }
+                .align-right {
+                text-align: right;
+                }
+                .total-row {
+                background-color: #DCDCDC;
+                font-weight: bold;
+                }
+                .container2{
+                display: flex;
+                }
+                .box2{
+                flex: 0 1 5%; /* Adjust width as needed */
+                /* background-color: #f2f2f2; */
+                padding: 1px;
+                margin: 1px;
+                /* text-align: center; */
+                }
+            </style>
         </head>
-        
-        
         <body>
+            <p style="text-align:center;font-size:14px;border:none;font-weight:bold; !important;">
+                    	DRAFT Price Sheet
+                   </p>
             
-            <table>
-                <tr>
-                    <th style="text-align:left; width:50% !important;">
-                        <apex:image style="" url="{!$Resource.logo}" width="100" />
-                    </th>
-                    
-                </tr>
-            </table><br/>
-            <p style="text-align:center;padding:8px;border:1px solid black;background-color:#154c79;color:white;text-transform:uppercase;">{!qlist[0].Project__r.Name} -&nbsp; {!bookingName}
-            </p>
-           
-
-            
-            <table class="mainTable">
-                <tr>
-                    <th colspan="3" style="background-color:silver;">Price Sheet -&nbsp; {!bookingName}</th>
-                
-                </tr>
-                <tr>
-                    <td width="30%" >Date</td>
-                    <td width="70%" colspan="2" ><apex:outPutText value="{0,date,dd-MM-yyyy}">
-                        <apex:param value="{!qlist[0].CreatedDate}"/>
-                        </apex:outPutText></td>
-                </tr>
+            <table style="border:none!important;">
                 
                 <tr>
-                    <td >Project Name</td>
-                    <td colspan="2" >{!qlist[0].Project__r.Name}</td>
-                    
-                    
-                </tr>
-                <tr>
-                    <td >Client Name</td>
-                    <td colspan="2" style="background-color:#cddabe;color:black" >{!qlist[0].Opportunity__r.Name}</td>
-                </tr>
-            </table>
-            
-            
-            
-            <table class="mainTable">
-                <tr>
-                    <th colspan="3"  style="width:100%;"></th>
-                    
-                </tr>
-                <tr>
-                    <td width="30%" rowspan="11">Residential Details</td>
-                   
-                </tr>
-                <tr >
-                    <td width="40%" style="text-align:left;">Tower No.</td>
-                    <td  width="30%" style="text-align:right;"> {!qlist[0].Tower__r.Name}</td>
-                </tr>
-                
-                
-                <tr >
-                    <td width="40%" style="text-align:left;">Unit Number Alloted</td>
-                    <td  width="30%" style="text-align:right;"> {!qlist[0].Unit__r.Name}</td>
-                </tr>
-                
-                <tr >
-                    <td  style="text-align:left;">Typology</td>
-                    <td  style="text-align:right;"> {!qlist[0].Unit__r.Configuration__c}</td>
-                </tr>
-                
-                <tr width="100%">
-                    <td  style="text-align:left;">Rera Carpet Area (Sq. Mt.)</td>
-                    <td  style="text-align:right;">{!qList[0].Unit__r.RERA_Carpet_Area_Sq_Mtr__c}</td>
-                </tr>
-                
-                <tr >
-                    <td style="text-align:left;">Rera Carpet Area (Sq. Ft.)</td>
-                    <td  style="text-align:right;">{!qList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c}</td>
-                </tr>
-                 <tr >
-                    <td width="40%" style="text-align:left;">Deck Area (Sq.Ft)</td>
-                    <td  width="30%" style="text-align:right;"> {!qList[0].Unit__r.Deck_Area__c} </td>
-                </tr>
-                <tr >
-                    <td width="40%" style="text-align:left;">Service Slab (Sq. Ft)</td>
-                    <td  width="30%" style="text-align:right;"> {!qlIst[0].Unit__r.Service_Slab__c	} </td>
-                </tr>
-                 <tr >
-                    <td width="40%" style="text-align:left;">Flat / Appartment Cost	</td>
-                    <td  width="30%" style="text-align:right;"> {!showBasicChargeAmount} </td>
-                </tr>
-                <tr>
-                    <td width="40%" style="text-align:left;">Car Park</td>
-                    <td width="30%" style="text-align:right;">
-                        {!IF(qList[0].Car_Park_Required_Count__c > 0, 'Yes', 'No')}
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td  style="text-align:left;">Floor Rise</td>
-                    <td  style="text-align:right;">{!showgetFloorRiseAmount}</td>
-                    
-                </tr>
-                <tr >
-                    <td  style="text-align:center;background-color:#D0d8f2;"><b>Agreement Value</b></td>
-                    <td  style="text-align:right; background-color:#D0d8f2;"><b>{!chargeAmount}</b></td>
-                </tr>
-            </table>
-            
-            <table class="mainTable">
-                <tr>
-                    <th colspan="3"  style="width:100%;"></th>
-                    
-                </tr>
-                <tr>
-                    <td width="30%" rowspan="5">Statutory Charges</td>
-                    
-                </tr>
-                
-                <tr >
-                    <td width="40%" style="text-align:left;">Registration Fee</td>
-                    <td  width="30%" style="text-align:right;">{!showRegistrationAmount} </td>
-                </tr>
-                <tr >
-                    <td width="40%" style="text-align:left;">Stamp Duty</td>
-                    <td  width="30%" style="text-align:right;">{!showStampAmount} </td>
-                </tr>
-                <tr >
-                    <td  style="text-align:left; ">GST On Agreement Value</td>
-                    <td  style="text-align:right;"> {!chargeTaxA}  </td>
-                </tr>
-                <tr >
-                    <td  style="text-align:left; background-color:#D0d8f2;"><b>Total-Statutory Charges</b></td>
-                    <td style="text-align:right; background-color:#D0d8f2;">{!gstotherchargeTotalOthercharges}</td>
-                </tr>
-                <tr >
-                    <td   style="text-align:left; "></td>
-                    <td  style="text-align:right;"> </td>
-                </tr>
-                
-            </table>
-          
-            <table class="mainTable">
-                <tr>
-                    <th width="70%" style="text-align:center;font-size:14px; background-color: #8c9bd1;"> Total Cost 
-
-                    </th>
-                    <td  colspan="2" style="text-align:right;font-size:14px; background-color:#8c9bd1;"><b>{!finalTotalOtherchargesAgreementValue}</b>
-                    </td>
-                </tr>
-            </table>
-            <!--<div style="page-break-before: always;">
-                <table class="mainTable" style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                        <td style="
-                                   text-align: left !important;
-                                   font-size: 10px;
-                                   border: 1px solid black;
-                                   padding: 5px;
-                                   width: 100%;
-                                   word-wrap: break-word;
-                                   overflow-wrap: break-word;
-                                   white-space: normal;">
-                            <apex:outputText style="text-align: left;" escape="false" value="{!qlist[0].Unit__r.Tower__r.Terms_Condition__c}"></apex:outputText>
-                        </td>
-                    </tr>
-                </table>
-            </div>-->
-            
-            <table class="mainTable">
-                <tr>
-                    <th style="text-align:left; font-size:12px;background-color:silver;" >TERMS &amp; CONDITIONS : -</th>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Government taxes/levies are subject to change as per prevailing government regulations and are payable separately upon demand. </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" > *Property Tax is not included in the Maintenance Charges.</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Legal Charges of Rs. 35,400/- will be charged with applicable GST rates payable at the time of registration.</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Society Formation will be charged Rs. 1,00,000 with applicable GST rates and is excluding the above cost and will be charged at the time of possession.</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Society Maintenance will be charged @Rs.5 per sq.ft for 24 months with applicable GST rates and is excluding the above cost and will be payable at the time of possession.</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Goods &amp; Service Tax (GST) is applicable &amp; Payable separately along with each Payment Milestone. Prevailing TDS payable as per Govt.norms on Net Consideration value shall be payable by the Allotee(s) to Government directly and shall submit Form-16B to the developer.</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Stamp Duty &amp; Registration are payable at the time of Execution of the Agreement , and these will be charged as per prevailing government regulations (i.e. Govt. Value or Market Value whichever is higher).</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*The price offered for the said residential flat is applicable as on date. Booking will be accepted on price prevailing on actual booking date.</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >*Maha RERA Registration No: _________________________	</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left; font-size:10px;" >* All Payments can be made by Cheque / DD/ RTGS/ NEFT/ CC Swipe in favour of <b>"SATYAM INFRA REALTY LLP - SATYAM TRINITY TOWERS - MASTER COLLECTION".</b></td>
-                </tr>
-            </table>
-
-
-            
-
-            <br/>
-            <table>
-                <tr>
-                    <th style="width:20%;">_________________________</th>
-                    <th style="width:20%;">_________________________</th>
-                    <th style="width:20%;">_________________________</th>
-                </tr>
-                <tr>
-                    <th style="width:20%;">
-                        Sales Manager Signature
-                    </th>
-                    <th style="width:20%;text-align:center;">
-                        Date
-                    </th>
-                    <th style="width:20%;">
-                        Customer Name &amp; Signature
-                    </th>
-                </tr>
-            </table>
-            
-            <!--<div style="page-break-before: always;font-size:10px;">    
-                <table class="mainTable">
-                    <tr>
-                        <td colspan="5" style="text-align:center;font-size:12px; background-color:#D0d8f2;">
-                             Schedule Of Payment Plan  
-                        </td>
-                    </tr>
-                    <tr>
-                        
-                        <th style="width:20%;">Description</th>
-                        <th style="width:2%;">MileStone%</th> 
-                        <th style="width:15%;">  AV
-                            excluding GST
-                            (in INR Rs.) </th>
-                        <th style="width:15%;">GST
-                            (in INR Rs.)</th>
-                        
-                        <th style="width:25%;">Total
-                            (in INR Rs.)</th>
-                    </tr>
-                    <apex:repeat value="{!pswList}" var="pm">
-                        <tr>
+       				 <td style="border:none;width:49%!important; vertical-align:top;">
+                        <table>
+                            <tr>
+                                <th colspan="3" style="text-align:left;">Costing Details</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Wing</td>
+                                <td ><apex:outputText value="{!flatDetails['Tower__c']}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Unit No.</td>
+                                <td style="color:red;"><apex:outputText value="{!flatDetails['Flat_No__c']}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Floor No.</td>
+                                <td ><apex:outputText value="{!flatDetails['Floor__c']}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Configuration</td>
+                                <td ><apex:outputText value="{!flatDetails['Configuration_Type__c']}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Total Carpet Area (Sq.ft.)</td>
+                                <td ><apex:outputText value="{!flatDetails['Total_carpet_Sq_Ft__c']}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">No. Of Car Park</td>
+                                <td ><apex:outputText value="{!flatDetails['Car_Park_Required_Count__c']}"/></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                
+                            </tr>
+                            <tr>
+                                <td style="padding:6px;">&nbsp;</td>
+                                <td style="padding:6px;">&nbsp;</td>
+                                <td style="padding:6px;">&nbsp;</td>
+                                
+                            </tr>
+                            <tr>
+                                <th>PARTICULARS</th>
+                                <th>&nbsp;</th>
+                                <th>Amount</th>
+                                
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td Style =""><b>Actual Consideration Value</b></td>
+                                <td>&nbsp;</td>
+                                <td Style =""><b>{!strtotalagreementAmountbeforeDiscount}</b></td>
+                            </tr>
+                            <tr>
+                              <!--  <apex:outputPanel rendered="{!discountAmount != 0}">-->
+                                    <td Style =""><b>Discount</b></td>
+                                    <td>&nbsp;</td>
+                                    <td Style =""><b>{!strdiscountAmount}</b></td>
+                               <!-- </apex:outputPanel>-->
+                            </tr>
+                            <tr>
+                                <th Style =""><b> Net Consideration Value </b></th>
+                                <th>(A)</th>
+                                <th Style =""><b>{!strtotalagreementAmountafterDiscount}</b></th>
+                            </tr>
+                             <tr>
+                                 <td>&nbsp;</td>
+                                 <td>&nbsp;</td>
+                                 <td>&nbsp;</td>
+                            </tr>
+                            <!--<apex:outputPanel rendered="{!totalchargeTax != 0}">
+<tr>
+<td Style="">GST</td>
+<td>&nbsp;</td>
+<td Style="">{!chargeTotalTax}</td>
+</tr>
+</apex:outputPanel>-->
+                            <!--<apex:repeat value="{!agreementChargeList}" var="a" >
+                                <tr>
+                                    <td Style =""><apex:outputText value="{!a.chargeName}"/></td>
+                                    <td>&nbsp;</td>
+                                    <td Style =""><apex:outputText value="{!a.chargeValueString}"/></td>
+                                </tr>
+                            </apex:repeat>-->
+                            
                            
-                            <td style="text-align:left !important; width:25%;">{!pm.milestoneName}</td>
-                            <td style="!important; width:2%;">{!pm.percentDue}</td>
-                            <td style="!important; width:10%;">{!pm.milestoneAmount}</td>
-                            <td style="!important; width:10%;">{!pm.milestoneGST}</td>
-                            <td style="!important; width:35%;">{!pm.totalCalculate}</td>
-                        </tr>
-                    </apex:repeat>
+                            <apex:repeat value="{!statutoryChargeList}" var="s" >
+                                <tr>
+                                    <td Style =""><apex:outputText value="{!s.chargeName}"/></td>
+                                    <td>&nbsp;</td>
+                                    <td Style =""><apex:outputText value="{!s.chargeValueString}"/></td>
+                                </tr>
+                            </apex:repeat>
+                         
+                                <tr>
+                                    <td Style="">GST</td>
+                                    <td>&nbsp;</td>
+                                    <td Style="">{!chargeTotalTax}</td>
+                                </tr>
+                          
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th> Total (SD, Regn Charges &amp; Taxes)  </th>
+                                <th>(B)</th>
+                                <th>{!ShowsectionBTotal}</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                           
+                            <apex:repeat value="{!otherChargeList}" var="o" >
+                                <tr>
+                                    <td Style =""><apex:outputText value="{!o.chargeName}"/></td>
+                                    <td>&nbsp;</td>
+                                    <td Style =""><apex:outputText value="{!o.chargeValueString}"/></td>
+                                </tr>
+                            </apex:repeat>
+                             <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th> Total Other Charges  </th>
+                                <th>(C)</th>
+                                <th>{!showotherchargeAmount}</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <!--<tr>
+                                <td Style ="">All In Price</td>
+                                <td>&nbsp;</td>
+                                <td Style =""><b>{!strtotalChargeAmount}</b></td>
+                            </tr>-->
+                            <tr>
+                                <th Style ="">Grand Total (A + B + C)</th>
+                                <th>&nbsp;</th>
+                                <th Style =""><b>{!strtotalChargeAmount}</b></th>
+                            </tr>
+                        </table>
+                    </td>
                     
-                    <tr>
-                        <th style="text-align:left !important; width:25%;">Total</th>
-                        <th style="text-align:center !important; width:18%;">{!showValueTotalper}</th>
-                        <th style="text-align:center !important; width:18%;">{!showValueTotalavgst}</th>
-                        <th style="text-align:center !important; width:18%;">{!showValueTotalgst}</th>
-                        <th style="text-align:center !important; width:35%;">{!showValueTotalIn}</th>
-                    </tr>
-                    <tr>
-                        <th  style="text-align:left !important; width:18%;">Stamp Duty @ 7%</th>
-                        
-                         <th colspan="4" style="text-align:right;">{!showStampAmount} </th>
-                    </tr>
-                       
-                    <tr>
-                        <th  style="text-align:left !important; width:18%;">Registration</th>
-                       
-                        <th  colspan="4" style="text-align:right;">{!showRegistrationAmount} </th>
-                    </tr>
-                   
-                    <tr>
-                        <th  style="text-align:left !important; width:18%;">Net Total</th>
-                        
-                        <th colspan="4" style="text-align:right;">{!shownetTotalAmount} </th>
-                    </tr>
-                    <tr>
-                        <th  style="text-align:left !important; width:18%;">Total</th>
-                        
-                        <th colspan="4" style="text-align:right;">{!shownetTotalAmount} </th>
-                    </tr>
-               </table> 
-            </div><br/>-->
-           
-            
-            
-           
-                <!--<table class="mainTable">
-                    <tr>
-                        <th style="text-align:left; font-size:12px;background-color:silver;" >TERMS &amp; CONDITIONS : -</th>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >The application will be processed by "" after relalization of the booking amount. </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >Stamp Duty and Registration charges are subject to change at any point of times as per government notifications and would be</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >GST &amp; OTHER TAXES are subject to change at any point of times as per government notifications and would be applicable at actual.</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >TDS @ 1% of Agreement value to be deposited to authorised department.</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >The buyer cannot sell his/her own flat until the possession is handover.Such a transfer/sale will lead to termination/ cancellation of the booking</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >Cancellation Charges Rs 100000/- 1 BHK &amp; Rs.200000/- 2BHK &amp; Rs.300000/- respectively, if flat cancelled when 10% is due .If more than 10% payment is due, interest will be charge.</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; font-size:10px;" >Token amount and future installment payment can be made by Cheque/DD/RTGS/NEFT/CC swipe in favour of ""</td>
-                    </tr>
-                </table><br/><br/>
-                  <table style="width:100%;padding:6px;">
-                <tr>
-                    <th style="width:70%;">______________________________________________</th>
-                    <th style="width:30%;">_________________________</th>
+        <td style="border:none;width:49%!important; vertical-align:top;">
+                        <table>
+                            <tr>
+                                <th colspan="5" style="text-align:left;"> PAYMENT SCHEDULE </th>
+                            </tr>
+                            <tr>
+                                <th>PARTICULARS</th>
+                                <th class="align-right">% Due</th>
+                                <th class="align-right">GST</th>
+                                <th class="align-right">Flat Cost</th>
+
+                                <!--<th class="align-right">Total</th>-->
+                            </tr>
+                            <apex:repeat value="{!paymentSchedule}" var="paymentMilestone">
+                                <tr>
+                                    <td>{!paymentMilestone['Milestone_Name__c']}</td>
+                                    <td class="align-right">{!paymentMilestone['Percentage__c']}</td>
+                                    <td class="align-right">{!paymentMilestone['Total_Tax__c']}</td>
+                                    <td class="align-right">{!paymentMilestone['Amount__c']}</td>
+
+                                    <!--<td class="align-right">{!paymentMilestone['Total']}</td>-->
+                                </tr>
+                            </apex:repeat>
+                            <tr class="total-row">
+                                <td>Total</td>
+                                <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Percentage']}"/></td>
+                                <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Tax']}"/></td>
+                                <td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Amount']}"/></td>
+
+                                <!--<td class="align-right"><apex:outputText value="{!paymentScheduleTotal['Total_Total']}"/></td>-->
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
+            </table>
+            
+            <!-- Terms and Conditions -->
+            <div style="font-size:14px !important;">
+                <apex:outputPanel rendered="{!NOT(ISNULL(termsList)) && termsList.size > 0}">
+                    <table style="width:100%; page-break-before:always;">
+                        <tr>
+                            <th colspan="2">Terms &amp; Condition</th>
+                        </tr>
+                        <apex:variable value="{!1}" var="count" />
+                        <apex:repeat value="{!termsList}" var="term">
+                            <tr rendered="{!OR(NOT(ISBLANK(term)), term != '')}">
+                                <td>
+                                    <apex:outputText value="{!term}"  escape="false"/>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </apex:outputPanel>
+            </div>
+            
+
+            
+            
+            
+            <!-- Banking Details for AV & GST -->
+            
+            <!--<table style="border:none!important;">
                 <tr>
-                    <th style="width:70%;">
-                       Customer Signature
-                    </th>
-                    <th style="width:30%;text-align:center;">
-                        Date
-                    </th>
+                    <td style="border:none!important;">
+                        <table>
+                            <tr>
+                                <th>Bank Details for Online Payment against GST</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>Company Name/Account Name - ABHISHEK PROPERTIES (I) PRIVATE LIMITED</div>
+                                    <div>Account No: 50200068299475</div>
+                                    <div>Bank Name: HDFC Bank</div>
+                                    <div>IFSC Code: HDFC0000543</div>
+                                    <div>Branch: ANDHERI EAST, Ahura Centre</div>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                    
+                    <td style="border:none!important;">
+                        <table>
+                            <tr>
+                                <th>Bank Details for Online Payment against AV</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>Company Name/Account Name - ABHISHEK PROPERTIES (I) PRIVATE LIMITED</div>
+                                    <div>Account No: 18290200004452</div>
+                                    <div>Bank Name: ANDHERI EAST, Mumbai Andheri East</div>
+                                    <div>IFSC Code: FDRL0001829</div>
+                                    <div>Branch: ANDHERI EAST, Ahura Centre</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
             </table>-->
-                
             
-            <!--<div style="page-break-before: always;">
-</div>-->
-          
+            
+            <!-- Banking Details for AV -->
+            
+            
+            <!-- Cheque Details -->
+            <!--<table>
+                <tr>
+                    <td>
+                        Cheque Favouring for Stamp Duty &amp; Registration: "Mumbai Housing Redevelopment Private Limited"
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th> Bank Details for Online Payment against Stamp Duty &amp; Registration</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Company Name/Account Name - Mumbai Housing Redevelopment Private Limited</div>
+                        <div>Account No: 18290200002126</div>
+                        <div>Bank Name: The Federal Bank</div>
+                        <div>IFSC Code: FDRL0001829</div>
+                        <div>Branch: ANDHERI EAST, MUMBAI ANDHERI East</div>
+                    </td>
+                </tr>
+            </table>-->
+           
+            
+            
         </body>
     </html>
 </apex:page>

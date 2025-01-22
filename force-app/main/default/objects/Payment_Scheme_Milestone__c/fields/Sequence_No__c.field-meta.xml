@@ -3,8 +3,8 @@
     <fullName>Sequence_No__c</fullName>
     <defaultValue>0</defaultValue>
     <externalId>false</externalId>
-    <label>Sequence No</label>
-    <precision>4</precision>
+    <label>Sequence No.</label>
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

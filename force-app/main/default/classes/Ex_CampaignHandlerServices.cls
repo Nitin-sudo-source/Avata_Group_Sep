@@ -1,38 +1,46 @@
 //-------------------------------------------//
-//  Client: Satyam Developers
-//  Created By: Exceller Consultancy
-//  Created Date: 17-10-2023
+//  Project: Avant Infra 
+//  Created By: Exceller Tech
+//  Created Date: 30-08-2024
+//  Author: Sarjerao Deshmukh
 //-------------------------------------------//
 public class Ex_CampaignHandlerServices {
-     public static void createCampaignPerformance(Set<Id> cId) {
+    public static void createCampaignPerformance(Set<Id> cIdSet){
         List<Campaign_Performance__c> cpList = new List<Campaign_Performance__c>();
-        List<Campaign__c> cList = [Select Id, Name, IsActive__c, Start_Date__c, End_Date__c from Campaign__c 
-                                   where Id IN: cId];
+        //List<Campaign__c> CampaignsToUpdate = new List<Campaign__c>();
+        
+        List<Campaign__c> cList = [Select Id, Name, Active__c, Campaign_Code__c, Start_Date__c, End_Date__c, Project__r.Campaign_Approver__c from Campaign__c
+                                   where Id IN: cIdSet AND Active__c = true];
         system.debug('cList: '+cList);
         
         if(!cList.isEmpty()) {
-            Date today = system.today();
             for(Campaign__c c : cList) {
-                if((c.Start_Date__c != null && c.Start_Date__c <= today ) || (c.End_Date__c >= today && c.Start_Date__c != null && c.Start_Date__c <= today )){
+                if(c.Active__c){
                     Campaign_Performance__c cp = new Campaign_Performance__c();
                     cp.Campaign__c = c.Id;
                     cp.Date__c = system.today();
                     cpList.add(cp);
                 }
+				//Commented by Nitin Updating using Flow                
+                //if(c.Project__r.Campaign_Approver__c != null)
+               // c.Campaign_Approver__c = c.Project__r.Campaign_Approver__c;
+               // c.Campaign_Code__c = c.Id;
+                //CampaignsToUpdate.add(c);
             }
-            system.debug('cpList: '+cpList);
-            system.debug('cpList Size: '+cpList.size());
-            if(!cpList.isEmpty())
-                insert cpList;
         }
+        if(!cpList.isEmpty() && cpList != null)
+            insert cpList;
+       // if(!CampaignsToUpdate.isEmpty() && CampaignsToUpdate != null)
+           // update CampaignsToUpdate;
     }
+    
     public static void updateCampaignDetails(Set<Id> cIdSet, String objectType) {
         List<Campaign__c> cList = new List<Campaign__c>();
         Map<Id, Campaign__c> campaignMap = new Map<Id, Campaign__c>();
         List<AggregateResult> objectList = new List<AggregateResult>();
         List<Campaign__c> updateCampaignList = new List<Campaign__c>();
         
-        cList = [Select Id, Name /*, Converted_Leads_Count__c,*/, Actual_Visits__c, Actual_Bookings__c from Campaign__c
+        cList = [Select Id, Name, Actual_Opportunities__c, Campaign_Code__c, Actual_Visits__c, Actual_Bookings__c, Actual_Revenue__c from Campaign__c
                  where Id IN: cIdSet];
         system.debug('cList: '+cList);
         
@@ -43,20 +51,20 @@ public class Ex_CampaignHandlerServices {
         }
         
         if(objectType.equalsIgnoreCase('Opportunity')) {
-            objectList = [Select Campaign__c, COUNT(Id) oppCount from Opportunity__c where  Campaign__c IN: cIdSet GROUP BY Campaign__c];
+            objectList = [Select Campaign__c, COUNT(Id) oppCount from Opportunity__c where Campaign__c IN: cIdSet GROUP BY Campaign__c];
             system.debug('objectList: '+objectList);
             
             if(!objectList.isEmpty() && objectList != null) {
                 for(AggregateResult ag: objectList) {
                     if(campaignMap.containsKey((String) ag.get('Campaign__c'))) {
                         Campaign__c c = campaignMap.get((String) ag.get('Campaign__c'));
-                      //  c.Converted_Leads_Count__c = (Decimal) ag.get('oppCount');
+                        c.Actual_Opportunities__c = (Decimal) ag.get('oppCount');
                         updateCampaignList.add(c);
                     }
                 }
             }
         } else if(objectType.equalsIgnoreCase('Site Visit')) {
-            objectList = [Select Campaign__c, SUM(Site_Visit_Count__c) svCount from Opportunity__c where Campaign__c IN: cIdSet GROUP BY Campaign__c];
+            objectList = [Select Campaign__c, SUM(SV_Count__c) svCount from Opportunity__c where Campaign__c IN: cIdSet GROUP BY Campaign__c];
             system.debug('objectList: '+objectList);
             
             if(!objectList.isEmpty() && objectList != null) {
@@ -68,48 +76,45 @@ public class Ex_CampaignHandlerServices {
                     }
                 }
             }
-        } /*else if(objectType.equalsIgnoreCase('Booking')) {
-            objectList = [Select Campaign__c, COUNT(Id) bookingCount from Opportunity__c  Where Stage__c = 'Booked' AND Campaign__c IN: cIdSet  GROUP BY Campaign__c];
+        } else if(objectType.equalsIgnoreCase('Booking')) {
+            objectList = [Select Campaign__c, COUNT(Id) bookingCount, SUM(Amount__c) bookingAmount from Opportunity__c 
+                          where Stage__c = 'Booked' AND Campaign__c IN: cIdSet GROUP BY Campaign__c];
             system.debug('objectList: '+objectList);
             
             if(!objectList.isEmpty() && objectList != null) {
                 for(AggregateResult ag: objectList) {
                     if(campaignMap.containsKey((String) ag.get('Campaign__c'))) {
                         Campaign__c c = campaignMap.get((String) ag.get('Campaign__c'));
-                       // c.Booking_Count__c = (Decimal) ag.get('bookingCount');
-                       // system.debug('bookingCount:::'+c.Booking_Count__c);
+                        c.Actual_Bookings__c = (Decimal) ag.get('bookingCount');
+                        c.Actual_Revenue__c = (Decimal) ag.get('bookingAmount');
                         updateCampaignList.add(c);
                     }
                 }
             }
-        }*/
-        
+        }
         if(!updateCampaignList.isEmpty() && updateCampaignList != null)
             update updateCampaignList;
     }
-    
     
     public static void calculateCampaignPerformance(String Type, List<Lead__c> leadList, List<Task> taskList) {
         List<Campaign_Performance__c> campaignPerformanceList = new List<Campaign_Performance__c>();
         List<Campaign_Performance__c> updateCampaignPerformanceList = new List<Campaign_Performance__c>();
         
         if(Type == 'Lead') {
-            system.debug('InsideLead'+ Type);
-            campaignPerformanceList = [Select Id, Name, date__c, Lead_Count__c, Campaign__c from Campaign_Performance__c
-                                        where Campaign__c =: leadList[0].Campaign__c AND date__c =: leadList[0].Created_Date__c LIMIT 1];
+            campaignPerformanceList = [Select Id, Name, Date__c, Lead_Count__c, Campaign__c from Campaign_Performance__c
+                                       where Campaign__c =: leadList[0].Campaign__c AND Date__c =: leadList[0].Created_Date__c ORDER BY CreatedDate ASC LIMIT 1];
             system.debug('campaignPerformanceList: '+campaignPerformanceList);
             
             if(!campaignPerformanceList.isEmpty()) {
                 if(campaignPerformanceList[0].Lead_Count__c == null) {
                     campaignPerformanceList[0].Lead_Count__c = 0;
-                    system.debug('Lead Count:'+campaignPerformanceList[0].Lead_Count__c);
                 }
                 campaignPerformanceList[0].Lead_Count__c = campaignPerformanceList[0].Lead_Count__c + 1;
                 updateCampaignPerformanceList.add(campaignPerformanceList[0]);
             }                            
         } else if(Type == 'Task') {
-            campaignPerformanceList = [Select Id, Name, date__c, Enquiry_Count__c, Campaign__c from Campaign_Performance__c
-                                        where Campaign__c =: taskList[0].Campaign__c AND date__c =: taskList[0].Created_Date__c LIMIT 1];
+            campaignPerformanceList = [Select Id, Name, Date__c, Enquiry_Count__c, Campaign__c from Campaign_Performance__c
+                                       where Campaign__c =: taskList[0].Campaign__c AND Date__c =: taskList[0].Created_Date__c ORDER BY CreatedDate ASC LIMIT 1];
             system.debug('campaignPerformanceList: '+campaignPerformanceList);
             
             if(!campaignPerformanceList.isEmpty()) {
@@ -120,8 +125,7 @@ public class Ex_CampaignHandlerServices {
                 updateCampaignPerformanceList.add(campaignPerformanceList[0]);
             }
         }
-        system.debug('updateCampaignPerformanceList: '+updateCampaignPerformanceList);
-        if(!updateCampaignPerformanceList.isEmpty())
+        if(!updateCampaignPerformanceList.isEmpty() && updateCampaignPerformanceList != null)
             update updateCampaignPerformanceList;
     }
 }

@@ -1,17 +1,33 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-10-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <template if:false={unitTrue}>
-        <lightning-card >
-    <div style="padding: 20px;">
-        <p class="my-heading" >Blocking Details</p>
-        <div class="slds-var-m-around_medium ">
-            <table style="width:100%" class="Table1Css">
+        
+        <div class="box2">
+        <div class="mains">
+            <header class="header">
+                <div class="main">
+                    <center>
+                        <!-- <lightning-icon size="medium" icon-name="custom:custom24"></lightning-icon> -->
+                        <lightning-icon icon-name='action:sort' alternative-text='sort' size='medium' title='sort'></lightning-icon>
+                        <!-- <h1 class="form-title">Blocking Details </h1> -->
+                        <label class="head" style="font-size:16px"> Blocking Details </label>
+                    </center>
+                </div>
+            </header>
+            <table>
             <tr>
                 <th>Unit</th>
                 <td>
                    {untNm}
                 </td>
-            </tr>  
-            <tr>
+          
+         
                 <th>Project Name</th>
                 <td>
                    {projectName}
@@ -22,8 +38,7 @@
                 <td>
                    {towerName}
                 </td>
-            </tr> 
-            <tr>
+           
                 <th>Opportunity Name</th>
                 <td>
                    {oppName}
@@ -35,8 +50,7 @@
                 <td>
                  <lightning-input type="checkbox" onchange={BlockWithTokenHandler} value={blockWithTokenCheckbox1}></lightning-input>
                 </td>
-            </tr>
-            <tr>
+           
                 <th>Mode of Payment</th>
                 <td>
                     <lightning-combobox placeholder="Select Mode of Payment" options={MOPpicklist} value={MOPpicklistValue} onchange={handleMOPChange} ></lightning-combobox>
@@ -48,8 +62,7 @@
                 <td>
                  <lightning-input type="number" formatter="currency" onchange={amountHandler} value={blockAmount1}></lightning-input>
                 </td>
-            </tr>
-            <tr>
+            
                 <th>Transaction ID</th>
                 <td>
                  <lightning-input type="text" onchange={chequeNoHandler} value={chequeNo}></lightning-input>
@@ -57,71 +70,35 @@
             </tr>
             <tr>
                 <th> Blocking Comment</th>
-                <td>
-                    <lightning-input type="text" onchange={commentHandler} value={blockComment} class="slds-var-m-bottom_small"></lightning-input>
+                <td colspan="3">
+                    <lightning-textarea 
+                    class="slds-var-m-bottom_small"
+                       
+                     
+                     
+                      
+                      placeholder="type here..."
+                       
+                       onchange={commentHandler}
+                      value={blockComment}
+                      variant="label-hidden"
+                    ></lightning-textarea>
+                    <!-- <lightning-input type="text" onchange={commentHandler} value={blockComment} class="slds-var-m-bottom_small"></lightning-input> -->
                 </td>
             </tr>
       </table>
         </div>
-        <center><button onclick={BlockingHandler} class="btn ">{clickBtn}</button></center>
-      </div>
-    </lightning-card>
-       
-    </template>
-    <template if:true={unitTrue}>
-        <lightning-card>
-        <div style="padding: 10px;">
-            <p class="my-heading" >Unblocking Details</p>
-         
-            <div class="slds-var-m-around_medium ">
-                <table style="width:100%" class="Table1Css">
-                <tr>
-                    <th>Unit</th>
-                    <td>
-                       <lightning-formatted-text value={untNm}></lightning-formatted-text>
-                    </td>
-                </tr>    
-                <!-- <tr>    
-                    <th>Blocked without token</th>
-                    <td>
-                   {blockWithoutTokenCheckbox}
-                    </td>
-                </tr> -->
-                <tr>
-                    <th>Blocked with token</th>
-                    <td>
-                        <lightning-input  disabled="true" if:true={blockWithTokenCheckbox} checked={blockWithTokenCheckbox} type="checkbox"  ></lightning-input>
-                        <lightning-input  disabled="true" if:false={blockWithTokenCheckbox} value={blockWithTokenCheckbox} type="checkbox"  ></lightning-input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Amount</th>
-                    <td>
-                     <lightning-formatted-number value={blockAmount}></lightning-formatted-number>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Cheque Number</th>
-                    <td>
-                        <lightning-formatted-text value={chequeNo}></lightning-formatted-text>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Blocking Comment</th>
-                    <td>
-                        <lightning-formatted-text value={blockComment}></lightning-formatted-text>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Unblocking Comment</th>
-                    <td>
-                    <lightning-input type="text" onchange={UnblockcommentHandler} value={unblockComment} class="slds-var-m-bottom_small"></lightning-input>
-                    </td>
-                </tr>
-          </table>
-            </div>
-            <center><button onclick={BlockingHandler} class="btn ">{clickBtn}</button></center>
+        <div class="slds-align_absolute-center">
+            <lightning-button 
+            variant="brand"
+            label={clickBtn}
+            onclick={BlockingHandler} 
+          ></lightning-button>
           </div>
-          </lightning-card>
-        </template>
+          
+        
+        <!-- <center><button onclick={BlockingHandler} class="btn">{clickBtn}</button></center> -->
+
+        </div>
+    </template>
 </template>

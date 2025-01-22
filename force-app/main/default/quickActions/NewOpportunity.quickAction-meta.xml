@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fieldOverrides>
-        <field>CloseDate</field>
-        <formula>TODAY()+60</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Name</field>
-        <formula>&quot;New Business&quot;</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>StageName</field>
-        <formula>&quot;Qualify&quot;</formula>
-    </fieldOverrides>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
@@ -24,7 +12,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>AccountId</field>
-                <uiBehavior>Required</uiBehavior>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -39,11 +27,6 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Amount</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>NextStep</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>

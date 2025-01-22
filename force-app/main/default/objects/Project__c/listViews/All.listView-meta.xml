@@ -2,10 +2,8 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Quotation_Validity_Days__c</columns>
-    <columns>Rate_of_Interest__c</columns>
-    <columns>TDS__c</columns>
-    <columns>Starting_Demand_No__c</columns>
+    <columns>Legal_Entity__c</columns>
+    <columns>TAT_Days_for_Walkin__c</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>

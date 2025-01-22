@@ -1,8 +1,3 @@
-//-------------------------------------------//
-//  Project: Satyam
-//  Created By: Exceller tech
-//  Created Date: 06-11-2023
-//-------------------------------------------//
 public class Ex_LedgerHandlerServices {
     public static void reverseCalculationOnDemandAndReceipt(Set<Id> lIdSet) {
         List<Demand__c> updateDemandList = new List<Demand__c>();
@@ -151,5 +146,4 @@ public class Ex_LedgerHandlerServices {
             return null;
         }
     }
-    
 }

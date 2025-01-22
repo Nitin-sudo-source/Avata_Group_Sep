@@ -6,9 +6,9 @@
     <lookupFilter>
         <active>true</active>
         <filterItems>
-            <field>Account.RecordTypeId</field>
+            <field>Account.RecordType.DeveloperName</field>
             <operation>equals</operation>
-            <value>CP Account</value>
+            <value>Channel_Partner</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

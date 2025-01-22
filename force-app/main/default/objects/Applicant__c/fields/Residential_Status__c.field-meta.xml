@@ -7,54 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>Type_Of_Applicant__c</controllingField>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>For Company</fullName>
-                <default>false</default>
-                <label>For Company</label>
-            </value>
-            <value>
-                <fullName>Partnership Firm</fullName>
-                <default>false</default>
-                <label>Partnership Firm</label>
-            </value>
-            <value>
-                <fullName>Mumbai Resident</fullName>
-                <default>false</default>
-                <label>Mumbai Resident</label>
-            </value>
-            <value>
-                <fullName>Non-Mumbai Resident</fullName>
-                <default>false</default>
-                <label>Non-Mumbai Resident</label>
-            </value>
-            <value>
-                <fullName>Non-Resident Indian</fullName>
-                <default>false</default>
-                <label>Non-Resident Indian</label>
-            </value>
-        </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Individual Buyer</controllingFieldValue>
-            <valueName>Mumbai Resident</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Individual Buyer</controllingFieldValue>
-            <valueName>Non-Mumbai Resident</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Individual Buyer</controllingFieldValue>
-            <valueName>Non-Resident Indian</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate Buyer</controllingFieldValue>
-            <valueName>For Company</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate Buyer</controllingFieldValue>
-            <valueName>Partnership Firm</valueName>
-        </valueSettings>
+        <restricted>true</restricted>
+        <valueSetName>Residential_Status</valueSetName>
     </valueSet>
 </CustomField>

@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Blocking Requested By</label>
     <referenceTo>User</referenceTo>
-    <relationshipLabel>Blocking Details</relationshipLabel>
     <relationshipName>Blocking_Details</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -7,23 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>PSF</fullName>
-                <default>false</default>
-                <label>PSF</label>
-            </value>
-            <value>
-                <fullName>Lumpsum</fullName>
-                <default>false</default>
-                <label>Lumpsum</label>
-            </value>
-            <value>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-                <label>Percentage</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>Charge_Type</valueSetName>
     </valueSet>
 </CustomField>

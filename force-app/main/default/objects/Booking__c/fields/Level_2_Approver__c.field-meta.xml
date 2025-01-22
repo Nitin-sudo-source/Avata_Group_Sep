@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Level 2 Approver</label>
     <referenceTo>User</referenceTo>
-    <relationshipName>Bookings1</relationshipName>
+    <relationshipName>Booking4</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

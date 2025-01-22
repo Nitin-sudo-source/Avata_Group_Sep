@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <label>Update Completion Date</label>
-    <lightningWebComponent>ex_UpdateConstructionStage</lightningWebComponent>
+    <lightningWebComponent>ex_ConstructionStageUpdate</lightningWebComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningWebComponent</type>
 </QuickAction>

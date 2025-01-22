@@ -7,33 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Discount</fullName>
-                <default>false</default>
-                <label>Discount</label>
-            </value>
-            <value>
-                <fullName>Credit Note</fullName>
-                <default>false</default>
-                <label>Credit Note</label>
-            </value>
-            <value>
-                <fullName>Cashback</fullName>
-                <default>false</default>
-                <label>Cashback</label>
-            </value>
-            <value>
-                <fullName>Offer</fullName>
-                <default>false</default>
-                <label>Offer</label>
-            </value>
-            <value>
-                <fullName>White-Goods</fullName>
-                <default>false</default>
-                <label>White-Goods</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>Discount_Category</valueSetName>
     </valueSet>
 </CustomField>

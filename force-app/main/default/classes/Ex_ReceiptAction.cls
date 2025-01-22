@@ -1,10 +1,5 @@
-//-------------------------------------------//
-//  Project: Satyam
-//  Created By: Exceller tech
-//  Created Date: 06-11-2023
-//-------------------------------------------//
 public class Ex_ReceiptAction {
-    @AuraEnabled
+ @AuraEnabled
     public static boolean receiptrecord( String Selectoption , String Remarks, String recordId){
         
         try{

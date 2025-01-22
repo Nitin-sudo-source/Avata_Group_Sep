@@ -3,6 +3,20 @@
     <fullName>CP_Project__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <label>CP Project</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>CP_Project__c.Channel_Partner__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Channel_Partner__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>CP_Project__c.Project_Name__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Project__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>CP_Project__c</referenceTo>
     <relationshipLabel>Site Visits</relationshipLabel>
     <relationshipName>Site_Visits</relationshipName>

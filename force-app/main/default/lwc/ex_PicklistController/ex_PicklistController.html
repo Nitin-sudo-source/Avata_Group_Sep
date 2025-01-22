@@ -10,6 +10,7 @@
         <div class="progress-bar">
             <div class="progress"></div>
         </div>
+        <p>Agora, me fala mais sobre o que você gosta?</p>
         <div class="button-container">
             <template for:each={picklistValues} for:item="value">
                 <button key={value} class="picklist-button" data-value={value} onclick={handleButtonClick}>
@@ -17,6 +18,6 @@
                 </button>
             </template>
         </div>
-        <lightning-button label="Continue" onclick={handleNext} class="next-button"></lightning-button>
+        <lightning-button label="Avançar" onclick={handleNext} class="next-button"></lightning-button>
     </lightning-card>
 </template>

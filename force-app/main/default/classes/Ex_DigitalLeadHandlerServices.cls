@@ -1,79 +1,99 @@
 //-------------------------------------------//
-//  Client: Satyam Developers
-//  Created By: Exceller Consultancy
-//  Created Date: 23-10-2023
+//  Project: Avant Infra 
+//  Created By: Exceller Tech
+//  Created Date: 05-09-2024
+//  Author: Sarjerao Deshmukh
 //-------------------------------------------//
 public class Ex_DigitalLeadHandlerServices {
-    public static void fbLeadProcess(Set<Id> dLeadId) {
+    public static void leadProcess(Set<Id> dLeadId) {
+        List<Opportunity__c> oppList = New List<Opportunity__c>();
         String mobile = '';
-        List<Digital_Lead__c> dLeadList = [Select Id, Name, Lead_Id__c, Full_Name__c, Form_Id__c, Mobile__c, Email__c, Ad_Id__c,
-                                           Configuration__c, Adset_Id__c, Campaign_Id__c, Campaign_Name__c, Adset_Name__c,
-                                           Retailer_Item_Id__c, Executed__c, Result__c, Lead__c, Account__c, Opportunity__c
+        String altMobile = '';
+        String details = '';
+        
+        List<Digital_Lead__c> dLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Mobile__c, Alternate_Mobile__c, Email__c, Alternate_Email__c,
+                                           Campaign_Code__c, Location__c, Company_Name__c,
+                                           Platform__c, Executed__c, Result__c, Lead__c, Account__c, Opportunity__c
                                            from Digital_Lead__c
                                            where Id IN: dLeadId];
         system.debug('dLeadList: '+dLeadList);
         
         if(!dLeadList.isEmpty() && dLeadList.size() == 1) {
             List<Lead__c> leadList = new List<Lead__c>();
-         //   List<Digital_Lead__c> updateDigitalLeadList = new List<Digital_Lead__c>();
+            List<Digital_Lead__c> updateDigitalLeadList = new List<Digital_Lead__c>();
             
             mobile = dLeadList[0].Mobile__c;
-            system.debug('Before substring:: '+mobile);
+            system.debug('Before Substring Mobile: '+mobile);
             if(mobile.length() > 10) {
                 mobile = mobile.substring(mobile.length() - 10);
             }
-            system.debug('After substring:: '+mobile);
+            system.debug('After Substring Mobile: '+mobile);
             
-            String details = 'Full Name: '+dLeadList[0].Full_Name__c+ '\n'
-                +'Mobile No: '+dLeadList[0].Mobile__c+ '\n'
-                +'Email Id: '+dLeadList[0].Email__c+ '\n'
-                +'Form Id: '+dLeadList[0].Form_Id__c+ '\n'
-                +'Configuration: '+dLeadList[0].Configuration__c+ '\n'
-                +'Ad Id: '+dLeadList[0].Ad_Id__c+ '\n'
-                // +'Ad Name: '+dLeadList[0].Ad_Name__c+ '\n'
-                +'Adset Id: '+dLeadList[0].Adset_Id__c+ '\n'
-                +'Adset Name: '+dLeadList[0].Adset_Name__c+ '';
+            if(dLeadList[0].Alternate_Mobile__c != null) {
+                altmobile = dLeadList[0].Alternate_Mobile__c;
+                system.debug('Before Substring Mobile: '+altmobile);
+                if(altmobile.length() > 10) {
+                    altmobile = altmobile.substring(altmobile.length() - 10);
+                }
+                system.debug('After Substring Mobile: '+altmobile);
+            }
+            
+            if(dLeadList[0].Platform__c.equalsIgnoreCase('Website')) {
+                details = 'First Name: '+dLeadList[0].First_Name__c+ '\n'
+                    +'Last Name: '+dLeadList[0].Last_Name__c+ '\n'
+                   /* +'Mobile No: '+dLeadList[0].Mobile__c+ '\n'*/
+                    +'Email Id: '+dLeadList[0].Email__c+ '\n'
+                    +'Campaign Code: '+dLeadList[0].Campaign_Code__c+ '\n'
+                    +'Location: '+dLeadList[0].Location__c+ '\n'
+                    +'Company Name: '+dLeadList[0].Company_Name__c+ '\n'
+                    +'Platform:'+dLeadList[0].Platform__c;
+            }
             
             String projectId;
             String campaignId;
-            String campaignType;
-            String campaignMedia;
+            String source;
+            String subSource;
+            String sourceDescription;
             
-            if(dLeadList[0].Form_Id__c != Null && !String.isEmpty(dLeadList[0].Form_Id__c)) {
-                String formId = dLeadList[0].Form_Id__c;
-                List<Campaign__c> cList = [Select Id,IsActive__c,Campaign_Code__c, Lead_Source__c, Project__c from Campaign__c
-                                           where Campaign_Code__c =: formId AND IsActive__c = true];
+            if(dLeadList[0].Campaign_Code__c != Null && !String.isEmpty(dLeadList[0].Campaign_Code__c)) {
+                List<Campaign__c> cList = [Select Id, Campaign_Code__c, Active__c, Project__c, Lead_Source__c, Lead_Sub_Source__c, Source_Description__c from Campaign__c
+                                           where Campaign_Code__c =: dLeadList[0].Campaign_Code__c AND Active__c =: true];
                 system.debug('cList: '+cList);
                 
                 if(!cList.isEmpty() && cList != null) {
-                    campaignId = cList[0].Id;
-                    // campaignType = cList[0].Campaign_Type__c;
                     projectId = cList[0].Project__c;
-                    campaignMedia = cList[0].Lead_Source__c;
-                    system.debug('campaignMedia: '+campaignMedia);
+                    campaignId = cList[0].Id;
+                    source = cList[0].Lead_Source__c;
+                    subSource = cList[0].Lead_Sub_Source__c;
+                    sourceDescription = cList[0].Source_Description__c;
                 }
             }
-            Lead__c l = new Lead__c(
-                Last_Name__c = dLeadList[0].Full_Name__c,
-                Mobile__c = mobile,
-                Email__c = dLeadList[0].Email__c,
-                Configuration_Required__c = dLeadList[0].Configuration__c,
-                // Lead_Created_From__c = 'Facebook',
-                Project__c = projectId,
-                Campaign_Code__c = dLeadList[0].Form_Id__c,
-                Campaign__c = campaignId,
-                //  Campaign_Type__c = campaignType,
-                Lead_Source__c = campaignMedia,
-                Description__c = details,
-                //   Adset_Id__c = dLeadList[0].Adset_Id__c,
-                //   Adset_Name__c = dLeadList[0].Adset_Name__c,
-                //   Ad_Name__c = dLeadList[0].Ad_Name__c,
-                Apply_Round_Robin__c = true
-                //  Enable_Autodial__c = true
-            );
             
-            if(l != Null) {
-                leadList.Add(l);
+            Lead__c l = new Lead__c();
+            l.First_Name__c = dLeadList[0].First_Name__c;
+            l.Last_Name__c = dLeadList[0].Last_Name__c;
+            l.Mobile__c = mobile;
+            l.Alternate_Mobile__c = altMobile;
+            l.Email__c = dLeadList[0].Email__c;
+            l.Alternate_Email__c = dLeadList[0].Alternate_Email__c;
+            l.Company_Name__c = dLeadList[0].Company_Name__c;
+            l.Location__c = dLeadList[0].Location__c;
+            l.Lead_Identifier__c = dLeadList[0].Platform__c;
+            l.Project__c = projectId;
+            l.Campaign_Code__c = dLeadList[0].Campaign_Code__c;
+            l.Campaign__c = campaignId;
+            l.Lead_Source__c = source;
+            l.Lead_Sub_Source__c = subSource;
+            l.Source_Description__c = sourceDescription;
+            l.Remarks__c = details;
+            l.Apply_Round_Robin__c = true;
+            l.Is_Serviced__c = false;   
+            
+            if(l != null){  
+                Database.DMLOptions dml = new Database.DMLOptions();
+                dml.DuplicateRuleHeader.AllowSave = true;
+                leadList.add(l);
+                system.debug('leadList: '+leadList);   
                 
                 try {
                     Map<Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = new Map<Lead__c, List<Ex_DuplicationHandlerServices.duplicateWrapper>>();
@@ -82,36 +102,48 @@ public class Ex_DigitalLeadHandlerServices {
                     for(Lead__c newLead: leadList) {
                         if(!duplicateWrapperMap.containsKey(l)) {
                             try {
-                                Database.saveResult[] srList = Database.insert(leadList);
+                                Database.saveResult[] srList = Database.insert(leadList,dml);
                                 for(Database.SaveResult sr: srList) {
                                     if(sr.isSuccess()) {
                                         try {
                                             task t = new task();
                                             t.Status = 'Completed';
                                             t.RecordTypeId =  Schema.SObjectType.Task.getRecordTypeInfosByName().get('Enquiry').getRecordTypeId();
-                                            t.Subject = 'New Enquiry Received From:'+ newLead.Lead_Source__c;
-                                            t.whatId = sr.getId();
+                                            t.Subject = 'New Enquiry Received From: '+ newLead.Lead_Source__c;
+                                            t.WhatId = sr.getId();
                                             
+                                            List<Lead__c> newLeadList = [Select Id, Name, OwnerId from Lead__c where Id =: sr.getId()];
+                                            system.debug('newLeadList: '+newLeadList);
+                                            
+                                            if(!newLeadList.isEmpty()) {
+                                                t.OwnerId = newLeadList[0].OwnerId;
+                                            }
+                                            if(String.isNotBlank(newLead.First_Name__c))
+                                                t.Name__c = newLead.First_Name__c + ' ';
                                             if(String.isNotBlank(newLead.Last_Name__c))
-                                                t.Name__c = newLead.Last_Name__c;
+                                                t.Name__c += newLead.Last_Name__c;
                                             if(String.isNotBlank(newLead.Mobile__c))
                                                 t.Mobile__c = newLead.Mobile__c;
+                                            if(String.isNotBlank(newLead.Alternate_Mobile__c))
+                                                t.Mobile__c = newLead.Alternate_Mobile__c;
                                             if(String.isNotBlank(newLead.Email__c))
                                                 t.Email__c = newLead.Email__c;
-                                            if(l.Project__c != null)
+                                            if(String.isNotBlank(newLead.Alternate_Email__c))
+                                                t.Alternate_Email__c = newLead.Alternate_Email__c;
+                                            if(newLead.Project__c != null)
                                                 t.Project__c = newLead.Project__c;
-                                            if(l.Campaign__c != null)
+                                            if(newLead.Campaign__c != null)
                                                 t.Campaign__c = newLead.Campaign__c;
                                             if(String.isNotBlank(newLead.Campaign_Code__c))
                                                 t.Campaign_Code__c = newLead.Campaign_Code__c;
-                                            //  if(String.isNotBlank(newLead.Campaign_Type__c))
-                                            //    t.Campaign_Type__c = newLead.Campaign_Type__c;
-                                            //if(String.isNotBlank(newLead.Lead_Source__c))
-                                            //    t.Stage__c = newLead.Lead_Source__c;
-                                            if(String.isNotBlank(newLead.Description__c))
-                                                t.Description = newLead.Description__c;
-                                            //  if(String.isNotBlank(newLead.Lead_Created_From__c))
-                                            //   t.Task_Created_From__c = newLead.Lead_Created_From__c;
+                                            if(String.isNotBlank(newLead.Location__c))
+                                                t.Location__c = newLead.Location__c;
+                                            if(String.isNotBlank(newLead.Company_Name__c))
+                                                t.Company_Name__c = newLead.Company_Name__c;
+                                            if(String.isNotBlank(newLead.Remarks__c))
+                                                t.Description = newLead.Remarks__c;
+                                            if(String.isNotBlank(newLead.Lead_Identifier__c))
+                                                t.Task_Identifier__c = newLead.Lead_Identifier__c;
                                             t.Is_New_Lead_Created__c = true;
                                             insert t;
                                             
@@ -154,37 +186,44 @@ public class Ex_DigitalLeadHandlerServices {
                             if(dw.objectType.equalsIgnoreCase('Lead')) {
                                 try {
                                     task t = new task();
-                                    t.status = 'Completed';
-                                    t.whatId = dw.dupLead.Id;
+                                    t.Status = 'Completed';
                                     t.RecordTypeId =  Schema.SObjectType.Task.getRecordTypeInfosByName().get('Enquiry').getRecordTypeId();
-                                    t.Subject = 'New Enquiry Received From:'+ leadList[0].Lead_Source__c;
+                                    t.Subject = 'New Enquiry Received From: '+ newLead.Lead_Source__c;
+                                    t.WhatId = dw.dupLead.Id;
+                                    t.OwnerId = dw.dupLead.OwnerId;
                                     
-                                    if(String.isNotBlank(leadList[0].Last_Name__c))
-                                        t.Name__c = leadList[0].Last_Name__c;
-                                    if(String.isNotBlank(leadList[0].Mobile__c))
-                                        t.Mobile__c = leadList[0].Mobile__c;
-                                    if(String.isNotBlank(leadList[0].Email__c))
-                                        t.Email__c = leadList[0].Email__c;
-                                    if(leadList[0].Project__c != null)
-                                        t.Project__c = leadList[0].Project__c;
-                                    if(leadList[0].Campaign__c != null)
-                                        t.Campaign__c = leadList[0].Campaign__c;
-                                    if(String.isNotBlank(leadList[0].Campaign_Code__c))
-                                        t.Campaign_Code__c= leadList[0].Campaign_Code__c;
-                                    //   if(String.isNotBlank(leadList[0].Campaign_Type__c))
-                                    //      t.Campaign_Type__c = leadList[0].Campaign_Type__c;
-                                    // if(String.isNotBlank(leadList[0].Lead_Stage__c))
-                                    //     t.Stage__c = leadList[0].Lead_Stage__c;
-                                    if(String.isNotBlank(leadList[0].Description__c))
-                                        t.Description = leadList[0].Description__c;
-                                    //  if(String.isNotBlank(leadList[0].Lead_Created_From__c))
-                                    //   t.Task_Created_From__c = leadList[0].Lead_Created_From__c;
+                                    if(String.isNotBlank(newLead.First_Name__c))
+                                        t.Name__c = newLead.First_Name__c + ' ';
+                                    if(String.isNotBlank(newLead.Last_Name__c))
+                                        t.Name__c += newLead.Last_Name__c;
+                                    if(String.isNotBlank(newLead.Mobile__c))
+                                        t.Mobile__c = newLead.Mobile__c;
+                                    if(String.isNotBlank(newLead.Alternate_Mobile__c))
+                                        t.Mobile__c = newLead.Alternate_Mobile__c;
+                                    if(String.isNotBlank(newLead.Email__c))
+                                        t.Email__c = newLead.Email__c;
+                                    if(String.isNotBlank(newLead.Alternate_Email__c))
+                                        t.Alternate_Email__c = newLead.Alternate_Email__c;
+                                    if(newLead.Project__c != null)
+                                        t.Project__c = newLead.Project__c;
+                                    if(newLead.Campaign__c != null)
+                                        t.Campaign__c = newLead.Campaign__c;
+                                    if(String.isNotBlank(newLead.Campaign_Code__c))
+                                        t.Campaign_Code__c = newLead.Campaign_Code__c;
+                                    if(String.isNotBlank(newLead.Location__c))
+                                        t.Location__c = newLead.Location__c;
+                                    if(String.isNotBlank(newLead.Company_Name__c))
+                                        t.Company_Name__c = newLead.Company_Name__c;
+                                    if(String.isNotBlank(newLead.Remarks__c))
+                                        t.Description = newLead.Remarks__c;
+                                    if(String.isNotBlank(newLead.Lead_Identifier__c))
+                                        t.Task_Identifier__c = newLead.Lead_Identifier__c;
                                     insert t;
                                     
                                     //Update Digital Lead
                                     dLeadList[0].Executed__c = True;
                                     dLeadList[0].Result__c = 'New Enquiry Against Lead';
-                                    dLeadList[0].Lead__c = dw.dupLead.Id; 
+                                    dLeadList[0].Lead__c = dw.dupLead.Id;
                                     update dLeadList[0];
                                 } catch(Exception ex) {
                                     system.debug('Error: '+ex);
@@ -194,43 +233,69 @@ public class Ex_DigitalLeadHandlerServices {
                                     dLeadList[0].Error__c = ex.getMessage();
                                     update dLeadList[0];
                                 }
-                            } else if(dw.objectType.equalsIgnoreCase('Opportunity')) {
+                            } else if(dw.objectType.equalsIgnoreCase('Account')) {
+                                oppList = [Select Id, Name, Stage__c, Is_Active__c, Account__c, Account__r.PersonContactId, Is_Booked__c, OwnerId from Opportunity__c 
+                                           Where Project__c =: newLead.Project__c AND Account__c =: dw.dupAccount.Id AND Is_Booked__c = false];
+                                System.debug('oppList: '+oppList);
+                                
                                 try {
                                     task t = new task();
                                     t.Status = 'Completed';
                                     t.RecordTypeId =  Schema.SObjectType.Task.getRecordTypeInfosByName().get('Enquiry').getRecordTypeId();
-                                    t.Subject = 'New Enquiry Received From:'+ leadList[0].Lead_Source__c;
-                                    t.WhoId = dw.dupOpp.Account__r.PersonContactId;
-                                    t.whatId = dw.dupOpp.Id;
+                                    t.Subject = 'New Enquiry Received From: '+ newLead.Lead_Source__c;
+                                    if(!oppList.isEmpty() && oppList != null) {
+                                        t.WhatId = oppList[0].Id;
+                                        t.WhoId = oppList[0].Account__r.PersonContactId;
+                                        t.OwnerId = oppList[0].OwnerId;
+                                        if (oppList[0].Stage__c.equalsIgnoreCase('Lost')) {
+                                            oppList[0].Stage__c = 'Created';
+                                            update oppList;
+                                        }
+                                    } else {
+                                        t.WhoId = dw.dupAccount.PersonContactId;
+                                        t.OwnerId = dw.dupAccount.OwnerId;
+                                    }
                                     
-                                    if(String.isNotBlank(leadList[0].Last_Name__c))
-                                        t.Name__c = leadList[0].Last_Name__c;
-                                    if(String.isNotBlank(leadList[0].Mobile__c))
-                                        t.Mobile__c = leadList[0].Mobile__c;
-                                    if(String.isNotBlank(leadList[0].Email__c))
-                                        t.Email__c = leadList[0].Email__c;
-                                    if(leadList[0].Project__c != null)
-                                        t.Project__c = leadList[0].Project__c;
-                                    if(leadList[0].Campaign__c != null)
-                                        t.Campaign__c = leadList[0].Campaign__c;
-                                    if(String.isNotBlank(leadList[0].Campaign_Code__c))
-                                        t.Campaign_Code__c= leadList[0].Campaign_Code__c;
-                                    //    if(String.isNotBlank(leadList[0].Campaign_Type__c))
-                                    //       t.Campaign_Type__c = leadList[0].Campaign_Type__c;
-                                    // if(String.isNotBlank(leadList[0].Lead_Stage__c))
-                                    //     t.Stage__c = leadList[0].Lead_Stage__c;
-                                    //    if(String.isNotBlank(leadList[0].Description__c))
-                                    //    t.Description = leadList[0].Description__c;
-                                    //    if(String.isNotBlank(leadList[0].Lead_Created_From__c))
-                                    //    t.Task_Created_From__c = leadList[0].Lead_Created_From__c;
+                                    if(String.isNotBlank(newLead.First_Name__c))
+                                        t.Name__c = newLead.First_Name__c + ' ';
+                                    if(String.isNotBlank(newLead.Last_Name__c))
+                                        t.Name__c += newLead.Last_Name__c;
+                                    if(String.isNotBlank(newLead.Mobile__c))
+                                        t.Mobile__c = newLead.Mobile__c;
+                                    if(String.isNotBlank(newLead.Alternate_Mobile__c))
+                                        t.Mobile__c = newLead.Alternate_Mobile__c;
+                                    if(String.isNotBlank(newLead.Email__c))
+                                        t.Email__c = newLead.Email__c;
+                                    if(String.isNotBlank(newLead.Alternate_Email__c))
+                                        t.Alternate_Email__c = newLead.Alternate_Email__c;
+                                    if(newLead.Project__c != null)
+                                        t.Project__c = newLead.Project__c;
+                                    if(newLead.Campaign__c != null)
+                                        t.Campaign__c = newLead.Campaign__c;
+                                    if(String.isNotBlank(newLead.Campaign_Code__c))
+                                        t.Campaign_Code__c = newLead.Campaign_Code__c;
+                                    if(String.isNotBlank(newLead.Location__c))
+                                        t.Location__c = newLead.Location__c;
+                                    if(String.isNotBlank(newLead.Company_Name__c))
+                                        t.Company_Name__c = newLead.Company_Name__c;
+                                    if(String.isNotBlank(newLead.Remarks__c))
+                                        t.Description = newLead.Remarks__c;
+                                    if(String.isNotBlank(newLead.Lead_Identifier__c))
+                                        t.Task_Identifier__c = newLead.Lead_Identifier__c;
                                     insert t;
                                     
+                                    //Update Digital Lead
                                     dLeadList[0].Executed__c = True;
-                                    dLeadList[0].Result__c = 'New Enquiry Against Opportunity';
-                                    dLeadList[0].Account__c = dw.dupOpp.Account__c;
-                                    dLeadList[0].Opportunity__c = dw.dupOpp.Id;
+                                    if(!oppList.isEmpty() && oppList != null) {
+                                        dLeadList[0].Account__c = oppList[0].Account__c;
+                                        dLeadList[0].Opportunity__c = oppList[0].Id;
+                                        dLeadList[0].Result__c = 'New Enquiry Against Opportunity';
+                                    } else {
+                                        dLeadList[0].Account__c = dw.dupAccount.Id;
+                                        dLeadList[0].Result__c = 'New Enquiry Against Account';
+                                    }
                                     update dLeadList[0];
-                                } catch(Exception ex) { 
+                                } catch(Exception ex) {
                                     system.debug('Error: '+ex);
                                     //Update Digital Lead
                                     dLeadList[0].Executed__c = True;

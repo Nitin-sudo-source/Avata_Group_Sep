@@ -4,8 +4,8 @@
     <decisions>
         <name>Lead_Stage</name>
         <label>Lead Stage</label>
-        <locationX>70</locationX>
-        <locationY>146</locationY>
+        <locationX>621</locationX>
+        <locationY>331</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Propspect</name>
@@ -60,9 +60,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>SMS_FOR_SNP</targetReference>
-            </connector>
             <label>SNP</label>
         </rules>
         <rules>
@@ -96,6 +93,9 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>SMS_Creation_For_Visit_Confirmed</targetReference>
+            </connector>
             <label>Visit Confirmed</label>
         </rules>
     </decisions>
@@ -124,8 +124,8 @@
     <recordCreates>
         <name>SMS_Creation</name>
         <label>SMS Creation</label>
-        <locationX>145</locationX>
-        <locationY>339</locationY>
+        <locationX>244</locationX>
+        <locationY>330</locationY>
         <inputAssignments>
             <field>Lead__c</field>
             <value>
@@ -160,10 +160,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>SMS_Creation_For_SNP</name>
-        <label>SMS Creation For SNP</label>
-        <locationX>254</locationX>
-        <locationY>179</locationY>
+        <name>SMS_Creation_For_Visit_Confirmed</name>
+        <label>SMS Creation For Visit Confirmed</label>
+        <locationX>1009</locationX>
+        <locationY>314</locationY>
         <inputAssignments>
             <field>Lead__c</field>
             <value>
@@ -173,7 +173,7 @@
         <inputAssignments>
             <field>Message__c</field>
             <value>
-                <elementReference>SMSBodyforSNP</elementReference>
+                <elementReference>VisitConfirmedMessage</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -185,59 +185,21 @@
         <inputAssignments>
             <field>Remarks__c</field>
             <value>
-                <elementReference>RemarksBody</elementReference>
+                <elementReference>VisitRemarks</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173255065216866</stringValue>
-            </value>
-        </inputAssignments>
-        <object>SMS__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>SMS_FOR_SNP</name>
-        <label>SMS FOR SNP</label>
-        <locationX>509</locationX>
-        <locationY>372</locationY>
-        <inputAssignments>
-            <field>Lead__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Message__c</field>
-            <value>
-                <elementReference>SMSBodyforSNP</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Mobile__c</field>
-            <value>
-                <elementReference>$Record.Mobile__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Remarks__c</field>
-            <value>
-                <elementReference>RemarksBody</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Template_Id__c</field>
-            <value>
-                <stringValue>1707173255065216866</stringValue>
+                <stringValue>1707173255071952011</stringValue>
             </value>
         </inputAssignments>
         <object>SMS__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>330</locationX>
-        <locationY>48</locationY>
+        <locationX>465</locationX>
+        <locationY>19</locationY>
         <connector>
             <targetReference>Lead_Stage</targetReference>
         </connector>
@@ -295,11 +257,21 @@
     <textTemplates>
         <name>SMSBodyForProspect</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Dear {!$Record.First_Name__c} {!$Record.Last_Name__c}, Thank you for your continued interest in the property. You are a few steps away from your dream house. Lets Schedule your visit by proposing Date &amp; Time. Looking forward to your response. Avants Group</text>
+        <text>Dear {{Customer&apos;s Name}}, Thank you for your continued interest in the property. You are a few steps away from your dream house. Lets Schedule your visit by proposing Date &amp; Time. Looking forward to your response. Avants Group</text>
     </textTemplates>
     <textTemplates>
         <name>SMSBodyforSNP</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>Dear {!$Record.First_Name__c} {!$Record.Last_Name__c}, Thank you for your continued interest in the property. You are a few steps away from your dream house. Lets Schedule your visit by proposing Date &amp; Time. Looking forward to your response. Avants Group</text>
+    </textTemplates>
+    <textTemplates>
+        <name>VisitConfirmedMessage</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear {{Customer&apos;s Name}}, Thank you for scheduling a site visit! We’ve confirmed your appointment for {{Date}} at {{Time}} for {{project name}} at {{address with location link}}. Our team will be there to assist you and ensure everything goes smoothly. If you need to make any changes or have any specific requests for the visit, feel free to let us know. Looking forward to meeting you! {{Owner}}, Avants Group</text>
+    </textTemplates>
+    <textTemplates>
+        <name>VisitRemarks</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>SMS Trigger Point: Visit Confirmation Message</text>
     </textTemplates>
 </Flow>

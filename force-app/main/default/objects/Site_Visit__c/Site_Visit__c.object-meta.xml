@@ -147,10 +147,11 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>New_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>Site_Visit_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
@@ -160,19 +161,26 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Site Visit</label>
     <nameField>
-        <displayFormat>SV-{0000}</displayFormat>
-        <label>Site Visit ID</label>
+        <displayFormat>SV-{00000}</displayFormat>
+        <label>Site Visit Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Site Visits</pluralLabel>
     <searchLayouts>
+        <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
+        <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>MassAssignRecordLabel</excludedStandardButtons>
+        <excludedStandardButtons>Import</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Phone__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Project_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Sales_Manager__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Site_Visit_Count__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Is_Sales_Manager_Assigned__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Opportunity__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
