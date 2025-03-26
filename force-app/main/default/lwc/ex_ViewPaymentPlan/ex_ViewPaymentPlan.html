@@ -1,0 +1,68 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-18-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="mains">
+        <div class="main">
+            <lightning-icon  size="medium" icon-name="standard:contract_payment"></lightning-icon>
+            <label class="head">Payment Details</label>
+        </div>
+        <div style="margin: 20px;">
+            <p style="margin: 20px;"><label style="font-size: 14px;" class="access">Payment Scheme: </label>
+                <label style="font-size: 14px;" class="access">{PaymentSchemeName}</label>
+            </p>
+            <table>
+                <tbody>
+                    <tr style="background-color: rgb(195, 247, 230);">
+                        <th>Milestone Name</th>
+                        <th>Percentage</th>
+                        <th>Amount</th>
+                        <th>Tax</th>
+                        <th>Total Amount</th>
+                    </tr>
+                    <template for:each={pmList} for:item="pm">
+                        <tr key={pm.Id}>
+                            <td>
+                                {pm.milestoneName}
+                            </td>
+                            <td>
+                                {pm.percentage}
+                            </td>
+                            <td>
+                                {pm.amount}
+                            </td>
+                            <td>
+                                {pm.tax}
+                            </td>
+                            <td>
+                                {pm.totalAmountWithTax}
+                            </td>
+                        </tr>
+                    </template>
+                    
+                    <tr>
+                        <td>
+                            <b>Total</b>
+                        </td>
+                        <td>
+                            {totalMilestonePercentage} %
+                        </td>
+                        <td>
+                            {chargeBucketAmountStr}
+                        </td>
+                        <td>
+                            {chargeBucketTotalTaxStr}
+                        </td>
+                        <td>
+                            {newTotalAmountStr}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

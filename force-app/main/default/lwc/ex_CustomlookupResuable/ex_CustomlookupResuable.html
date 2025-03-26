@@ -10,7 +10,7 @@ Source : lwcFactory.com
            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
               <div class="searchBoxWrapper slds-show">
                 <!--Lookup Input Field-->
-                <lightning-input                   
+                <!-- <lightning-input                   
                    type="search"
                    data-source="searchInputField"
                    onclick={toggleResult}
@@ -20,6 +20,18 @@ Source : lwcFactory.com
                    variant="label-hidden"
                    placeholder={placeholder}
                ></lightning-input>  
+                -->
+                <lightning-input
+                type="search"
+                data-source="searchInputField"
+                onclick={toggleResult}
+                oninput={handleKeyChange}
+                is-loading={isSearchLoading}
+                value={searchKey}
+                variant="label-hidden"
+                placeholder={placeholder}
+             ></lightning-input>
+             
               </div>
               
             <!--Lookup Selected record pill container start-->  

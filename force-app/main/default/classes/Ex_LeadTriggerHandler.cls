@@ -17,13 +17,19 @@ public class Ex_LeadTriggerHandler {
     
     public static void afterInsert(List<Lead__c> leadList) {
         List<Lead__c> lList = new List<Lead__c>();
+       Set<Id> ldset = new Set<Id>();
         
         for(Lead__c l: leadList) {
+            if(l.IsConverted__c != null && l.Project__c != null){
+                ldset.add(l.Id);
+            }
             if(l.Campaign__c != null)
                 lList.add(l);
         }
         if(!lList.isEmpty() && lList != null)
-            Ex_CampaignHandlerServices.calculateCampaignPerformance('Lead', lList, null);   
+            Ex_CampaignHandlerServices.calculateCampaignPerformance('Lead', lList, null);  
+        //if(!ldset.isEmpty() && ldset != null)
+           // Ex_SMSTriggerHandlerServices.sendBulkMessage('Lead__c', ldset);
     }
     
     public static void beforeUpdate(Map<Id, Lead__c> oldMap, Map<Id, Lead__c> newMap) {

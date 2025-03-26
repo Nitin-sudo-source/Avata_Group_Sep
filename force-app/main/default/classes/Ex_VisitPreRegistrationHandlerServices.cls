@@ -28,7 +28,45 @@ public class Ex_VisitPreRegistrationHandlerServices {
                 if(vpr.Visit_Pre_Registration_Code__c == null){
                     vpr.Visit_Pre_Registration_Code__c = String.valueOf(randomInt).substring(0,len);   
                 }
+                System.debug('vpr.Pre_Registration_Validity_In_Hours__c: '+vpr.Pre_Registration_Validity_In_Hours__c);
+                if(vpr.Pre_Registration_Validity_In_Hours__c != null){
+                    Datetime workTime = DateTime.now().addHours(Integer.valueof(vpr.Pre_Registration_Validity_In_Hours__c));
+                    vpr.Pre_Registration_Expiry__c = workTime;
+                    System.debug('vpr.Pre_Registration_Expiry__c: '+vpr.Pre_Registration_Expiry__c);
+                }
             }
         }
+        
+        
     }
+    public static void updateVpr( List<Visit_Pre_Registration__c> updateVpr){
+        if(updateVpr != null && !updateVpr.isEmpty()){
+            for (Visit_Pre_Registration__c vpr : updateVpr) {
+                System.debug('Extend_Validity_In_Hours__c: '+vpr.Extend_Validity_In_Hours__c);
+                if(vpr.Extend_Validity_In_Hours__c != null && vpr.Extend_Validity_In_Hours__c != 0){
+                    
+                    Datetime workTime = vpr.Pre_Registration_Expiry__c.addHours(Integer.valueof(vpr.Extend_Validity_In_Hours__c));
+                    vpr.Pre_Registration_Expiry__c = workTime;
+                    System.debug('vpr.Pre_Registration_Expiry__c: '+vpr.Pre_Registration_Expiry__c);
+                }
+            }
+        }
+        
+    }
+    
+    public static void duplicationCheck(List<Visit_Pre_Registration__c> vprLeadList){
+        Map<Visit_Pre_Registration__c, List<Ex_VisitPreRegDuplicationHandlerServices.duplicateWrapper>> duplicateWrapperMap = Ex_VisitPreRegDuplicationHandlerServices.duplicationCheck(vprLeadList);
+        if(!vprLeadList.isEmpty() && vprLeadList!=null){
+            for(Visit_Pre_Registration__c vpr : vprLeadList){
+                String errMsg = '';
+                if(duplicateWrapperMap.containsKey(vpr)){
+                    for(Ex_VisitPreRegDuplicationHandlerServices.duplicateWrapper dw : duplicateWrapperMap.get(vpr)){
+                        errMsg = 'Visit Pre-Registration for selected '+dw.Type+' Already Exists with Moible Number: '+dw.dupVisitPreReg.Mobile_Number__c+' and Project: '+dw.dupVisitPreReg.Project__r.Name;
+                    }
+                    if(!test.isRunningTest() && errMsg != null)
+                        vpr.addError(errMsg);
+                }
+            }
+        }
+    }   
 }

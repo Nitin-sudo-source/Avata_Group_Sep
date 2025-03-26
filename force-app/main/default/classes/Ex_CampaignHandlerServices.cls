@@ -7,27 +7,31 @@
 public class Ex_CampaignHandlerServices {
     public static void createCampaignPerformance(Set<Id> cIdSet){
         List<Campaign_Performance__c> cpList = new List<Campaign_Performance__c>();
-        List<Campaign__c> CampaignsToUpdate = new List<Campaign__c>();
+        //List<Campaign__c> CampaignsToUpdate = new List<Campaign__c>();
         
-        List<Campaign__c> cList = [Select Id, Name, Active__c, Campaign_Code__c, Start_Date__c, End_Date__c from Campaign__c
-                                   where Id IN: cIdSet];
+        List<Campaign__c> cList = [Select Id, Name, Active__c, Campaign_Code__c, Start_Date__c, End_Date__c, Project__r.Campaign_Approver__c from Campaign__c
+                                   where Id IN: cIdSet AND Active__c = true];
         system.debug('cList: '+cList);
         
         if(!cList.isEmpty()) {
             for(Campaign__c c : cList) {
-                Campaign_Performance__c cp = new Campaign_Performance__c();
-                cp.Campaign__c = c.Id;
-                cp.Date__c = system.today();
-                cpList.add(cp);
-                
-                c.Campaign_Code__c = c.Id;
-                CampaignsToUpdate.add(c);
+                if(c.Active__c){
+                    Campaign_Performance__c cp = new Campaign_Performance__c();
+                    cp.Campaign__c = c.Id;
+                    cp.Date__c = system.today();
+                    cpList.add(cp);
+                }
+				//Commented by Nitin Updating using Flow                
+                //if(c.Project__r.Campaign_Approver__c != null)
+               // c.Campaign_Approver__c = c.Project__r.Campaign_Approver__c;
+               // c.Campaign_Code__c = c.Id;
+                //CampaignsToUpdate.add(c);
             }
         }
         if(!cpList.isEmpty() && cpList != null)
             insert cpList;
-        if(!CampaignsToUpdate.isEmpty() && CampaignsToUpdate != null)
-            update CampaignsToUpdate;
+       // if(!CampaignsToUpdate.isEmpty() && CampaignsToUpdate != null)
+           // update CampaignsToUpdate;
     }
     
     public static void updateCampaignDetails(Set<Id> cIdSet, String objectType) {

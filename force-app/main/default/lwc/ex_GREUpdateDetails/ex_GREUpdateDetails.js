@@ -380,6 +380,7 @@ export default class Ex_GREUpdateDetails extends NavigationMixin(LightningElemen
                 actionName: 'view'
             }
         });
+
     }
   
 

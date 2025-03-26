@@ -17,8 +17,8 @@ public class Ex_SMAssignmentController {
     
     @AuraEnabled
     public static List<Team_Member__c> getAllSalesManager(Site_Visit__c svRecord) {
-        List<Team_Member__c> userList = [Select Id, User__r.Name, Availability__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
-                                         where Team__r.Project__c =: svRecord.Project__c AND  User_Active_Status__c = true AND Team__r.Team_Type__c = 'Sales Team' ORDER BY Last_Assignment_DateTime__c ASC];
+        List<Team_Member__c> userList = [Select Id, User__r.Name, Availability__c, DayOff__c, Assignment_Counter__c ,Last_Assignment_DateTime__c, Last_Assignment_Milliseconds__c, Team__r.Project__c from Team_Member__c
+                                         where Team__r.Project__c =: svRecord.Project__c AND  User_Active_Status__c = true AND DayOff__c = false AND Team__r.Team_Type__c = 'Sales Team' ORDER BY Last_Assignment_DateTime__c ASC];
         system.debug('Inside:::'+ userList);
         if(!userList.isEmpty() && userList != null){
             return userList;
@@ -81,10 +81,10 @@ public class Ex_SMAssignmentController {
         svRecord.Sales_Manager__c = salesManager.User__r.Id;
         svRecord.OwnerId = salesManager.User__r.Id;
         svRecord.Is_Sales_Manager_Assigned__c = true;
-        svRecord.SM_Assignment_Date__c = System.today();
+        svRecord.SM_Assignment_Date__c = DateTime.now();
         // svRecord.SM_Assignment_Date__c = System.now();
-        salesManager.Last_Assignment_DateTime__c = System.now();
-        salesManager.Last_Assignment_Milliseconds__c = System.now().millisecondGMT();
+        salesManager.Last_Assignment_DateTime__c = DateTime.now();
+        salesManager.Last_Assignment_Milliseconds__c = DateTime.now().millisecondGMT();
         if(salesManager.Assignment_Counter__c == null){
             salesManager.Assignment_Counter__c  = 1;
         }else{

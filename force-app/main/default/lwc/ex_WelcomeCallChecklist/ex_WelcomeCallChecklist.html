@@ -1,0 +1,597 @@
+<!--
+@description       : 
+@author            : ChangeMeIn@UserSettingsUnder.SFDoc
+@group             : 
+@last modified on  : 10-18-2024
+@last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card>
+        <div class="mains">
+            <div class="main" style="padding: 15px;">
+                <label class="head">Booking Verification Checklist</label>
+            </div>
+            <template if:true={showRejectedChecklist}>
+                <template for:each={groupedRejectedChecklist} for:item="group" for:index="ind">
+                    <div key={group.sectionName}>
+                        <div class="mains">
+                            <div class="main">
+                                <h2 class="section head">{group.sectionName}</h2>
+                            </div>
+                            <template for:each={group.items} for:item="checklist" for:index="index">
+                                <div key={checklist.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <p name='section1' class="item">{checklist.Item__c}</p>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                            <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                                data-key={ind} data-id={checklist.Id} data-index={index}
+                                                onchange={handleExistingAction}>
+                                            </lightning-input-field>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+                <div style="text-align: center;padding-top: 10px;">
+                    <lightning-button variant="brand" label="Submit" title="Submit" onclick={updateAccount}>
+                    </lightning-button>
+                </div>
+            </template>
+
+            <div if:false={showRejectedChecklist}>
+                <!-- <div class="slds-p-around_medium" style="border:1px solid black;border-radius: 5px;"> -->
+                <div class="section-div" data-section="section1">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name='section1' class="head">All Applicants Name Confirmation</h2>
+                        </div>
+                        <!-- <h2 name='section1' class="section">All Applicants Name Confirmation</h2> -->
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <template if:true={applicants}>
+                            <template for:each={applicants} for:item="applicant" for:index="index">
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <p name='section1' class="item">Applicant {applicant.displayIndex} -
+                                            {applicant.Name}
+                                        </p>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                            <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                                value={applicant.Action__c} data-index={index} class="validate"
+                                                onchange={handleAction} required>
+                                            </lightning-input-field>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="section-div" data-section="section2">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name='section2' class="head">Tower/Building Name and Unit Details</h2>
+                        </div>
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name='section2' class="item">Tower Name - {tower}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name='section2' class="item">Unit Name - {unit} </br></p>
+                                <p class="item">Carpet Area - {carpet}</br>Saleable Area - {saleable}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=1 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="section-div" data-section="section3">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name="section3" class="head">KYC of all applicants</h2>
+                        </div>
+
+                        <template if:true={applicants}>
+                            <template for:each={applicants} for:item="applicant" for:index="index">
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_2-of-2">
+                                        <p name="section3" class="section3-applicant item"
+                                            style="padding-left: 34%; font-weight: 700; background-color: rgb(195, 247, 230);padding-bottom: 20px;">
+                                            Applicant {applicant.displayIndex} - {applicant.Name}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <p name="section3a" class="item">
+                                            <span style="font-weight: 700;">Adhaar Number : </span>
+                                            {applicant.Aadhar_Number__c} <label style="padding-left: 15%;"
+                                                class="blue-link" data-id={applicant.Id} data-doc-type="Aadhar Card"
+                                                onclick={viewDocument}>View Aadhaar Card</label>
+                                        </p>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                            <lightning-input-field name="aadhar" style="width: 30%;"
+                                                field-name="Action__c" value={actionValue} data-index={index}
+                                                onchange={handleAction} class="validate" required>
+                                            </lightning-input-field>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <p name="section3b" class="item">
+                                            <span style="font-weight: 700;">PAN Number :
+                                            </span>{applicant.PAN_Number__c}<label style="padding-left: 22%;"
+                                                class="blue-link" data-id={applicant.Id} data-doc-type="Pan Card"
+                                                onclick={viewDocument}>View PAN Card</label>
+                                        </p>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                            <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                                value={actionValue} name="pan" data-index={index}
+                                                onchange={handleAction} class="validate" required>
+                                            </lightning-input-field>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+
+                            </template>
+                        </template>
+                    </div>
+                </div>
+                <div class="section-div" data-section="section4">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name="section4" class="head">Mobile Number and Email Id</h2>
+                        </div>
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <template if:true={applicants}>
+                            <template for:each={applicants} for:item="applicant" for:index="index">
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_2-of-2">
+                                        <p name="section4" class="item"
+                                            style="padding-left: 34%;font-weight: 700;background-color: rgb(195, 247, 230);padding-bottom: 20px;">
+                                            Applicant
+                                            {applicant.displayIndex} - {applicant.Name}</p>
+                                    </div>
+                                </div>
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <p name="section4a" class="item"><span style="font-weight: 700;">Mobile
+                                                Number:</span>
+                                            {applicant.Mobile__c}</p>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                            <lightning-input-field name="mobile" style="width: 30%;"
+                                                field-name="Action__c" value={actionValue} data-index={index}
+                                                onchange={handleAction} class="validate" required>
+                                            </lightning-input-field>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                                <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <p name="section4b" class="item"><span style="font-weight: 700;">Email
+                                                Id:</span>
+                                            {applicant.Email__c}</p>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                            <lightning-input-field name="email" style="width: 30%;"
+                                                field-name="Action__c" value={actionValue} data-index={index}
+                                                onchange={handleAction} class="validate" required>
+                                            </lightning-input-field>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <!-- <div class="section-div" data-section="section5">
+            <h2 name="section5" class="section">Payment Terms</h2>
+            <div style="border: 1px solid black;">
+                <div class="slds-grid slds-wrap slds-p-bottom_small">
+                    <div class="slds-col slds-size_1-of-2">
+                        <p name="section5" class="item">Payment Term - {paymentScheme}</p>
+                        
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                            <lightning-input-field style="width: 30%;" field-name="Action__c" value={actionValue}
+                                data-index=0 onchange={handleAction}>
+                            </lightning-input-field>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+                <div class="section-div" data-section="section6">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name="section6" class="head">Agreement Value and Total Cost of the Unit</h2>
+                        </div>
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <!-- <div class="slds-col slds-size_1-of-2">
+                            <p name="section6" class="item">Agreement Value - {agreementValue}</br></p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                <lightning-input-field style="width: 30%;" field-name="Action__c" value={actionValue}
+                                    data-index=0 onchange={handleAction} class="validate" required>
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div> -->
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">Agreement Value - {agreementValue}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">GST on Agreement Value - {agreementValueTax}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=3 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">Total Agreement Value - {agreementTotal}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=4 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">SDR - {SDRValue}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=1 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">Other Charges - {OCValue}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=2 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">GST on Other Charges - {OCTax}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=5 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">Total Other Charges - {OCTotal}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=6 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">Total Car Park Count - {carPark}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=7 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section6" class="item">Total Cost of the Unit - {totalPriceFormatted}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=8 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="section-div" data-section="section7">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name="section7" class="head">Payment Schedules</h2>
+                        </div>
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section7" class="item">Payment Schedule - <span class="blue-link"
+                                        data-id={paymentSchemeId} onclick={handlePayment}>{paymentScheme}</span></br>
+                                </p>
+                                <!-- <p class="item"><template if:true={deviation}>
+                                Payment Schedule Deviation - <span><input type="checkbox" id="deviationCheckbox1" name="deviationCheckbox" checked disabled></span></br>
+                            </template> -->
+                                <!-- <template if:false={deviation}>
+                                Payment Schedule Deviation - <span><input type="checkbox" id="deviationCheckbox2" name="deviationCheckbox" unchecked disabled></span>
+                            </template> -->
+                                </p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="section-div" data-section="section8">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name="section8" class="head">Token Amount Payment Details</h2>
+                        </div>
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section8" class="item">Token Amount - {token}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                        value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+
+                <div class="section-div" data-section="section9">
+                    <div class="mains">
+                        <div class="main">
+                            <h2 name="section9" class="head">Source of Booking</h2>
+                        </div>
+                        <!-- <div style="border: 1px solid black;"> -->
+                        <div class="slds-grid slds-wrap slds-p-bottom_small">
+                            <template if:true={showSource}>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p name="section9" class="item">Booking Source - {sourceDetails}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                        <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                            value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                            required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                                <!-- <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field
+                                        style="width: 30%;"
+                                        field-name="Action__c"
+                                        value={actionValue}
+                                        data-index=1
+                                        onchange={handleAction}>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div> -->
+                            </template>
+                            <template if:true={showCP}>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p name="section9" class="item">Booking Source - {sourceDetails}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                        <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                            value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                            required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p name="section9" class="item">Channel Partner - {cp1}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                        <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                            value={actionValue} data-index=1 onchange={handleAction} class="validate"
+                                            required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                            </template>
+
+                            <template if:true={showConflict}>
+                                <!-- <div class="slds-col slds-size_1-of-2">
+                                    <p name="section9" class="item">Booking Source - {sourceDetails} </br></p>
+                                    <p class="item"><template if:true={isConflict}>
+                                            Is Conflict - <span><input type="checkbox" id="deviationCheckbox3"
+                                                    name="deviationCheckbox" checked disabled></span>
+                                        </template>
+                                        <template if:false={isConflict}>
+                                            Is Conflict - <span><input type="checkbox" id="deviationCheckbox4"
+                                                    name="deviationCheckbox" unchecked disabled></span>
+                                        </template></br>First Channel Partner - {cp1}
+                                    </p>
+                                </div> -->
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                        <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                            value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                            required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                                <!-- <div class="slds-col slds-size_1-of-2">
+                                <p name="section9" class="item">Is Conflict - {isConflict}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field
+                                        style="width: 30%;"
+                                        field-name="Action__c"
+                                        value={actionValue}
+                                        data-index=1
+                                        onchange={handleAction}>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section9" class="item">First Channel Partner Is - {cp1}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field
+                                        style="width: 30%;"
+                                        field-name="Action__c"
+                                        value={actionValue}
+                                        data-index=2
+                                        onchange={handleAction}>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <p name="section9" class="item">Second Channel Partner Is - {cp2}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                    <lightning-input-field
+                                        style="width: 30%;"
+                                        field-name="Action__c"
+                                        value={actionValue}
+                                        data-index=3
+                                        onchange={handleAction}>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div> -->
+                            </template>
+                            <template if:true={showReference}>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p name="section9" class="item">Booking Source - {sourceDetails}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                        <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                            value={actionValue} data-index=0 onchange={handleAction} class="validate"
+                                            required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p name="section9" class="item">Referrer Name Is - {refer}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-record-edit-form object-api-name="Booking_Checklist__c">
+                                        <lightning-input-field style="width: 30%;" field-name="Action__c"
+                                            value={actionValue} data-index=1 onchange={handleAction} class="validate"
+                                            required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                            </template>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <template if:true={showChild}>
+                    <c-ex-_-view-payment-plan booking={recordId}></c-ex-_-view-payment-plan>
+                </template>
+
+                
+
+                <div style="text-align: center;padding-top: 10px;">
+                    <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+                <!-- </div> -->
+            </div>
+            <!-- <template if:true={showError}>
+        You have already completed checklist.
+    </template> -->
+        </div>
+    </lightning-card>
+</template>

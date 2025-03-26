@@ -45,6 +45,28 @@ global without sharing class Ex_SiteVisitForm {
         return pickListValues;
     }
     
+    @AuraEnabled(cacheable=false)
+    global static List<String> getLeadSource() {
+        List<String> pickListValues = new List<String>();
+        Schema.DescribeFieldResult objFieldDescribe = Site_Visit__c.Lead_Source__c.getDescribe();
+        List<Schema.PicklistEntry> lstPickListValues = objFieldDescribe.getPickListValues();
+        for (Schema.PicklistEntry objPickList : lstPickListValues) {
+            pickListValues.add(objPickList.getLabel());
+        }
+        return pickListValues;
+    }
+    
+    @AuraEnabled(cacheable=false)
+    global static List<String> getLeadSubSource() {
+        List<String> pickListValues = new List<String>();
+        Schema.DescribeFieldResult objFieldDescribe = Site_Visit__c.Lead_Sub_Source__c.getDescribe();
+        List<Schema.PicklistEntry> lstPickListValues = objFieldDescribe.getPickListValues();
+        for (Schema.PicklistEntry objPickList : lstPickListValues) {
+            pickListValues.add(objPickList.getLabel());
+        }
+        return pickListValues;
+    }
+    
     @AuraEnabled
     public static Visit_Pre_Registration__c checkCPData(String code, String Proj){
         System.debug('code: '+code);
@@ -52,7 +74,7 @@ global without sharing class Ex_SiteVisitForm {
         try {
             
             Visit_Pre_Registration__c cpList = [select Id, Visit_Pre_Registration_Code__c, Project__c , Project__r.Name, Customer_Name__c, Budget_Range__c, Configuration__c,
-                                                Mobile_Number__c, Lead__c, Site_Visit_Date__c, Status__c
+                                                Mobile_Number__c, Lead__c, Site_Visit_Date__c, Status__c, CP_Lead__c
                                                 from Visit_Pre_Registration__c 
                                                 where Visit_Pre_Registration_Code__c LIKE :code AND Project__c=:Proj AND Status__c != 'Completed'];
             system.debug('cpList is: '+cpList);
@@ -69,18 +91,19 @@ global without sharing class Ex_SiteVisitForm {
     }
     
     @AuraEnabled
-    global static SVWrapper getSVWrapper(String projectId, Id leadId ,Id oppId, Id accId){
+    global static SVWrapper getSVWrapper(String projectId, Id leadId ,Id oppId, Id accId, String cpLeadId){
         SVWrapper sv = new SVWrapper();
         system.debug('Id projectId::'+projectId);
         system.debug('Id leadId ::'+leadId);
         system.debug('Id oppId::'+oppId);
         system.debug('Id accId::'+accId);
+        List<CP_lead__c> cpLeadList  = new List<CP_Lead__c>();
+        
         if(accId != null ){
             Account acc = [Select Id, Name, Salutation, FirstName, LastName, Age_Group__c, Gender__c, Occupation__c, Marital_Status__c, Designation__c ,
                            BillingPostalCode, BillingCountry, BillingState, BillingCity, Industry__c, Family_Size__c, BillingStreet, Current_Resident_Status__c,  Current_Residence_Configuration__c,
-                           City__c, State__c,  Office_Pincode__c, Residential_Address__c, Locality__c,
+                           City__c, State__c,  Office_Pincode__c, Residential_Address__c, Locality__c, Nationality__c, 
                            Office_Location__c, Company_Name__c, Employment_Type__c, Annual_Income__c, 
-                           
                            Ethnicity__c, PersonMobilePhone, Phone, PersonEmail, Alternate_Email__c from Account where Id =: accId AND IsPersonAccount = true];
             system.debug('acc:::'+acc);
             if(acc != null){
@@ -105,8 +128,7 @@ global without sharing class Ex_SiteVisitForm {
                 if(acc.FirstName != null)
                     sv.sv.First_Name__c = acc.FirstName;
                 if(acc.LastName != null)
-                    sv.sv.Last_Name__c = acc.LastName;
-                
+                    sv.sv.Last_Name__c = acc.LastName;                
                 
                 // Demographics Details
                 if(acc.Age_Group__c != null)
@@ -140,21 +162,26 @@ global without sharing class Ex_SiteVisitForm {
                     sv.sv.Employment_Type__c = acc.Employment_Type__c;
                 if(acc.Annual_Income__c != null)
                     sv.sv.Annual_Income__c = acc.Annual_Income__c;
-                
-                
+                if(acc.Nationality__c!=null)
+                    sv.sv.Nationality__c = acc.Nationality__c;
+                if(acc.Annual_Income__c!=null)
+                    sv.sv.Annual_Income__c = acc.Annual_Income__c;
+                if(acc.Employment_Type__c != null)
+                    sv.sv.Employment_Type__c = acc.Employment_Type__c;
+
                 
             }
-            if(oppId != null && (String.isNotBlank(projectId))){
-                Opportunity__c opp = [Select Id, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
+            
+            if(oppId != null && String.isNotBlank(projectId) && acc.Id != null){
+                Opportunity__c opp = [Select Id, SV_Date_History__c, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                       Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Referrer_Address__c,
                                       Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c, Referrer_Mobile__c, 
                                       Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c,
                                       Area_Sq_Ft__c, Location__c, Actual_budget__c, Referrer_Name__c,
                                       Source_of_Funding__c, Any_Pre_existing_Loans__c, Type_of_Pre_existing_Loan__c,
-                                      Current_Outstanding_Amount__c, Sourcing_Manager__c
-                                      
+                                      Current_Outstanding_Amount__c, Sourcing_Manager__c, CP_Project__c, CP_Project__r.OwnerId, Is_Booked__c
                                       from Opportunity__c 
-                                      where (Id =: oppId)  AND Project__c =: projectId AND Is_Active__c = true limit 1];
+                                      where Id =: oppId AND Project__c =: projectId AND Account__c =: acc.Id AND Is_Booked__c = false];
                 System.debug('opp: '+opp);
                 if(opp != null){
                     sv.sv.Lead_Source__c = opp.Source__c;
@@ -163,8 +190,10 @@ global without sharing class Ex_SiteVisitForm {
                     if(opp.Source__c == 'Channel Partner') {
                         if(opp.Channel_Partner__c != null)
                             sv.sv.Channel_Partner__c = opp.Channel_Partner__c;
-                        // if(opp.Sourcing_Manager__c != null)
-                        //    sv.sv.Sourcing_Manager__c = opp.Sourcing_Manager__c;
+                        if(opp.CP_Project__c != null)
+                          sv.sv.CP_Project__c = opp.CP_Project__c;
+                        if(opp.CP_Project__r.OwnerId != null)
+                            sv.sv.Sourcing_Manager__c = opp.CP_Project__r.OwnerId;
                     }
                     
                     if(opp.Source__c == 'Reference') {
@@ -213,7 +242,6 @@ global without sharing class Ex_SiteVisitForm {
                     if(opp.Sourcing_Manager__c != null)
                         sv.sv.Sourcing_Manager__c = opp.Sourcing_Manager__c;
                     
-                    
                 }
             }
         }
@@ -222,14 +250,14 @@ global without sharing class Ex_SiteVisitForm {
                           Budget_Range__c, Buying_Purpose__c, Campaign__c, Campaign_Code__c, Channel_Partner__c,
                           Configuration_Required__c,  Channel_Partner__r.OwnerId,
                           Created_Date__c, Current_Residence_Configuration__c, Current_Resident_Status__c, 
-                          Designation__c, Email__c, Ethnicity__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
+                          Designation__c, Email__c, Ethnicity__c,  Nationality__c, Employment_Type__c, Annual_Income__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
                           Last_Name__c, Lead_Source__c, Lead_Stage__c, Lead_Sub_Source__c, Lead_Sub_Stage__c,
                           Lead_Sub_Stage_Reason__c, Marital_Status__c, Mobile__c, Occupation__c, Alternate_Mobile__c, Possession_Timeframe__c,
                           Presales_Call_Comment_History__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c, Presales_Last_Call_Date__c, Presales_Last_Call_Status__c, 
                           Project__c, Presales_Next_Follow_Up_Date__c, Presales_Proposed_Visit_Date__c, Referrer_Name__c, Referrer_Mobile__c, Referrer_Address__c, 
                           Residential_Address__c, Locality__c, Salutation__c, Source_Description__c,
                           Office_Location__c, Company_Name__c, Location__c,
-                          Office_Pincode__c, 
+                          Office_Pincode__c,  CP_Project__r.OwnerId, CP_Project__c,
                           Owner.FirstName, Owner.LastName,  City__c, State__c, Pincode__c from Lead__c WHERE Id=:leadId AND IsConverted__c = false];
             System.debug('ld: '+ld);
             if(ld != null){
@@ -248,7 +276,8 @@ global without sharing class Ex_SiteVisitForm {
                 
                 if(ld.Lead_Source__c == 'Channel Partner'){
                     sv.sv.Channel_Partner__c = ld.Channel_Partner__c;
-                    sv.sv.Sourcing_Manager__c =  ld.Channel_Partner__r.OwnerId;
+                    sv.sv.CP_Project__c = ld.CP_Project__c;
+                    sv.sv.Sourcing_Manager__c =  ld.CP_Project__r.OwnerId;
                 }
                 
                 if(ld.Lead_Source__c == 'Reference'){
@@ -273,6 +302,9 @@ global without sharing class Ex_SiteVisitForm {
                 sv.sv.Family_Size__c = ld.Family_Size__c;
                 sv.sv.Current_Resident_Status__c = ld.Current_Resident_Status__c;
                 sv.sv.Designation__c = ld.Designation__c;
+                sv.sv.Nationality__c = ld.Nationality__c;
+                sv.sv.Annual_Income__c = ld.Annual_Income__c;
+                sv.sv.Employment_Type__c = ld.Employment_Type__c;
                 
                 //Requirement Details
                 sv.sv.Configuration_Required__c = ld.Configuration_Required__c;
@@ -294,6 +326,63 @@ global without sharing class Ex_SiteVisitForm {
                 sv.sv.Presales_Manager__c = ld.OwnerId;
             }
         }
+        System.debug('cpLeadId: '+cpLeadId);
+        if(String.isNotBlank(cpLeadId) && String.isNotBlank(projectId)){
+            cpLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Email__c, Channel_Partner_Name__c, CP_Project__r.OwnerId, CP_Project__c,
+                          Age_Group__c, Gender__c, Marital_Status__c, Ethnicity__c, Occupation__c, Industry__c, Current_Resdient_Configuration__c, 
+                          Family_Size__c, Current_Resident_Status__c, Designation__c, Configuration_Required__c, Budget_Range__c, 
+                          Buying_Purpose__c, Location__c, Actual_Budget__c,
+                          Alternate_Email__c, CP_Lead_Call_Comment_History__c, CP_Lead_Call_Count__c, CP_Lead_Next_Follow_up_Date__c, CP_Lead_Stage__c, 
+                          Cp_Lead_Sub_Stage__c, Cp_Lead_Sub_Stage_Reason__c, Last_CP_Lead_Call_Comment__c, Last_CP_Lead_Call_Date__c, Proposed_Visit_Date__c 
+                          from CP_Lead__c where Id=: cpLeadId];
+            System.debug('cpLeadList: '+cpLeadList);
+            if(!cpLeadList.isEmpty() && cpLeadList != null){
+                CP_Lead__c cp = cpLeadList[0];
+                sv.sv.First_Name__c = cp.First_Name__c;
+                sv.sv.Last_Name__c = cp.Last_Name__c;
+                if(cp.Email__c != null){
+                    sv.sv.Email__c = cp.Email__c;
+                }
+                
+                //source Details
+                sv.sv.Lead_Source__c = 'Channel Partner';
+                sv.sv.Lead_Sub_Source__c = 'Channel Partner';
+                
+                sv.sv.Channel_Partner__c = cp.Channel_Partner_Name__c;
+                sv.sv.Sourcing_Manager__c =  cp.CP_Project__r.OwnerId;
+                sv.sv.CP_Lead__c = cp.Id;
+                sv.sv.CP_Project__c = cp.CP_Project__c;
+                
+                
+                //Demographics Details
+                sv.sv.Age_Group__c = cp.Age_Group__c;
+                sv.sv.Gender__c = cp.Gender__c;
+                sv.sv.Marital_Status__c = cp.Marital_Status__c;
+                sv.sv.Ethnicity__c = cp.Ethnicity__c;
+                sv.sv.Occupation__c = cp.Occupation__c;
+                sv.sv.Industry__c = cp.Industry__c;
+                // sv.sv.Office_Location__c = cp.Office_Location__c;
+                // sv.sv.Company_Name__c = cp.Company_Name__c;
+                // sv.sv.Office_Pincode__c = cp.Office_Pincode__c;
+                sv.sv.Current_Residence_Configuration__c = cp.Current_Resdient_Configuration__c;
+                sv.sv.Family_Size__c = cp.Family_Size__c;
+                sv.sv.Current_Resident_Status__c = cp.Current_Resident_Status__c;
+                sv.sv.Designation__c = cp.Designation__c;
+                
+                //Requirement Details
+                sv.sv.Configuration_Required__c = cp.Configuration_Required__c;
+                sv.sv.Budget_Range__c = cp.Budget_Range__c;
+                sv.sv.Buying_Purpose__c = cp.Buying_Purpose__c;
+                // sv.sv.Possession_Timeframe_Required__c = cp.Possession_Timeframe__c;
+                //  sv.sv.Area_Sq_Ft__c = cp.Area_Sq_Ft__c;
+                sv.sv.Location__c = cp.Location__c;
+                if(cp.Actual_Budget__c != null)
+                sv.sv.Actual_budget__c = Decimal.valueof(cp.Actual_Budget__c);
+                
+            }
+        }
+        
+        
         System.debug('sv: '+sv);
         return sv;
     }
@@ -315,17 +404,17 @@ global without sharing class Ex_SiteVisitForm {
             accList = [Select  Name, Salutation, FirstName, LastName, Age_Group__c, Gender__c, Occupation__c, Marital_Status__c, Designation__c ,
                        BillingPostalCode, BillingCountry, BillingState, BillingCity, Industry__c, Family_Size__c, BillingStreet, Current_Resident_Status__c,  Current_Residence_Configuration__c,
                        City__c, State__c,  Pincode__c, Residential_Address__c, Locality__c, Office_Location__c,
-                       Ethnicity__c, PersonMobilePhone, Phone, PersonEmail, Alternate_Email__c, Owner.Name from Account 
+                       Ethnicity__c, Nationality__c, Employment_Type__c, Annual_Income__c, PersonMobilePhone, Phone, PersonEmail, Alternate_Email__c, Owner.Name from Account 
                        where (PersonMobilePhone =: num OR Phone =: num) AND IsPersonAccount = true];
             system.debug('accList: '+accList);
             
             if(!accList.isEmpty()) {
                 isAccount = true;
-                oppList = [Select Id, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
-                           Channel_Partner__c, OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
-                           Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                           where Account__c =: accList[0].Id AND Is_Active__c = true];
+                oppList = [Select Id, SV_Date_History__c, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
+                           Channel_Partner__c, OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Last_SV_Date__c, Sales_Manager__r.Name,
+                           Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c, Owner.FirstName, Owner.LastName, Mobile__c, SV_Comment_History__c,
+                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c from Opportunity__c
+                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Booked__c = false];
                 system.debug('oppList: '+oppList);
                 
                 if(!oppList.isEmpty()) {
@@ -336,7 +425,7 @@ global without sharing class Ex_SiteVisitForm {
                     accList = [Select  Name, Salutation, FirstName, LastName, Age_Group__c, Gender__c, Occupation__c, Marital_Status__c, Designation__c ,
                                BillingPostalCode, BillingCountry, BillingState, BillingCity, Industry__c, Family_Size__c, BillingStreet, Current_Resident_Status__c,  Current_Residence_Configuration__c,
                                City__c, State__c,  Pincode__c, Residential_Address__c, Locality__c, Office_Location__c,
-                               Ethnicity__c, PersonMobilePhone, Phone, PersonEmail, Alternate_Email__c, Owner.Name from Account
+                               Ethnicity__c,  Nationality__c, Employment_Type__c, Annual_Income__c, PersonMobilePhone, Phone, PersonEmail, Alternate_Email__c, Owner.Name from Account
                                where (PersonEmail =: email OR Alternate_Email__c =: email) AND IsPersonAccount = true];
                     system.debug('accList: '+accList);
                     
@@ -344,10 +433,10 @@ global without sharing class Ex_SiteVisitForm {
                         isAccount = true;
                         
                         oppList = [Select Id, CreatedDate, Name, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
-                                   Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
-                                   Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                                   where Account__c =: accList[0].Id ];
+                                   Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c, Last_SV_Date__c, Sales_Manager__r.Name,
+                                   Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c, Owner.FirstName, Owner.LastName, Mobile__c, SV_Comment_History__c,
+                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c from Opportunity__c
+                                   where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Booked__c = false];
                         system.debug('oppList: '+oppList);
                         
                         if(!oppList.isEmpty()) {
@@ -363,7 +452,7 @@ global without sharing class Ex_SiteVisitForm {
                             Budget_Range__c, Buying_Purpose__c, Campaign__c, Campaign_Code__c, Channel_Partner__c,
                             Configuration_Required__c, Channel_Partner__r.OwnerId,
                             Created_Date__c, Current_Residence_Configuration__c, Current_Resident_Status__c, 
-                            Designation__c, Email__c, Ethnicity__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
+                            Designation__c, Email__c, Ethnicity__c, Nationality__c, Employment_Type__c, Annual_Income__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
                             Last_Name__c, Lead_Source__c, Lead_Stage__c, Lead_Sub_Source__c, Lead_Sub_Stage__c,
                             Lead_Sub_Stage_Reason__c, Marital_Status__c, Mobile__c, Occupation__c, Alternate_Mobile__c, Possession_Timeframe__c,
                             Presales_Call_Comment_History__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c, Presales_Last_Call_Date__c, Presales_Last_Call_Status__c, 
@@ -380,7 +469,7 @@ global without sharing class Ex_SiteVisitForm {
                                     Budget_Range__c, Buying_Purpose__c, Campaign__c, Campaign_Code__c, Channel_Partner__c,
                                     Configuration_Required__c, Account__c, Opportunity__c, Channel_Partner__r.OwnerId,
                                     Created_Date__c, Current_Residence_Configuration__c, Current_Resident_Status__c, 
-                                    Designation__c, Email__c, Ethnicity__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
+                                    Designation__c, Email__c, Ethnicity__c,  Nationality__c, Employment_Type__c, Annual_Income__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
                                     Last_Name__c, Lead_Source__c, Lead_Stage__c, Lead_Sub_Source__c, Lead_Sub_Stage__c,
                                     Lead_Sub_Stage_Reason__c, Marital_Status__c, Mobile__c, Occupation__c, Alternate_Mobile__c, Possession_Timeframe__c,
                                     Presales_Call_Comment_History__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c, Presales_Last_Call_Date__c, Presales_Last_Call_Status__c, 
@@ -444,19 +533,19 @@ global without sharing class Ex_SiteVisitForm {
         
         if(mobile != Null && !String.isBlank(mobile)) {
             accList = [Select Id, Salutation, FirstName, LastName, PersonMobilePhone, Phone, PersonEmail,
-                       Office_Location__c
+                       Office_Location__c, Nationality__c, Employment_Type__c, Annual_Income__c
                        from Account
                        where (PersonMobilePhone =: mobile OR Phone =: mobile) AND IsPersonAccount = true];
             system.debug('accList: '+accList);
             
             if(!accList.isEmpty()) {
                 isAccountFound = true;
-                oppList = [Select Id, Name , SV_Count__c, Last_SV_Date__c,
+                oppList = [Select Id, Name , SV_Date_History__c, SV_Count__c, Last_SV_Date__c,  Sub_Stage__c, Sub_Stage_Reason__c,
                            CreatedDate, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                            Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
                            Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Active__c = true];
+                           Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c from Opportunity__c
+                           where Account__c =: accList[0].Id AND Project__c =: projectId AND Is_Booked__c = false];
                 system.debug('oppList: '+oppList);
                 if(!oppList.isEmpty()) {
                     isOppFound = true;
@@ -464,18 +553,18 @@ global without sharing class Ex_SiteVisitForm {
             } else {
                 if(email != Null && !String.isBlank(email)) {
                     accList = [Select Id, Salutation, FirstName, LastName, PersonMobilePhone, Phone, PersonEmail,
-                               Office_Location__c
+                               Office_Location__c, Nationality__c, Employment_Type__c, Annual_Income__c
                                from Account
                                where (PersonEmail =: email OR Alternate_Email__c =: email) AND IsPersonAccount = true];
                     system.debug('accList: '+accList);
                     if(!accList.isEmpty()) {
                         isAccountFound = true;
-                        oppList = [Select Id, Name , SV_Count__c, Last_SV_Date__c,
+                        oppList = [Select Id, Name ,  SV_Date_History__c, SV_Count__c, Last_SV_Date__c,  Sub_Stage__c, Sub_Stage_Reason__c,
                                    CreatedDate, Project__c, Account__c,  Configuration_Required__c, Stage__c, Project__r.Name,
                                    Channel_Partner__c,   OwnerId, Channel_Partner__r.Name, Presales_Manager__c,
                                    Possession_Timeframe__c,  Buying_Purpose__c, Budget_Range__c,
-                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c from Opportunity__c
-                                   where Account__c =: accList[0].Id AND Project__c =:projectId AND Is_Active__c = true];
+                                   Source_Description__c, Sub_Source__c, Source__c, Project__r.TAT_Days_for_Walkin__c, Is_Active__c, Is_Booked__c  from Opportunity__c
+                                   where Account__c =: accList[0].Id AND Project__c =:projectId AND Is_Booked__c = false];
                         system.debug('oppList: '+oppList);
                         if(!oppList.isEmpty()) {
                             isOppFound = true;
@@ -484,11 +573,11 @@ global without sharing class Ex_SiteVisitForm {
                 }
             }
             if(oppList.isEmpty()) {
-                leadList = [Select  Id, Office_Location__c, Full_Name__c, Actual_Budget__c, Age_Group__c, Alternate_Email__c,
+                leadList = [Select  Id, CP_Lead__c, Office_Location__c, Full_Name__c, Actual_Budget__c, Age_Group__c, Alternate_Email__c,
                             Budget_Range__c, Buying_Purpose__c, Campaign__c, Campaign_Code__c, Channel_Partner__c,
                             Configuration_Required__c, Account__c, Opportunity__c, Channel_Partner__r.OwnerId,
                             Created_Date__c, Current_Residence_Configuration__c, Current_Resident_Status__c, 
-                            Designation__c, Email__c, Ethnicity__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
+                            Designation__c, Email__c, Ethnicity__c,  Nationality__c, Employment_Type__c, Annual_Income__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
                             Last_Name__c, Lead_Source__c, Lead_Stage__c, Lead_Sub_Source__c, Lead_Sub_Stage__c,
                             Lead_Sub_Stage_Reason__c, Marital_Status__c, Mobile__c, Occupation__c, Alternate_Mobile__c, Possession_Timeframe__c,
                             Presales_Call_Comment_History__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c, Presales_Last_Call_Date__c, Presales_Last_Call_Status__c, 
@@ -500,11 +589,11 @@ global without sharing class Ex_SiteVisitForm {
                     isLeadFound = true;
                 } else {
                     if(email != Null && !String.isBlank(email)) {
-                        leadList = [Select  Id, Office_Location__c, Full_Name__c, Actual_Budget__c, Age_Group__c, Alternate_Email__c,
+                        leadList = [Select  Id, CP_Lead__c, Office_Location__c, Full_Name__c, Actual_Budget__c, Age_Group__c, Alternate_Email__c,
                                     Budget_Range__c, Buying_Purpose__c, Campaign__c, Campaign_Code__c, Channel_Partner__c,
                                     Configuration_Required__c, Account__c, Opportunity__c, Channel_Partner__r.OwnerId,
                                     Created_Date__c, Current_Residence_Configuration__c, Current_Resident_Status__c, 
-                                    Designation__c, Email__c, Ethnicity__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
+                                    Designation__c, Email__c, Ethnicity__c, Nationality__c, Employment_Type__c, Annual_Income__c, Family_Size__c, First_Name__c, Gender__c, Industry__c, IsConverted__c, 
                                     Last_Name__c, Lead_Source__c, Lead_Stage__c, Lead_Sub_Source__c, Lead_Sub_Stage__c,
                                     Lead_Sub_Stage_Reason__c, Marital_Status__c, Mobile__c, Occupation__c, Alternate_Mobile__c, Possession_Timeframe__c,
                                     Presales_Call_Comment_History__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c, Presales_Last_Call_Date__c, Presales_Last_Call_Status__c, 
@@ -533,7 +622,7 @@ global without sharing class Ex_SiteVisitForm {
                 List<Visit_Pre_Registration__c> vprList = new List<Visit_Pre_Registration__c>();
                 vprList = [Select Id, Name, Site_Visit_Date__c, Status__c from Visit_Pre_Registration__c where Id =: vpId];
                 if(vprList != null && !vprList.isEmpty()){
-                    vprList[0].Site_Visit_Date__c = System.today();
+                    vprList[0].Site_Visit_Date__c = DateTime.now();
                     vprList[0].Status__c = 'Completed';
                     updateVPRList.add(vprList[0]);
                 }
@@ -557,6 +646,14 @@ global without sharing class Ex_SiteVisitForm {
                             sv.Site_Visit_Count__c = oppList[0].SV_Count__c + 1;
                         }
                         insert sv;
+                       
+                        if(oppList[0].Stage__c != null && oppList[0].Stage__c.equalsIgnoreCase('Lost')){
+                            oppList[0].Stage__c = 'Created';
+                             oppList[0].Sub_Stage__c = '';
+                             oppList[0].Sub_Stage_Reason__c = '';
+                            
+                            
+                        }
                         
                         //Update Opportunity
                         oppList[0].SV_Count__c = oppList[0].SV_Count__c + 1;
@@ -590,6 +687,7 @@ global without sharing class Ex_SiteVisitForm {
                     op.Name = sv.First_Name__c +' '+ sv.Last_Name__c;
                     op.Project__c = projectId;
                     op.Stage__c = 'In Follow-up';
+                    op.Sub_Stage__c = 'Cold';
                     op.Budget_Range__c = sv.Budget_Range__c;
                     op.Buying_Purpose__c = sv.Buying_Purpose__c;
                     op.Configuration_Required__c = sv.Configuration_Required__c;
@@ -617,6 +715,7 @@ global without sharing class Ex_SiteVisitForm {
             }
         } else {
             system.debug('Test');
+            system.debug('CP:'+svWrapper.sv.Channel_Partner__c);
             if(isLeadFound && !isAccountFound){
                 try{
                     System.debug('Inside Lead Found:');
@@ -624,22 +723,69 @@ global without sharing class Ex_SiteVisitForm {
 leadList[0].Project__c = pList[0].Id;*/
                     leadList[0].Project__c = projectId;
                     leadList[0].Lead_Stage__c = 'Visit Done';
-                    update leadList[0];
+                    leadList[0].Lead_Sub_Stage__c = 'Visit Done';
+                    if(svWrapper.sv.Lead_Source__c!=null){
+                        leadList[0].Lead_Source__c = SVWrapper.sv.Lead_Source__c;
+                    }
+                    if(svWrapper.sv.Lead_Sub_Source__c!=null){
+                        leadList[0].Lead_Sub_Source__c = SVWrapper.sv.Lead_Sub_Source__c;
+                    }
+                    if(svWrapper.sv.Lead_Source__c!=null && svWrapper.sv.Lead_Source__c=='Channel Partner'){
+                        system.debug('CP:'+svWrapper.sv.Channel_Partner__c);
+                        if(svWrapper.sv.Channel_Partner__c!=null)
+                        	leadList[0].Channel_Partner__c = SVWrapper.sv.Channel_Partner__c;
+                    }
+                    if(svWrapper.sv.Lead_Source__c!=null && svWrapper.sv.Lead_Source__c=='Reference'){
+                        if(svWrapper.sv.Referrer_Name__c!=null)
+                        	leadList[0].Referrer_Name__c = SVWrapper.sv.Referrer_Name__c;
+                    }
+                    if(svWrapper.sv.CP_Lead__c != null){
+                        leadList[0].CP_Lead__c = SVWrapper.sv.CP_Lead__c;
+                    }
+					update leadList[0];                    
                     
                     Ex_LeadConversionServices.convertLead(leadList);
                     
                     Lead__c convertedLead = [SELECT Converted_Account__c, Converted_Opportunity__c from Lead__c where Id =: leadList[0].Id];
                     system.debug('Converted Lead: '+convertedLead);
                     
-                    Opportunity__c convertedOpp =  [SELECT Id, Name, SV_Count__c, Fist_SV_Date__c,  Last_SV_Date__c,Source__c from Opportunity__c where Id =: convertedLead.Converted_Opportunity__c];
+                    Opportunity__c convertedOpp =  [SELECT Id, Name, SV_Count__c, Fist_SV_Date__c, Last_SV_Date__c, Last_SV_attended_by__c,
+                                                   Presales_Last_Call_Date__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c,Presales_Call_Comment_History__c,
+                                                   Presales_Next_Follow_Up_Date__c, Presales_Proposed_Visit_Date__c from Opportunity__c where Id =: convertedLead.Converted_Opportunity__c];
                     system.debug('Converted Opportunity: '+convertedOpp);
                     
                     //Tag Site Visit Against Opportunity
                     sv.Opportunity__c = convertedOpp.Id;
-                    sv.Site_Visit_Date__c = system.Today(); //PP
+                    sv.Site_Visit_Date__c = System.today(); //PP
                     sv.Site_Visit_Count__c = 1;
                     
                     insert sv;
+                    
+                    List<CP_lead__c> cpLeadList  = new List<CP_Lead__c>();
+                    List<CP_lead__c> updateCPLeadList  = new List<CP_Lead__c>();
+                    
+                    if(SVWrapper.sv.CP_Lead__c != null){
+                        cpLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Email__c, Channel_Partner_Name__c, CP_Project__r.OwnerId, CP_Project__c,
+                                      Age_Group__c, Gender__c, Marital_Status__c, Ethnicity__c, Occupation__c, Industry__c, Current_Resdient_Configuration__c, 
+                                      Family_Size__c, Current_Resident_Status__c, Designation__c, Configuration_Required__c, Budget_Range__c, 
+                                      Buying_Purpose__c, Location__c, Actual_Budget__c,
+                                      Alternate_Email__c, CP_Lead_Call_Comment_History__c, CP_Lead_Call_Count__c, CP_Lead_Next_Follow_up_Date__c, CP_Lead_Stage__c, 
+                                      Cp_Lead_Sub_Stage__c, Cp_Lead_Sub_Stage_Reason__c, Last_CP_Lead_Call_Comment__c, Last_CP_Lead_Call_Date__c, Proposed_Visit_Date__c 
+                                      from CP_Lead__c where Id=: SVWrapper.sv.CP_Lead__c];
+                        IF(!cpLeadList.isEmpty() && cpLeadList != null){
+                            CP_Lead__c cp = cpLeadList[0];
+                            cp.CP_Lead_Stage__c = 'Visit Done';
+                            cp.Cp_Lead_Sub_Stage__c = 'Visit Done';
+                            updateCPLeadList.add(cp);
+                            
+                            convertedOpp.Presales_Last_Call_Date__c = cp.Last_CP_Lead_Call_Date__c;
+                            convertedOpp.Presales_Call_Count__c = CP.CP_Lead_Call_Count__c;
+                            convertedOpp.Presales_Last_Call_Comment__c = CP.Last_CP_Lead_Call_Comment__c;
+                            convertedOpp.Presales_Call_Comment_History__c = CP.CP_Lead_Call_Comment_History__c;
+                            convertedOpp.Presales_Next_Follow_Up_Date__c = CP.CP_Lead_Next_Follow_up_Date__c;
+                            convertedOpp.Presales_Proposed_Visit_Date__c = CP.Proposed_Visit_Date__c;
+                        }
+                    }
                     
                     //Update Opportunity
                     // convertedOpp.Site_Visit_Count__c = 1;
@@ -653,6 +799,10 @@ leadList[0].Project__c = pList[0].Id;*/
                     message = 'Thank You! Site visit number is '+ lstSV[0].Name;
                     system.debug('Success Message: '+message);
                     resultMap.put(sv.Id,message);
+                    System.debug('updateCPLeadList: '+updateCPLeadList);
+                    if(!updateCPLeadList.isEmpty() && updateCPLeadList != null){
+                        update updateCPLeadList;
+                    }
                 }catch(Exception ex) {
                     system.debug('Error: '+ex);
                     message = 'Error ' +ex.getMessage();  
@@ -667,6 +817,7 @@ leadList[0].Project__c = pList[0].Id;*/
                     l.Last_Name__c = sv.Last_Name__c;
                     l.Mobile__c = sv.Mobile__c;
                     l.Email__c = sv.Email__c;
+                    l.IsConverted__c = true;
                     
                     
                     //Address Details
@@ -693,6 +844,9 @@ leadList[0].Project__c = pList[0].Id;*/
                     l.Gender__c = sv.Gender__c;
                     l.Marital_Status__c = sv.Marital_Status__c;
                     l.Ethnicity__c = sv.Ethnicity__c;
+                    l.Nationality__c = sv.Nationality__c;
+                    l.Annual_Income__c = sv.Annual_Income__c;
+                    l.Employment_Type__c = sv.Employment_Type__c;
                     l.Occupation__c = sv.Occupation__c;
                     l.Designation__c = sv.Designation__c;
                     l.Company_Name__c = sv.Company_Name__c;
@@ -700,11 +854,12 @@ leadList[0].Project__c = pList[0].Id;*/
                     l.Family_Size__c = sv.Family_Size__c;
                     l.Current_Resident_Status__c = sv.Current_Resident_Status__c;
                     l.Current_Residence_Configuration__c = sv.Current_Residence_Configuration__c;
-                    
+					
                     
                     
                     // Stage Details
                     l.Lead_Stage__c = 'Visit Done';
+                    l.Lead_Sub_Stage__c = 'Visit Done';
                     
                     if(String.isNotBlank(projectId) && isQRUser){
                         pList = [Select Id, User__c from Project__c where Id =: projectId];
@@ -725,7 +880,9 @@ leadList[0].Project__c = pList[0].Id;*/
                     Lead__c convertedLead = [Select Converted_Account__c, Converted_Opportunity__c from Lead__c where Id = :l.Id ];
                     system.debug('Converted Lead: '+convertedLead);
                     
-                    Opportunity__c convertedOpp = [SELECT Id, Name, SV_Count__c, Fist_SV_Date__c, Last_SV_Date__c, Last_SV_attended_by__c from Opportunity__c where Id =: convertedLead.Converted_Opportunity__c];
+                    Opportunity__c convertedOpp = [SELECT Id, Name, SV_Count__c, Fist_SV_Date__c, Last_SV_Date__c, Last_SV_attended_by__c,
+                                                   Presales_Last_Call_Date__c, Presales_Call_Count__c, Presales_Last_Call_Comment__c,Presales_Call_Comment_History__c,
+                                                   Presales_Next_Follow_Up_Date__c, Presales_Proposed_Visit_Date__c from Opportunity__c where Id =: convertedLead.Converted_Opportunity__c];
                     system.debug('Converted Opportunity: '+convertedOpp);
                     
                     //Tag Site Visit Against Converted Opportunity
@@ -742,6 +899,32 @@ leadList[0].Project__c = pList[0].Id;*/
                     
                     insert sv;
                     
+                    
+                    List<CP_lead__c> cpLeadList  = new List<CP_Lead__c>();
+                    List<CP_lead__c> updateCPLeadList  = new List<CP_Lead__c>();
+                    
+                    if(SVWrapper.sv.CP_Lead__c != null){
+                        cpLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Email__c, Channel_Partner_Name__c, CP_Project__r.OwnerId, CP_Project__c,
+                          Age_Group__c, Gender__c, Marital_Status__c, Ethnicity__c,  Occupation__c, Industry__c, Current_Resdient_Configuration__c, 
+                          Family_Size__c, Current_Resident_Status__c, Designation__c, Configuration_Required__c, Budget_Range__c, 
+                          Buying_Purpose__c, Location__c, Actual_Budget__c,
+                          Alternate_Email__c, CP_Lead_Call_Comment_History__c, CP_Lead_Call_Count__c, CP_Lead_Next_Follow_up_Date__c, CP_Lead_Stage__c, 
+                          Cp_Lead_Sub_Stage__c, Cp_Lead_Sub_Stage_Reason__c, Last_CP_Lead_Call_Comment__c, Last_CP_Lead_Call_Date__c, Proposed_Visit_Date__c 
+                          from CP_Lead__c where Id=: SVWrapper.sv.CP_Lead__c];
+                        IF(!cpLeadList.isEmpty() && cpLeadList != null){
+                            CP_Lead__c cp = cpLeadList[0];
+                            cp.CP_Lead_Stage__c = 'Visit Done';
+                            cp.Cp_Lead_Sub_Stage__c = 'Visit Done';
+                            updateCPLeadList.add(cp);
+                            
+                            convertedOpp.Presales_Last_Call_Date__c = cp.Last_CP_Lead_Call_Date__c;
+                            convertedOpp.Presales_Call_Count__c = CP.CP_Lead_Call_Count__c;
+                            convertedOpp.Presales_Last_Call_Comment__c = CP.Last_CP_Lead_Call_Comment__c;
+                            convertedOpp.Presales_Call_Comment_History__c = CP.CP_Lead_Call_Comment_History__c;
+                            convertedOpp.Presales_Next_Follow_Up_Date__c = CP.CP_Lead_Next_Follow_up_Date__c;
+                            convertedOpp.Presales_Proposed_Visit_Date__c = CP.Proposed_Visit_Date__c;
+                        }
+                    }
                     //Update Opportunity
                     convertedOpp.SV_Count__c = 1;
                     convertedOpp.Last_SV_Date__c = system.now();
@@ -752,6 +935,12 @@ leadList[0].Project__c = pList[0].Id;*/
                     message = 'Thank You! Site visit number is '+ lstSV[0].Name;
                     system.debug('Success Message: '+message);
                     resultMap.put(sv.Id,message);
+                    System.debug('updateCPLeadList: '+updateCPLeadList);
+                    if(!updateCPLeadList.isEmpty() && updateCPLeadList != null){
+                        update updateCPLeadList;
+                    }
+                    
+                    
                 } catch(Exception ex) {
                     system.debug('Exception: '+ex);
                     message = 'Error ' +ex.getMessage();    

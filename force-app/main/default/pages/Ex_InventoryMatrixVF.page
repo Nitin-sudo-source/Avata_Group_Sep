@@ -1,0 +1,21 @@
+<apex:page showHeader="false" sidebar="false"  docType="html-5.0" lightningStylesheets="false" standardStylesheets="false">
+    
+    <apex:includeLightning />  
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:Ex_InventoryMatrixApp", function()
+                   {
+                       $Lightning.createComponent("c:ex_InventoryMatrix",
+                                                  { 
+                                                      recordId: '{!$CurrentPage.parameters.recordId}'
+                                                      
+                                                  },
+                                                  "LightningComponentid",
+                                                  function(cmp) {
+                                                      
+                                                      // console.log('LWC Componenet added in VF page'+ 'oppId:'+ oppId  +'uId:'+uId);
+                                                      
+                                                  });
+                   });
+    </script>
+</apex:page>

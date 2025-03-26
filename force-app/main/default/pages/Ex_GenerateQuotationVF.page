@@ -1,0 +1,21 @@
+<apex:page showHeader="false" sidebar="false"  >
+    <apex:includeLightning />  
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:Ex_GenerateQuotationApp", function()
+                   {
+                       $Lightning.createComponent("c:ex_GenerateQuotation",
+                                                  { 
+                                                      oppId: '{!$CurrentPage.parameters.oppId}',
+                                                      uId: '{!$CurrentPage.parameters.uId}'
+                                                      
+                                                  },
+                                                  "LightningComponentid",
+                                                  function(cmp) {
+                                                      
+                                                      // console.log('LWC Componenet added in VF page'+ 'oppId:'+ oppId  +'uId:'+uId);
+                                                      
+                                                  });
+                   });
+    </script>
+</apex:page>

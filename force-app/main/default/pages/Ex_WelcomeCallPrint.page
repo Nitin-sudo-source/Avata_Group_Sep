@@ -1,0 +1,302 @@
+<apex:page controller="Ex_WelcomeCallEmailController" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style type="text/css" media="print">
+                               @page {
+                    font-family: Times, sans-serif;
+                    size: A4;
+                    margin-top: 0.5in;
+                    padding: 2px;
+                }
+
+                .header {
+                    position: running(header);
+                    font-size: 10px;
+                    text-align: left;
+                    padding-left: 5px;
+                    margin-top: 5mm;
+                }
+
+                .footer {
+                    display: block;
+                    text-align: right;
+                    position: running(footer);
+                }
+
+                * {
+                    box-sizing: border-box;
+                    font-size: 10px;
+                }
+
+                body {
+                    font-family: Times, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .content-container {
+                    font-family: Arial, sans-serif;
+                    padding: 20px;
+                }
+
+                .date-text,
+                .salutation-text,
+                .section-title,
+                .paragraph-text,
+                .contact-text {
+                    font-size: 15px;
+                }
+
+                .section-title {
+                    font-size: 18px;
+                    text-decoration: underline;
+                }
+
+                .crm-details b {
+                    font-size: 14px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th,
+                td {
+                    border: 0.5px solid black;
+                    padding: 4px;
+                    text-align: left;
+                    font-size: 14px;
+                    page-break-inside: avoid;
+                	width:50%;
+                }
+
+                th {
+                    font-weight: bold;
+                }
+
+                h3 {
+                    font-size: 18px;
+                }
+                
+            </style>
+        </head>
+        
+        <body>
+             <div class="content-container">
+
+                <p style="font-size: 15px;text-align: right;"> Date:
+                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                        <apex:param value="{!welcomecallDate}" /> 
+                    </apex:outputText>
+                </p>
+                
+                <!-- <p style="font-size: 15px;text-align: right;">Date: {!currentDate}</p>-->
+                
+                <!-- Salutation -->
+                <p style="font-size: 15px;">Dear {!bkList[0].Primary_Applicant_Name__c},</p>
+                
+                <p style="font-size: 15px;">
+                    Greetings from Avant Group…!!!
+                </p>
+                <p style="font-size: 15px;">
+                    Congratulations on your new home, we are delighted to welcome you.
+                </p>
+                
+                
+                <p style="font-size: 15px;">
+                    My name is <b style="font-size: 15px;"> {!crmName} </b> and I am your Customer Relationship Manager for your booking at 
+                    <b style="font-size: 15px;"> {!projName} </b>and it shall be my pleasure to assist you in completing your flat purchase formalities.
+                </p>
+                
+                <p style="font-size: 15px;">
+                    I am pleased to inform you that your request for the purchase of a {!inventoryType} unit 
+                    has been accepted and accordingly, a {!configrationType} is tentatively booked under your name, 
+                    the details of which are as follows:
+                </p>
+                
+                <!-- Personal Details Section -->
+               
+                
+                
+                
+                <table>
+                    <tr>
+                    	<th colspan="2" style="border:none;">  <h3><u style="font-size: 16px;">Your Personal Details:</u></h3> </th>
+                    </tr>
+                    <tr>
+                        <th>Primary Applicant’s Name</th>
+                        <th>{!bkList[0].Primary_Applicant_Name__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Co-Applicant’s Name</th>
+                        <th>
+                            <apex:repeat value="{!ApplicantWrapperList}" var="ap">
+                                {!ap.applicantName},
+                            </apex:repeat>
+                            
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Primary Applicant’s Mobile</th>
+                        <th>{!bkList[0].Primary_Applicant_Mobile__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Primary Applicant’s Email</th>
+                        <th>{!bkList[0].Primary_Applicant_Email__c}</th>
+                    </tr>
+                    
+                </table>
+                 
+                 
+                 
+                
+                
+                <table>
+                     <tr>
+                    	<th colspan="2" style="border:none;">  <h3><u style="font-size: 16px;">Details of the {!inventoryType} unit:</u></h3> </th>
+                    </tr>
+                    <tr>
+                        <th>Building Name</th>
+                        <th> {!towerName} </th>
+                        <!-- <th style="padding: 10px;" align="left">{!bkList[0].Tower__r.Name}</th>-->
+                    </tr>
+                    <tr>
+                        <th>Unit No.</th>
+                        <th> {!unitName} </th>
+                        <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Name}</th>-->
+                    </tr>
+                    <tr>
+                        <th>Type of Unit</th>
+                        <th>{!inventoryType}</th>
+                    </tr>
+                    <tr>
+                        <th>Rera Carpet Area</th>
+                        <th> {!reraArea} </th>
+                        <!--  <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.RERA_Carpet_Area_Sq_Ft__c}</th>-->
+                    </tr>
+                    <tr>
+                        <th>Floor</th>
+                        <th> {!floorNo} </th>
+                        <!-- <th style="padding: 10px;" align="left">{!bkList[0].Unit__r.Floor__c}</th>-->
+                    </tr>
+                </table>
+                
+                <h3 style="font-size: 16px;">Payment Plan:</h3>
+                <p style="font-size: 15px;">
+                    Please note all payments shall be made in accordance with the cost sheet attached separately with this email/letter. 
+                    All statutory taxes and levies need to be borne by the home buyer as per the rates applicable from time to time and paid 
+                    to the developer as and when called for the same.
+                </p>
+                
+                <h3 ><u style="font-size: 16px;">Online/Cheque Payment Details:</u></h3>
+                <p style="font-size: 15px;">
+                    We would strongly encourage you to make the payments online and provide us with the UTR No. of the payments so 
+                    we can trace your payments and accordingly confirm.
+                </p>
+                
+                
+                
+                <h3 style="page-break-before: always;"><u style="font-size: 15px;">Account Details for Payment to be made against Flat:</u></h3>
+                
+                <table>
+                    <tr>
+                        <th>Particulars</th>
+                        <th>Online payments towards</th>
+                    </tr>
+                    <tr>
+                        <th>Company Name/Account Name</th>
+                        <th>{!bkList[0].Account_Name_Flat_Cost__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Bank /Branch Name</th>
+                        <th>{!bkList[0].Bank_Name_Flat_Cost__c} / {!bkList[0].Branch_Name_Flat_Cost__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Account No</th>
+                        <th>{!bkList[0].Account_Number_Flat_Cost__c}</th>
+                    </tr>
+                    <tr>
+                        <th>IFSC CODE</th>
+                        <th>{!bkList[0].IFSC_Code_Flat_Cost__c}</th>
+                    </tr>
+                </table>
+                
+                <!-- Account Details for Payments Against GST -->
+                <h3><u style="font-size: 15px;">Account Details for Payments to be Made Against GST:</u></h3>
+                <table>
+                    <tr>
+                        <th>Particulars</th>
+                        <th>Online payments towards</th>
+                    </tr>
+                    <tr>
+                        <th>Company Name/Account Name</th>
+                        <th>{!bkList[0].Account_Name_Tax__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Bank and Branch Name</th>
+                        <th>{!bkList[0].Bank_Name_Tax__c} / {!bkList[0].Branch_Name_Tax__c}</th>
+                    </tr>
+                    <tr>
+                        <th>Account No</th>
+                        <th>{!bkList[0].Account_Number_Tax__c}</th>
+                    </tr>
+                    <tr>
+                        <th>IFSC CODE</th>
+                        <th>{!bkList[0].IFSC_Code_Tax__c}</th>
+                    </tr>
+                </table>
+                <!-- TDS Payment Details -->
+                <h3><u style="font-size: 15px;">TDS Payment Details:</u></h3>
+                
+                <table>
+                    <tr>
+                        <th>Particulars</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>{!tdsCompanyName}</th>
+                    </tr>
+                    <tr>
+                        <th>PAN No</th>
+                        <th>{!tdsPan}</th>
+                    </tr>
+                    <tr>
+                        <th>Email ID</th>
+                        <th>{!tdsEmail}</th>
+                    </tr>
+                    <tr>
+                        <th>Company Address</th>
+                        <th>{!tdsCompanyAddress}</th>
+                    </tr>
+                    <tr>
+                        <th>Contact No</th>
+                        <th>{!tdsContactNo}</th>
+                    </tr>
+                    
+                </table>
+                
+                <h3><u style="font-size: 16px;">Please share the following with us once you have made an online payment:</u></h3>
+                <p style="font-size: 15px;">(1) Bank name and account number from which the payment has been made</p>
+                <p style="font-size: 15px;">(2) Transaction Code – the 16 digit UTR code is mandatory for us to accept your payment, since banks/we cannot identify the payment without it</p>
+                <p style="font-size: 15px;">(3) Transaction Date and Transaction Amount</p>
+                <p style="font-size: 15px;">(4) Unit number and Project Name</p>
+                
+                <h3><u style="font-size: 16px;">Contact Us:</u></h3>
+                
+                <p style="font-size: 15px;">You may reach us at <strong style="font-size: 15px;">"crm@avantinfra.com"</strong></p>
+                
+                <p style="font-size: 15px;">I truly wish to make your journey until possession of your home a very enjoyable one.<br/>
+                    Looking forward to assisting you.</p>
+                
+                <p style="font-size: 15px;">Thanking You,</p>
+                 <p>
+                     <b style="font-size: 15px;">Avant Group </b>
+                 </p>
+            </div>
+        </body>
+    </html>
+</apex:page>

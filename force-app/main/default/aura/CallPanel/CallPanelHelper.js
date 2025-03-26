@@ -1,15 +1,19 @@
 ({
     getDetails : function(component, event, helper, payload) {
-       if(payload.User_Id__c == $A.get( "$SObjectType.CurrentUser.Id" )){
-              component.set('v.displayCall', true); 
+        if(payload.User_Id__c == $A.get( "$SObjectType.CurrentUser.Id" )){
+            component.set('v.displayCall', true); 
             if(payload.Record_Id__c != undefined && payload.Record_Id__c != null){
-                    component.set('v.recordId', payload.Record_Id__c); 
-                    component.set('v.objectName', payload.ObjectName__c); 
-                 
-                    component.set('v.displayCall', true);
-            } 
+                console.log(' playload========>' + payload.Record_Id__c);
+                component.set('v.recordId', payload.Record_Id__c); 
+                component.set('v.objectName', payload.ObjectName__c); 
+                component.set('v.displayCall', true);
+                console.log('Record Id:', component.get('v.recordId'));
+            console.log('Object Name:', component.get('v.objectName'));
+
+            }
+            
             helper.openUtility(component, event, helper);
-           
+            
         }
     },
     

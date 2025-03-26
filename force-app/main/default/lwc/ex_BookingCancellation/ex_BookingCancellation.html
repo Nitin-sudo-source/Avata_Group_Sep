@@ -1,0 +1,126 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 04-11-2024
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<template>
+    <div style="border: 2px solid black;margin:15px;">
+        <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Please wait...</div>
+        </div>
+        <lightning-card>
+            <!-- <div class="slds-align_absolute-center" style="background-color: darkturquoise;color: black;text-shadow: 2px 2px 5px grey;font-size: 20px;padding: 5px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Booking Details</div> -->
+            <lightning-record-view-form record-id={recordId} object-api-name="Booking__c">
+                <div style="Padding:10px;">
+
+                    <table class="Table1Css">
+                        <tr>
+                            <th colspan="4"
+                                style="text-align:center; font-size:18px;border: 1px solid black;padding:8px; background:#4fb7b2; color: black;">
+                                Booking Details
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Project Name</th>
+                            <td>
+                                <lightning-output-field variant="label-hidden" field-name="Project__c">
+                                </lightning-output-field>
+                            </td>
+                            <th>Tower Name</th>
+                            <td>
+                                <lightning-output-field variant="label-hidden" field-name="Tower__c">
+                                </lightning-output-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Opportunity Name</th>
+                            <td>
+                                <lightning-output-field variant="label-hidden" field-name="Opportunity__c">
+                                </lightning-output-field>
+                            </td>
+                            <th>Unit Name</th>
+                            <td>
+                                <lightning-output-field variant="label-hidden" field-name="Unit__c">
+                                </lightning-output-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Booking Date</th>
+                            <td>
+                                <lightning-output-field variant="label-hidden" field-name="Booking_Date__c">
+                                </lightning-output-field>
+                            </td>
+                            <th>Total Amount Received</th>
+                            <td colspan="3">
+                                <lightning-output-field variant="label-hidden" field-name="Total_Amount_Received__c">
+                                </lightning-output-field>
+                            </td>
+                            <!-- <th>Sale Value</th>
+                            <td>
+                                <lightning-output-field variant="label-hidden" field-name="Sale_Value__c">
+                                </lightning-output-field>
+                            </td> -->
+                        </tr>
+                       
+
+                    </table>
+                </div>
+            </lightning-record-view-form>
+            <br />
+            <div style="Padding:10px;">
+                <lightning-record-edit-form record-id={recordId} object-api-name="Booking__c">
+                    <table class="Table1Css">
+                        <tr>
+                            <th colspan="4"
+                            style="text-align:center; font-size:18px;border: 1px solid black;padding:8px; background:#4fb7b2; color: black;">
+                            Cancellation Details
+                        </th>
+
+                        </tr>
+                        <tr>
+                            <th>Cancellation Type </th>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Cancellation_Type__c"
+                                    onchange={handleCancelChange}> </lightning-input-field>
+                            </td>
+                            <th>Please Enter Refund Amount </th>
+                            <td>
+                                <lightning-input data-formfield="Refund_Amount__c" variant="label-hidden" default="true"
+                                    placeholder="0.00" value={bookObject.Refund_Amount__c}
+                                    onchange={onchnageamount}></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Please Upload Cancellation Document </th>
+                            <td>
+                                <lightning-file-upload variant="label-hidden" name="fileUploader"
+                                    accept={acceptedFormats} record-id={recordId}
+                                    onuploadfinished={handleUploadFinished}>
+                               </lightning-file-upload>
+                                <template if:true={showfilename}>
+                                    <p>{showfilename}</p>
+                                </template>
+                            </td>
+                            <th>Please Enter Cancellation Remarks </th>
+                            <td>
+                                <lightning-input style="margin-right: 20px;" variant="label-hidden"
+                                    data-formfield="Cancellation_Remark__c" label="Please Enter Cancellation Remark"
+                                    placeholder="Please Enter Cancellation Remark"
+                                    value={bookObject.Cancellation_Remark__c} onchange={handleReasonChange}
+                                    required></lightning-input>
+                            </td>
+                        </tr>
+
+                    </table>
+                </lightning-record-edit-form>
+            </div>
+            <center>
+                <lightning-button variant="Success" label="Submit For Cancellation" onclick={createBookData}
+                    style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;padding:10px;"></lightning-button>
+            </center>
+        </lightning-card>
+    </div>
+</template>

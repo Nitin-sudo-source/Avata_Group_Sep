@@ -1,0 +1,930 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 22-01-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<apex:page controller="Ex_PrintBookingPDF" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style type="text/css" media="print">
+                @page {
+                font-family: Times, sans-serif, Gotham Book, Arial; 
+                size: A4;
+                margin-top: 1.6in;
+                padding: 4px;
+                /*border: 1px solid black;*/
+                @top-left {
+                content: element(header);
+                }
+                /* @bottom-left {
+                content: "Page " counter(page) ;
+                }*/
+                @bottom-left {
+                content: element(footer);
+                }
+                }
+                .header {
+                position: running(header);
+                font-size: 10px;
+                text-align: left;
+                padding-left: 5px;
+                margin-top: 5mm;
+                }
+                
+                div.footer {
+                display: block;
+                padding: 5px;
+                position: running(footer);
+                
+                }
+
+                * {
+                box-sizing: border-box;
+                font-size: 8.5px;
+                }
+                body { 
+                font-family: 'Arial Unicode MS'; 
+                
+                margin: 0; 
+                padding: 0; 
+                }
+                .logo img{
+                height: 150px;
+                width:350px;
+                
+                }
+                .logo p{
+                margin: 0;
+                padding: 0;
+                }
+                .applicantDetails{
+                font-size:12px;
+                font-family: 'Arial Unicode MS'; 
+                }
+                .u{
+                    font-size: 12px;
+                }
+
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                font-size:12px;
+                }
+                
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:left;
+                /* background-color:  #b7c5e1; */
+                page-break-inside: avoid;
+                
+                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                page-break-inside: avoid;
+                
+                }
+                .mainTable tr{
+                page-break-inside: avoid;
+                
+                }
+
+                
+               
+            </style>
+            
+<!--Page 1 Start-->
+        <div>
+                <p style="text-align:center;font-size:30px;font-weight:bold;padding:8px;padding-top:20px;color:#484848; margin-top: 1in;">
+                    WEH-JVLR JUNCTION <br/> ANDHERI (E)
+                </p>
+            
+                <p style="text-align:center;font-size:30px;font-weight:bold;padding:8px;color:#000000;">
+                    | APPLICATION FORM &amp; |<br/> ALLOTMENT 
+                </p>
+           
+            <div class="logo" style="text-align:center;padding-left:20px; width:100%; display:inline-block; padding:0px 0px 5px 0px;margin:0px;">
+                <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
+            </div>
+            
+            <p style="text-align:center;font-size:32px;font-weight:bold;padding:8px;padding-top:20px;color:#003300;text-transform:uppercase;">
+                Congratulations <br/> On Your NEW Home
+            </p>
+            
+            <div class="footer">
+                <p align="" style="font-size:10px;">
+                    Codename Your Glory is registered in MahaRera as Avant Heritage - V is registered under MahaRERA Registration No.: P51800053527 &amp; is available on
+                    website of maharera.mahaonline.gov.in. All the images used in this are for representation purpose only. T&amp;C apply.
+                </p>
+            </div>
+
+        </div>
+<!--Page 1 End-->
+            
+            <!--Page 2 Start-->
+            <div style="page-break-before: always;">
+                <div class="header">
+                    <div class="logo" style="text-align:right; width:100%;">
+                        <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
+                    </div>
+                </div>
+                <div class="applicantDetails">
+                    
+                    <table style="font-size:12px;">
+                        <tr>
+                            <th>
+                                <b style="font-size:12px;text-transform:uppercase;"> A) Applicant Details </b>
+                            </th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <!-- 'Name of Applicant' label before the first td -->
+                            <td style="font-size:12px;width: 30% !important;">Name of Applicant</td>
+                            <td style="width: 70%;">
+                                <table style="font-size:12px;">
+                                    <apex:variable value="{!1}" var="count" />
+                                    <apex:repeat value="{!ApplicantWrapperList}" var="ap">
+                                        <!-- First td -->
+                                        <tr>
+                                            <td style="font-size:14px;">
+                                                {!count}) 
+                                                <apex:variable value="{!count+1}" var="count" /> 
+                                                <!-- Blank checkboxes for Mr, Mrs, Ms, and M/S -->
+                                                Title: 
+                                                <apex:outputText rendered="{!ap.apTitle == 'Mr.'}">
+                                                    &#9745; {!ap.apTitle} &nbsp;&nbsp; <!-- Checked box for Mr -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!ap.apTitle == 'Mrs.'}">
+                                                    &#9745; {!ap.apTitle} &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                 <apex:outputText rendered="{!ap.apTitle == 'Ms.'}">
+                                                    &#9745; {!ap.apTitle} &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!ap.apTitle != 'Mr.'}">
+                                                    &#9744; Mr. &nbsp;&nbsp; <!-- Checked box for Mr -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!ap.apTitle != 'Mrs.'}">
+                                                    &#9744; Mrs. &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                 <apex:outputText rendered="{!ap.apTitle != 'Ms.'}">
+                                                    &#9744; Ms. &nbsp;&nbsp; <!-- Unchecked box for other titles -->
+                                                </apex:outputText>
+                                                <hr/>
+                                            </td>                                            
+                                        </tr>
+                                        <tr>
+                                            <th>First name</th>
+                                            <th>Middle name</th>
+                                            <th>Last name</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{!ap.applicantName}</td>
+                                            <td>{!ap.applicantName}</td>
+                                            <td>{!ap.applicantName}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+          
+            <div>
+                <p style="font-size:12px;">
+                    Residence Address: <u style="font-size:14px;">{!bkList[0].Primary_Applicant_Address__c}</u>
+                </p>
+               
+                <!--<tr>
+                    <td style="font-size:12px;width: 30%;">
+                        <label style="line-height: 2.5; font-size: 12px;">Occupation:</label>
+                    </td>
+                    <td style="width: 70%;">
+                        &#9744; <span style="font-size: 12px;">{!ap.applicantOccupation}</span> &nbsp;&nbsp;
+                    </td>
+                </tr>-->
+                <!--<br/>
+                <label style="display: block; width: 100%;font-size:12px; line-height: 2.5; text-align: justify;">
+                    Details:Organization: ___________________________________ Designation: _________________________________________
+                </label>
+                <label style="line-height: 2.5;font-size:12px;">
+                    Office address:_______________________________________________________________________________________________
+                </label>
+                
+                <label  style="line-height: 2.5;font-size:12px;">
+                    Contact details: Mobile: ______________________________________ Residence: ____________________
+                </label>
+                
+                <label  style="line-height: 2.5;font-size:12px;">
+                    Office:_____________________________________________ E-mail id:_________________________________________________
+                </label>
+                <tr>
+                    <td style="font-size:12px;width: 30%;">
+                        <label style="line-height: 2.5; font-size: 12px;">Resident Status:</label>
+                    </td>
+                    <td style="width: 70%;">
+                        &#9744; <span style="font-size: 12px;">Indian Resident</span> &nbsp;&nbsp;
+                        &#9744; <span style="font-size: 12px;">Non Resident [NRI / PIO / OCI]</span>
+                    </td>
+                </tr>
+                <label style="line-height: 2.5;font-size:12px;">
+                    If Non Resident, which country _________________________________ Contact No. __________________________________________
+                </label>
+                <label style="line-height: 2.5;font-size:12px;">
+                    Local (India) Contact no. _____________________________________________________________________________________________
+                </label>
+                <label style="line-height: 2.5;font-size:12px;">
+                    Local contact person (with contact no.): ______________________________________________________________________________
+                </label>-->
+               
+                
+                
+                
+                <!--<tr>
+                    <td style="font-size:12px;width: 30%;">
+                        <label style="line-height: 2.5; font-size: 12px;">End use:</label>
+                    </td>
+                    <td style="width: 70%;">
+                        &#9744; <span style="font-size: 12px;">Self</span> &nbsp;&nbsp;
+                        &#9744; <span style="font-size: 12px;">Investment</span> &nbsp;&nbsp;
+                    </td>
+                </tr>-->
+
+                <table class="mainTable">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Relation With 1st Applicant</th>
+                        <th>Birth Date</th>
+                        <th>Anniversary Date</th>
+                        <th>Pan no.</th>
+                        <th>Aadhar no.</th>
+                    </tr>
+                    <apex:variable value="{!1}" var="apCount" />
+                    <apex:repeat value="{!ApplicantWrapperList}" var="ap">
+                        <tr>
+                            <th> Applicant {!apCount}</th>
+                            <td>NA</td>
+                            <td><apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!ap.applicantDOB}" /> 
+                            </apex:outputText>
+                                </td>
+                            <td><apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!ap.applicantAnivserD}" /> 
+                            </apex:outputText>
+                            </td>
+                            <td>{!ap.applicantPAN}</td>
+                             <td>{!ap.applicantAadhar}</td>
+                             </tr>
+
+
+                    </apex:repeat>
+                </table>
+
+                <p style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                    B) DETAILS OF FLAT ALOTTED 
+                </p>
+                <p style="font-size:12px; padding:4px;  line-height:1.2;">
+                    Project name: <u style="font-size:12px;">{!projectName}</u>&nbsp;&nbsp; 
+                    Flat no: <u style="font-size:12px;">{!unitName}</u>&nbsp;&nbsp; 
+                    Floor: <u style="font-size:12px;">{!unitFloor}</u>&nbsp;&nbsp; 
+                    Configuration: <u style="font-size:12px;">{!unitConfi}</u>
+                    <br/><br/>
+                    RERA carpet area: <u style="font-size:12px;">{!unitCarpetArea}</u> Sq Ft along with 
+                    <u style="font-size:12px;">{!bkList[0].Car_Park_Allotment_Count__c}</u> Car Park
+                    <br/><br/>
+                    Agreement value: Rs. <u style="font-size:12px;">{!agreementValue}</u> (Rupees 
+                    <u style="font-size:12px;">{!amountInWords}</u>)
+                </p>
+                
+                
+                <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                    C)PAYMENT SCHEDULE 
+                </th>
+                <br/>
+                <label style="line-height: 2.5;font-size:12px;">
+                    As per the cost sheet attached.
+                </label>
+                <br/>
+                <label style="line-height: 2.5;font-size:12px;">
+                    Signature of applicant/(s):___________________________________________________________________________________________
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Remarks:__________________________________________________________________________________________________________
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Signature of appplicant/(s):___________________________________________________________________________________________
+                </label>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                
+                <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                    D)SOURCE OF FUNDING
+                </th>
+                <br/>
+                <tr>
+                    <td style="font-size:12px;width: 30%;">
+                        <label style="line-height: 2.5; font-size: 12px;">Have you opted for a loan?</label>
+                    </td>
+                    <td style="width: 70%;">
+                        &#9744; <span style="font-size: 12px;">Yes</span> &nbsp;&nbsp; 
+                        &#9744; <span style="font-size: 12px;">No</span> &nbsp;&nbsp; 
+                        &#9744; <span style="font-size: 12px;">Not yet decided</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size:12px;width: 30%;">
+                        <label style="line-height: 2.5; font-size: 12px;">If yes, do you have a sanction letter?</label>
+                    </td>
+                    <td style="width: 70%;">
+                        &#9744; <span style="font-size: 12px;">Yes</span> &nbsp;&nbsp; 
+                        &#9744; <span style="font-size: 12px;">No</span> &nbsp;&nbsp; 
+                        <span style="font-size: 12px;">Name of bank/FI:</span> <input type="text" style="font-size: 12px; width: 200px;" />
+                    </td>
+                </tr>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Name and contact no. of bank/FI person:   
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Own contribution amount  %            Home loan amount  %  
+                </label>
+                <br/>
+                <br/>
+                <br/>
+                
+                
+                <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                    E) SOURCE OF APPLICATION
+                </th>
+                <tr>
+                    <td style="font-size:12px;width: 30%;">
+                        <label style="line-height: 2.5; font-size: 12px;">How did you come to know about the project?</label>
+                    </td>
+                    <br/>
+                    <td style="width: 100%;">
+                        <div>
+                            &#9744; <span style="font-size: 12px;">Newspaper</span> &nbsp;&nbsp; 
+                            &#9744; <span style="font-size: 12px;">Hoardings / Kiosks</span> &nbsp;&nbsp; 
+                            &#9744; <span style="font-size: 12px;">E-mailers</span> &nbsp;&nbsp; 
+                            &#9744; <span style="font-size: 12px;">SMS</span> &nbsp;&nbsp;
+                            &#9744; <span style="font-size: 12px;">Channel partner</span>
+                        </div>
+                        <div>
+                            &#9744; <span style="font-size: 12px;">Reference</span> &nbsp;&nbsp; 
+                            &#9744; <span style="font-size: 12px;">Website</span> &nbsp;&nbsp; 
+                            &#9744; <span style="font-size: 12px;">Online campaign</span> &nbsp;&nbsp; 
+                            &#9744; <span style="font-size: 12px;">Social media</span> &nbsp;&nbsp;
+                            &#9744; <span style="font-size: 12px;">Existing customer</span>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+                <br/>
+                <br/>
+                <tr>
+                    <td colspan="2" style="font-size:12px; text-transform:uppercase; font-weight:bold;">
+                        F) REAL ESTATE ASSOCIATE DETAILS (IF NOT APPLICABLE STRIKE OFF) 
+                        &#9744; <span style="font-size: 12px;">YES</span> &nbsp;&nbsp; 
+                        &#9744; <span style="font-size: 12px;">NO</span>
+                    </td>
+                </tr>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Name of the real estate associate:_______________________________________________________________________________
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Contact person/proprietor:_________________________ Mobile no:___________________Landline no:___________________________
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Email Id:______________________________Remarks:__________________________________________________________________
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    RERA Reg. no:_____________________________________GST no: ________________________________________________________
+                </label>
+                
+                <br/>
+                <br/>
+                <br/>
+                
+                
+                <th style="font-size:12px;text-transform:uppercase;font-weight:bold;">
+                    G) APPLICATION PAYMENT DETAILS:
+                </th>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Cheque/Draft/UTR-NEFT no:_______________________________________Dated___________________Rs.__________________                   
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    (Rupees______________________________________________________________________________________________________only)
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Drawn on__________________________Bank_______________________________Branch__________________________________
+                </label>
+                
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <label style="line-height: 2.5; font-size: 12px;">OR</label>
+                </div>
+                
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Google Pay/PAYTM reference no:_____________________________Rs:______________or Swipe card no:_____________________
+                </label>
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Card issuer name:___________________________________RR no.___________________________UPI_________________________
+                </label>
+                <br/>
+                <p style="line-height: 2.5; font-size: 12px;">
+                    I/we, the undersigned intend to book a flat and request you to allot me/us as per the company’s/firm's terms and 
+                    conditions, which I/we have read, understood, and agree to abide by the same as stipulated by your 
+                    company/firm.
+                </p>
+                
+                <p style="line-height: 2.5; font-size: 12px;">
+                    I/we agree to pay further installments of the consideration amount along with taxes as stipulated/called by the 
+                    company/firm and the other charges as and when called for. I/we further agree to sign and execute any necessary 
+                    standard agreement for sale as and when instructed by the company/firm on the company's/firm’s standard 
+                    format. I/we have, in the meantime, signed the terms and conditions of allotment/sale attached to this application 
+                    form.
+                </p>
+                
+                <p style="line-height: 2.5; font-size: 12px;">
+                    In case of cancellation of the application, either by applicants or by the company/firm, I/we agree and confirm 
+                    that the company/firm shall be entitled to forfeit the earnest amount of 10%, being the “Liquidated damages/
+                    Administrative charges” and GST if applicable as per the terms and conditions of allotment attached to this 
+                    application form.  
+                </p>
+                
+                <p style="line-height: 2.5; font-size: 12px;">
+                    I/we undersigned do hereby declare/confirm that the above-mentioned particulars/information given by me/us 
+                    is true and correct and nothing has been canceled therefrom.   
+                </p>
+                
+                <p style="line-height: 2.5; font-size: 12px;">
+                    Photograph and signature of all the applicant/s:
+                </p>
+                
+                
+                <br/>
+                
+                <!-- Terms and Conditions -->
+                <div style="font-size:14px !important;">
+                    <!-- Check if termsList is not empty -->
+                    <apex:outputPanel rendered="{!NOT(ISNULL(termsList)) && termsList.size > 0}">
+                        <table style="width:100%; page-break-before:always;">
+                            <tr>
+                                <th colspan="2" style="font-weight:bold;">TERMS AND CONDITIONS OF ALLOTMENT OF UNIT</th>
+                            </tr>
+                            <!-- Iterate through the termsList and display each term -->
+                            <apex:repeat value="{!termsList}" var="term">
+                                <!-- Only render rows with non-blank terms -->
+                                <tr rendered="{!NOT(ISBLANK(term))}">
+                                    <td>
+                                        <apex:outputText value="{!term}" escape="false"/>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                </div>
+                
+                
+                <label style="line-height: 2.5;font-size:12px;">
+                    Signature of appIicant/(s):________________________  __________________________
+                </label>
+                <br/>
+                <br/>
+                <br/>
+                <label style="line-height: 2.5;font-size:12px;">
+                    FOR OFFICE USE ONLY
+                </label>
+                <br/>
+                <table  border="1" style="width:100%; text-align:left; border-collapse:collapse;">
+                    <tr>
+                        <th style="padding: 10px;">Signatory</th>
+                        <th style="padding: 10px;">Name</th>
+                        <th style="padding: 10px;">Signature</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Sales Manager</td>
+                        <td style="padding: 10px;"></td> 
+                        <td style="padding: 10px;"></td> 
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Site Head</td>
+                        <td style="padding: 10px;"></td> 
+                        <td style="padding: 10px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Any Deviation</td>
+                        <td style="padding: 10px;"></td> 
+                        <td style="padding: 10px;"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div style="page-break-before: always;">
+                <div class="header">
+                    <div class="logo" style="text-align:right; width:100%; display:inline-block; padding:0px 0px 5px 0px;margin:0px;">
+                        <apex:outputText value="{!bkList[0].Project__r.Project_Logo__c}" escape="false" />
+                    </div>
+                </div>
+                
+                
+                
+                <div>
+                    <table border="1" style="width:100%; text-align:left; border-collapse:collapse; line-height:0.7; padding:5px; font-size:6px">
+                        
+                        <tr>
+                            <th colspan="6" style="padding: 10px;font-size:12px">Customer details and application information</th>
+                            
+                            
+                            <th  colspan = "3"  style="padding: 10px;font-size:12px">  Offer / deviation details
+                                
+                            </th>
+                            
+                        </tr>
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;font-size:12px" align= "left"> Application date 
+                            </th>
+                            <th    style="padding: 10px;width:20%" align= "left">  
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> Details/Amount 
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Approver’s Signature 
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  colspan = "6" style="padding: 10px;" align= "Centre"> Applicant's names
+                            </th>
+                            <th  colspan = "6" style="padding: 10px;" align= "left"> Application benefits under:
+                            </th>
+                            
+                        </tr>
+                        
+                        
+                        <tr>
+                            <th   style="padding: 10px;" align= "Centre"> 1st Applicant:
+                            </th>
+                            <th colspan = "5" style="padding: 10px;" align= "Centre"> 
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Loyalty benefit offer
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <th   style="padding: 10px;" align= "Centre"> 2nd Applicant:
+                            </th>
+                            <th colspan = "5" style="padding: 10px;" align= "Centre"> 
+                            </th>
+                            <th style="padding: 10px;" align= "left">  Referral benefit
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <th   style="padding: 10px;" align= "Centre"> 3rd Applicant:
+                            </th>
+                            <th colspan = "5" style="padding: 10px;" align= "Centre"> 
+                            </th>
+                            <th style="padding: 10px;" align= "left">  Stamp duty offer
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <th  colspan = "6" style="padding: 10px;" align= "Centre"> Unit details
+                            </th>
+                            <th style="padding: 10px;" align= "left">Payment deviation under
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        
+                        
+                        <tr>
+                            <th   style="padding: 10px; " align= "Centre">Project Name
+                            </th>
+                            <th  style="padding: 10px;width:50%" align= "Centre">
+                            </th>
+                            <th  colspan ="2" style="padding: 10px;" align= "Centre">
+                            </th>
+                            <th  colspan ="2" style="padding: 10px;" align= "Centre">
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Rate discount
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        
+                        <tr>
+                            <th   style="padding: 10px; " align= "Centre">Flat no.
+                            </th>
+                            <th  style="padding: 10px;width:50%" >
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >Tower/Wing name
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Discount as pass back
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        <tr>
+                            <th   style="padding: 10px; " align= "Centre">Customer type 
+                            </th>
+                            <th  style="padding: 10px;width:50%" >
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >Source of broking
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >
+                            </th>
+                            <th style="padding: 10px;" align= "left">Payment extension(Days and slab name)
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        
+                        <tr>
+                            <th   style="padding: 10px; " align= "Centre">RERA carpet area
+                            </th>
+                            <th  style="padding: 10px;width:50%" >
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >Sq. Mt.
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >Sq. Ft.
+                            </th>
+                            <th style="padding: 10px;" align= "left">Application date change (from and to)
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        <tr>
+                            <th  colspan = "6" style="padding: 10px;" align= "Centre"> Commercial details
+                            </th>
+                            <th style="padding: 10px;" align= "left">Waiver granted under
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        
+                        <tr>
+                            <th   style="padding: 10px; " align= "Centre">Values 
+                            </th>
+                            <th  style="padding: 10px;width:50%" >Quoted (A)
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >Transacted (B)
+                            </th>
+                            <th  colspan ="2" style="padding: 10px;" >Discount (A- B)
+                            </th>
+                            <th style="padding: 10px;" align= "left">Admin fees
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        
+                        <tr>
+                            <th   style="padding: 10px; " align= "Centre"> Consideration value 
+                            </th>
+                            <th  style="padding: 10px;width:50%" >
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >
+                            </th>
+                            <th  colspan ="2"  style="padding: 10px;" >
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Penal interest
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr> 
+                        
+                        <tr>
+                            <th  colspan ="6"  style="padding: 10px;" align= "Centre">Parking details
+                            </th>
+                            <th style="padding: 10px;" align= "left">Cancellation charges
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <th style="padding: 10px;" align="left">No. of slots allotted</th>
+                            <th style="padding: 10px;" align="left"></th> 
+                            <th style="padding: 10px;" align="left">Level</th>
+                            <th style="padding: 10px;" align="left"></th>
+                            <th style="padding: 10px;" align="left">Type of slot*</th>
+                            <th  colspan = "6" style="padding: 10px;" align= "left">Special deviation under
+                            </th>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">Basement,Stilt,Podium,Open,Stack
+                            </th>
+                            <th style="padding: 10px;" align= "left">Lock in clause (Period)
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th colspan = "2"  style="padding: 10px;" align= "Center">Signatory
+                            </th>
+                            <th colspan ="2"  style="padding: 10px;" align= "center ">  Name
+                            </th>
+                            <th colspan = "2"  style="padding: 10px;" align= "center">Signature 
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Transfer of unit allowed (No of times)
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan = "2"  style="padding: 10px;" align= "Center"> Sales manager
+                            </th>
+                            <th colspan ="2"  style="padding: 10px;" align= "center ">  
+                            </th>
+                            <th colspan = "2"  style="padding: 10px;" align= "center">
+                            </th>
+                            <th style="padding: 10px;" align= "left">Parking lot deviation (No of additional slots)
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 10px;" align= "left">Special loan scheme
+                                
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th colspan = "2"  style="padding: 10px;" align= "Center">Site head
+                            </th>
+                            <th colspan ="2"  style="padding: 10px;" align= "center ">  
+                            </th>
+                            <th colspan = "2"  style="padding: 10px;" align= "center">
+                            </th>
+                            <th style="padding: 10px;" align= "left">Subvention
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  colspan ="6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th style="padding: 10px;" align= "left"> 1:99/10:90/Deferred OGR.
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th colspan = "2"  style="padding: 10px;" align= "Center">Project in- charge
+                            </th>
+                            <th colspan ="2"  style="padding: 10px;" align= "center ">  
+                            </th>
+                            <th colspan = "2"  style="padding: 10px;" align= "center">
+                            </th>
+                            <th style="padding: 10px;" align= "left"> Other
+                            </th>
+                            <th  style="padding: 10px;" align= "left">
+                            </th>
+                            <th   style="padding: 10px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 10px;" align= "left"> Details of offer / deviation given
+                                
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 10px;" align= "left"> 
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 10px;" align= "left"> 
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 10px;" align= "left"> 
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  colspan = "6"  style="padding: 10px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 10px;" align= "left"> 
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  colspan = "6"  style="padding: 12px;" align="left">
+                            </th>
+                            <th  colspan = "3"  style="padding: 12px;" align= "left"> 
+                            </th>
+                        </tr>
+                        
+                    </table>
+                    
+                </div> 
+                
+            </div>
+            
+            <!-- Terms and Conditions -->
+            <div style="font-size:14px !important;">
+                <apex:outputPanel rendered="{!NOT(ISNULL(termsList)) && termsList.size > 0}">
+                    <table style="width:100%; page-break-before:always;">
+                        <tr>
+                            <th colspan="2" style="font-weight:bold;">Terms &amp; Conditions</th>
+                        </tr>
+                        <apex:repeat value="{!termsList}" var="term">
+                            
+                            <tr rendered="{!NOT(ISBLANK(term))}">
+                                <td>
+                                    <apex:outputText value="{!term}" escape="false"/>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </apex:outputPanel>
+            </div>
+            
+        </head>
+    </html>
+</apex:page>

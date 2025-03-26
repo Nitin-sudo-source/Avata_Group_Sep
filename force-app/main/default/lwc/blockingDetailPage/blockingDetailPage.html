@@ -1,0 +1,104 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-10-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:false={unitTrue}>
+        
+        <div class="box2">
+        <div class="mains">
+            <header class="header">
+                <div class="main">
+                    <center>
+                        <!-- <lightning-icon size="medium" icon-name="custom:custom24"></lightning-icon> -->
+                        <lightning-icon icon-name='action:sort' alternative-text='sort' size='medium' title='sort'></lightning-icon>
+                        <!-- <h1 class="form-title">Blocking Details </h1> -->
+                        <label class="head" style="font-size:16px"> Blocking Details </label>
+                    </center>
+                </div>
+            </header>
+            <table>
+            <tr>
+                <th>Unit</th>
+                <td>
+                   {untNm}
+                </td>
+          
+         
+                <th>Project Name</th>
+                <td>
+                   {projectName}
+                </td>
+            </tr> 
+            <tr>
+                <th>Tower Name</th>
+                <td>
+                   {towerName}
+                </td>
+           
+                <th>Opportunity Name</th>
+                <td>
+                   {oppName}
+                </td>
+            </tr>     
+          
+            <tr>
+                <th>Blocked with token</th>
+                <td>
+                 <lightning-input type="checkbox" onchange={BlockWithTokenHandler} value={blockWithTokenCheckbox1}></lightning-input>
+                </td>
+           
+                <th>Mode of Payment</th>
+                <td>
+                    <lightning-combobox placeholder="Select Mode of Payment" options={MOPpicklist} value={MOPpicklistValue} onchange={handleMOPChange} ></lightning-combobox>
+                  </td>
+            </tr>
+            <tr>
+            
+                <th>Amount</th>
+                <td>
+                 <lightning-input type="number" formatter="currency" onchange={amountHandler} value={blockAmount1}></lightning-input>
+                </td>
+            
+                <th>Transaction ID</th>
+                <td>
+                 <lightning-input type="text" onchange={chequeNoHandler} value={chequeNo}></lightning-input>
+                </td>
+            </tr>
+            <tr>
+                <th> Blocking Comment</th>
+                <td colspan="3">
+                    <lightning-textarea 
+                    class="slds-var-m-bottom_small"
+                       
+                     
+                     
+                      
+                      placeholder="type here..."
+                       
+                       onchange={commentHandler}
+                      value={blockComment}
+                      variant="label-hidden"
+                    ></lightning-textarea>
+                    <!-- <lightning-input type="text" onchange={commentHandler} value={blockComment} class="slds-var-m-bottom_small"></lightning-input> -->
+                </td>
+            </tr>
+      </table>
+        </div>
+        <div class="slds-align_absolute-center">
+            <lightning-button 
+            variant="brand"
+            label={clickBtn}
+            onclick={BlockingHandler} 
+          ></lightning-button>
+          </div>
+          
+        
+        <!-- <center><button onclick={BlockingHandler} class="btn">{clickBtn}</button></center> -->
+
+        </div>
+    </template>
+</template>

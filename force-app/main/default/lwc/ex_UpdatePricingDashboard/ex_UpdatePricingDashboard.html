@@ -1,0 +1,920 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-14-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+
+<lightning-card>
+    <div class="box3">
+        <div class="mains">
+            <div class="main">
+                <lightning-icon size="small" icon-name="custom:custom31"></lightning-icon>
+                <label class="head" style="font-size:14px">AV Change Dashboard</label>
+            </div>
+            <lightning-record-edit-form object-api-name="Booking__c">
+                <div class="box3">
+                    <table class="">
+                        <!-- <tr>
+                            <th>
+                                Agreement Value
+                            </th>
+                            <td>
+                                <lightning-input name="Updated_Agreement_Value__c"
+                                   
+                                    field-name="Updated_Agreement_Value__c" variant="label-hidden"
+                                    value={avDetails.getAvvalue} data-id="Updated_Agreement_Value__c"
+                                    formatter="currency" max-length="20" onchange={handleUpdatedAv}></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Stamp Duty(%) :
+                            </th>
+                            <td>
+                                <lightning-input name="Stamp_Duty__c" field-name="Stamp_Duty__c" variant="label-hidden"
+                                    
+                                    data-id="Stamp_Duty__c" value={avDetails.getStampvalue}
+                                    onchange={handleUpdatedStamp}></lightning-input>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                GST(%) :
+                            </th>
+                            <td>
+                                <lightning-input name="GST__c" field-name="GST__c" variant="label-hidden"
+                                
+                                    data-id="GST__c" value={avDetails.getTaxalue}
+                                    onchange={handleUpdatedGST}></lightning-input>
+
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <th>
+                                Agreement Value
+                            </th>
+                            <td>
+                                <lightning-input
+                                    type="number"  
+                                    name="Updated_Agreement_Value__c"
+                                    field-name="Updated_Agreement_Value__c"
+                                    variant="label-hidden"
+                                    value={avDetails.getAvvalue}
+                                    data-id="Updated_Agreement_Value__c"
+                                    max-length="20"
+                                    onchange={handleUpdatedAv}>
+                                </lightning-input>
+                            </td>
+                        
+                            <!-- <th>
+                                Stamp Duty(%) :
+                            </th>
+                            <td>
+                                <lightning-input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    name="Stamp_Duty__c"
+                                    field-name="Stamp_Duty__c"
+                                    variant="label-hidden"
+                                    data-id="Stamp_Duty__c"
+                                    value={avDetails.getStampvalue}
+                                    disabled="true"
+                                    onchange={handleUpdatedStamp}>
+                                </lightning-input>
+                            </td> -->
+                        </tr>
+                        <tr>
+                            <!-- <th>
+                                GST(%) :
+                            </th>
+                            <td>
+                                <lightning-input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    name="GST__c"
+                                    field-name="GST__c"
+                                    variant="label-hidden"
+                                    data-id="GST__c"
+                                    value={avDetails.getTaxalue}
+                                    onchange={handleUpdatedGST}>
+                                </lightning-input>
+                            </td> -->
+                        
+                            <th>
+                                Remarks 
+                            </th>
+                            <td>
+                                <lightning-input-field name="Remarks__c" field-name="Remarks__c" variant="label-hidden"
+                                    data-id="Remarks__c" onchange={handleRemarks}></lightning-input-field>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </lightning-record-edit-form>
+
+             <div class="slds-align_absolute-center">
+                <lightning-icon icon-name='action:refresh' alternative-text='refresh' size='small' title='refresh'></lightning-icon>
+                <lightning-button 
+                variant="base"
+                label=" Payment Milestones" 
+                onclick={showPaymentSchedule} 
+              ></lightning-button>
+             </div>
+
+           
+
+
+
+            
+
+            <!-- <div class="box3">
+                <table class="">
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th style="text-align:center">
+                            Orginal Value
+                        </th>
+                        <th style="text-align:center">
+                            Modified Value
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Agreement Value
+                        </th>
+                        <td if:true={avDetails.getAvvalue} style="text-align:right !important">
+                            {avDetails.getAvvalue}
+                        </td>
+                        <td if:true={getModifiedData.getAvvalue} style="text-align:right !important">
+                            <p style="color:red !important;" if:true={getModifiedData.getAvvalue}>
+                                {getModifiedData.getAvvalue}
+                            </p>
+                        </td>
+                        <td if:false={getModifiedData.getAvvalue} style="text-align:right !important">
+                            {avDetails.getAvvalue}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Stamp Duty
+                        </th>
+                        <td if:true={avDetails.getOrginalStampValue} style="text-align:right !important">
+                            {avDetails.getOrginalStampValue}
+                        </td>
+                        <td if:true={getModifiedData.getStampvalue} style="text-align:right !important">
+                            <p style="color:red !important;" if:true={getModifiedData.getStampvalue}>
+                                {getModifiedData.getStampvalue}</p>
+                        </td>
+                        <td if:false={getModifiedData.getStampvalue} style="text-align:right !important">
+                            {avDetails.getOrginalStampValue}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tax
+                        </th>
+                        <td if:true={avDetails.getOrginalGstValue} style="text-align:right !important">
+                            {avDetails.getOrginalGstValue}
+                        </td>
+                        <td if:true={getModifiedData.getTaxalue} style="text-align:right !important">
+                            <p style="color:red !important;" if:true={getModifiedData.getTaxalue}>
+                                {getModifiedData.getTaxalue}
+                            </p>
+                        </td>
+                        <td if:false={getModifiedData.getTaxalue} style="text-align:right !important">
+                            {avDetails.getOrginalGstValue}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Total
+                        </th>
+                        <td if:true={avDetails.getValueTotal} style="text-align:right !important">
+                            {avDetails.getValueTotal}
+                        </td>
+                        <td if:true={getModifiedData.getValueTotal} style="text-align:right !important">
+                            <p style="color:red !important;" if:true={getModifiedData.getTaxalue}>
+                                {getModifiedData.getValueTotal}</p>
+                        </td>
+                        <td if:false={getModifiedData.getValueTotal} style="text-align:right !important">
+                            {avDetails.getValueTotal}
+                        </td>
+                    </tr>
+                </table>
+            </div><br/> -->
+
+            <!-- <template if:true={showPaymentScheduleData}> -->
+                <div class="container2">
+                    <div class="box2">
+                        <div class="mains">
+                            <template for:each={allPriceDetailMap} for:item="group">
+                                <div class="main" if:false={group.isOtherCharge} key={group.key}>
+                                    <lightning-icon size="small" icon-name="standard:crypto_wallet_group_item"></lightning-icon>
+                                    <label class="head" style="font-size:14px">{group.key}</label>
+                                </div>
+        
+                                <table class="charge-table" key={group.key}>
+                                    <tbody>
+                                        <tr if:false={group.isOtherCharge} key={group.key}>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Charge Name
+                                            </th>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Original Amount
+                                            </th>
+                                            <!-- <template if:false={hideRate}>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Original Rate
+                                                    </th>
+                                                </template> -->
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Original Taxes
+                                            </th>
+        
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Modified Amount
+                                            </th>
+                                            <!-- <template if:false={hideRate}>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Modified Rate
+                                                    </th>
+                                                </template> -->
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Modified Taxes
+                                            </th>
+        
+                                        </tr>
+        
+                                        <template for:each={group.value} for:item="ch" if:false={group.isOtherCharge}>
+                                            <tr key={ch.key} if:false={ch.isTotal}>
+                                                <td style="text-align:left; font-size: 10px;">
+                                                    <lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                        value={ch.chargeName}></lightning-formatted-text>
+                                                    <lightning-formatted-text if:false={ch.isChange} value={ch.chargeName}>
+                                                    </lightning-formatted-text>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text value={ch.originalAmountString}>
+                                                    </lightning-formatted-text>
+                                                </td>
+                                                <!-- <template if:false={hideRate}>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text value={ch.originalRateString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+                                                    </template> -->
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text value={ch.originalTaxString}>
+                                                    </lightning-formatted-text>
+                                                </td>
+        
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                        value={ch.modifiedAmountString}></lightning-formatted-text>
+                                                    <lightning-formatted-text if:false={ch.isChange}
+                                                        value={ch.modifiedAmountString}></lightning-formatted-text>
+                                                </td>
+                                                <!-- <template if:false={hideRate}>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text style="color: red;" if:true={ch.isChange} value={ch.modifiedRateString}>
+                                                            </lightning-formatted-text>
+                                                            <lightning-formatted-text if:false={ch.isChange} value={ch.modifiedRateString}></lightning-formatted-text>
+                                                        </td>
+                                                    </template> -->
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                        value={ch.modifiedTaxString}></lightning-formatted-text>
+                                                    <lightning-formatted-text if:false={ch.isChange}
+                                                        value={ch.modifiedTaxString}></lightning-formatted-text>
+                                                </td>
+        
+                                            </tr>
+        
+                                            <tr key={ch.key} if:true={ch.isTotal}>
+                                                <td style="text-align:left; font-size: 10px;">
+                                                    <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                                value={ch.chargeName}></lightning-formatted-text></b>
+                                                    <b><lightning-formatted-text if:false={ch.isChange}
+                                                                value={ch.chargeName}></lightning-formatted-text></b>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text
+                                                                value={ch.originalAmountString}></lightning-formatted-text></b>
+                                                </td>
+                                                <!-- <template if:false={hideRate}>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <b><lightning-formatted-text
+                                                                value={ch.originalTotalRate}></lightning-formatted-text></b>
+                                                        </td>
+                                                    </template> -->
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text
+                                                                value={ch.originalTaxString}></lightning-formatted-text></b>
+                                                </td>
+        
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                                value={ch.modifiedAmountString}></lightning-formatted-text></b>
+                                                    <b><lightning-formatted-text if:false={ch.isChange}
+                                                                value={ch.modifiedAmountString}></lightning-formatted-text></b>
+                                                </td>
+                                                <!-- <template if:false={hideRate}>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                                    value={ch.modifiedTotalRate}></lightning-formatted-text></b>
+                                                            <b><lightning-formatted-text if:false={ch.isChange}
+                                                                    value={ch.modifiedTotalRate}></lightning-formatted-text></b>
+                                                        </td> 
+                                                    </template>-->
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                                value={ch.modifiedTaxString}></lightning-formatted-text></b>
+                                                    <b><lightning-formatted-text if:false={ch.isChange}
+                                                                value={ch.modifiedTaxString}></lightning-formatted-text></b>
+                                                </td>
+                                            </tr>
+                                        </template>
+        
+                                    </tbody>
+                                </table>
+                            </template>
+                        </div>
+                    </div>
+        
+        
+        
+                    <div class="box2" style="flex: 0 1 65%!important;">
+                        <div class="mains">
+                            <template for:each={allPriceDetailMap} for:item="group">
+                                <div class="main" if:true={group.isOtherCharge} key={group.key}>
+                                    <lightning-icon size="small" icon-name="standard:volume_discounts"></lightning-icon>
+                                    <label class="head" style="font-size:14px">{group.key}</label>
+                                </div>
+        
+                                <table class="charge-table" key={group.key}>
+                                    <tbody>
+                                        <tr if:true={group.isOtherCharge} key={group.key}>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Charge Name
+                                            </th>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Original Amount
+                                            </th>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Original Taxes
+                                            </th>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Modified Amount
+                                            </th>
+                                            <th
+                                                style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                Modified Taxes
+                                            </th>
+                                        </tr>
+        
+                                        <template for:each={group.value} for:item="ch" if:true={group.isOtherCharge}>
+                                            <tr key={ch.key} if:false={ch.isTotal}>
+                                                <td style="text-align:left; font-size: 10px;">
+                                                    <lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                        value={ch.chargeName}></lightning-formatted-text>
+                                                    <lightning-formatted-text if:false={ch.isChange} value={ch.chargeName}>
+                                                    </lightning-formatted-text>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text value={ch.originalAmountString}>
+                                                    </lightning-formatted-text>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text value={ch.originalTaxString}>
+                                                    </lightning-formatted-text>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                        value={ch.modifiedAmountString}></lightning-formatted-text>
+                                                    <lightning-formatted-text if:false={ch.isChange}
+                                                        value={ch.modifiedAmountString}></lightning-formatted-text>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                        value={ch.modifiedTaxString}></lightning-formatted-text>
+                                                    <lightning-formatted-text if:false={ch.isChange}
+                                                        value={ch.modifiedTaxString}></lightning-formatted-text>
+                                                </td>
+                                            </tr>
+                                            <tr key={ch.key} if:true={ch.isTotal}>
+                                                <td style="text-align:left; font-size: 10px;">
+                                                    <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                            value={ch.chargeName}></lightning-formatted-text></b>
+                                                    <b><lightning-formatted-text if:false={ch.isChange}
+                                                            value={ch.chargeName}></lightning-formatted-text></b>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text
+                                                            value={ch.originalAmountString}></lightning-formatted-text></b>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text
+                                                            value={ch.originalTaxString}></lightning-formatted-text></b>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                            value={ch.modifiedAmountString}></lightning-formatted-text></b>
+                                                    <b><lightning-formatted-text if:false={ch.isChange}
+                                                            value={ch.modifiedAmountString}></lightning-formatted-text></b>
+                                                </td>
+                                                <td style="text-align:right; font-size: 10px;">
+                                                    <b><lightning-formatted-text style="color: red;" if:true={ch.isChange}
+                                                            value={ch.modifiedTaxString}></lightning-formatted-text></b>
+                                                    <b><lightning-formatted-text if:false={ch.isChange}
+                                                            value={ch.modifiedTaxString}></lightning-formatted-text></b>
+                                                </td>
+                                            </tr>
+                                        </template>
+        
+                                    </tbody>
+                                </table>
+                            </template>
+                        </div>
+                    </div>
+                    </div>
+            <!-- </template> -->
+
+            <template if:false={isError}>
+                <div class="slds-align_absolute-center" style="font-size: 20px;">
+                    <lightning-button variant="success" label="Save" onclick={handleSave}></lightning-button>
+                </div><br/>
+            </template>
+        </div>
+    </div>
+
+
+    <!-- this should be incapsulated in its own component, see https://developer.salesforce.com/docs/component-library/bundle/lightning-modal/documentation -->
+
+      <lightning-modal-header if:true={showPaymentScheduleData}></lightning-modal-header>
+      <lightning-modal-body>
+        <div class="container" style="position:relative;overflow-x:auto !important;">
+            <div class="box3">
+                <template if:true={showPaymentScheduleData}>
+                    <div class="" style="border: 1px solid #ddd;">
+                        <div class="mains">
+    
+                            <!-- <div class="main">
+                                <lightning-icon size="medium" icon-name="standard:form"></lightning-icon>
+                                <label class="head" style="font-size:14px !important;">Payment Schedule</label>
+                                <template if:true={isPaymentScheduleEnable}>
+                                    <lightning-button icon-name="utility:breadcrumbs" if:false={editPaymentScheduleMode}
+                                        style="float: right;" label="Edit Schedule" onclick={editPaymentSchedule}
+                                        variant="brand"></lightning-button>
+                                    <lightning-button icon-name="utility:breadcrumbs" if:true={editPaymentScheduleMode}
+                                        style="float: right;" label="Update Schedule" onclick={updatePaymentSchedule}
+                                        variant="brand"></lightning-button>&nbsp;&nbsp;
+                                    <lightning-button icon-name="utility:breadcrumbs" if:true={editPaymentScheduleMode}
+                                        style="float: right;" label="Confirm Schedule" onclick={confirmPaymentSchedule}
+                                        variant="brand"></lightning-button>&nbsp;&nbsp;
+                                    <lightning-button icon-name="utility:breadcrumbs" if:true={editPaymentScheduleMode}
+                                        style="float: right;" label="Cancel Schedule" onclick={cancelPaymentSchedule}
+                                        variant="brand"></lightning-button>
+                                </template>
+                            </div> -->
+    
+                            <div class="main">
+                                <lightning-icon size="medium" icon-name="standard:form"></lightning-icon>
+                                <label class="head" style="font-size:14px !important;">Payment Schedule</label>
+                                <template if:true={isPaymentScheduleEnable}>
+                                    <!-- <lightning-button 
+                                        class="payment-button"
+                                        icon-name="utility:breadcrumbs" 
+                                        if:false={editPaymentScheduleMode}
+                                        label="Edit Schedule" 
+                                        onclick={editPaymentSchedule}
+                                        variant="brand">
+                                    </lightning-button>
+                                    
+                                    <lightning-button 
+                                        class="payment-button update-button"
+                                        icon-name="utility:breadcrumbs" 
+                                        if:true={editPaymentScheduleMode}
+                                        label="Update Schedule" 
+                                        onclick={updatePaymentSchedule}
+                                        variant="brand">
+                                    </lightning-button>
+                                    
+                                    <lightning-button 
+                                        class="payment-button update-button"
+                                        icon-name="utility:breadcrumbs" 
+                                        if:true={editPaymentScheduleMode}
+                                        label="Confirm Schedule" 
+                                        onclick={confirmPaymentSchedule}
+                                        variant="brand">
+                                    </lightning-button>
+                                    
+                                    <lightning-button 
+                                        class="payment-button"
+                                        icon-name="utility:breadcrumbs" 
+                                        if:true={editPaymentScheduleMode}
+                                        label="Cancel Schedule" 
+                                        onclick={cancelPaymentSchedule}
+                                        variant="brand">
+                                    </lightning-button> -->
+                                </template>
+                            </div>
+                            
+    
+                            <div class="panel-collapse collapse in" style="overflow-x:auto;">
+                                <div class="panel-body table-responsive">
+                                    <table class="">
+                                        <template if:false={editPaymentScheduleMode}>
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Milestone Name
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Percentage
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Due Date
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Amount
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Tax
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Total Amount
+                                                    </th>
+                                                    <!-- <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        TDS
+                                                    </th> -->
+                                                </tr>
+                                            </thead>
+    
+                                            <tbody>
+                                                <template for:each={paymentMilestoneWrapperList} for:item="pmw">
+                                                    <tr key={pmw}>
+    
+                                                        <!-- <tr key={pmw} style={pmw.completedMilestone}> -->
+    
+                                                        <td style="text-align:left; font-size: 10px;">
+                                                            <lightning-formatted-text value={pmw.milestoneName}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text value={pmw.percentageString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+    
+    
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.pm}>
+                                                                <lightning-formatted-date-time year="numeric"
+                                                                    month="numeric" day="numeric" value={pmw.pm.Due_Date__c}
+                                                                    variant="label-hidden"></lightning-formatted-date-time>
+                                                            </template>
+                                                            <template if:false={pmw.pm}>
+                                                                <p></p>
+                                                            </template>
+                                                        </td>
+    
+                                                        <!-- <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.isDueDatevisible}>
+                                                                <lightning-formatted-date-time year="numeric"
+                                                                    month="numeric" day="numeric"
+                                                                    value={pmw.pm.Due_Date__c}
+                                                                    variant="label-hidden">
+                                                                </lightning-formatted-date-time>
+                                                            </template>
+                                                            <template if:true={pmw.isDueDatevisible}>
+                                                                <p></p>
+                                                            </template>
+                                                        </td> -->
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text value={pmw.amountString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text value={pmw.taxString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                                <lightning-formatted-text value={pmw.totalString}>
+                                                                </lightning-formatted-text>
+                                                          
+                                                        </td>
+                                                        <!-- <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.isTDSVisible}>
+                                                                <lightning-formatted-text
+                                                                    value={pmw.isTDSAmountString}>
+                                                                </lightning-formatted-text>
+                                                            </template>
+                                                            <template if:false={pmw.isTDSVisible}>
+                                                                
+                                                            </template>
+                                                        </td> -->
+    
+    
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+    
+                                            <!-- <thead>
+                                                <tr>
+                                                    <th colspan="2"
+                                                        style="padding-top: 3px; padding-bottom: 3px;">
+                                                        Original NPV: <lightning-formatted-number
+                                                            minimum-fraction-digits="3" value={originalNPV}>
+                                                        </lightning-formatted-number>
+                                                    </th>
+                                                    <th colspan="2"
+                                                        style="padding-top: 3px; padding-bottom: 3px;">
+                                                        Modified NPV: <lightning-formatted-number
+                                                            minimum-fraction-digits="3" value={updatedNPV}>
+                                                        </lightning-formatted-number>
+                                                    </th>
+                                                    <th colspan="3"
+                                                        style="padding-top: 3px; padding-bottom: 3px;">
+                                                        Discount: <lightning-formatted-number
+                                                            minimum-fraction-digits="3" value={discountNPV}>
+                                                        </lightning-formatted-number>&nbsp;
+                                                        <lightning-input type="checkbox" data-value-id={discountNPV}
+                                                data-index="1"  name="npvDiscount" label="Apply Discount"
+                                                onchange={handleNpvDiscount}></lightning-input>
+    
+                                                        
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2"
+                                                        style="padding-top: 3px; padding-bottom: 3px;">
+                                                        Original NPV PSF: <lightning-formatted-number
+                                                            minimum-fraction-digits="3" value={originalNPVPSF}>
+                                                        </lightning-formatted-number>
+                                                    </th>
+                                                    <th colspan="2"
+                                                        style="padding-top: 3px; padding-bottom: 3px;">
+                                                        Modified NPV PSF: <lightning-formatted-number
+                                                            minimum-fraction-digits="3" value={updatedNPVPSF}>
+                                                        </lightning-formatted-number>
+                                                    </th>
+                                                    <th colspan="3"
+                                                        style="padding-top: 3px; padding-bottom: 3px;">
+                                                        Discount PSF: <lightning-formatted-number
+                                                            minimum-fraction-digits="3" value={discountNPVPSF}>
+                                                        </lightning-formatted-number>
+                                                    </th>
+                                                </tr>
+                                            </thead> -->
+                                        </template>
+    
+                                        <template if:true={editPaymentScheduleMode}>
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Milestone Name
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        No. Of Days
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Milestone Type
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Construction Stage
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Amount Type
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Milestone Percentage
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Milestone Amount
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Due Date
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Amount
+                                                    </th>
+    
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Tax
+                                                    </th>
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Total
+                                                    </th>
+                                                     <!-- <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        TDS
+                                                    </th>  -->
+                                                    <th
+                                                        style="text-align:center; width: 5%; padding-top: 3px; padding-bottom: 3px; background-color: #cae2df; color: black; font-size: 10px;">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+    
+                                            <tbody>
+                                                <template for:each={paymentMilestoneWrapperList} for:item="pmw"
+                                                    for:index="index">
+                                                    <tr key={pmw} if:false={pmw.isTotal}>
+                                                        <td style="text-align:left; font-size: 10px;">
+                                                            <lightning-input type="text" data-index={index}
+                                                                value={pmw.milestoneName} name="milestoneName"
+                                                                onchange={handleChange}></lightning-input>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                                <lightning-input type="number" data-index={index}
+                                                                    value={pmw.pm.Number_of_Days__c} name="Number_of_Days__c"
+                                                                    onchange={handleChange}>
+                                                                </lightning-input>
+                                                            
+                                                        </td>
+                                                        <td style="text-align:left; font-size: 10px;">
+                                                            <lightning-combobox data-index={index} class="custom-combobox"
+                                                                value={pmw.pm.Milestone_Type__c} name="Milestone_Type__c"
+                                                                options={pmw.milestoneType} onchange={handleChange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td style="text-align:left; font-size: 10px;">
+                                                            <template if:true={pmw.isConStructionLinked}>
+                                                                <lightning-combobox data-index={index}
+                                                                    class="custom-combobox"
+                                                                    value={pmw.pm.Construction_Stage__c}
+                                                                    name="Construction_Stage__c" options={pmw.csListDisplay}
+                                                                    onchange={handleChange}>
+                                                                </lightning-combobox>
+                                                            </template>
+                                                            <template if:false={pmw.isConStructionLinked}>
+                                                                <p></p>
+                                                            </template>
+                                                        </td>
+                                                        <td style="text-align:left; font-size: 10px;">
+                                                            <lightning-combobox data-index={index} class="custom-combobox"
+                                                                value={pmw.pm.Charge_Bucket_1_Type__c}
+                                                                name="Charge_Bucket_1_Type__c" options={pmw.amountType}
+                                                                onchange={handleChange}></lightning-combobox>
+                                                        </td>
+                                                        <!-- <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.isPercentage}>
+                                                                <lightning-input type="number" step="0.25"
+                                                                    data-index={index}
+                                                                    value={pmw.pm.Charge_Bucket_1_Percentage__c}
+                                                                    name="Charge_Bucket_1_Percentage__c"
+                                                                    onchange={handleChange}></lightning-input>
+                                                            </template>
+                                                            <template if:false={pmw.isPercentage}>
+                                                                <lightning-formatted-number steps="0.25"
+                                                                    value={pmw.pm.Charge_Bucket_1_Percentage__c}>
+                                                                </lightning-formatted-number>
+                                                            </template>
+                                                        </td> -->
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.isPercentage}>
+                                                                <lightning-input type="number" step="0.01"
+                                                                    data-index={index}
+                                                                    value={pmw.pm.Charge_Bucket_1_Percentage__c}
+                                                                    name="Charge_Bucket_1_Percentage__c"
+                                                                    onchange={handleChange}></lightning-input>
+                                                            </template>
+                                                            <template if:false={pmw.isPercentage}>
+                                                                <lightning-formatted-number steps="0.01"
+                                                                    value={pmw.pm.Charge_Bucket_1_Percentage__c}>
+                                                                </lightning-formatted-number>
+                                                            </template>
+                                                        </td>
+    
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.isAmount}>
+                                                                <lightning-input type="number" step="0.01"
+                                                                    data-index={index}
+                                                                    value={pmw.pm.Charge_Bucket_1_Amount__c}
+                                                                    name="Charge_Bucket_1_Amount__c"
+                                                                    onchange={handleChange}></lightning-input>
+                                                            </template>
+                                                            <template if:false={pmw.isAmount}>
+                                                                <lightning-formatted-number steps="0.01"
+                                                                    value={pmw.pm.Charge_Bucket_1_Amount__c}>
+                                                                </lightning-formatted-number>
+                                                            </template>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.pm}>
+                                                                <lightning-formatted-date-time year="numeric"
+                                                                    month="numeric" day="numeric" value={pmw.pm.Due_Date__c}
+                                                                    variant="label-hidden"></lightning-formatted-date-time>
+                                                            </template>
+                                                            <template if:false={pmw.pm}>
+                                                                <p></p>
+                                                            </template>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text value={pmw.amountString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+    
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                            <lightning-formatted-text value={pmw.taxString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+                                                        <td style="text-align:right; font-size: 10px;">
+                                                           
+                                                            <lightning-formatted-text value={pmw.totalString}>
+                                                            </lightning-formatted-text>
+                                                        </td>
+                                                         <!-- <td style="text-align:right; font-size: 10px;">
+                                                            <template if:true={pmw.isTDSVisible}>
+                                                                <lightning-formatted-text
+                                                                    value={pmw.isTDSAmountString}>
+                                                                </lightning-formatted-text>
+                                                            </template>
+                                                            <template if:false={pmw.isTDSVisible}>
+                                                                
+                                                            </template>
+                                                        </td>  -->
+                                                        <td style="text-align:center;font-size:18px !important;">
+                                                            <a href="#" name="add" onclick={handleChange} data-index={index}
+                                                                style="font-size:18px;color:green !important">+</a> &nbsp;
+                                                            <a href="#" name="remove" onclick={handleChange}
+                                                                data-index={index} style="font-size:18px;color:red !important">-</a>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+    
+                                        </template>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+      </lightning-modal-body>
+      <lightning-modal-footer></lightning-modal-footer>
+ 
+
+
+   
+
+
+	<!-- <div class="box3">
+		<br>
+		<div style="text-align: center;">
+			<template if:true={showPaymentScheduleData}>
+				<lightning-button icon-name="utility:save" if:false={isValidationError} label="Save"
+					onclick={saveQuotation} variant="brand">
+				</lightning-button>
+			</template>
+		</div>
+        </div> -->
+
+		<c-custom-toast></c-custom-toast>
+
+
+</lightning-card>
+
+</template>

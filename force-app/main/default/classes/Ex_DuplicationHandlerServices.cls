@@ -639,12 +639,20 @@ public class Ex_DuplicationHandlerServices {
         return accountDuplicateMapAlternateEmail;
     }
     
-    /*-----------------------------------Master Method For CP Account --------------------------------------------*/    
-    /*public static Map<Account, List<duplicateWrapper>> duplicationCheckCPAcccount(List<Account> accountList) {
+    /*-----------------------------------Master Method For CP Account Start--------------------------------------------*/
+	// Changes Done by Nitin Choudhary    
+    public static Map<Account, List<duplicateWrapper>> duplicationCheckCPAcccount(List<Account> accountList) {
         Map<Account, List<duplicateWrapper>> duplicateWrapperMap = new Map<Account, List<duplicateWrapper>>();
         Map<Account, List<Account>> CPaccountDuplicateMapMobile = new Map<Account, List<Account>>();
+        Map<Account, List<Account>> CPaccountDuplicateMapPan = new Map<Account, List<Account>>();
+        Map<Account, List<Account>> CPaccountDuplicateMapRera = new Map<Account, List<Account>>();
+
+
         
         CPaccountDuplicateMapMobile = CPaccountDuplicateCheckByMobile(accountList);
+        CPaccountDuplicateMapPan = CPaccountDuplicateCheckByRera(accountList);
+        CPaccountDuplicateMapRera = CPaccountDuplicateCheckByPan(accountList);
+        
         system.debug('CPaccountDuplicateMapMobile: '+CPaccountDuplicateMapMobile);
         
         if(!CPaccountDuplicateMapMobile.isEmpty() && CPaccountDuplicateMapMobile != null) {
@@ -656,6 +664,26 @@ public class Ex_DuplicationHandlerServices {
                 duplicateWrapperMap.put(a, dwList);
             }
         } 
+        
+         if(!CPaccountDuplicateMapPan.isEmpty() && CPaccountDuplicateMapPan != null) {
+            for(Account a: CPaccountDuplicateMapPan.keySet()) {
+                List<duplicateWrapper> dwList = new List<duplicateWrapper>();
+                for(Account dupAccount: CPaccountDuplicateMapPan.get(a)) {
+                    dwList.add(new duplicateWrapper('Account', dupAccount));
+                }
+                duplicateWrapperMap.put(a, dwList);
+            }
+        }
+        
+         if(!CPaccountDuplicateMapRera.isEmpty() && CPaccountDuplicateMapRera != null) {
+            for(Account a: CPaccountDuplicateMapRera.keySet()) {
+                List<duplicateWrapper> dwList = new List<duplicateWrapper>();
+                for(Account dupAccount: CPaccountDuplicateMapRera.get(a)) {
+                    dwList.add(new duplicateWrapper('Account', dupAccount));
+                }
+                duplicateWrapperMap.put(a, dwList);
+            }
+        }
         return duplicateWrapperMap;
     }
     
@@ -674,7 +702,7 @@ public class Ex_DuplicationHandlerServices {
         System.debug('RecordType::'+rt);
         
         if(!incomingAccountMobileMap.isEmpty() && incomingAccountMobileMap != null) {
-            duplicateAccountList = [Select Id, Name,FirstName, LastName, Phone, PersonEmail,CP_Unique_Code__c,Owner.Name,PersonContactId from Account 
+            duplicateAccountList = [Select Id, Name,FirstName, LastName, PAN_No__c, MahaRERA_Registration_No__c, Phone, PersonEmail,CP_Unique_Code__c,Owner.Name,PersonContactId from Account 
                                     where Phone IN: incomingAccountMobileMap.keySet() AND Id NOT IN: incomingAccountIdSet AND RecordTypeId =: rt.id];
             system.debug('duplicateAccountList: '+duplicateAccountList);
             
@@ -699,18 +727,99 @@ public class Ex_DuplicationHandlerServices {
             }
         }
         return accountDuplicateMapMobile;
-    }*/
+    }
     
-    /*public static Map<String, List<Account>> getIncomingCPAccountMap(String Type, List<Account> accountList) {
-        Map<String, List<Account>> incomingAccountMap = new Map<String, List<Account>>();
+    public static Map<Account, List<Account>> CPaccountDuplicateCheckByRera(List<Account> accountList) {
+        Map<Account, List<Account>> accountDuplicateMapMobile = new Map<Account, List<Account>>();
+        Map<String, List<Account>> incomingAccountMobileMap = new Map<String, List<Account>>();
+        Map<String, List<Account>> duplicateMapMobile = new Map<String, List<Account>>();
+        List<Account> duplicateAccountList = new List<Account>();
+        Set<Id> incomingAccountIdSet = new Set<Id>();
+        
+        incomingAccountMobileMap = getIncomingCPAccountMap('CP RERA', accountList);
+        incomingAccountIdSet = getAccountIdSet(accountList);
         
         RecordType rt = new RecordType();
         rt = [Select Id, DeveloperName, Name from RecordType where Name =: 'Channel Partner']; 
         System.debug('RecordType::'+rt);
         
+        if(!incomingAccountMobileMap.isEmpty() && incomingAccountMobileMap != null) {
+            duplicateAccountList = [Select Id, Name,FirstName, LastName, PAN_No__c, MahaRERA_Registration_No__c, Phone, PersonEmail,CP_Unique_Code__c,Owner.Name,PersonContactId from Account 
+                                    where MahaRERA_Registration_No__c IN: incomingAccountMobileMap.keySet() AND Id NOT IN: incomingAccountIdSet AND RecordTypeId =: rt.id];
+            system.debug('duplicateAccountList: '+duplicateAccountList);
+            
+            if(!duplicateAccountList.isEmpty() && duplicateAccountList != null) {
+                for(Account dupAccount: duplicateAccountList) {
+                    if(!duplicateMapMobile.containsKey(dupAccount.MahaRERA_Registration_No__c)) {
+                        List<Account> newAccountList = new List<Account>();
+                        newAccountList.add(dupAccount);
+                        duplicateMapMobile.put(dupAccount.MahaRERA_Registration_No__c, newAccountList);
+                    } else {
+                        duplicateMapMobile.get(dupAccount.MahaRERA_Registration_No__c).add(dupAccount);
+                    }
+                }
+            }
+            
+            for(String phone: incomingAccountMobileMap.keySet()) {
+                if(duplicateMapMobile.containsKey(phone)) {
+                    for(Account a: incomingAccountMobileMap.get(phone)) {
+                        accountDuplicateMapMobile.put(a, duplicateMapMobile.get(phone));
+                    }
+                }
+            }
+        }
+        return accountDuplicateMapMobile;
+    }
+    
+    public static Map<Account, List<Account>> CPaccountDuplicateCheckByPan(List<Account> accountList) {
+        Map<Account, List<Account>> accountDuplicateMapMobile = new Map<Account, List<Account>>();
+        Map<String, List<Account>> incomingAccountMobileMap = new Map<String, List<Account>>();
+        Map<String, List<Account>> duplicateMapMobile = new Map<String, List<Account>>();
+        List<Account> duplicateAccountList = new List<Account>();
+        Set<Id> incomingAccountIdSet = new Set<Id>();
         
+        incomingAccountMobileMap = getIncomingCPAccountMap('CP PAN', accountList);
+        incomingAccountIdSet = getAccountIdSet(accountList);
         
-        if(Type.equalsIgnoreCase('CPPhone')) {
+        RecordType rt = new RecordType();
+        rt = [Select Id, DeveloperName, Name from RecordType where Name =: 'Channel Partner']; 
+        System.debug('RecordType::'+rt);
+        
+        if(!incomingAccountMobileMap.isEmpty() && incomingAccountMobileMap != null) {
+            duplicateAccountList = [Select Id, Name,FirstName, LastName, PAN_No__c, MahaRERA_Registration_No__c, Phone, PersonEmail,CP_Unique_Code__c,Owner.Name,PersonContactId from Account 
+                                    where PAN_No__c IN: incomingAccountMobileMap.keySet() AND Id NOT IN: incomingAccountIdSet AND RecordTypeId =: rt.id];
+            system.debug('duplicateAccountList: '+duplicateAccountList);
+            
+            if(!duplicateAccountList.isEmpty() && duplicateAccountList != null) {
+                for(Account dupAccount: duplicateAccountList) {
+                    if(!duplicateMapMobile.containsKey(dupAccount.PAN_No__c)) {
+                        List<Account> newAccountList = new List<Account>();
+                        newAccountList.add(dupAccount);
+                        duplicateMapMobile.put(dupAccount.PAN_No__c, newAccountList);
+                    } else {
+                        duplicateMapMobile.get(dupAccount.PAN_No__c).add(dupAccount);
+                    }
+                }
+            }
+            
+            for(String phone: incomingAccountMobileMap.keySet()) {
+                if(duplicateMapMobile.containsKey(phone)) {
+                    for(Account a: incomingAccountMobileMap.get(phone)) {
+                        accountDuplicateMapMobile.put(a, duplicateMapMobile.get(phone));
+                    }
+                }
+            }
+        }
+        return accountDuplicateMapMobile;
+    }
+    
+    public static Map<String, List<Account>> getIncomingCPAccountMap(String Type, List<Account> accountList) {
+        Map<String, List<Account>> incomingAccountMap = new Map<String, List<Account>>();
+        RecordType rt = new RecordType();
+        rt = [Select Id, DeveloperName, Name from RecordType where Name =: 'Channel Partner']; 
+        System.debug('RecordType::'+rt);
+        
+        if(Type.equalsIgnoreCase('CP Phone')) {
             for(Account a: accountList) {
                 if(a.Phone != null && a.RecordTypeId == rt.id) {
                     if(!incomingAccountMap.containsKey(a.Phone)) {
@@ -724,8 +833,374 @@ public class Ex_DuplicationHandlerServices {
                 }
             }
         }
+        if(Type.equalsIgnoreCase('CP PAN')) {
+            for(Account a: accountList) {
+                if(a.PAN_No__c != null && a.RecordTypeId == rt.id) {
+                    if(!incomingAccountMap.containsKey(a.PAN_No__c)) {
+                        List<Account> newAccountList = new List<Account>();
+                        newAccountList.add(a);
+                        incomingAccountMap.put(a.PAN_No__c, newAccountList);
+                    } else {
+                        incomingAccountMap.get(a.PAN_No__c).add(a);
+                        System.debug('RecordType::'+a.RecordTypeId);
+                    }
+                }
+            }
+        }
+        if(Type.equalsIgnoreCase('CP RERA')) {
+            for(Account a: accountList) {
+                if(a.MahaRERA_Registration_No__c != null && a.RecordTypeId == rt.id) {
+                    if(!incomingAccountMap.containsKey(a.MahaRERA_Registration_No__c)) {
+                        List<Account> newAccountList = new List<Account>();
+                        newAccountList.add(a);
+                        incomingAccountMap.put(a.MahaRERA_Registration_No__c, newAccountList);
+                    } else {
+                        incomingAccountMap.get(a.MahaRERA_Registration_No__c).add(a);
+                        System.debug('RecordType::'+a.RecordTypeId);
+                    }
+                }
+            }
+        }
         return incomingAccountMap;
-    }*/
+    }
+
+    // Master Method for CP Lead Start
+    public static Set<Id> getCPLeadIdSet(List<CP_Lead__c> leadList) {
+        Set<Id> leadIdSet = new Set<Id>();
+        
+        for(CP_Lead__c l: leadList) {
+            leadIdSet.add(l.Id);
+        }
+        return leadIdSet;
+    }
+    
+    public static Map<CP_Lead__c, List<duplicateWrapper>> duplicationCheckCPLead(List<CP_Lead__c> cpList) {
+        Map<CP_Lead__c, List<duplicateWrapper>> duplicateWrapperMap = new Map<CP_Lead__c, List<duplicateWrapper>>();
+        Map<CP_Lead__c, List<CP_Lead__c>> cpleadDuplicateMapMobileWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<CP_Lead__c, List<CP_Lead__c>> cpleadDuplicateMapPhoneWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<CP_Lead__c, List<CP_Lead__c>> cpleadDuplicateMapEmailWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<CP_Lead__c, List<CP_Lead__c>> cpleadDuplicateMapAlternateEmailWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        
+        cpleadDuplicateMapMobileWithProject = getCPleadDuplicateCheckByMobileWithProject(cpList);
+        system.debug('cpleadDuplicateMapMobileWithProject: '+cpleadDuplicateMapMobileWithProject);
+        
+        cpleadDuplicateMapPhoneWithProject = getCPleadDuplicateCheckByPhoneWithProject(cpList);
+        system.debug('cpleadDuplicateMapPhoneWithProject: '+cpleadDuplicateMapPhoneWithProject);
+        
+        cpleadDuplicateMapEmailWithProject = getCPleadDuplicateCheckByEmailWithProject(cpList);
+        system.debug('cpleadDuplicateMapEmailWithProject: '+cpleadDuplicateMapEmailWithProject);
+        
+        cpleadDuplicateMapAlternateEmailWithProject = getCPleadDuplicateCheckByAlternateEmailWithProject(cpList);
+        system.debug('cpleadDuplicateMapAlternateEmailWithProject: '+cpleadDuplicateMapAlternateEmailWithProject);
+        
+        if(!cpleadDuplicateMapMobileWithProject.isEmpty() && cpleadDuplicateMapMobileWithProject != null) {
+            for(CP_Lead__c l: cpleadDuplicateMapMobileWithProject.keySet()) {
+                List<duplicateWrapper> dwList = new List<duplicateWrapper>();
+                for(CP_Lead__c dupCPLead: cpleadDuplicateMapMobileWithProject.get(l)) {
+                    dwList.add(new duplicateWrapper('CP Lead', dupCPLead));
+                }
+                duplicateWrapperMap.put(l, dwList);
+            }
+        }
+        if(!cpleadDuplicateMapPhoneWithProject.isEmpty() && cpleadDuplicateMapPhoneWithProject != null) {
+            for(CP_Lead__c l: cpleadDuplicateMapPhoneWithProject.keySet()) {
+                List<duplicateWrapper> dwList = new List<duplicateWrapper>();
+                for(CP_Lead__c dupCPLead: cpleadDuplicateMapPhoneWithProject.get(l)) {
+                    dwList.add(new duplicateWrapper('CP Lead', dupCPLead));
+                }
+                duplicateWrapperMap.put(l, dwList);
+            }
+        }
+        if(!cpleadDuplicateMapEmailWithProject.isEmpty() && cpleadDuplicateMapEmailWithProject != null) {
+            for(CP_Lead__c l: cpleadDuplicateMapEmailWithProject.keySet()) {
+                List<duplicateWrapper> dwList = new List<duplicateWrapper>();
+                for(CP_Lead__c dupCPLead: cpleadDuplicateMapEmailWithProject.get(l)) {
+                    dwList.add(new duplicateWrapper('CP Lead', dupCPLead));
+                }
+                duplicateWrapperMap.put(l, dwList);
+            }
+        }
+        if(!cpleadDuplicateMapAlternateEmailWithProject.isEmpty() && cpleadDuplicateMapAlternateEmailWithProject != null) {
+            for(CP_Lead__c l: cpleadDuplicateMapAlternateEmailWithProject.keySet()) {
+                List<duplicateWrapper> dwList = new List<duplicateWrapper>();
+                for(CP_Lead__c dupCPLead: cpleadDuplicateMapAlternateEmailWithProject.get(l)) {
+                    dwList.add(new duplicateWrapper('CP Lead', dupCPLead));
+                }
+                duplicateWrapperMap.put(l, dwList);
+            }
+        }
+        return duplicateWrapperMap;
+    }
+    
+    public static Map<CP_Lead__c, List<CP_Lead__c>> getCPleadDuplicateCheckByMobileWithProject(List<CP_Lead__c> leadList) {
+        Map<CP_Lead__c, List<CP_Lead__c>> leadDuplicateMapMobileWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadMobileMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadMobileWithProjectMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> duplicateMapMobileWithProject = new Map<String, List<CP_Lead__c>>();
+        List<CP_Lead__c> duplicateLeadList = new List<CP_Lead__c>();
+        Set<Id> incomingLeadIdSet = new Set<Id>();
+        
+        incomingLeadMobileMap = getIncomingCPLeadMap('Mobile', leadList);
+        incomingLeadMobileWithProjectMap = getIncomingCPLeadWithProjectMap('Mobile', leadList);
+        incomingLeadIdSet = getCPLeadIdSet(leadList);
+        
+        if(!incomingLeadMobileMap.isEmpty() && incomingLeadMobileMap != null) {
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+                                 where Mobile__c IN: incomingLeadMobileMap.keySet() AND Id NOT IN: incomingLeadIdSet];
+                                
+            system.debug('CPduplicateLeadList: '+duplicateLeadList);
+            
+            if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
+                for(CP_Lead__c dupCPLead: duplicateLeadList) {
+                    if(!duplicateMapMobileWithProject.containsKey(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(dupCPLead);
+                        duplicateMapMobileWithProject.put(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
+                    } else {
+                        duplicateMapMobileWithProject.get(dupCPLead.Mobile__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
+                    }
+                }
+            }
+            
+            for(String mobileWithProject: incomingLeadMobileWithProjectMap.keySet()) {
+                if(duplicateMapMobileWithProject.containsKey(mobileWithProject)) {
+                    for(CP_Lead__c l: incomingLeadMobileWithProjectMap.get(mobileWithProject)) {
+                        leadDuplicateMapMobileWithProject.put(l, duplicateMapMobileWithProject.get(mobileWithProject));
+                    }
+                }
+            }
+        }
+        return leadDuplicateMapMobileWithProject;
+    }
+    
+    public static Map<CP_Lead__c, List<CP_Lead__c>> getCPleadDuplicateCheckByPhoneWithProject(List<CP_Lead__c> leadList) {
+        Map<CP_Lead__c, List<CP_Lead__c>> leadDuplicateMapPhoneWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadPhoneMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadPhoneWithProjectMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> duplicateMapPhoneWithProject = new Map<String, List<CP_Lead__c>>();
+        List<CP_Lead__c> duplicateLeadList = new List<CP_Lead__c>();
+        Set<Id> incomingLeadIdSet = new Set<Id>();
+        
+        incomingLeadPhoneMap = getIncomingCPLeadMap('Phone', leadList);
+        incomingLeadPhoneWithProjectMap = getIncomingCPLeadWithProjectMap('Phone', leadList);
+        incomingLeadIdSet = getCPLeadIdSet(leadList);
+        
+        if(!incomingLeadPhoneMap.isEmpty() && incomingLeadPhoneMap != null) {
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+                                 where Phone__c IN: incomingLeadPhoneMap.keySet() AND Id NOT IN: incomingLeadIdSet];
+                                
+            system.debug('CPduplicateLeadList: '+duplicateLeadList);
+            
+            if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
+                for(CP_Lead__c dupCPLead: duplicateLeadList) {
+                    if(!duplicateMapPhoneWithProject.containsKey(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(dupCPLead);
+                        duplicateMapPhoneWithProject.put(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
+                    } else {
+                        duplicateMapPhoneWithProject.get(dupCPLead.Phone__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
+                    }
+                }
+            }
+            
+            for(String mobileWithProject: incomingLeadPhoneWithProjectMap.keySet()) {
+                if(duplicateMapPhoneWithProject.containsKey(mobileWithProject)) {
+                    for(CP_Lead__c l: incomingLeadPhoneWithProjectMap.get(mobileWithProject)) {
+                        leadDuplicateMapPhoneWithProject.put(l, duplicateMapPhoneWithProject.get(mobileWithProject));
+                    }
+                }
+            }
+        }
+        return leadDuplicateMapPhoneWithProject;
+    }
+    
+     public static Map<CP_Lead__c, List<CP_Lead__c>> getCPleadDuplicateCheckByEmailWithProject(List<CP_Lead__c> leadList) {
+        Map<CP_Lead__c, List<CP_Lead__c>> leadDuplicateMapEmailWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadEmailMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadEmailWithProjectMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> duplicateMapEmailWithProject = new Map<String, List<CP_Lead__c>>();
+        List<CP_Lead__c> duplicateLeadList = new List<CP_Lead__c>();
+        Set<Id> incomingLeadIdSet = new Set<Id>();
+        
+        incomingLeadEmailMap = getIncomingCPLeadMap('Email', leadList);
+        incomingLeadEmailWithProjectMap = getIncomingCPLeadWithProjectMap('Email', leadList);
+        incomingLeadIdSet = getCPLeadIdSet(leadList);
+        
+        if(!incomingLeadEmailMap.isEmpty() && incomingLeadEmailMap != null) {
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+                                 where Email__c IN: incomingLeadEmailMap.keySet() AND Id NOT IN: incomingLeadIdSet];
+                                
+            system.debug('CPduplicateLeadList: '+duplicateLeadList);
+            
+            if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
+                for(CP_Lead__c dupCPLead: duplicateLeadList) {
+                    if(!duplicateMapEmailWithProject.containsKey(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(dupCPLead);
+                        duplicateMapEmailWithProject.put(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
+                    } else {
+                        duplicateMapEmailWithProject.get(dupCPLead.Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
+                    }
+                }
+            }
+            
+            for(String mobileWithProject: incomingLeadEmailWithProjectMap.keySet()) {
+                if(duplicateMapEmailWithProject.containsKey(mobileWithProject)) {
+                    for(CP_Lead__c l: incomingLeadEmailWithProjectMap.get(mobileWithProject)) {
+                        leadDuplicateMapEmailWithProject.put(l, duplicateMapEmailWithProject.get(mobileWithProject));
+                    }
+                }
+            }
+        }
+        return leadDuplicateMapEmailWithProject;
+    }
+    
+     public static Map<CP_Lead__c, List<CP_Lead__c>> getCPleadDuplicateCheckByAlternateEmailWithProject(List<CP_Lead__c> leadList) {
+        Map<CP_Lead__c, List<CP_Lead__c>> leadDuplicateMapPhoneWithProject = new Map<CP_Lead__c, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadPhoneMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> incomingLeadPhoneWithProjectMap = new Map<String, List<CP_Lead__c>>();
+        Map<String, List<CP_Lead__c>> duplicateMapPhoneWithProject = new Map<String, List<CP_Lead__c>>();
+        List<CP_Lead__c> duplicateLeadList = new List<CP_Lead__c>();
+        Set<Id> incomingLeadIdSet = new Set<Id>();
+        
+        incomingLeadPhoneMap = getIncomingCPLeadMap('Alternate Email', leadList);
+        incomingLeadPhoneWithProjectMap = getIncomingCPLeadWithProjectMap('Alternate Email', leadList);
+        incomingLeadIdSet = getCPLeadIdSet(leadList);
+        
+        if(!incomingLeadPhoneMap.isEmpty() && incomingLeadPhoneMap != null) {
+            duplicateLeadList = [Select Id, CreatedDate, CP_Project__c, OwnerId, Owner.FirstName, Owner.LastName, Name, Mobile__c, Phone__c, Email__c, Alternate_Email__c, Channel_Partner_Name__c from CP_Lead__c 
+                                 where Alternate_Email__c IN: incomingLeadPhoneMap.keySet() AND Id NOT IN: incomingLeadIdSet];
+                                
+            system.debug('CPduplicateLeadList: '+duplicateLeadList);
+            
+            if(!duplicateLeadList.isEmpty() && duplicateLeadList != null) {
+                for(CP_Lead__c dupCPLead: duplicateLeadList) {
+                    if(!duplicateMapPhoneWithProject.containsKey(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(dupCPLead);
+                        duplicateMapPhoneWithProject.put(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c, newLeadList);
+                    } else {
+                        duplicateMapPhoneWithProject.get(dupCPLead.Alternate_Email__c+'-'+dupCPLead.Channel_Partner_Name__c+'-'+dupCPLead.CP_Project__c).add(dupCPLead);
+                    }
+                }
+            }
+            
+            for(String mobileWithProject: incomingLeadPhoneWithProjectMap.keySet()) {
+                if(duplicateMapPhoneWithProject.containsKey(mobileWithProject)) {
+                    for(CP_Lead__c l: incomingLeadPhoneWithProjectMap.get(mobileWithProject)) {
+                        leadDuplicateMapPhoneWithProject.put(l, duplicateMapPhoneWithProject.get(mobileWithProject));
+                    }
+                }
+            }
+        }
+        return leadDuplicateMapPhoneWithProject;
+    }
+    
+    public static Map<String, List<CP_Lead__c>> getIncomingCPLeadMap(String Type, List<CP_Lead__c> leadList) {
+        Map<String, List<CP_Lead__c>> incomingLeadMap = new Map<String, List<CP_Lead__c>>();
+        
+        if(Type.equalsIgnoreCase('Mobile') || Type.equalsIgnoreCase('Phone')) {
+            for(CP_Lead__c l: leadList) {
+                if(l.Mobile__c != null) {
+                    if(!incomingLeadMap.containsKey(l.Mobile__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadMap.put(l.Mobile__c, newLeadList);
+                    } else {
+                        incomingLeadMap.get(l.Mobile__c).add(l);
+                    }
+                }
+            
+                if(l.Phone__c != null) {
+                    if(!incomingLeadMap.containsKey(l.Phone__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadMap.put(l.Phone__c, newLeadList);
+                    } else {
+                        incomingLeadMap.get(l.Phone__c).add(l);
+                    }
+                }
+            }
+        }  
+        if(Type.equalsIgnoreCase('Email') || Type.equalsIgnoreCase('Alternate Email')) {
+            for(CP_Lead__c l: leadList) {
+                if(l.Email__c != null) {
+                    if(!incomingLeadMap.containsKey(l.Email__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadMap.put(l.Email__c, newLeadList);
+                    } else {
+                        incomingLeadMap.get(l.Email__c).add(l);
+                    }
+                }
+            
+                if(l.Alternate_Email__c != null) {
+                    if(!incomingLeadMap.containsKey(l.Alternate_Email__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadMap.put(l.Alternate_Email__c, newLeadList);
+                    } else {
+                        incomingLeadMap.get(l.Alternate_Email__c).add(l);
+                    }
+                }
+            }
+        }
+        return incomingLeadMap;
+    }
+
+    public static Map<String, List<CP_Lead__c>> getIncomingCPLeadWithProjectMap(String Type, List<CP_Lead__c> leadList) {
+        Map<String, List<CP_Lead__c>> incomingLeadWithProjectMap = new Map<String, List<CP_Lead__c>>();
+        
+        if(Type.equalsIgnoreCase('Mobile') || Type.equalsIgnoreCase('Phone')) {
+            for(CP_Lead__c l: leadList) {
+                if(l.Mobile__c != null) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Mobile__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadWithProjectMap.put(l.Mobile__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
+                    } else {
+                        incomingLeadWithProjectMap.get(l.Mobile__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
+                    }
+                }
+                if(l.Phone__c != null) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Phone__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadWithProjectMap.put(l.Phone__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
+                    } else {
+                        incomingLeadWithProjectMap.get(l.Phone__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
+                    }
+                }
+            }
+        }
+        if(Type.equalsIgnoreCase('Email') || Type.equalsIgnoreCase('Alternate Email')) {
+            for(CP_Lead__c l: leadList) {
+                if(l.Email__c != null) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Email__c +'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadWithProjectMap.put(l.Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
+                    } else {
+                        incomingLeadWithProjectMap.get(l.Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
+                    }
+                }
+                if(l.Alternate_Email__c != null) {
+                    if(!incomingLeadWithProjectMap.containsKey(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c)) {
+                        List<CP_Lead__c> newLeadList = new List<CP_Lead__c>();
+                        newLeadList.add(l);
+                        incomingLeadWithProjectMap.put(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c, newLeadList);
+                    } else {
+                        incomingLeadWithProjectMap.get(l.Alternate_Email__c+'-'+l.Channel_Partner_Name__c+'-'+l.CP_Project__c).add(l);
+                    }
+                }
+            }
+        }
+        
+        return incomingLeadWithProjectMap;
+    }
+    
+    /*-----------------------------------Master Method For CP Account End--------------------------------------------*/
+
     
     public static Map<String, List<Lead__c>> getIncomingLeadMap(String Type, List<Lead__c> leadList) {
         Map<String, List<Lead__c>> incomingLeadMap = new Map<String, List<Lead__c>>();
@@ -856,8 +1331,8 @@ public class Ex_DuplicationHandlerServices {
         }
         
         if(!incomingOpportunityAccountMap.isEmpty() && incomingOpportunityAccountMap != null) {
-            duplicateOpportunityList = [Select Id, Name, Account__c, Is_Active__c, Project__c, Project__r.Name, OwnerId, Owner.Name from Opportunity__c
-                                        where Account__c IN: incomingOpportunityAccountMap.keySet() AND Id NOT IN: incomingOpportunityIdSet AND Is_Active__c = true];
+            duplicateOpportunityList = [Select Id, Name,Stage__c, Account__c, Is_Active__c, Project__c, Project__r.Name, Is_Booked__c, OwnerId, Owner.Name from Opportunity__c
+                                        where Account__c IN: incomingOpportunityAccountMap.keySet() AND Id NOT IN: incomingOpportunityIdSet AND Is_Booked__c = false];
             system.debug('duplicateOpportunityList: '+duplicateOpportunityList);
             
             if(!duplicateOpportunityList.isEmpty() && duplicateOpportunityList != null) {
@@ -917,11 +1392,17 @@ public class Ex_DuplicationHandlerServices {
         public String objectType {get;set;}
         public Lead__c dupLead {get;set;}
         public Account dupAccount {get;set;}
+        public CP_Lead__c dupCPLead {get;set;}
+
         
         public duplicateWrapper(String type, Lead__c l, Account a) {
             this.objectType = type;
             this.dupLead = l;
             this.dupAccount = a;
+        }
+        public duplicateWrapper(String type, CP_Lead__c cp){
+            this.objectType = type;
+            this.dupCPLead = cp;
         }
         public duplicateWrapper(String type, Account acc) {
             this.objectType = type;
