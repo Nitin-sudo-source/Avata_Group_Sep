@@ -29,15 +29,20 @@
   /* text-align: center; */
   }
   .main{
-  background-color: rgb(240, 240, 240);
-  border: 1px solid #c2c2c2;
+  /* background-color: rgb(240, 240, 240); */
+  background: linear-gradient(222deg, rgba(238, 226, 252, 0) 50%, rgba(238, 226, 252, 1) 102.81%), linear-gradient(135deg, rgba(218, 233, 255, 1) 11%, rgba(237, 249, 247, 1) 100%);
+
+  border: 0.5px solid #393838;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.07) inset;
+
   padding: 15px;
   border-radius: 2px;
   }
   
   .mains{
   /* margin: 20px; */
-   border: 2px solid #c2c2c2;border-radius: var(--lwc-borderRadiusMedium,0.25rem); 
+   border: 2px solid #393838;
+   border-radius: var(--lwc-borderRadiusMedium,0.25rem); 
   }
   
   .head{
