@@ -132,7 +132,11 @@
                                                     data-value={u.Id}>
                                                     <span class="unit-info popup-text"><strong>{u.Name}</strong><br />
                                                         {u.Configuration_Type__c} | {u.Sales_Status__c} | {u.Saleable_Area__c}
-                                                        | {u.primaryapname}
+                                                       
+														<template if:true={u.isUnitBooked}>
+															|  {u.primaryApplicantName}
+														</template>
+															
 
                                                     </span>
 

@@ -72,112 +72,112 @@ export default class Ex_InventoryMatrix extends LightningElement {
     @track filteredunitFloorMap = [];
     @track storeProjectName = '';
 
-     // Get Unit Sales Status values
-     @wire(getObjectInfo, { objectApiName: Unit__c })
-     unitInfo;
- 
-     @wire(getPicklistValues, {
-         recordTypeId: '$unitInfo.data.defaultRecordTypeId',
-         fieldApiName: Sales_Status__c
-     })
-     handlePicklistValues({ error, data }) {
- 
-         // Handle Sales Status values for filter
-         if (data) {
- 
-             this.unitSalesStatusOptions = data.values.map((picklistValue, index) => {
-                 return {
-                     'id': index + 1,
-                     'filterType': Sales_Status__c.fieldApiName,
-                     'salesStatus': picklistValue.value,
-                     'unitCount': 0,
-                     'checkBoxStatus': false,
-                     'isAll': false
-                 }
-             })
- 
-             // Add "All" filter 
-             this.unitSalesStatusOptions = [
-                 {
-                     'id': 0,
-                     'filterType': Sales_Status__c.fieldApiName,
-                     'salesStatus': 'All',
-                     'unitCount': 0,
-                     'checkBoxStatus': true,
-                     'isAll': true
-                 },
-                 ...this.unitSalesStatusOptions
-             ];
-             this.selectedSalesStatusFilters = ['All'];
+    // Get Unit Sales Status values
+    @wire(getObjectInfo, { objectApiName: Unit__c })
+    unitInfo;
+
+    @wire(getPicklistValues, {
+        recordTypeId: '$unitInfo.data.defaultRecordTypeId',
+        fieldApiName: Sales_Status__c
+    })
+    handlePicklistValues({ error, data }) {
+
+        // Handle Sales Status values for filter
+        if (data) {
+
+            this.unitSalesStatusOptions = data.values.map((picklistValue, index) => {
+                return {
+                    'id': index + 1,
+                    'filterType': Sales_Status__c.fieldApiName,
+                    'salesStatus': picklistValue.value,
+                    'unitCount': 0,
+                    'checkBoxStatus': false,
+                    'isAll': false
+                }
+            })
+
+            // Add "All" filter 
+            this.unitSalesStatusOptions = [
+                {
+                    'id': 0,
+                    'filterType': Sales_Status__c.fieldApiName,
+                    'salesStatus': 'All',
+                    'unitCount': 0,
+                    'checkBoxStatus': true,
+                    'isAll': true
+                },
+                ...this.unitSalesStatusOptions
+            ];
+            this.selectedSalesStatusFilters = ['All'];
             //('Sales status values : ' + JSON.stringify(this.unitSalesStatusOptions));
-         }
-         // Handle Error
-         else if (error) {
-             //console.log("Error in retriving picklist values for Unit : 'Sales Status'");
-             this.unitSalesStatusOptions = [];
-         }
-     }
- 
- 
-     // Get Unit Configuration values
-     @wire(getObjectInfo, { objectApiName: Unit__c })
-     unitInfo;
- 
-     @wire(getPicklistValues, {
-         recordTypeId: '$unitInfo.data.defaultRecordTypeId',
-         fieldApiName: Configuration_Type__c
-     })
-     handleUnitConfigurations({ error, data }) {
- 
-         // Handle Configuration Type values of Unit
-         if (data) {
- 
-             this.unitConfigurationTypeOptions = data.values.map((picklistValue, index) => {
-                 return {
-                     'id': index + 1,
-                     'filterType': Configuration_Type__c.fieldApiName,
-                     'configurationType': picklistValue.value,
-                     'unitCount': 0,
-                     'checkBoxStatus': false,
-                     'isAll': false
-                 }
-             })
- 
-             // Add "All" filter 
-             this.unitConfigurationTypeOptions = [
-                 {
-                     'id': 0,
-                     'filterType': Configuration_Type__c.fieldApiName,
-                     'configurationType': 'All',
-                     'unitCount': 0,
-                     'checkBoxStatus': true,
-                     'isAll': true
-                 },
-                 ...this.unitConfigurationTypeOptions
-             ];
-             this.selectedConfigurationTypeFilters = ['All'];
+        }
+        // Handle Error
+        else if (error) {
+            //console.log("Error in retriving picklist values for Unit : 'Sales Status'");
+            this.unitSalesStatusOptions = [];
+        }
+    }
+
+
+    // Get Unit Configuration values
+    @wire(getObjectInfo, { objectApiName: Unit__c })
+    unitInfo;
+
+    @wire(getPicklistValues, {
+        recordTypeId: '$unitInfo.data.defaultRecordTypeId',
+        fieldApiName: Configuration_Type__c
+    })
+    handleUnitConfigurations({ error, data }) {
+
+        // Handle Configuration Type values of Unit
+        if (data) {
+
+            this.unitConfigurationTypeOptions = data.values.map((picklistValue, index) => {
+                return {
+                    'id': index + 1,
+                    'filterType': Configuration_Type__c.fieldApiName,
+                    'configurationType': picklistValue.value,
+                    'unitCount': 0,
+                    'checkBoxStatus': false,
+                    'isAll': false
+                }
+            })
+
+            // Add "All" filter 
+            this.unitConfigurationTypeOptions = [
+                {
+                    'id': 0,
+                    'filterType': Configuration_Type__c.fieldApiName,
+                    'configurationType': 'All',
+                    'unitCount': 0,
+                    'checkBoxStatus': true,
+                    'isAll': true
+                },
+                ...this.unitConfigurationTypeOptions
+            ];
+            this.selectedConfigurationTypeFilters = ['All'];
             //('Configuration type values : ' + JSON.stringify(this.unitConfigurationTypeOptions));
-         }
-         // Handle Error
-         else if (error) {
+        }
+        // Handle Error
+        else if (error) {
             //("Error in retriving picklist values for Unit : 'Configuration Type'");
-             this.unitConfigurationTypeOptions = [];
-         }
-     }
+            this.unitConfigurationTypeOptions = [];
+        }
+    }
 
 
 
 
     connectedCallback() {
-        if(this.oppId == undefined){
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        this.oppId = urlSearchParams.get("recordId");
+        if (this.oppId == undefined) {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            this.oppId = urlSearchParams.get("recordId");
         }
         //alert('oppId: ' + this.oppId);
         this.getProjects();
     }
 
-    
+
     getProjects() {
         getProject({ oppId: this.oppId })
             .then(data => {
@@ -195,9 +195,9 @@ export default class Ex_InventoryMatrix extends LightningElement {
                         this.projectdisbaled = false;
                     }
                     this.getTowers();
-                   //('Project List:', JSON.stringify(this.projList));
+                    //('Project List:', JSON.stringify(this.projList));
                 } else {
-                   //('No data');
+                    //('No data');
                 }
             })
             .catch(error => {
@@ -209,35 +209,37 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
     handleProject(event) {
         this.selectedProjId = event.detail.value;
-       //('selectedProjId: ', this.selectedProjId);
+        //('selectedProjId: ', this.selectedProjId);
         this.getTowers();
     }
 
     getTowers() {
         this.showSpinner = true;
-       //('selectedProjId: ', this.selectedProjId);
+        //('selectedProjId: ', this.selectedProjId);
         getTower({ projId: this.selectedProjId })
             .then(data => {
                 this.towerList = data.map(t => ({
                     label: t.Name,
                     value: t.Id
                 }));
-               //('Tower List:', JSON.stringify(this.towerList));
-                this.showSpinner = false;
+                //('Tower List:', JSON.stringify(this.towerList));
+
                 this.noErrorInTower = true;
-                
+                this.showSpinner = false;
+
             })
             .catch(error => {
                 console.error('Error:', JSON.stringify(error));
                 this.noErrorInTower = false;
+                this.showSpinner = false;
                 return Promise.reject(error);
-                
+
             });
     }
 
     handleTower(event) {
         this.selectedTower = event.detail.value;
-       //('Tower  : ', this.selectedTower);
+        //('Tower  : ', this.selectedTower);
         this.getUnits();
         this.getUnitConfigurationMap();
         this.getUnitFloorMap();
@@ -257,7 +259,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
             .then(data => {
                 this.unitList = data
 
-               //('Unit List:', JSON.stringify(this.unitList));
+                //('Unit List:', JSON.stringify(this.unitList));
             })
             .catch(error => {
                 console.error('Error:', JSON.stringify(error));
@@ -275,7 +277,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
                     this.unitConfigurationMap.push({ key: config, value: result[config] })
                 }
                 this.showSpinner = false;
-               //('unitConfigurationMap .: ', JSON.stringify(this.unitConfigurationMap));
+                //('unitConfigurationMap .: ', JSON.stringify(this.unitConfigurationMap));
             }).catch(error => {
                 console.error("Error In getUnitConfigurationMapDetails: ", error);
                 this.unitConfigurationMap = null;
@@ -299,55 +301,23 @@ export default class Ex_InventoryMatrix extends LightningElement {
             .then(data => {
                 if (data) {
                     this.originalUnitFloorMap = data;
-                   //('Unit Map: ' + JSON.stringify(this.originalUnitFloorMap));
+                    //('Unit Map: ' + JSON.stringify(this.originalUnitFloorMap));
                     this.updateUnitCountForFilters();
 
                     for (let floor in data) {
-                       //('floor: ' + floor);
+                        //('floor: ' + floor);
                         this.unitList = data[floor];
                         this.unitList = this.unitList.map(item => ({ ...item, BlockButton: false }));
 
-                       //('unitList: ' + this.unitList);
+                        //('unitList: ' + this.unitList);
 
                         this.unitList.forEach(unit => {
-                           //('unit182: ' + JSON.stringify(unit));
-                            if (unit.Sales_Status__c === 'Booked') {
-                                if (unit.Booking__c != null && unit.Booking__c != undefined) {
-                                    if (unit.Booking__r.Primary_Applicant_Name__c != undefined && unit.Booking__r.Primary_Applicant_Name__c != null) {
-                                       //('unitin: ');
-                                        unit.primaryapname = unit.Booking__r.Primary_Applicant_Name__c;
-                                    }
-                                }
-                            }
-                            else {
-                                unit.primaryapname = '';
-                            }
-                           //('Unit_Blocked_By__c::' + unit.Unit_Blocked_By__c);
-                            if (unit.Unit_Blocked_By__c && this.currentUser) {
-                               //('Unit_Blocked_By__cif::' + unit.Unit_Blocked_By__c);
-                               //('OUTPUT : ', unit.Unit_Blocked_By__c == this.currentUser);
-                               //('Opportunity__c : ', unit.Opportunity__c);
-                               //('this.oppId' + this.oppId);
-                                if (unit.Opportunity__c !== undefined) {
-                                    if (unit.Unit_Blocked_By__c == this.currentUser && unit.Opportunity__c.includes(this.oppId)) {
-                                        unit.BlockButton = true;
-                                       //('this.BlockButton : ' + unit.BlockButton);
-                                    } else {
-                                        unit.BlockButton = false;
-                                    }
-                                }
-                            } else {
+                            console.log('unit: ' + JSON.stringify(unit));
 
-                                unit.BlockButton = false;
-                            }
-
-
-                           //('primaryapnamenew::' + unit.primaryapname);
-                            //console.log('this.primaryapnamenew::' + this.primaryapname);
 
                             if (unit.Sales_Status__c === 'Vacant') {
                                 this.vacantCount = this.vacantCount + 1;
-                            } else if (unit.Sales_Status__c === 'Booked') {
+                            } else if (String(unit.Sales_Status__c) === 'Booked') {
                                 this.bookedCount = this.bookedCount + 1;
                             } else if (unit.Sales_Status__c === 'Blocked') {
                                 this.blockedCount = this.blockedCount + 1;
@@ -370,8 +340,8 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
                     }
                     this.unitCount = this.vacantCount + this.bookedCount + this.blockedCount + this.bookingInProcessCount + this.refugeCount + this.reservedCount + this.possessionDoneCount + this.holdByManagementCount;
-                   //('Unit Count: ', this.unitCount);
-                   //('unitFloorMap: ' + JSON.stringify(this.unitFloorMap));
+                    //('Unit Count: ', this.unitCount);
+                    console.log('unitFloorMap: ' + JSON.stringify(this.unitFloorMap));
                 } else if (error) {
                     console.error('Error In getUnitFloorMapDetails: ', error);
                     this.showSpinner = false;
@@ -386,10 +356,10 @@ export default class Ex_InventoryMatrix extends LightningElement {
         var filterBy = event.target.dataset.filterBy;
         var isAll = event.target.dataset.isAll == 'true';
 
-       //('checkBoxStatus : ' + checkBoxStatus);
-       //('filterType : ' + filterType);
-       //('filterBy : ' + filterBy);
-       //('isAll : ' + isAll);
+        //('checkBoxStatus : ' + checkBoxStatus);
+        //('filterType : ' + filterType);
+        //('filterBy : ' + filterBy);
+        //('isAll : ' + isAll);
 
 
         // Handle Sales Status Filter
@@ -512,7 +482,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
                 });
             }
 
-           //('filteredUnits1 : ' + JSON.stringify(filteredUnits1));
+            //('filteredUnits1 : ' + JSON.stringify(filteredUnits1));
 
             var filteredUnits2 = [];
             if (this.selectedConfigurationTypeFilters.includes('All')) {
@@ -528,18 +498,21 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
                 return {
                     ...unit,
+                    isUnitBooked: unit.Sales_Status__c === 'Booked',
                     isUnitBlocked: unit.Sales_Status__c === 'Blocked',
-                    isQuotationVisible: unit.Sales_Status__c === 'Available',
-                    isBlockVisible: unit.Sales_Status__c === 'Available',
+                    isQuotationVisible: unit.Sales_Status__c === 'Vacant',
+                    isBlockVisible: unit.Sales_Status__c === 'Vacant',
                     isUnblockVisible: (unit.Sales_Status__c === 'Blocked') &&
                         (unit.Opportunity__c && unit.Opportunity__c.slice(0, unit.Opportunity__c.length - 3) === this.oppId),
-                   
+                    primaryApplicantName: unit.Sales_Status__c === 'Booked' && unit.Booking__r ? unit.Booking__r.Primary_Applicant_Name__c : ''
+
+
 
 
                 }
             })
 
-           //('filteredUnits2 : ' + JSON.stringify(filteredUnits2));
+            console.log('filteredUnits2 : ' + JSON.stringify(filteredUnits2));
 
             if (filteredUnits2.length > 0) {
                 floorWiseAllUnitsFiltered.push({
@@ -550,7 +523,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
         })
 
-       //('floorWiseAllUnitsFiltered : ' + JSON.stringify(floorWiseAllUnitsFiltered));
+        //('floorWiseAllUnitsFiltered : ' + JSON.stringify(floorWiseAllUnitsFiltered));
 
         return floorWiseAllUnitsFiltered;
     }
@@ -559,7 +532,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
     // Update Unit counts as per filters
     updateUnitCountForFilters() {
 
-       //('this.originalUnitFloorMap : ' + JSON.stringify(Object.keys(this.originalUnitFloorMap)));
+        //('this.originalUnitFloorMap : ' + JSON.stringify(Object.keys(this.originalUnitFloorMap)));
 
         // Calculate the Unit Counts as per filters
         var unitCountBySalesStatus = { "All": 0 };
@@ -567,7 +540,7 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
 
         Object.keys(this.originalUnitFloorMap).map(floor => {
-           //('FLOOR : ' + floor)
+            //('FLOOR : ' + floor)
             var units = this.originalUnitFloorMap[floor];
             units.map(unit => {
                 if (unitCountBySalesStatus[unit.Sales_Status__c] == undefined) {
@@ -583,8 +556,8 @@ export default class Ex_InventoryMatrix extends LightningElement {
             unitCountByConfigurationType['All'] = unitCountByConfigurationType['All'] + units.length;
         });
 
-       //('unitCountBySalesStatus : ' + JSON.stringify(unitCountBySalesStatus));
-       //('unitCountByConfigurationType : ' + JSON.stringify(unitCountByConfigurationType));
+        //('unitCountBySalesStatus : ' + JSON.stringify(unitCountBySalesStatus));
+        //('unitCountByConfigurationType : ' + JSON.stringify(unitCountByConfigurationType));
 
 
         // Update the filter counts
@@ -611,33 +584,33 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
 
     handleQuotation(event) {
-    this.selectedUnitId = event.currentTarget.dataset.value;
-    //this.unitTransfer = event.currentTarget.dataset.value === 'true';
-    var link = document.createElement('a');
-   //('selectedUnitId .: ', this.selectedUnitId);
-   //('unitTransfer:' + this.unitTransfer);
+        this.selectedUnitId = event.currentTarget.dataset.value;
+        //this.unitTransfer = event.currentTarget.dataset.value === 'true';
+        var link = document.createElement('a');
+        //('selectedUnitId .: ', this.selectedUnitId);
+        //('unitTransfer:' + this.unitTransfer);
 
-    if (this.unitTransfer) {
-        const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId;
-        // const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId + '&bkId=' + this.bkId + '&unitTransfer=true';
-        //const url = '/apex/Ex_InventoryMatrixVF?oppId=' + this.oppId + '&unitTransfer=true';
-        link.href = url;
-    } else {
-        const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId;
-        link.href = url;
-    }
+        if (this.unitTransfer) {
+            const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId;
+            // const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId + '&bkId=' + this.bkId + '&unitTransfer=true';
+            //const url = '/apex/Ex_InventoryMatrixVF?oppId=' + this.oppId + '&unitTransfer=true';
+            link.href = url;
+        } else {
+            const url = '/apex/Ex_GenerateQuotationVF?uId=' + this.selectedUnitId + '&oppId=' + this.oppId;
+            link.href = url;
+        }
 
-    link.target = '_blank';
-    link.click();
+        link.target = '_blank';
+        link.click();
     }
 
     handleBlock(event) {
         this.selectedUnitId = event.currentTarget.dataset.value;
-       //(' this.selectedUnitId : ' + this.selectedUnitId);
+        //(' this.selectedUnitId : ' + this.selectedUnitId);
         if (this.selectedUnitId) {
             handleblockunit({ selectedunit: this.selectedUnitId, oppId: this.oppId })
                 .then(result => {
-                   //('Unit Blocked successfully:', result);
+                    //('Unit Blocked successfully:', result);
                     alert('Unit blocked for 24 hours.');
 
                     location.reload();
@@ -652,11 +625,11 @@ export default class Ex_InventoryMatrix extends LightningElement {
 
     handleUnBlock(event) {
         this.selectedUnitId = event.currentTarget.dataset.value;
-       //(' this.selectedUnitId : ' + this.selectedUnitId);
+        //(' this.selectedUnitId : ' + this.selectedUnitId);
         if (this.selectedUnitId) {
             handleunblockunit({ selectedunit: this.selectedUnitId, oppId: this.oppId })
                 .then(result => {
-                   //('Unit UnBlocked successfully:', result);
+                    //('Unit UnBlocked successfully:', result);
                     alert('Unit Unblocked.');
                     location.reload();
                 })
