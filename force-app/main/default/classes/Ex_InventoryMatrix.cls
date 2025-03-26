@@ -290,15 +290,15 @@ public class Ex_InventoryMatrix {
         List<Unit__c> selectedunitlist = new List<Unit__c>();
         List<Unit__c> updateselectedunitlist = new List<Unit__c>();
         If(selectedunit!=null){
-            selectedunitlist = [Select id,Name,Sales_Status__c,Opportunity__c from Unit__c where Id=:selectedunit];
+            selectedunitlist = [Select id, Last_Unit_Blocking_Date__c, Unit_Blocked_By__c, Name,Sales_Status__c,Opportunity__c from Unit__c where Id=:selectedunit];
             system.debug('selectedunitlist::'+selectedunitlist);
             if(selectedunitlist!=null && !selectedunitlist.isEmpty()){
                 for(Unit__c u:selectedunitlist){
                     if(u.Sales_Status__c != 'Blocked'){
                         u.Sales_Status__c = 'Blocked';
                         u.Opportunity__c = oppId;
-                        // u.Unit_Blocked_Date_Time__c = System.now();
-                        // u.Unit_Blocked_By__c = userInfo.getUserId();
+                        u.Last_Unit_Blocking_Date__c = System.now();
+                        u.Unit_Blocked_By__c = userInfo.getUserId();
                         updateselectedunitlist.add(u);
                     }
                     update updateselectedunitlist;
@@ -319,7 +319,7 @@ public class Ex_InventoryMatrix {
             if(selectedunitlist!=null && !selectedunitlist.isEmpty()){
                 for(Unit__c u:selectedunitlist){
                     if(u.Sales_Status__c =='Blocked'){
-                        u.Sales_Status__c = 'Available';
+                        u.Sales_Status__c = 'Vacant';
                         // u.Manually_Unblock_Date_Time__c = system.now();
                         updateselectedunitlist.add(u);
                     }

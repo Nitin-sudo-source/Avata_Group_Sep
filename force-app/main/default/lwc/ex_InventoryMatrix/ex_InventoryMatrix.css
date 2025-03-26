@@ -1,3 +1,25 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('/resource/Inter_Jakarta_Fonts/Inter_Jakarta_Fonts/Inter/static/Inter_18pt-Medium.ttf') format("TrueType");
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    src: url('/resource/Inter_Jakarta_Fonts/Inter_Jakarta_Fonts/Plus_Jakarta_Sans/static/PlusJakartaSans-Bold.ttf') format("TrueType");
+}
+
+*{
+    font-family: 'Inter' !important;
+}
+:host{
+    --sds-c-input-radius-border: 18px;
+    --option-border-radius: 18px;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    background: white;
+}
 span {
     box-sizing: border-box;
 }
@@ -5,10 +27,20 @@ span {
 .legend { 
     list-style: none; 
 }
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .legend li { 
     float: left; 
     margin-right: 10px; 
 }
+.legend label{
+    padding: 5px 10px;
+}
+
 .legend span { 
     border: 1px solid #ccc; 
     float: left; 
@@ -17,7 +49,7 @@ span {
     margin: 2px; 
 }
 
-.legend .Vacant { 
+.legend .Available { 
     background-color: #DDFFBB; 
     /* border-radius: 15px;  */
 }
@@ -53,11 +85,11 @@ span {
     min-width: 150px; 
     width: auto;
     display: inline-block;
-    font-size: xx-small;
+    font-size: 10px;
 }
 
 .floor-header {
-    font-family: "Calibri Light", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     border-bottom: 1px solid #ccc;
     padding: 5px;
     margin-bottom: 5px;
@@ -66,6 +98,7 @@ span {
     font-weight: bold;
     border-radius: 4px;
     color: black;
+    margin-right: 20px;
 }
 
 .unit-container {
@@ -94,16 +127,16 @@ span {
     text-align: center;
     min-width:  150px;
     width: auto;
-    box-shadow: grey 10px 10px 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     border-radius: 15px;
     min-height: 80px;
-    height: auto;
-   
+    height: auto;   
   }
   .unit-box:hover{
-    
     transform: scale(1.1);
+    transition: 0.3s;
   }
+
   
   .unit-buttons {
     display: flex;
@@ -112,7 +145,7 @@ span {
     margin-top: 10px;
     color: #000000;
   }
-  .unit-booked {
+  .unit-Booked {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,12 +166,13 @@ span {
 }
 .unit-buttons button {
     margin-right: 5px;
-    display:none;
+    /* display:none; */
+    display:inline-block;
   }
 .unit-box[data-unit-status="Vacant"] .unit-buttons button {
     display: inline-block;
 }
-.unit-box[data-unit-status="Reserved"] .unit-buttons button {
+.unit-box[data-unit-status="Sale Hold with Money"] .unit-buttons button {
     display: inline-block;
 }
 
@@ -149,24 +183,55 @@ span {
     margin-right: 5px;
     display:none;
   }
-.unit-box[data-unit-status="Booked"] {
-    background-color: #ECDDD0;
+.chip[data-sales-status="All"], .chip[data-configuration-type="All"] {
+    background-color: #acd1e9 !important;
+    font-weight: 700;
 }
-.unit-box[data-unit-status="Vacant"] {
-    background-color: #DDFFBB; 
+.chip[data-sales-status="Booked"], .unit-box[data-unit-status="Booked"] {
+    background-color: #f55959 !important;
 }
-.unit-box[data-unit-status="Refuge"] {
-    background-color: #b7afa3;
+.chip[data-sales-status="Vacant"], .unit-box[data-unit-status="Vacant"]{
+    background-color: #adfb9b  !important;
 }
-.unit-box[data-unit-status="Reserved"] {
-    background-color: #c3932b;
+.chip[data-sales-status="Refuge"], .unit-box[data-unit-status="Refuge"] {
+    /* background-color: #9d66e5 !important; */
+    background-color: #E2DFD2	 !important;
 }
-.unit-box[data-unit-status="Blocked"] {
-    background-color: #E6E6FA;
+.chip[data-sales-status="Tenants Inventory"], .unit-box[data-unit-status="Tenants Inventory"] {
+    background-color: #658bfc !important;
 }
-.unit-box[data-unit-status="Booking-In-Process"] {
-    background-color: #acd1e9; /* Light blue color */
+.chip[data-sales-status="Project Affected People"], .unit-box[data-unit-status="Project Affected People"] {
+    /* background-color: #ff4abc !important; */
+    background-color: #9d66e5 !important;
 }
+.chip[data-sales-status="Booking-In-Process"], .unit-box[data-unit-status="Booking-In-Process"] {
+    background-color: #FFA500 !important;
+}
+.chip[data-sales-status="Management Inventory"], .unit-box[data-unit-status="Management Inventory"] {
+    background-color: #3f3f3f !important;
+}
+.chip[data-sales-status="Blocked"], .unit-box[data-unit-status="Blocked"] {
+    background-color: #a0a0a0 !important;
+}
+.chip[data-sales-status="UnBlocked"], .unit-box[data-unit-status="UnBlocked"] {
+    background-color: #d3f4f3 !important;
+}
+
+.chip[data-sales-status="Reserved"], .unit-box[data-unit-status="Reserved"] {
+    background-color: #ea8181 !important;
+}
+.chip[data-sales-status="Not for Sale	"], .unit-box[data-unit-status="Not for Sale	"] {
+    background-color: #f4bb35 !important;
+}
+ .chip[data-sales-status="Possession Done"], .unit-box[data-unit-status="Possession Done"] {
+    background-color: #efef6f !important;
+} 
+
+.chip[data-sales-status="Hold By Management"], .unit-box[data-unit-status="Hold By Management"] {
+    background-color: #8af2ef !important;
+} 
+
+
 
 .icon{
     background-color:white;
@@ -205,9 +270,25 @@ lightning-combobox{
     color: solid black;
 }
 
+.btn, .button, .formulaButton, .btnWhatsNew {
+    font-family: 'Verdana', 'Geneva', sans-serif;
+    /* background-image: url(/img/bgButton.gif); */
+    background-repeat: repeat-x;
+    background-position: left top;
+    border-right: 1px solid #5c5d61;
+    border-bottom: 1px solid #5c5d61;
+    border-top: none;
+    border-left: none;
+    font-size: 80%;
+    color: #fff;
+    padding: 1px 3px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline;
+}
+
 .button1 {
     display: inline-block;
-    padding: 0 10px;
     margin-left: 50px;
     text-align: center;
     text-decoration: none;
@@ -224,7 +305,7 @@ lightning-combobox{
     align-items: center;
     font-size: 12px;
     background-color: #ccc;
-    padding: 5px;
+    padding: 5px 7px;
     border-radius: 15px;
 }
 input{
@@ -239,21 +320,31 @@ input{
 
     /* padding: 5px;
     margin: 10px; */
-     border: 2px solid #c2c2c2;
+     /* border: 2px solid #c2c2c2; */
 }
 
 .main {
-    background-color: #57a3fd63 ;
-    border: 2px solid #c2c2c2;
+    /* background-color: #57a3fd63 ; */
+    /* border: 2px solid #c2c2c2; */
     padding: 8px;
     border-radius: 2px;
-    color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    /* color: whitesmoke; */
+}
+.main label{
+    font-family: 'Plus Jakarta Sans' !important;
+}
+.main img{
+    width: 40px;
+    height: 40px;
 }
 
 .mains {
     /* border: 1px solid #c2c2c2; */
     border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
-    padding: 8px;
 }
 
 .head {
@@ -322,4 +413,115 @@ input{
         justify-content: center;
         align-items: center;
     }
+}
+
+/* Change Scrollbar Style */
+
+/* Width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #c8c8c8; 
+    width: 3px;
+    border-radius: 5px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0; 
+}
+
+.scroll-shadow {
+    background: 
+      /* Shadow on the right side */
+      linear-gradient(to left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%) right,
+      /* Shadow on the left side */
+      linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%) left;
+    background-size: 48px 100%;
+    background-repeat: no-repeat;
+    background-attachment: local, local;
+  }
+
+.legend-wrapper{
+    width: 100%;
+    height: auto;
+    padding: 0px 10%;
+    margin: 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.legend-wrapper .legend{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.unit-configuration-chip{
+    background-color: #a0a0a0b6;
+    color: #000000;
+    border-radius: 15px;
+
+}
+.chips{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.chips .chip{
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.configuration-chips .chip{
+    background-color: #a0a0a0;
+}
+.chips .chip label{
+    font-size: 12.8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+.chips .chip span{
+    margin-left: -8px ;
+}
+.input-no-border {
+    --lwc-shadowButtonFocus: 0;
+    --lwc-borderWidthThin: 0;
+    --slds-c-input-shadow-focus: 0;
+    --sds-c-input-shadow-focus: 0;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: none;
+}
+.combo-box-input{
+    border-radius: 15px;
+}
+.inventory-action-button{
+    margin: 2px 3px;
+    border-radius: 18px;
+    padding: 3px 6px;
+    border: 1px solid gray;
+}
+.inventory-action-button-wrapper{
+    margin-top: 5px;
+}
+.box3{
+    background-color: white !important;
 }
