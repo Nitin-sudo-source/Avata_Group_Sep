@@ -53,8 +53,8 @@
     <actionCalls>
         <name>Send_Email_To_Customer_0</name>
         <label>Send Email To Customer</label>
-        <locationX>344</locationX>
-        <locationY>423</locationY>
+        <locationX>166</locationX>
+        <locationY>262</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -101,6 +101,7 @@
         <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Store_VP_code</name>
         <label>Store VP code</label>
@@ -114,9 +115,60 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Send_Email_To_Customer_0</targetReference>
+            <targetReference>Check_Email_Mobile</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Email_Mobile</name>
+        <label>Check Email &amp; Mobile</label>
+        <locationX>377</locationX>
+        <locationY>363</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Mobile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Mobile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SMS_Creation</targetReference>
+            </connector>
+            <label>Check Mobile</label>
+        </rules>
+        <rules>
+            <name>Check_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Mobile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_To_Customer_0</targetReference>
+            </connector>
+            <label>Check Email</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Org_wide_email_is_present</name>
         <label>Check Org wide email is present</label>
@@ -216,8 +268,8 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
     <recordCreates>
         <name>SMS_Creation</name>
         <label>SMS Creation</label>
-        <locationX>127</locationX>
-        <locationY>374</locationY>
+        <locationX>12</locationX>
+        <locationY>411</locationY>
         <connector>
             <targetReference>Update_Lead_in_order_to_Send_SMS</targetReference>
         </connector>
@@ -242,7 +294,7 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173255071952011</stringValue>
+                <stringValue>1707173856381991371</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -318,7 +370,7 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
         <object>Lead__c</object>
     </recordUpdates>
     <start>
-        <locationX>802</locationX>
+        <locationX>801</locationX>
         <locationY>50</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -338,13 +390,6 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
         <filters>
             <field>IsConverted__c</field>
             <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Email__c</field>
-            <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
@@ -378,13 +423,12 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
     <textTemplates>
         <name>SMSBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!Get_Visit_Preregistration_Record.Customer_Name__c}! 
-Your site visit to Avant Heritage - IV is scheduled for {!Get_Visit_Preregistration_Record.Site_Visit_Date__c}. Carry your visit code {!Get_Visit_Preregistration_Record.Visit_Pre_Registration_Code__c} and show at the reception to avoid long waiting. Team Avant.</text>
+        <text>Hi {!$Record.Full_Name__c},Your site visit to Avant Heritage - IV has been confirmed for {!$Record.Presales_Proposed_Visit_Date__c} at NA.  am. Please carry your visit code {!VPCode} and show it at the reception to avoid long waiting period. You may add the schedule to your calendar (add to calendar link Location Pin: NA We look forward to meeting you soon. Best Regards, Team Avant</text>
     </textTemplates>
     <textTemplates>
         <name>SMSRemarks</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>SMS Trigger Point: After call successfully connected and 24 hrs before propsed visit date</text>
+        <text>SMS Trigger Point: After call successfully connected and 24 hrs before proposed visit date</text>
     </textTemplates>
     <variables>
         <name>EmailSubject</name>

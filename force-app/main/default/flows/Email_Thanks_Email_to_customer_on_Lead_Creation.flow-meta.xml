@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Send_Email_To_User</name>
         <label>Send Email To User</label>
-        <locationX>623</locationX>
-        <locationY>444</locationY>
+        <locationX>457</locationX>
+        <locationY>500</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
-            <targetReference>SMS_Creation</targetReference>
+            <targetReference>SMS_Creation_0</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -45,6 +45,7 @@
         <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <name>FromEmail</name>
         <dataType>String</dataType>
@@ -55,8 +56,8 @@
     <decisions>
         <name>Check_Email_is_present_in_ORG_Wide_Email_Addresses</name>
         <label>Check Email is present in ORG Wide Email Addresses</label>
-        <locationX>352</locationX>
-        <locationY>412</locationY>
+        <locationX>287</locationX>
+        <locationY>460</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Email_is_present_in_ORG_Wide_Email_Addresses</name>
@@ -79,6 +80,57 @@
                 <targetReference>Send_Email_To_User</targetReference>
             </connector>
             <label>Email is present in ORG Wide Email Addresses</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Mobile_Email</name>
+        <label>Check Mobile &amp; Email</label>
+        <locationX>396</locationX>
+        <locationY>172</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mobile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Org_Wide_Email_Address</targetReference>
+            </connector>
+            <label>Check Email</label>
+        </rules>
+        <rules>
+            <name>Check_Mobile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Mobile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SMS_Creation</targetReference>
+            </connector>
+            <label>Check Mobile</label>
         </rules>
     </decisions>
     <description>Set Sender Type as OrgWideEmailAddress</description>
@@ -107,8 +159,46 @@
     <recordCreates>
         <name>SMS_Creation</name>
         <label>SMS Creation</label>
-        <locationX>836</locationX>
-        <locationY>525</locationY>
+        <locationX>485</locationX>
+        <locationY>345</locationY>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>SMSBodyForLeadCreation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>$Record.Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Remarks__c</field>
+            <value>
+                <elementReference>Remarks</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Template_Id__c</field>
+            <value>
+                <stringValue>1707173255048469561</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SMS__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>SMS_Creation_0</name>
+        <label>SMS Creation</label>
+        <locationX>675</locationX>
+        <locationY>499</locationY>
         <inputAssignments>
             <field>Lead__c</field>
             <value>
@@ -167,9 +257,9 @@
         <locationX>547</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Get_Org_Wide_Email_Address</targetReference>
+            <targetReference>Check_Mobile_Email</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
             <field>Project__c</field>
             <operator>IsNull</operator>
@@ -178,15 +268,22 @@
             </value>
         </filters>
         <filters>
-            <field>Email__c</field>
+            <field>IsConverted__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Mobile__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
-            <field>IsConverted__c</field>
-            <operator>EqualTo</operator>
+            <field>Email__c</field>
+            <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
@@ -216,7 +313,7 @@ Team Avant</text>
     <textTemplates>
         <name>Remarks</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>SMS Trigger Point : When New Lead is Created With {!$Record.Mobile__c} &amp; Email {!$Record.Email__c}</text>
+        <text>SMS Trigger Point : When New Lead is Created</text>
     </textTemplates>
     <textTemplates>
         <name>SMSBodyForLeadCreation</name>

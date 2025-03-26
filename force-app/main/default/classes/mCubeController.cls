@@ -665,6 +665,18 @@ global without sharing class mCubeController {
                         System.debug('t.OwnerId:' + t.OwnerId);
                     }
                     
+                    
+                    //added on 7/03/2025 for oppurtunity
+                    
+                    if (objectName == 'Opportunity__c') {
+                        // Query the Account to get the OwnerId
+                        Opportunity__c OppurtunityRecord = [SELECT OwnerId FROM Opportunity__c WHERE Id = :cw.refid LIMIT 1];
+                        t.RecordTypeId = Schema.SObjectType.Task.getRecordTypeInfosByName().get('Presales Call').getRecordTypeId();
+                        t.WhatId = cw.refid;
+                        t.OwnerId = OppurtunityRecord.OwnerId;
+                        System.debug('t.OwnerId:' + t.OwnerId);
+                    }
+                    
                     if (objectName == 'CP_Lead__c') {
                         CP_Lead__c  cpLeadRecord = [SELECT ID, Name, CP_Lead_Stage__c, CP_Lead_Sub_Stage__c, CP_Lead_Sub_Stage_Reason__c, OwnerId FROM CP_Lead__c WHERE ID = :cw.refid LIMIT 1];
                         List<Visit_Pre_Registration__c> vpr = new List<Visit_Pre_Registration__c>();

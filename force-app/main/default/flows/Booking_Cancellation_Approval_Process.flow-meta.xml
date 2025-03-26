@@ -25,6 +25,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
     <interviewLabel>Booking Cancellation Approval Process {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Booking Cancellation Approval Process</label>

@@ -42,6 +42,7 @@
         <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Increment_Account_Enquiry_Count</name>
         <label>Increment Account Enquiry Count</label>

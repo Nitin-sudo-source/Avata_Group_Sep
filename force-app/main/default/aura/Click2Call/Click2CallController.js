@@ -48,6 +48,13 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 $A.get("e.force:closeQuickAction").fire();
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "title": "Success",
+                    "type": "success",
+                    "message": 'Call Initiated successfully'
+                });
+                toastEvent.fire();
                // component.set("v.Ids",response.getReturnValue()); 
             } else if(state === 'ERROR'){
                      var errors = response.getError();

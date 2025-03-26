@@ -2,7 +2,7 @@
   @description       : 
   @author            : nitinSFDC@exceller.SFDoc
   @group             : 
-  @last modified on  : 15-01-2025
+  @last modified on  : 22-01-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <apex:page controller="Ex_PrintBookingPDF" renderAs="pdf" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
@@ -138,14 +138,14 @@
                     
                     <table style="font-size:12px;">
                         <tr>
-                            <th style="font-size:12px;">
-                                A) Applicant Details
+                            <th>
+                                <b style="font-size:12px;text-transform:uppercase;"> A) Applicant Details </b>
                             </th>
                             <td></td>
                         </tr>
                         <tr>
                             <!-- 'Name of Applicant' label before the first td -->
-                            <td style="font-size:12px;">Name of Applicant</td>
+                            <td style="font-size:12px;width: 30% !important;">Name of Applicant</td>
                             <td style="width: 70%;">
                                 <table style="font-size:12px;">
                                     <apex:variable value="{!1}" var="count" />

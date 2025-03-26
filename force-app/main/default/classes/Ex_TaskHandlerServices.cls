@@ -49,7 +49,7 @@ public class Ex_TaskHandlerServices {
         
         
         
-        List<Task> taskList = [Select Id, Status__c, Registration_Date__c, Registration_Scheduled_Date__c, Registration_Venue__c, WhoId, WhatId, CreatedDate, CallType, Call_Status__c, CallDurationInSeconds, Description, Subject, RecordTypeId, RecordType.Name,
+        List<Task> taskList = [Select Id, Status__c, Opportunity_Stage__c, Opportunity_Sub_Stage__c, Opportunity_Sub_Stage_Reason__c, Registration_Date__c, Registration_Scheduled_Date__c, Registration_Venue__c, WhoId, WhatId, CreatedDate, CallType, Call_Status__c, CallDurationInSeconds, Description, Subject, RecordTypeId, RecordType.Name,
                                Stage__c, Sub_Stage__c, Sub_Stage_Reason__c, Next_Follow_Up_Date__c, Proposed_Date_Of_Visit__c, Date__c, Meeting_Type__c,
                                Next_Call_Date__c, Next_Meeting_Date__c, Purpose_of_Meeting__c from Task where Id IN: taskId 
                                AND (RecordType.Name = 'Presales Call' OR RecordType.Name = 'Sales Call'OR  RecordType.Name = 'CP Call' OR RecordType.Name = 'CP Meeting' OR RecordType.Name = 'CP Lead Call' OR RecordType.Name = 'Registration Call')];
@@ -256,14 +256,14 @@ public class Ex_TaskHandlerServices {
                         op.Sales_Next_Follow_up_Date__c = t.Next_Follow_Up_Date__c  ;
                         op.Sales_Proposed_Visit_Date__c = t.Proposed_Date_Of_Visit__c;
                         op.Sales_Last_Call_Comment__c = t.Description;
-                        if(t.Stage__c != null) {
-                            op.Stage__c = t.Stage__c;
-                            op.Sub_Stage__c = t.Sub_Stage__c;
-                            op.Sub_Stage_Reason__c = t.Sub_Stage_Reason__c;
+                        if(t.Opportunity_Stage__c != null) {
+                            op.Stage__c = t.Opportunity_Stage__c;
+                            op.Sub_Stage__c = t.Opportunity_Sub_Stage__c;
+                            op.Sub_Stage_Reason__c = t.Opportunity_Sub_Stage_Reason__c;
                         }
                         if(op.Sales_Call_Count__c == null)
                             op.Sales_Call_Count__c = 0;
-                        if((operation == 'insert' || operation == 'update') && t.Stage__c != null)
+                        if((operation == 'insert' || operation == 'update') && t.Opportunity_Stage__c != null)
                             op.Sales_Call_Count__c = op.Sales_Call_Count__c + 1;
                         if(op.Sales_Last_Call_Comment__c != null) {
                             if(op.Sales_Call_Comment_History__c == null)

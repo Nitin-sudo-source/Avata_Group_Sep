@@ -51,6 +51,7 @@
         <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_if_First_Presales_Call_Answered_is_not_done</name>
         <label>Check if First Presales Call Answered is not done</label>
@@ -74,10 +75,46 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Check_Mobile</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Org_wide_email_addresses</targetReference>
             </connector>
             <label>First Presales Call Answered is not done</label>
+        </rules>
+        <rules>
+            <name>Check_Mobile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Lead.Is_First_Presales_call_answered_done__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Lead.Mobile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Lead.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SMS_Creation</targetReference>
+            </connector>
+            <label>Check Mobile</label>
         </rules>
     </decisions>
     <decisions>
@@ -134,8 +171,8 @@
     <recordCreates>
         <name>SMS_Creation</name>
         <label>SMS Creation</label>
-        <locationX>497</locationX>
-        <locationY>476</locationY>
+        <locationX>398</locationX>
+        <locationY>535</locationY>
         <connector>
             <targetReference>Update_Lead</targetReference>
         </connector>
@@ -166,7 +203,7 @@
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173255048469561</stringValue>
+                <stringValue>1707173856256238187</stringValue>
             </value>
         </inputAssignments>
         <object>SMS__c</object>
@@ -224,8 +261,8 @@
     <recordUpdates>
         <name>Update_Lead</name>
         <label>Update Lead</label>
-        <locationX>281</locationX>
-        <locationY>533</locationY>
+        <locationX>225</locationX>
+        <locationY>578</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -243,16 +280,16 @@
         <object>Lead__c</object>
     </recordUpdates>
     <start>
-        <locationX>689</locationX>
-        <locationY>19</locationY>
+        <locationX>687</locationX>
+        <locationY>20</locationY>
         <connector>
             <targetReference>Get_Lead</targetReference>
         </connector>
         <filterFormula>{!$Record.RecordType.Name} == &quot;Presales Call&quot; &amp;&amp;
 {!$Record.WhatId} != null &amp;&amp;
-ISPICKVAL({!$Record.Call_Status__c}, &quot;Answered&quot;)</filterFormula>
+ISPICKVAL({!$Record.Call_Status__c}, &quot;ANSWER&quot;)</filterFormula>
         <object>Task</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
@@ -264,11 +301,8 @@ ISPICKVAL({!$Record.Call_Status__c}, &quot;Answered&quot;)</filterFormula>
     <textTemplates>
         <name>SMSBodyforFirstPresalesCall</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!Get_Lead.First_Name__c} {!$User.LastName}, 
-thank you for speaking with us. Based on your conversation with {!Get_Lead.Owner:User.FirstName} {!Get_Lead.Owner:User.LastName} how would you rate your experience. 
-Kindly share your feedback.
- Team Avant.
-[Chatbot integration for service rating – link to google rating page]</text>
+        <text>Hello {!Get_Lead.First_Name__c} {!$User.LastName},
+Thank you for giving your valuable time to Avant Group.We appreciate you connecting with us!For any further queries, simply reply to this message with Hi or visit our website for more information: www.avantinfra.com Will looking forward to assisting you.Best Regards,Team Avant</text>
     </textTemplates>
     <textTemplates>
         <name>SMSRemarks</name>

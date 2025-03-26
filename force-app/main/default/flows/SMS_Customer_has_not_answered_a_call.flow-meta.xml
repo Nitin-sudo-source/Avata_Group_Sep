@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>check_Call_Status_iS_No_Answer</name>
         <label>check Call Status iS No Answer</label>
@@ -17,10 +18,46 @@
                     <stringValue>NOANSWER</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.WhatId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>get_Lead.Id</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>SMS_Creation</targetReference>
             </connector>
             <label>Customer has not answered a call</label>
+        </rules>
+        <rules>
+            <name>After_First_Call_Answered_Call_Status_is_NOAnswer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_Lead.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.WhatId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_Lead.Is_First_Presales_call_answered_done__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_Lead.Lead_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SNP</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SMS_Creation_0</targetReference>
+            </connector>
+            <label>After First Call Answered Call Status is NOAnswer</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -48,8 +85,8 @@
     <recordCreates>
         <name>SMS_Creation</name>
         <label>SMS Creation</label>
-        <locationX>404</locationX>
-        <locationY>371</locationY>
+        <locationX>397</locationX>
+        <locationY>216</locationY>
         <inputAssignments>
             <field>Lead__c</field>
             <value>
@@ -77,7 +114,45 @@
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173255055684422</stringValue>
+                <stringValue>1707173918859678022</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SMS__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>SMS_Creation_0</name>
+        <label>SMS Creation</label>
+        <locationX>475</locationX>
+        <locationY>373</locationY>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>get_Lead.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>NOAnswerSMSBody</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>get_Lead.Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Remarks__c</field>
+            <value>
+                <elementReference>SMSRemarks</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Template_Id__c</field>
+            <value>
+                <stringValue>1707173856829123602</stringValue>
             </value>
         </inputAssignments>
         <object>SMS__c</object>
@@ -86,8 +161,8 @@
     <recordLookups>
         <name>get_Lead</name>
         <label>get Lead</label>
-        <locationX>109</locationX>
-        <locationY>75</locationY>
+        <locationX>225</locationX>
+        <locationY>133</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>check_Call_Status_iS_No_Answer</targetReference>
@@ -114,8 +189,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>330</locationX>
-        <locationY>48</locationY>
+        <locationX>485</locationX>
+        <locationY>34</locationY>
         <connector>
             <targetReference>get_Lead</targetReference>
         </connector>
@@ -123,14 +198,19 @@
 {!$Record.WhatId} != null &amp;&amp;
 ISPICKVAL({!$Record.Call_Status__c}, &quot;NOANSWER&quot;)</filterFormula>
         <object>Task</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <textTemplates>
+        <name>NOAnswerSMSBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi {!get_Lead.Full_Name__c}, Guess you were busy and missed our call. We will try calling you back between soon. Look forward to speaking with you soon. Regards, Team Avant.</text>
+    </textTemplates>
+    <textTemplates>
         <name>SMSBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Dear {{Customer Name}}, I trust this message finds you well. I recently attempted to reach you by phone to discuss your interest in {{Project Name}}, but it seems we missed each other. In the meantime, I invite you to explore further details about our project at your convenience: https://www.avantinfra.com. We truly appreciate your trust in Avant Builder and are excited about the prospect of a successful relation. Should you have any questions or need assistance, please don’t hesitate to reach out. Best regards, {{Agent Name}}</text>
+        <text>Hi {!get_Lead.Full_Name__c}, looks like you have been busy. We’ll try calling you later, or you can call us back on 9898989888. Look forward to speaking with you soon. Regards, Team Avant.</text>
     </textTemplates>
     <textTemplates>
         <name>SMSRemarks</name>

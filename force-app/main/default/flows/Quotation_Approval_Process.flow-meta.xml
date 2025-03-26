@@ -25,6 +25,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
     <interviewLabel>Quotation Approval Process {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Quotation Approval Process</label>
