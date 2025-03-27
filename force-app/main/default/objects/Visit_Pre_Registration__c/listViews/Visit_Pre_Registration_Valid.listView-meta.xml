@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Visit_Pre_Registration_Valid</fullName>
+    <columns>NAME</columns>
+    <columns>Customer_Name__c</columns>
+    <columns>Project__c</columns>
+    <columns>Mobile_Number__c</columns>
+    <columns>Site_Visit_Date__c</columns>
+    <columns>Status__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Valid</value>
+    </filters>
+    <label>Visit Pre-Registration Valid</label>
+</ListView>

@@ -3,7 +3,7 @@
     <fullName>Team_Type__c</fullName>
     <label>Team Type</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -11,49 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Presales Team</fullName>
-                <default>false</default>
-                <label>Presales Team</label>
-            </value>
-            <value>
                 <fullName>Sales Team</fullName>
                 <default>false</default>
                 <label>Sales Team</label>
             </value>
             <value>
-                <fullName>TL Team</fullName>
+                <fullName>Presales Team</fullName>
                 <default>false</default>
-                <label>TL Team</label>
-            </value>
-            <value>
-                <fullName>Digital</fullName>
-                <default>false</default>
-                <label>Digital</label>
-            </value>
-            <value>
-                <fullName>CTI</fullName>
-                <default>false</default>
-                <label>CTI</label>
-            </value>
-            <value>
-                <fullName>Sourcing Team</fullName>
-                <default>false</default>
-                <label>Sourcing Team</label>
+                <label>Presales Team</label>
             </value>
             <value>
                 <fullName>Quotation Approval Team</fullName>
                 <default>false</default>
                 <label>Quotation Approval Team</label>
-            </value>
-            <value>
-                <fullName>Unapproved Discount Team</fullName>
-                <default>false</default>
-                <label>Unapproved Discount Team</label>
-            </value>
-            <value>
-                <fullName>Booking Approval Team</fullName>
-                <default>false</default>
-                <label>Booking Approval Team</label>
             </value>
         </valueSetDefinition>
     </valueSet>

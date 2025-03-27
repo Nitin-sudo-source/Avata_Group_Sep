@@ -4,8 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Sourcing Manager</label>
     <referenceTo>User</referenceTo>
-    <relationshipLabel>Site Visit (Sourcing Manager)</relationshipLabel>
-    <relationshipName>Site_Visit1</relationshipName>
+    <relationshipName>Site_Visits2</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

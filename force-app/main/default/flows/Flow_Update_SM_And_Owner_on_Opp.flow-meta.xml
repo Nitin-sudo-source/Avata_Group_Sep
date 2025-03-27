@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Flow: Update SM And Owner on Opp {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Flow: Update SM</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Opp_SM</name>
+        <label>Update Opp SM</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Sales_Manager__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Sales_Manager__c</field>
+            <value>
+                <elementReference>$Record.Sales_Manager__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Opp_SM</targetReference>
+        </connector>
+        <filterFormula>OR(
+AND (
+ISNEW(),
+{!$Record.Is_Sales_Manager_Assigned__c} == True,
+{!$Record.Sales_Manager__c} != Null,
+{!$Record.Site_Visit_Count__c} ==1
+),
+AND(
+ISCHANGED({!$Record.Is_Sales_Manager_Assigned__c}),
+{!$Record.Is_Sales_Manager_Assigned__c} ==True,
+{!$Record.Sales_Manager__c} != Null,
+{!$Record.Site_Visit_Count__c} ==1
+)
+)</filterFormula>
+        <object>Site_Visit__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

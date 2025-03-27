@@ -56,11 +56,6 @@
         <label>Energy</label>
     </customValue>
     <customValue>
-        <fullName>Real Estate</fullName>
-        <default>false</default>
-        <label>Real Estate</label>
-    </customValue>
-    <customValue>
         <fullName>Engineering</fullName>
         <default>false</default>
         <label>Engineering</label>

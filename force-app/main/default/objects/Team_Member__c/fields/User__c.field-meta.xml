@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>User</label>
     <referenceTo>User</referenceTo>
-    <relationshipLabel>Team Members</relationshipLabel>
     <relationshipName>Team_Members</relationshipName>
     <required>false</required>
     <trackHistory>true</trackHistory>

@@ -4,27 +4,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Clone</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -78,7 +67,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-035f016f-0390-45fe-96f4-c5063ef06266</name>
+        <name>Facet-2009c60b-66b3-4616-bd97-7fb9b02de8e5</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -104,11 +93,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-035f016f-0390-45fe-96f4-c5063ef06266</value>
+                    <value>Facet-2009c60b-66b3-4616-bd97-7fb9b02de8e5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Field History</value>
+                    <value>Team Member History</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
@@ -134,7 +123,7 @@
     <masterLabel>Team Member Record Page</masterLabel>
     <sobjectType>Team_Member__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeSimpleViewTemplate</name>
+        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>

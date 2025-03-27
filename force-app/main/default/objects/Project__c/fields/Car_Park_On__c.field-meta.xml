@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Car_Park_On__c</fullName>
+    <label>Car Park On</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Project level</fullName>
+                <default>true</default>
+                <label>Project level</label>
+            </value>
+            <value>
+                <fullName>Tower level</fullName>
+                <default>false</default>
+                <label>Tower level</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

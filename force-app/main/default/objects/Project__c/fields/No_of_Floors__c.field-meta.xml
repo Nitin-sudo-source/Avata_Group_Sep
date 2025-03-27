@@ -3,7 +3,7 @@
     <fullName>No_of_Floors__c</fullName>
     <defaultValue>0</defaultValue>
     <externalId>false</externalId>
-    <label>No. of Floors</label>
+    <label>No of Floors</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

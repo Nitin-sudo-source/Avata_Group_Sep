@@ -4,27 +4,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Delete</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -60,7 +49,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>CombinedAttachments</value>
+                    <value>AttachedContentDocuments</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -78,7 +67,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-bbb2a3ee-92d6-4745-98b1-608fc8d32603</name>
+        <name>Facet-8717168c-5775-4280-90f0-4ebf66703c9f</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -104,11 +93,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-bbb2a3ee-92d6-4745-98b1-608fc8d32603</value>
+                    <value>Facet-8717168c-5775-4280-90f0-4ebf66703c9f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Uploaded Documents</value>
+                    <value>Files</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
@@ -134,7 +123,7 @@
     <masterLabel>Document Record Page</masterLabel>
     <sobjectType>Document__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeSimpleViewTemplate</name>
+        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>

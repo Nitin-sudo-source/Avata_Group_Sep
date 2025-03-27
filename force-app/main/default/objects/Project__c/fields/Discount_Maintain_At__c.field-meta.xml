@@ -11,14 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Project Level</fullName>
+                <fullName>Project</fullName>
                 <default>false</default>
-                <label>Project Level</label>
+                <label>Project</label>
             </value>
             <value>
-                <fullName>Tower Level</fullName>
-                <default>false</default>
-                <label>Tower Level</label>
+                <fullName>Tower</fullName>
+                <default>true</default>
+                <label>Tower</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -4,21 +4,19 @@
     <columns>NAME</columns>
     <columns>Full_Name__c</columns>
     <columns>Project__c</columns>
-    <columns>Lead_Source__c</columns>
     <columns>Lead_Stage__c</columns>
-    <columns>OWNER.FIRST_NAME</columns>
-    <columns>OWNER.LAST_NAME</columns>
+    <columns>Presales_Next_Follow_Up_Date__c</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Mine</filterScope>
     <filters>
-        <field>Presales_Next_Follow_up_Date__c</field>
+        <field>Presales_Next_Follow_Up_Date__c</field>
         <operation>equals</operation>
         <value>TODAY</value>
     </filters>
     <filters>
-        <field>IsConverted__c</field>
-        <operation>equals</operation>
-        <value>0</value>
+        <field>Lead_Stage__c</field>
+        <operation>notEqual</operation>
+        <value>Lost,Visit Done</value>
     </filters>
-    <label>Today&apos;s Follow ups</label>
+    <label>Today&apos;s Follow-ups</label>
 </ListView>

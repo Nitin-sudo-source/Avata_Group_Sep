@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PSM_Compact_Layout</fullName>
+    <fields>Payment_Scheme__c</fields>
+    <fields>Milestone_Name__c</fields>
+    <fields>Sequence_No__c</fields>
+    <fields>Name</fields>
+    <fields>Milestone_Type__c</fields>
+    <fields>Construction_Stage__c</fields>
+    <fields>Token_Amount__c</fields>
+    <fields>Deduct_Token__c</fields>
+    <label>PSM Compact Layout</label>
+</CompactLayout>

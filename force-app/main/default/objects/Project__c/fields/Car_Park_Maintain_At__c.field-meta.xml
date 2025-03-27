@@ -7,18 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Project Level</fullName>
-                <default>true</default>
-                <label>Project Level</label>
-            </value>
-            <value>
-                <fullName>Tower Level</fullName>
-                <default>false</default>
-                <label>Tower Level</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>Car_Park_Maintain_At</valueSetName>
     </valueSet>
 </CustomField>

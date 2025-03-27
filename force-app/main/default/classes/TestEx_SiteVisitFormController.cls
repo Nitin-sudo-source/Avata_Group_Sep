@@ -1,10 +1,267 @@
-//-------------------------------------------//
-//  Project: Unmanaged Package 
-//  Created By: Priyanshu Agarkar
-//  Created Date: 15-09-2024
-//-------------------------------------------//
 @isTest
 public class TestEx_SiteVisitFormController {
+    
+        @isTest()
+    Public Static  void insertSitevisit(){
+        
+        Project__c p1 = new Project__c();
+        p1.Name = 'New Project';
+        p1.TAT_Days_for_Walkin__c = 30;
+        insert p1;
+        
+        Team__c t = new Team__c();
+        t.Name = 'Sales Team';
+        t.Project__c = p1.Id;
+        t.Team_Type__c = 'Sales Team';
+        insert t;
+        
+        Team_Member__c tmb1 = new Team_Member__c();
+        tmb1.Team__c = t.Id;
+        tmb1.User__c = UserInfo.getUserId();
+        tmb1.Availability__c = true;
+        tmb1.DayOff__c = false;
+        tmb1.Last_Assignment_DateTime__c =System.now();
+        tmb1.Last_Assignment_Milliseconds__c = 1;
+        insert tmb1;
+        
+        Account acc = new Account();
+        acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
+        acc.LastName = 'acc1';
+        acc.Phone = '99854857584';
+        acc.PersonMobilePhone = '9958455544';
+        acc.Alternate_Email__c = 'acc1@gmail.com';
+        acc.PersonEmail = 'acc11@gmail.com';
+        insert acc;
+        
+        Opportunity__c op = new Opportunity__c();
+        op.Name = 'Test';
+        op.Account__c = acc.id;
+        op.Stage__c = '';
+        op.Close_Date__c = system.today().addDays(30);
+        op.SV_Count__c =1 ;
+        insert op ;
+        
+        Site_visit__c sv = new Site_visit__c();
+        sv.Salutation__c = 'Mr.';
+        sv.First_Name__c = 'SV';
+        sv.Last_Name__c = 'Test';
+        sv.Project__c = p1.id;
+        sv.Mobile__c= '1212141214';
+        sv.Email__c = 'Test@gmail.com';
+        sv.Lead_Source__c = 'Google';
+        sv.Lead_Sub_Source__c = 'Google Search';
+        sv.Current_Resident_Status__c = 'Rented';
+        sv.Configuration_Required__c = '1 BHK';
+        sv.Budget_Range__c = 'Budget of 20 to 30 lakhs';
+        sv.Buying_Purpose__c = 'Self-Use';
+        sv.Site_Visit_Count__c = 1;
+        sv.Possession_Timeframe_Required__c = 'Under Construction (UC – 1 to 2 years)';
+        sv.Is_Sales_Manager_Assigned__c = false;
+        sv.Opportunity__c=  op.id;
+        insert sv;
+        
+        List <Site_visit__C> svList =  [Select Id , Name , Sales_Manager__c,OwnerId,opportunity__c , Is_Sales_Manager_Assigned__c , Project__C 
+                                       From Site_visit__c Where Id=:sv.Id];
+        Set<Id> oppIdSet = new Set<Id>();
+        Map<Id, List<Site_Visit__c>> svMap = new Map<Id, List<Site_Visit__c>>();
+        for(Site_Visit__c sv1: svList) {
+        
+            List<Site_Visit__c> newList = new List<Site_Visit__c>();
+                    newList.add(sv1);
+                    svMap.put(sv1.Project__c, newList);
+                     oppIdSet.add(sv1.Opportunity__c);
+          }
+        Test.startTest();
+        System.debug('Project Id'+sv.Project__c);
+        Ex_SiteVisitHandlerServices.applyRoundRobin(svMap,oppIdSet);
+        Test.stopTest();
+        
+    }
+    
+     @isTest()
+    Public Static void makeAvailable(){
+        Project__c p1 = new Project__c();
+        p1.Name = 'New Project';
+        p1.TAT_Days_for_Walkin__c = 30;
+        insert p1;
+        
+        Team__c t1 = new Team__c();
+        t1.Name = 'Sales Team';
+        t1.Project__c = p1.Id;
+        t1.Team_Type__c = 'Sales Team';
+        insert t1;
+        
+        Team_Member__c tmb1 = new Team_Member__c();
+        tmb1.Team__c = t1.Id;
+        tmb1.User__c = UserInfo.getUserId();
+        tmb1.Availability__c = true;
+        tmb1.DayOff__c = false;
+        tmb1.Last_Assignment_DateTime__c =System.now();
+        tmb1.Last_Assignment_Milliseconds__c = 1;
+        insert tmb1;
+        
+         Account acc = new Account();
+        acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
+        acc.LastName = 'acc111';
+        acc.Phone = '99854887584';
+        acc.PersonMobilePhone = '9958455544';
+        acc.Alternate_Email__c = 'acc111@gmail.com';
+        acc.PersonEmail = 'acc1122@gmail.com';
+        insert acc;
+        
+        Opportunity__c op = new Opportunity__c();
+        op.Name = 'Test';
+        op.Account__c = acc.id;
+        op.Stage__c = '';
+        op.Close_Date__c = system.today().addDays(30);
+        op.SV_Count__c =1 ;
+        insert op ;
+        
+        Site_visit__c sv = new Site_visit__c();
+        sv.Salutation__c = 'Mr.';
+        sv.First_Name__c = 'SV12';
+        sv.Last_Name__c = 'Test';
+        sv.Project__c = p1.id;
+        sv.Mobile__c= '1212149914';
+        sv.Email__c = 'Test9666@gmail.com';
+        sv.Lead_Source__c = 'Google';
+        sv.Lead_Sub_source__c ='Google Search';
+        sv.Current_Resident_Status__c = 'Self-owned';
+        sv.Configuration_Required__c = '1 BHK';
+        sv.Budget_Range__c = 'Budget of 20 to 30 lakhs';
+        sv.Buying_Purpose__c = 'Self-Use';
+        sv.Site_Visit_Count__c = 1;
+        sv.Possession_Timeframe_Required__c = 'Under Construction (UC – 1 to 2 years)';
+        sv.Is_Sales_Manager_Assigned__c = true;
+        sv.Sales_Manager__c = tmb1.User__c;
+        sv.Opportunity__c=  op.id;
+        sv.Comments__c ='';
+        
+       
+        Test.startTest();
+        insert sv;
+        sv.Comments__c = 'Test Commenttttttttttttttt';
+        update sv;
+        
+        Map<Id, Set<Id>> projectUserIdMap = new Map<Id, Set<Id>>();
+         Set<Id> newIdSet = new Set<Id>();
+                    newIdSet.add(sv.Sales_Manager__c);
+                    projectUserIdMap.put(sv.Project__c, newIdSet);
+        Ex_SiteVisitHandlerServices.updateSalesManagerAvailability(projectUserIdMap);
+        
+        Test.stopTest();
+    }
+    
+     @isTest
+    Public Static  void insertSitevisitForDayOff(){
+        
+        Project__c p2 = new Project__c();
+        p2.Name = 'New Project2';
+        p2.TAT_Days_for_Walkin__c = 30;
+        insert p2;
+        
+        Team__c t3 = new Team__c();
+        t3.Name = 'Sales Team';
+        t3.Project__c = p2.Id;
+        t3.Team_Type__c = 'Sales Team';
+        insert t3;
+        
+        Team_Member__c tmb1 = new Team_Member__c();
+        tmb1.Team__c = t3.Id;
+        tmb1.User__c = UserInfo.getUserId();
+        tmb1.Availability__c = false;
+        tmb1.DayOff__c = true;
+        tmb1.Last_Assignment_DateTime__c =System.now();
+        tmb1.Last_Assignment_Milliseconds__c = 1;
+        insert tmb1;
+        
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator']; // Get a standard profile
+      integer i = 10;
+        i++; 
+
+        User newUser = new User(
+            FirstName = 'Test',
+            LastName = 'User',
+            Email = 'testtt'+i+'@example.com',
+            Username = 'testtt'+i+'@example.com',
+            Alias = 'tuser',
+            ProfileId = p.Id,
+            TimeZoneSidKey = 'GMT',
+            LocaleSidKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US'
+            );
+        insert newUser;
+        
+        Team_Member__c tmb2 = new Team_Member__c();
+        tmb2.Team__c = t3.Id;
+        tmb2.User__c = newUser.Id;
+        tmb2.Availability__c = true;
+        tmb2.DayOff__c = false;
+        tmb2.Last_Assignment_DateTime__c =System.now();
+        tmb2.Last_Assignment_Milliseconds__c = 1;
+        insert tmb2;
+        
+        Account acc = new Account();
+        acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
+        acc.LastName = 'acc111';
+        acc.Phone = '99854887584';
+        acc.PersonMobilePhone = '9958455544';
+        acc.Alternate_Email__c = 'acc111@gmail.com';
+        acc.PersonEmail = 'acc1122@gmail.com';
+        insert acc;
+        
+        Opportunity__c op = new Opportunity__c();
+        op.Name = 'Test';
+        op.Account__c = acc.id;
+        op.Stage__c = '';
+        op.Close_Date__c = system.today().addDays(30);
+        op.SV_Count__c =1 ;
+        op.Sales_Manager__c = tmb1.User__c;
+        insert op ;
+        
+        Site_visit__c sv = new Site_visit__c();
+        sv.Salutation__c = 'Mr.';
+        sv.First_Name__c = 'SV12';
+        sv.Last_Name__c = 'Test';
+        sv.Project__c = p2.id;
+        sv.Mobile__c= '1212149914';
+        sv.Email__c = 'Test9666@gmail.com';
+        sv.Lead_Source__c = 'Google';
+        sv.Lead_Sub_Source__c = 'Google Search';
+        sv.Current_Resident_Status__c = 'Self-owned';
+        sv.Configuration_Required__c = '1 BHK';
+        sv.Budget_Range__c = 'Budget of 20 to 30 lakhs';
+        sv.Buying_Purpose__c = 'Self-Use';
+        sv.Site_Visit_Count__c = 1;
+        sv.Possession_Timeframe_Required__c = 'Under Construction (UC – 1 to 2 years)';
+        sv.Is_Sales_Manager_Assigned__c = false;
+        sv.Site_Visit_Count__c=2;
+        
+        sv.Opportunity__c=  op.id;
+        insert sv;
+        
+        Test.startTest();
+        System.debug('Project Id2nd'+sv.Project__c);
+        
+        
+         List <Site_visit__C> svList =  [Select Id , Name , Sales_Manager__c,OwnerId,opportunity__c , Is_Sales_Manager_Assigned__c , Project__C 
+                                       From Site_visit__c Where Id=:sv.Id];
+        Set<Id> oppIdSet = new Set<Id>();
+        Map<Id, List<Site_Visit__c>> svMap = new Map<Id, List<Site_Visit__c>>();
+        for(Site_Visit__c sv1: svList) {
+        
+            List<Site_Visit__c> newList = new List<Site_Visit__c>();
+                    newList.add(sv1);
+                    svMap.put(sv1.Project__c, newList);
+                     oppIdSet.add(sv1.Opportunity__c);
+          }
+        
+        
+        
+        Test.stopTest();
+        
+    }
     
     
     public static Lead__c getLead(){
@@ -21,21 +278,20 @@ public class TestEx_SiteVisitFormController {
         l1.Marital_Status__c = 'Married';
         l1.Occupation__c = 'Shop owner';
         l1.Alternate_Email__c = 'Test2@gmail.com';
-        l1.Mobile__c = '9372082791';
+        l1.Mobile__c = '9637576100';
         l1.Age_Group__c = '25 to 30 Years';
         l1.Configuration_Required__c = '1 BHK';
         l1.OwnerId = userInfo.getuserId();
-        l1.Project_Type__c = 'Residential';
         l1.Budget_Range__c = 'Budget of 30 to 40 lakhs';
         l1.Current_Resident_Status__c = 'Self-owned';
         l1.Buying_Purpose__c = 'Self-Use';
         l1.Industry__c = 'Agriculture';
-        l1.Current_Resident_Configuration__c = '1 RK';
+        l1.Current_Residence_Configuration__c = '1 RK';
         l1.Ethnicity__c = 'Marathi';
         l1.Source_Description__c = 'NA';
-        l1.Possession_Timeframe_Required__c = 'RTMI (Ready to Move in)';
+        l1.Possession_Timeframe__c = 'RTMI (Ready to Move in)';
         //l1.Channel_Partner__c = acc1.Id;
-        l1.Family_Size__c = 'Joint Family';
+        l1.Family_Size__c = '3';
         l1.Company_Name__c = 'Test Comapny';
         //l1.CP_Project__c = cpp.Id;
         
@@ -44,49 +300,71 @@ public class TestEx_SiteVisitFormController {
     
     @isTest
     public static void testLeadFound(){
-        
-        Profile sysAdminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
-        User sysAdminUser = [SELECT Id FROM User WHERE ProfileId = :sysAdminProfile.Id LIMIT 1];
+        Account acc2 = new Account();
+        acc2.OwnerId = userInfo.getUserId();
+        acc2.LastName = 'Last Name';
+        acc2.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
+        acc2.PersonMobilePhone = '9637576210';
+        acc2.PersonEmail = 'prasad.alamwar@test.com';
+        acc2.Age_Group__c = '25 to 30 Years ';
+        acc2.Occupation__c = 'Employed in Pvt. company ';
+        acc2.Marital_Status__c = 'Married';
+        acc2.Current_Residence_Configuration__c = '1 BHK';
+        // acc2.Current_Residence_Status__c = 'Self-owned';
+        acc2.Ethnicity__c = 'Marathi';
+        acc2.Designation__c = 'Air Force';
+        acc2.Gender__c = 'Male';
+        acc2.Company_Name__c = 'Test Comapny';
+        acc2.Locality__c = 'Pune';
+        acc2.Pincode__c = '422610';
+        acc2.City__c = 'Pune';
+        //acc2.Residence__c = 'Indian';
+        //acc2.Country__c = 'India';
+        insert acc2;
         
         Project__c p = new Project__c();
         p.Name = 'Test Project';
-        p.Site_Head__c = sysAdminUser.Id;
+        p.CRM_Head__c = UserInfo.getUserId();
         insert p;
         
-        CP_Document__c cd = new CP_Document__c();
-        cd.Name = 'Yes';
-        cd.Document_Required__c = 'Pan Card';
-        insert cd;
+        CP_Document__c cpd = new CP_Document__c();
+        cpd.Name = 'Yes';
+        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd;
         
+        CP_Document__c cpd2 = new CP_Document__c();
+        cpd2.Name = 'No';
+        cpd2.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd2;
         
-        //Account acc1 = new Account();
-        //acc1.OwnerId = userInfo.getUserId();
-        //acc1.Name = 'test account';
-        // acc1.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
-        //insert acc1;
+        /*Channel_Partner__c cp1 = new Channel_Partner__c();
+cp1.Name_as_per_MahaRERA__c = 'Prop Tiger';
+cp1.RERA_Available__c = 'No';
+cp1.Mobile__c = '9876543210';
+cp1.PAN_No__c = 'ABCDE1234A';
+Id cpRecordTypeId = SObjectType.Channel_Partner__c.getRecordTypeInfosByName().get('CP Mira Road').getRecordTypeId();
+cp1.RecordTypeId =cpRecordTypeId;
+insert cp1;*/
         
-        Channel_Partner__c channelPartner = new Channel_Partner__c();
-        channelPartner.Name = 'Test CP';
-        channelPartner.Mobile__c = '9372082791';
-        insert channelPartner;
+        Account cpacc = new Account();
+        cpacc.OwnerId = userInfo.getUserId();
+        cpacc.Name = 'Last Name';
+        cpacc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
+        cpacc.Phone = '9011722426';
+        cpacc.Email__c = 'prasad.alamwar@test.com';
+        cpacc.PAN_No__c = '676747';
+        cpacc.RERA_Available__c = 'No';
+        insert cpacc;
         
         CP_Project__c cpp = new CP_Project__c();
-        // cpp.Account__c = acc1.Id;
-        cpp.Channel_Partner__c = channelPartner.Id;
-        cpp.Project__c = p.Id;
-        insert cpp; 
+        //  cpp.Account__c = cp1.Id;
+        cpp.Project_Name__c = p.Id;
+        insert cpp;
         
         Lead__c l1 = TestEx_SiteVisitFormController.getLead();
         l1.Project__c = p.Id;
-        l1.Channel_Partner__c = channelPartner.Id;
+        l1.Channel_Partner__c = cpacc.Id;
         l1.CP_Project__c =  cpp.Id;
-        l1.Phone__c = '9372082791';
-        l1.Source_of_Finance__c = 'Loan';
-        l1.Current_Resident_Configuration__c = '1 RK';
-        l1.Walkin_Source__c = 'Channel Partner';
-        l1.Walkin_Sub_Source__c = 'Channel Partner';
-        l1.Clash__c = true;
-        l1.Clash_Details__c = 'Different Lead Source and walkin source';
         insert l1;
         
         
@@ -101,281 +379,376 @@ public class TestEx_SiteVisitFormController {
         tm.Availability__c = false;
         insert tm;
         
+        Opportunity__c opp = new Opportunity__c();
+        opp.Project__c =p.Id;
+        opp.Sourcing_Manager__c = UserInfo.getUserId();
+        insert opp;
+        
         Site_Visit__c sv = new Site_Visit__c();
+        sv.Opportunity__c = opp.Id;
         sv.Comments__c = 'Test Fresh Sv';
+        sv.Stage__c = 'In Follow-up';
         insert sv;
+        sv.Sourcing_Manager__c = UserInfo.getUserId();
         sv.Comments__c = 'Test Revisit';
+        //sv.Stage__c = 'Approved';
         sv.Sales_Manager__c = UserInfo.getUserId();
-        sv.Phone__c = '5646541658';
+        // sv.Re_Assign_Sales_Manager__c = UserInfo.getUserId();
         update sv;
         
-        test.startTest();
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult = Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , null ,null);
-        List<String> resultsubmit1 = Ex_SiteVisitFormController.submit(l1.Project__c, l1.Id, null, null, svwrapperResult , true, '', true);
-        //List<String> resultsubmit2 = Ex_SiteVisitFormController.submit(null, null, null, null, svwrapperResult , false, '', false);
-        String resultsubmit3 = Ex_SiteVisitFormController.getSiteName(sv.Id);
-        test.stopTest();
+        CP_Lead__c cpl=new CP_Lead__c();
+        cpl.Channel_Partner_Name__c = cpacc.Id;
+        cpl.Project__c = p.Id;
+        cpl.Mobile__c = '8889898988';
+        // cpl.CP_Project__c = cpp.id;
+        insert cpl;
         
+         CP_Lead__c cpl1=new CP_Lead__c();
+        cpl1.Channel_Partner_Name__c = cpacc.Id;
+        cpl1.Project__c = p.Id;
+        cpl1.Mobile__c = '8889898988';
+        // cpl.CP_Project__c = cpp.id;
+        insert cpl1;
+         cpl1.Mobile__c = '8889898986';
+        update cpl1;
+        
+        List<CP_Lead__c> leadList = new List<CP_Lead__c>();
+        leadList.add(cpl);
+        leadList.add(cpl1);
+        
+        
+        
+        
+        String projid=p.id;
+        String cpleadid=cpl.id;
+        
+        test.startTest();
+        Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+        //  Ex_SiteVisitForm.SVWrapper svwrapperResult = Ex_SiteVisitForm.getSVWrapper(projid, l1.Id ,opp.id ,acc2.id,cpleadid);
+        
+        
+        //List<String> resultsubmit1 = Ex_SiteVisitForm.submit(l1.Project__c, l1.Id, null, null, svwrapperResult , true, '', true,  '',  '');
+        //List<String> resultsubmit2 = Ex_SiteVisitForm.submit(null, null, null, null, svwrapperResult , false, '', false, '' ,'' );
+        Ex_SiteVisitForm.getLeadSource();
+        Ex_SiteVisitForm.getLeadSubSource();
+        Ex_SiteVisitForm.getSalutation();
+        Ex_SiteVisitForm.selectProject();
+        Ex_CPLeadHandlerServices.duplicationCheck('Yes', leadList);
+        Ex_CPLeadHandlerServices.duplicationCheck('No', leadList);
+        Ex_CPLeadHandlerServices.AssignCPProject(leadList);
+        
+        
+        
+        
+        test.stopTest();
     }
     
     @isTest
     public static void testAccountFound(){
-        Profile sysAdminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
-        User sysAdminUser = [SELECT Id FROM User WHERE ProfileId = :sysAdminProfile.Id LIMIT 1];
-        
         Project__c p = new Project__c();
         p.Name = 'Test Project';
-        p.Site_Head__c = sysAdminUser.Id;
         insert p;
         
-        CP_Document__c cd = new CP_Document__c();
-        cd.Name = 'Yes';
-        cd.Document_Required__c = 'Pan Card';
-        insert cd;
+        CP_Document__c cpd = new CP_Document__c();
+        cpd.Name = 'Yes';
+        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd;
         
-        //Account acc1 = new Account();
-        //acc1.OwnerId = userInfo.getUserId();
-        //acc1.Name = 'test account';
-       // acc1.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
-        //insert acc1;
+        CP_Document__c cpd2 = new CP_Document__c();
+        cpd2.Name = 'No';
+        cpd2.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd2;
         
-        Id personAccountRTId = [SELECT Id FROM RecordType WHERE Name = 'Person Account' AND SObjectType = 'Account' LIMIT 1].Id;
+        /*Channel_Partner__c cp1 = new Channel_Partner__c();
+        cp1.Name_as_per_MahaRERA__c = 'Prop Tiger';
+        cp1.RERA_Available__c = 'No';
+        cp1.Mobile__c = '9876543210';
+        cp1.PAN_No__c = 'ABCDE1234A';
+        Id cpRecordTypeId = SObjectType.Channel_Partner__c.getRecordTypeInfosByName().get('CP Mira Road').getRecordTypeId();
+        cp1.RecordTypeId =cpRecordTypeId;
+        insert cp1;*/
+        
         Account acc2 = new Account();
         acc2.OwnerId = userInfo.getUserId();
         acc2.LastName = 'Last Name';
-       // acc2.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
-        acc2.RecordTypeId = personAccountRTId; 
-        acc2.Alternate_Mobile__c = '9637576210';
+        acc2.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
+        acc2.PersonMobilePhone = '9637576210';
         acc2.PersonEmail = 'prasad.alamwar@test.com';
         acc2.Age_Group__c = '25 to 30 Years ';
-        acc2.Occupation__c = 'Employed in Pvt. company  ';
+        acc2.Occupation__c = 'Employed in Pvt. company ';
         acc2.Marital_Status__c = 'Married';
         acc2.Current_Residence_Configuration__c = '1 BHK';
-        acc2.Industry__c = 'Agriculture';
-        acc2.Current_Resident_Status__c = 'Self-owned';
+       // acc2.Current_Residence_Status__c = 'Self-owned';
         acc2.Ethnicity__c = 'Marathi';
         acc2.Designation__c = 'Air Force';
         acc2.Gender__c = 'Male';
-        acc2.Family_Size__c = 'Joint Family';
         acc2.Company_Name__c = 'Test Comapny';
         acc2.Locality__c = 'Pune';
         acc2.Pincode__c = '422610';
         acc2.City__c = 'Pune';
-        acc2.State__c = 'Mh';
-        acc2.Country__c = 'India';
-        acc2.Locality_1__c = 'Pune';
-        acc2.Pincode_1__c = '422610';
-        acc2.City_1__c = 'Pune';
-        acc2.State_1__c = 'Mh';
-        acc2.Country_1__c = 'India';
-        acc2.Flat_No__c = '4/203';
+        //acc2.Residence__c = 'Indian';
+        //acc2.Country__c = 'India';
         insert acc2;
         
-        Channel_Partner__c channelPartner = new Channel_Partner__c();
-        channelPartner.Name = 'Test CP';
-        channelPartner.Mobile__c = '9372082791';
-        insert channelPartner;
-        
         CP_Project__c cp = new CP_Project__c();
-        // cp.Account__c = acc1.Id;
-        cp.Channel_Partner__c = channelPartner.Id;
-        cp.Project__c = p.Id;
+        //cp.Account__c = cp1.Id;
+        cp.Project_Name__c = p.Id;
         insert cp;
         
-        CP_Project__c cp1 = new CP_Project__c();
-        cp1.OwnerId = userInfo.getUserId();
-        // cp1.Account__c = acc1.Id;
-        cp1.Channel_Partner__c = channelPartner.Id;
-        cp1.Project__c = p.Id;
-        insert cp1;
+        CP_Project__c cp2 = new CP_Project__c();
+        cp2.OwnerId = userInfo.getUserId();
+       // cp2.Account__c = cp1.Id;
+        cp2.Project_Name__c = p.Id;
+        insert cp2;
         
         Lead__c l1 = TestEx_SiteVisitFormController.getLead();
         l1.Project__c = p.Id;
-        l1.Channel_Partner__c = channelPartner.Id;
-        l1.CP_Project__c = cp1.Id;
-        l1.Walkin_Source__c = 'Channel Partner';
-        l1.Walkin_Sub_Source__c = 'Channel Partner';
+       // l1.Channel_Partner__c = cp1.Id;
+        l1.CP_Project__c = cp2.Id;
         insert l1;
         
-        Lead__c l2 = TestEx_SiteVisitFormController.getLead();
-        l2.Project__c = p.Id;
-        l2.Channel_Partner__c = channelPartner.Id;
-        l2.CP_Project__c = cp.Id;
-        l2.Walkin_Source__c = 'Reference';
-        l2.Walkin_Sub_Source__c = 'Reference';
-        l2.Referrer_Name__c = sysAdminUser.Id;
-        insert l2;
+        
+        Visit_Pre_Registration__c testVPR = new Visit_Pre_Registration__c();
+           
+            testVPR.Site_Visit_Date__c = System.today();
+            testVPR.Status__c = 'Valid';
+        
+        insert testVPR;
+        
+        // Test parameters
+        String projectId = p.Id;
+        Boolean isQRUser = true;
+        Boolean changeStatus = true;
+        String vpId = testVPR.Id;
         
         test.startTest();
-        Date addDaysToDate = Ex_SiteVisitFormController.addDaysToDate(system.now(), 10.0);
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult = Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , null ,acc2.Id);
-        List<String> resultsubmit2 = Ex_SiteVisitFormController.submit(l1.Project__c, null, null, acc2.Id, svwrapperResult , false, '', false);
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult2 = Ex_SiteVisitFormController.getSVWrapper(p.Id , l2.Id , null ,acc2.Id);
-        List<String> resultsubmit3 = Ex_SiteVisitFormController.submit(l2.Project__c, null, null, acc2.Id, svwrapperResult2 , true, '', true);
+        Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+       //   Ex_SiteVisitForm.SVWrapper svwrapperResult = Ex_SiteVisitForm.getSVWrapper(p.Id , l1.Id ,opp.id ,acc2.id,l1.id);       
+        Ex_SiteVisitForm.submit(svwrapperResult1,projectId,true,true,vpId);
+        
+       // Ex_SiteVisitForm.ge(cp1.Id, p.Id);
+       // List<sObject> channelParter =  Ex_SiteVisitForm.fetchLookupData('VG001', 'Channel_Partner__c', p.id);
+       // List<sObject> User = Ex_SiteVisitForm.fetchLookupData('Test User', 'User', p.id);
+       // Ex_SiteVisitForm.fetchDefaultRecord('Test User', 'User', p.Id);
+        
         test.stopTest();
         
     }
     
     @isTest
     public static void testLeadAndOpportunityFound(){
-        Profile sysAdminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
-        User sysAdminUser = [SELECT Id FROM User WHERE ProfileId = :sysAdminProfile.Id LIMIT 1];
-        
         Project__c p = new Project__c();
         p.Name = 'Test Project';
-        p.Site_Head__c = sysAdminUser.Id;
         insert p;
         
-        CP_Document__c cd = new CP_Document__c();
-        cd.Name = 'Yes';
-        cd.Document_Required__c = 'Pan Card';
-        insert cd;
+         CP_Document__c cpd = new CP_Document__c();
+        cpd.Name = 'Yes';
+        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd;
         
-        //Account acc1 = new Account();
-        //acc1.OwnerId = userInfo.getUserId();
-        //acc1.Name = 'test account';
-        //acc1.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
-        // insert acc1;
+         CP_Document__c cpd2 = new CP_Document__c();
+        cpd2.Name = 'No';
+        cpd2.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd2;
         
-        Channel_Partner__c channelPartner = new Channel_Partner__c();
-        channelPartner.Name = 'Test CP';
-        channelPartner.Mobile__c = '9372082791';
-        insert channelPartner;  
+       /*Channel_Partner__c cp1 = new Channel_Partner__c();
+        cp1.Name_as_per_MahaRERA__c = 'Prop Tiger';
+        cp1.RERA_Available__c = 'No';
+        cp1.Mobile__c = '9876543210';
+        cp1.PAN_No__c = 'ABCDE1234A';
+        Id cpRecordTypeId = SObjectType.Channel_Partner__c.getRecordTypeInfosByName().get('CP Mira Road').getRecordTypeId();
+        cp1.RecordTypeId =cpRecordTypeId;
+        insert cp1;*/
         
         CP_Project__c cp = new CP_Project__c();
-        // cp.Account__c = acc1.Id;
-        cp.Channel_Partner__c = channelPartner.Id;
-        cp.Project__c = p.Id;
+       // cp.Account__c = cp1.Id;
+        cp.Project_Name__c = p.Id;
         insert cp;
         
-        Lead__c l1 = TestEx_SiteVisitFormController.getLead();
-        l1.Project__c = p.Id;
-        l1.Channel_Partner__c = channelPartner.Id;
-        l1.CP_Project__c = cp.Id;
-        l1.Project_Type__c ='Residential';
-        l1.Clash__c = true;
-        l1.Clash_Details__c = 'Different lead source and walkin source';
-        l1.Project_Type__c = 'Residential';
-        l1.Source_of_Finance__c = 'Loan'; 
-        l1.Lead_Stage__c = 'Visit Done';
-        l1.Lead_Sub_Stage__c = 'Visit Done';
-        insert l1;
-        
+                
         Account acc2 = new Account();
         acc2.OwnerId = userInfo.getUserId();
         acc2.LastName = 'Last Name';
         acc2.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
-        acc2.Alternate_Mobile__c= '9637576210';
+        acc2.PersonMobilePhone = '9637576210';
         acc2.PersonEmail = 'prasad.alamwar@test.com';
-        acc2.Alternate_Email__c = 'prasad@test.com';
         acc2.Ethnicity__c = 'Christian';
-        acc2.Family_Size__c = 'Nuclear Family without Elders';
         acc2.Age_Group__c = '25 to 30 Years ';
         acc2.Gender__c = 'Male';
-        acc2.Occupation__c = 'Employed in Pvt. company  ';
+        acc2.Occupation__c = 'Employed in Pvt. company ';
         acc2.Marital_Status__c = 'Married';
         acc2.Current_Residence_Configuration__c = '1 BHK';
         acc2.Designation__c = 'Accountant';
-        acc2.Industry__c = 'Agriculture';
-        acc2.Current_Resident_Status__c = 'Self-owned';
+       // acc2.Current_Residence_Status__c = 'Self-owned';
         acc2.Current_Residence_Configuration__c = '1 RK';
         acc2.Ethnicity__c = 'Marathi';
         acc2.Designation__c = 'Air Force';
         acc2.Gender__c = 'Male';
-        acc2.Family_Size__c = 'Joint Family';
         acc2.Company_Name__c = 'Test Comapny';
         acc2.Locality__c = 'Pune';
         acc2.Pincode__c = '422610';
         acc2.City__c = 'Pune';
-        acc2.State__c = 'Mh';
-        acc2.Country__c = 'India';
+        acc2.BillingCity='pune';
+        acc2.BillingState='mp';
+        acc2.BillingPostalCode='413304';
+        acc2.Current_Resident_Status__c='Rented';
+        acc2.Residential_Address__c='delhi';
+        acc2.Salutation='Ms.';
+        acc2.FirstName='test';
+        acc2.Industry__c='Shipping';
+        acc2.Office_Location__c='pune';
+        acc2.Office_Pincode__c='66777';
+        acc2.Family_Size__c='3';
+        acc2.Employment_Type__c='Business';
+       // acc2.Residence__c = 'Indian';
+       // acc2.Country__c = 'India';
         insert acc2;
         
+         Account cpacc = new Account();
+        cpacc.OwnerId = userInfo.getUserId();
+        cpacc.Name = 'Last Name';
+        cpacc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
+        cpacc.Phone = '9011722426';
+        cpacc.Email__c = 'prasad.alamwar@test.com';
+        cpacc.PAN_No__c = '676747';
+        cpacc.RERA_Available__c = 'No';
+        insert cpacc;
+        
+        
+        Lead__c l1 = TestEx_SiteVisitFormController.getLead();
+        l1.Project__c = p.Id;
+        l1.Channel_Partner__c = cpacc.Id;
+        l1.CP_Project__c = cp.Id;
+        insert l1;
+
         Opportunity__c opp = new Opportunity__c();
         opp.Account__c = acc2.Id;
         opp.CP_Project__c = cp.Id;
         opp.Project__c = p.Id;
-        opp.Project_Type__c = 'Residential';
-        opp.Buying_Purpose__c = 'Both';
-        opp.Possession_Timeframe_Required__c = 'RTMI (Ready to Move in)';
-        opp.Lead_Source__c = 'Channel Partner';
-        opp.Lead_Sub_Source__c = 'Channel Partner';
+        
+        //opp.Project_Type__c = 'Residential';
+        opp.Buying_Purpose__c = 'Second Home';
+        opp.Possession_Timeframe__c = 'RTMI (Ready to Move in)';
+        opp.Source__c = 'Channel Partner';
+        opp.Sub_Source__c = 'Channel Partner';
         opp.Source_Description__c = 'Test Discription';
-        opp.Budget__c = 'Budget of 30 to 40 lakhs';
+        opp.Budget_Range__c = 'Budget of 30 to 40 lakhs';
         opp.Presales_Manager__c = UserInfo.getUserId();
         opp.Sourcing_Manager__c = Userinfo.getUserId();
         opp.Configuration_Required__c = '1 BHK';
-        opp.First_Site_Visit_Date__c = system.today();
-        opp.Channel_Partner__c = channelPartner.Id;
+        opp.Fist_SV_Date__c = system.today();
+        //opp.Channel_Partner__c = cpacc.Id;
+        opp.Area_Sq_ft__c='451-650';
+        opp.Location__c='new';
+        opp.Actual_Budget__c=Decimal.valueOf('6000000');
+        opp.Source_of_Funding__c='Loan';
+        opp.Any_Pre_existing_Loans__c='No';
+        opp.Current_Outstanding_Amount__c=Decimal.valueOf('6776757');
         insert opp;
+        
+        Opportunity__c opp1 = new Opportunity__c();
+        opp1.Account__c = acc2.Id;
+        opp1.CP_Project__c = cp.Id;
+        opp1.Project__c = p.Id;
+        opp1.Source__c = 'Reference';
+        opp1.Sub_Source__c = 'Reference';
+        opp1.Referrer_Name__c='arati';
+        opp1.Fist_SV_Date__c = system.today();
+        //opp.Channel_Partner__c = cpacc.Id;
+        insert opp1;
+        
         
         Opportunity__c newopp =[select id, Account__c, Project__c from Opportunity__c where Id =: opp.Id];
         
-        CP_Project__c cp1 = new CP_Project__c();
-        cp1.OwnerId = userInfo.getUserId();
-        // cp1.Account__c = acc1.Id;
-        cp1.Channel_Partner__c = channelPartner.Id;
-        cp1.Project__c = p.Id;
-        insert cp1;
+        CP_Project__c cp2 = new CP_Project__c();
+        cp2.OwnerId = userInfo.getUserId();
+       // cp2. = cpacc.Id;
+        cp2.Project_Name__c = p.Id;
+        insert cp2;
+        
+        CP_Lead__c cpl=new CP_Lead__c();
+        cpl.CP_Project__c=cp2.id;
+        insert cpl;
+        
+         Visit_Pre_Registration__c testVPR = new Visit_Pre_Registration__c();
+           testVPR.Visit_Pre_Registration_Code__c = 'CODE123';
+            testVPR.Project__c = p.Id;
+            testVPR.Site_Visit_Date__c = System.today();
+            testVPR.Status__c = 'Valid';
+        
+        insert testVPR;
+        
+        String projid=p.id;
+        String cpleadid=cpl.id;
+        Boolean isQRUser = true;
+        Boolean changeStatus = true;
+        String vpId = testVPR.Id;
+        
         
         Test.startTest();
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult = Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , null ,acc2.Id);
-        List<String> resultsubmit2 = Ex_SiteVisitFormController.submit(l1.Project__c, l1.Id, newopp.Id, acc2.Id, svwrapperResult , true, '', true);
+        Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+        Ex_SiteVisitForm.SVWrapper svwrapperResult = Ex_SiteVisitForm.getSVWrapper(p.Id , l1.Id ,opp.id ,acc2.Id,cpl.id);
+         Ex_SiteVisitForm.SVWrapper svwrapperResultt = Ex_SiteVisitForm.getSVWrapper(p.Id , l1.Id ,opp1.id ,acc2.Id,cpl.id);
+
+        Ex_SiteVisitForm.checkCPData('CODE123',projid);
+              
+       Ex_SiteVisitForm.submit(svwrapperResult1, projid, isQRUser, changeStatus, vpId);
+        
         Test.stopTest();
         
     }
     
     @isTest
     public static void TestAccountandOpportunityFound(){
-        
-        Profile sysAdminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
-        User sysAdminUser = [SELECT Id FROM User WHERE ProfileId = :sysAdminProfile.Id LIMIT 1];
-        
         Project__c p = new Project__c();
         p.Name = 'Test Project';
-        p.Site_Head__c = sysAdminUser.Id;
         insert p;
         
-        CP_Document__c cd = new CP_Document__c();
-        cd.Name = 'Yes';
-        cd.Document_Required__c = 'Pan Card';
-        insert cd;
+        CP_Document__c cpd = new CP_Document__c();
+        cpd.Name = 'Yes';
+        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd;
         
-        // Account acc = new Account();
-        // acc.Name = 'test account';
-        // acc.City__c = 'Pune';
+        CP_Document__c cpd2 = new CP_Document__c();
+        cpd2.Name = 'No';
+        cpd2.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd2;
+        
+        Account acc = new Account();
+        acc.Name = 'test account';
+        acc.City__c = 'Pune';
         //acc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('PersonAccount').getRecordTypeId();
-        // insert acc;
+        //insert acc;
         
-        // Account acc1 = new Account();
-        // acc1.OwnerId = userInfo.getUserId();
-        // acc1.Name = 'test account';
-        // acc1.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
-        // insert acc1;
-        // 
-        
-        Channel_Partner__c channelPartner3 = new Channel_Partner__c();
-        channelPartner3.Name = 'Test CP';
-        channelPartner3.Mobile__c = '9372082791';
-        insert channelPartner3; 
+        /*Channel_Partner__c cp1 = new Channel_Partner__c();
+        cp1.Name_as_per_MahaRERA__c = 'Prop Tiger';
+        cp1.RERA_Available__c = 'No';
+        cp1.Mobile__c = '9876543210';
+        cp1.PAN_No__c = 'ABCDE1234A';
+        Id cpRecordTypeId = SObjectType.Channel_Partner__c.getRecordTypeInfosByName().get('CP Mira Road').getRecordTypeId();
+        cp1.RecordTypeId =cpRecordTypeId;
+        insert cp1;*/
         
         CP_Project__c cp = new CP_Project__c();
-        // cp.Account__c = acc1.Id;
-        cp.Channel_Partner__c = channelPartner3.Id;
-        cp.Project__c = p.Id;
+       // cp.Account__c = cp1.Id;
+        cp.Project_Name__c = p.Id;
         insert cp;
         
-        CP_Document__c cd1 = new CP_Document__c();
-        cd1.Name = 'Yes';
-        cd1.Document_Required__c = 'Pan Card';
-        insert cd1;
+        CP_Document__c cpd3 = new CP_Document__c();
+        cpd3.Name = 'Yes';
+        cpd3.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd3;
         
-        CP_Project__c cp1 = new CP_Project__c();
-        cp1.OwnerId = userInfo.getUserId();
-        // cp1.Account__c = acc1.Id;
-        cp1.Channel_Partner__c = channelPartner3.Id;
-        cp1.Project__c = p.Id;
-        insert cp1;
+         CP_Document__c cpd4 = new CP_Document__c();
+        cpd4.Name = 'No';
+        cpd4.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd4;
+
+        CP_Project__c cpproj = new CP_Project__c();
+        cpproj.OwnerId = userInfo.getUserId();
+       // cpproj. = cp1.Id;
+        cpproj.Project_Name__c = p.Id;
+        insert cpproj;
         
         Account acc2 = new Account();
         acc2.OwnerId = userInfo.getUserId();
@@ -385,106 +758,75 @@ public class TestEx_SiteVisitFormController {
         acc2.PersonEmail = 'prasad.alamwar@test.com';
         acc2.PersonEmail = 'prasad@test.com';
         acc2.Ethnicity__c = 'Christian';
-        acc2.Family_Size__c = 'Nuclear Family without Elders';
         acc2.Age_Group__c = '25 to 30 Years ';
         acc2.Gender__c = 'Male';
-        acc2.Occupation__c = 'Employed in Pvt. company  ';
+        acc2.Occupation__c = 'Employed in Pvt. company ';
         acc2.Marital_Status__c = 'Married';
         acc2.Current_Residence_Configuration__c = '1 BHK';
         acc2.Designation__c = 'Accountant';
-        acc2.Industry__c = 'Agriculture';
-        acc2.Current_Resident_Status__c = 'Self-owned';
+       // acc2.Current_Residence_Status__c = 'Self-owned';
         acc2.Current_Residence_Configuration__c = '1 RK';
         acc2.Ethnicity__c = 'Marathi';
         acc2.Designation__c = 'Air Force';
         acc2.Gender__c = 'Male';
-        acc2.Family_Size__c = 'Joint Family';
         acc2.Company_Name__c = 'Test Comapny';
         acc2.Locality__c = 'Pune';
         acc2.Pincode__c = '422610';
         acc2.City__c = 'Pune';
-        acc2.State__c = 'Mh';
-        acc2.Country__c = 'India';
-        acc2.Phone = '5465665574';
-        acc2.Flat_No__c = '4/203';
-        acc2.City_1__c = 'Thane';
-        acc2.Locality_1__c = 'Thane';
-        acc2.Country_1__c = 'India';
-        acc2.State_1__c = 'MH';
-        acc2.Pincode_1__c = '345672';
+        //acc2.Residence__c = 'Indian';
+        //acc2.Country__c = 'India';
         insert acc2;
+        
+        Account cpacc = new Account();
+        cpacc.OwnerId = userInfo.getUserId();
+        cpacc.Name = 'Last Name';
+        cpacc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
+        cpacc.Phone = '9011722426';
+        cpacc.Email__c = 'prasad.alamwar@test.com';
+        cpacc.PAN_No__c = '676747';
+        cpacc.RERA_Available__c = 'No';
+        insert cpacc;
         
         Opportunity__c opp = new Opportunity__c();
         opp.Close_Date__c = system.today().addDays(2);
         opp.Account__c = acc2.Id;
-        opp.CP_Project__c = cp1.Id;
+        opp.CP_Project__c = cpproj.Id;
         opp.Project__c = p.Id;
-        opp.Project_Type__c = 'Residential';
-        opp.Buying_Purpose__c = 'Both';
-        opp.Possession_Timeframe_Required__c = 'RTMI (Ready to Move in)';
-        opp.Lead_Source__c = 'Channel Partner';
-        opp.Lead_Sub_Source__c = 'Channel Partner';
+        //opp.Project_Type__c = 'Residential';
+        opp.Buying_Purpose__c = 'Second Home';
+        opp.Possession_Timeframe__c = 'RTMI (Ready to Move in)';
+        opp.Source__c = 'Channel Partner';
+        opp.Sub_Source__c = 'Channel Partner';
         opp.Source_Description__c = 'Test Discription';
-        opp.Budget__c = 'Budget of 30 to 40 lakhs';
-        opp.Opportunity_Stage__c = 'In Follow-up';
+        opp.Budget_Range__c = 'Budget of 30 to 40 lakhs';
         opp.Presales_Manager__c = UserInfo.getUserId();
         opp.Sourcing_Manager__c = Userinfo.getUserId();
         opp.Configuration_Required__c = '1 BHK';
-        opp.First_Site_Visit_Date__c = system.today();
-        opp.Walkin_Source__c = 'Channel Partner';
-        opp.Walkin_Sub_Source__c = 'Channel Partner';
-        opp.Actual_Budget__c = '415984';
-        opp.Preferred_Location__c = 'Thane';
-        opp.Source_of_Finance__c = 'Loan';
-        opp.Channel_Partner__c = channelPartner3.Id;
+        opp.Fist_SV_Date__c = system.today();
+        //opp.Channel_Partner__c = cpacc.Id;
         insert opp;
-        
-        Opportunity__c opp2 = new Opportunity__c();
-        opp2.Close_Date__c = system.today().addDays(2);
-        opp2.Account__c = acc2.Id;
-        opp2.CP_Project__c = cp1.Id;
-        opp2.Project__c = p.Id;
-        opp2.Lead_Source__c = 'Reference';
-        opp2.Lead_Sub_Source__c = 'Reference';
-        opp2.Walkin_Source__c = 'Channel Partner';
-        opp2.Walkin_Sub_Source__c = 'Channel Partner';
-        opp2.SV_Count__c = 5;
-        insert opp2;
         
         Opportunity__c newopp =[select id, Account__c, Project__c from Opportunity__c where Id =: opp.Id];
         
-        Channel_Partner__c channelPartner4 = new Channel_Partner__c();
-        channelPartner4.Name = 'Test CP';
-        channelPartner4.Mobile__c = '9702536061';
-        insert channelPartner4; 
-        
         CP_Project__c cp11 = new CP_Project__c();
-        cp11.Project__c = p.id;
-        //cp11.Account__c = acc1.Id;
-        cp11.Channel_Partner__c = channelPartner4.Id;
+        cp11.Project_Name__c = p.id;
+        //cp11.Account__c = cp1.Id;
         insert cp11;
         
         Lead__c ld = new Lead__c();
         ld.Last_Name__c = 'Test';
         ld.Lead_Source__c = 'Channel Partner';
-        ld.Channel_Partner__c = channelPartner4.Id;
+        ld.Channel_Partner__c = cpacc.Id;
         ld.CP_Project__c = cp11.Id;
         ld.Project__c = p.Id;
         ld.IsConverted__c = true;
         ld.Mobile__c = '9637576210';
         insert ld;
         
-        Channel_Partner__c channelPartner2 = new Channel_Partner__c();
-        channelPartner2.Name = 'Test CP';
-        channelPartner2.Mobile__c = '8767954821';
-        insert channelPartner2; 
-        
         Lead__c ld1 = new Lead__c();
         ld1.Last_Name__c = 'Test';
         ld1.Lead_Source__c = 'Channel Partner';
-        ld1.Clash__c = true;
-        ld1.Clash_Details__c = 'Different';
-        ld1.Channel_Partner__c = channelPartner2.Id;
+        ld1.Channel_Partner__c = cpacc.Id;
         ld1.CP_Project__c = cp11.Id;
         ld1.Project__c = p.Id;
         ld1.IsConverted__c = false;
@@ -496,312 +838,269 @@ public class TestEx_SiteVisitFormController {
         sv.Mobile__c = '9637576100';
         insert sv;
         
-        Channel_Partner__c channelPartner = new Channel_Partner__c();
-        channelPartner.Name = 'Test CP';
-        channelPartner.Mobile__c = '9786523140';
-        insert channelPartner;  
-        
         List<Lead__c> leadList = new List<Lead__c>();
         
         Lead__c l1 = TestEx_SiteVisitFormController.getLead();
         l1.Project__c = p.Id;
-        l1.Channel_Partner__c =  channelPartner.Id;
+        l1.Channel_Partner__c =  cpacc.Id;
         l1.CP_Project__c = cp.Id;
         insert l1;
         leadList.add(l1);
+        
         
         Account a = new Account();
         a.FirstName = 'Test';
         a.LastName = 'Account';
         a.PersonMobilePhone = '1122334005';
-        a.Alternate_Email__c = 'Test2@gmail.com';
+        a.Phone = 'Test2@gmail.com';
         a.PersonEmail = 'customer12321@test.in';
         a.Company_Name__c = 'test';
         a.City__c = 'Pune';
-        a.State__c = 'MH';
-        a.Country__c = 'India';
+       // a.Residence__c = 'Indian';
+       // a.Country__c = 'India';
         a.Pincode__c = '422610';
         a.Locality__c = 'Mundwa Road';
-        a.Current_Resident_Status__c = 'Self-owned';
+       // a.Current_Residence_Status__c = 'Self-owned';
         a.Current_Residence_Configuration__c = '3 BHK';
         a.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
         insert a;
         a.Salutation = 'Mr.';
         update a;
         
-        test.startTest();
-        Map<string,string> selectProject = Ex_SiteVisitFormController.selectProject();
-        String projectImage = Ex_SiteVisitFormController.projectImage(p.Id);
-        Lead__c getCodeDetails = Ex_SiteVisitFormController.getCodeDetails(p.Id, 'Test');
-        Ex_SiteVisitFormController.AccountWrapper acwrapperResult = Ex_SiteVisitFormController.getAccountWrapper();
-        Ex_SiteVisitFormController.ChannelPartnerWrapper cpwrapperResult = Ex_SiteVisitFormController.getChannelPartnerWrapper();
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult = Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , opp.Id ,acc2.Id);
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult2 = Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , opp2.Id ,acc2.Id);
-        Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , opp2.Id ,acc2.Id);
-        Map<String, List<SObject>> result2 = Ex_SiteVisitFormController.searchForData(l1.Mobile__c,l1.Email__c,l1.Project__c);
-        Map<String, List<SObject>> result3 = Ex_SiteVisitFormController.searchForData(ld.Mobile__c,l1.Email__c,l1.Project__c);
-        Ex_SiteVisitFormController.submit(p.Id, l1.Id, opp2.Id, acc2.Id, svwrapperResult2, true, '', true);
-        List<String> resultsubmit1 = Ex_SiteVisitFormController.submit(newopp.Project__c, newopp.Id, opp.Id, acc2.Id, svwrapperResult , true, '', true);
+        Visit_Pre_Registration__c testVPR = new Visit_Pre_Registration__c();
+           testVPR.Visit_Pre_Registration_Code__c = 'CODE123';
+            testVPR.Project__c = p.Id;
+            testVPR.Site_Visit_Date__c = System.today();
+            testVPR.Status__c = 'Valid';
         
+        insert testVPR;
+        
+        CP_Lead__c cpl=new CP_Lead__c();
+        cpl.CP_Project__c=cp11.id;
+        insert cpl;
+        String projid=p.id;
+        String cpleadid=cpl.id;
+        Boolean isQRUser = true;
+        Boolean changeStatus = true;
+        String vpId = testVPR.Id;
+        
+        test.startTest();
+        Map<string,string> selectProject = Ex_SiteVisitForm.selectProject();
+         Ex_SiteVisitForm.projectImage(p.id);
+      //  Ex_SiteVisitForm.getSVWrapper(projectId, leadId, oppId, accId, cpLeadId)
+        Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+        Ex_SiteVisitForm.SVWrapper svwrapperResult = Ex_SiteVisitForm.getSVWrapper(p.Id , l1.Id , opp.Id ,acc2.Id,'test');
+       Ex_SiteVisitForm.search('hgfh','hur','ujk');
+       // Map<String, List<SObject>> result2 = Ex_SiteVisitForm.search(l1.Mobile__c,l1.Email__c,l1.Project__c);
+       // Map<String, List<SObject>> result3 = Ex_SiteVisitForm.searchForData(ld.Mobile__c,l1.Email__c,l1.Project__c);
+      //  Ex_SiteVisitForm.submit(svwrapperResult1,p.id,true,true,'demo');
+          Ex_SiteVisitForm.submit(svwrapperResult1, projid, isQRUser, changeStatus, vpId);
+      //  Ex_SiteVisitForm.saveFile('base64Data', 'fileName', sv);
         Map<Id, Account> result = Ex_LeadConversionServices.getLeadIdAccountMap(leadList);  
         Ex_LeadConversionServices.convertLead(leadList);
-        Ex_SiteVisitFormController.fetchLookupData('sWildCardText','User',p.Id);
-        Ex_SiteVisitFormController.fetchDefaultRecord(opp.Id,'Opportunity__c',p.Id);
-        Ex_SiteVisitFormController.getCPProject(channelPartner4.Id,p.Id);
-        Ex_SiteVisitFormController.getCPProject(null,null);
         test.stopTest();
-    }   
+    }  
     
     @isTest
     public static void TestLeadandAccountFound(){
-        Profile sysAdminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
-        User sysAdminUser = [SELECT Id FROM User WHERE ProfileId = :sysAdminProfile.Id LIMIT 1];
-        
         Project__c p = new Project__c();
         p.Name = 'Test Project';
-        p.Site_Head__c = sysAdminUser.Id;
         insert p;
         
-        CP_Document__c cd = new CP_Document__c();
-        cd.Name = 'Yes';
-        cd.Document_Required__c = 'Pan Card';
-        insert cd;
+         CP_Document__c cpd = new CP_Document__c();
+        cpd.Name = 'Yes';
+        cpd.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
+        insert cpd;
         
-        // Account acc1 = new Account();
-        //acc1.OwnerId = userInfo.getUserId();
-        // acc1.Name = 'test account';
-        // acc1.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
-        // insert acc1;
+         CP_Document__c cpd2 = new CP_Document__c();
+        cpd2.Name = 'No';
+        cpd2.Document_Required__c = 'PAN Card,RERA Competency Certificate';
+        insert cpd2;
+        
+        /*Channel_Partner__c cp1 = new Channel_Partner__c();
+        cp1.Name_as_per_MahaRERA__c = 'Prop Tiger';
+        cp1.RERA_Available__c = 'No';
+        cp1.Mobile__c = '9876543210';
+        cp1.PAN_No__c = 'ABCDE1234A';
+        Id cpRecordTypeId = SObjectType.Channel_Partner__c.getRecordTypeInfosByName().get('CP Mira Road').getRecordTypeId();
+        cp1.RecordTypeId =cpRecordTypeId;
+        insert cp1;*/
         
         Account acc2 = new Account();
         acc2.OwnerId = userInfo.getUserId();
-        acc2.Salutation = 'Mr.';
-        acc2.FirstName = 'First Name';
         acc2.LastName = 'Last Name';
-        acc2.Phone = '8954671230';
-        acc2.Flat_No__c = '789';
         acc2.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
         acc2.PersonMobilePhone = '9637576210';
-        acc2.PersonEmail = 'prasad.alamwar@test.com';
+        //acc2.PersonEmail = 'prasad.alamwar@test.com';
         acc2.PersonEmail = 'prasad@test.com';
         acc2.Ethnicity__c = 'Christian';
-        acc2.Family_Size__c = 'Nuclear Family without Elders';
         acc2.Age_Group__c = '25 to 30 Years ';
         acc2.Gender__c = 'Male';
-        acc2.Occupation__c = 'Employed in Pvt. company  ';
+        acc2.Occupation__c = 'Employed in Pvt. company ';
         acc2.Marital_Status__c = 'Married';
         acc2.Current_Residence_Configuration__c = '1 BHK';
         acc2.Designation__c = 'Accountant';
-        acc2.Industry__c = 'Agriculture';
-        acc2.Current_Resident_Status__c = 'Self-owned';
+       // acc2.Current_Residence_Status__c = 'Self-owned';
         acc2.Current_Residence_Configuration__c = '1 RK';
         acc2.Ethnicity__c = 'Marathi';
         acc2.Designation__c = 'Air Force';
         acc2.Gender__c = 'Male';
-        acc2.Family_Size__c = 'Joint Family';
         acc2.Company_Name__c = 'Test Comapny';
         acc2.Locality__c = 'Pune';
         acc2.Pincode__c = '422610';
         acc2.City__c = 'Pune';
-        acc2.State__c = 'Mh';
-        acc2.Country__c = 'India';
-        acc2.City_1__c = 'Thane';
-        acc2.Locality_1__c = 'Thane';
-        acc2.Country_1__c = 'India';
-        acc2.State_1__c = 'MH';
-        acc2.Pincode_1__c = '345672';
+      //  acc2.Residence__c = 'Indian';
+       // acc2.Country__c = 'India';
         insert acc2;
         
-        Channel_Partner__c channelPartner = new Channel_Partner__c();
-        channelPartner.Name = 'Test CP';
-        channelPartner.Mobile__c = '9372082791';
-        insert channelPartner;  
+         Account cpacc = new Account();
+        cpacc.OwnerId = userInfo.getUserId();
+        cpacc.Name = 'Last Name';
+        cpacc.RecordTypeId = Schema.SObjectType.account.getRecordTypeInfosByName().get('Channel Partner').getRecordTypeId();
+        cpacc.Phone = '9011722426';
+        cpacc.Email__c = 'prasad.alamwar@test.com';
+        cpacc.PAN_No__c = '676747';
+        cpacc.RERA_Available__c = 'No';
+        insert cpacc;
         
         CP_Project__c cp = new CP_Project__c();
-        // cp.Account__c = acc1.Id;
-        cp.Channel_Partner__c = channelPartner.Id;
-        cp.Project__c = p.Id;
+     //   cp.Account__c = cp1.Id;
+        cp.Project_Name__c = p.Id;
         insert cp;
         
-        CP_Project__c cp1 = new CP_Project__c();
-        cp1.OwnerId = userInfo.getUserId();
-        // cp1.Account__c = acc1.Id;
-        cp1.Channel_Partner__c = channelPartner.Id;
-        cp1.Project__c = p.Id;
-        insert cp1;
-        
+        CP_Project__c cp2 = new CP_Project__c();
+        cp2.OwnerId = userInfo.getUserId();
+       // cp2.Account__c = cp1.Id;
+        cp2.Project_Name__c = p.Id;
+        insert cp2;
         
         Lead__c l1 = TestEx_SiteVisitFormController.getLead();
         l1.Project__c = p.Id;
-        l1.Channel_Partner__c = channelPartner.Id;
-        l1.CP_Project__c = cp1.Id;
-        l1.Phone__c = '8965472031';
-        l1.Walkin_Source__c = 'Channel Partner';
-        l1.Walkin_Sub_Source__c = 'Channel Partner';
-        l1.Project_Type__c = 'Residential';
+        l1.Channel_Partner__c = cpacc.Id;
+        l1.CP_Project__c = cp2.Id;
         insert l1;
         
-        Lead__c l2 = TestEx_SiteVisitFormController.getLead();
-        l2.Project__c = p.Id;
-        l2.CP_Project__c = cp1.Id;
-        l2.Phone__c = '8965472031';
-        l2.Lead_Source__c = 'Reference';
-        l2.Lead_Sub_Source__c = 'Reference';
-        l2.Referrer_Name__c = 'Test';
-        l2.Source_of_Finance__c = 'Loan';
-        l2.Clash__c = true;
-        l2.Clash_Details__c = 'Test';
-        l2.Project_Type__c = 'Residential';
-        insert l2;
+        Opportunity__c opp=new Opportunity__c();
+        opp.Account__c=acc2.id;
+        insert opp;
         
-        String apiKey = 'AIzaSyBHwqzLKYNX1Ih3Jhcz2JvM0YIkIsSaaM8';
+        Visit_Pre_Registration__c testVPR = new Visit_Pre_Registration__c();
+           testVPR.Visit_Pre_Registration_Code__c = 'CODE123';
+            testVPR.Project__c = p.Id;
+            testVPR.Site_Visit_Date__c = System.today();
+            testVPR.Status__c = 'Valid';
+        
+        insert testVPR;
+        
+        CP_Lead__c cpl=new CP_Lead__c();
+        cpl.CP_Project__c=cp.id;
+        insert cpl;
+        String projid=p.id;
+        String cpleadid=cpl.id;
+        Boolean isQRUser = true;
+        Boolean changeStatus = true;
+        String vpId = testVPR.Id;
         
         test.startTest();
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult = Ex_SiteVisitFormController.getSVWrapper(p.Id , l1.Id , null ,acc2.Id);
-        List<String> resultsubmit2 = Ex_SiteVisitFormController.submit(l1.Project__c, l1.Id, null, acc2.Id, svwrapperResult , false, '', false);
-        
-        Ex_SiteVisitFormController.SiteVisitWrapper svwrapperResult2 = Ex_SiteVisitFormController.getSVWrapper(p.Id , l2.Id , null ,acc2.Id);
-        List<String> resultsubmit3 = Ex_SiteVisitFormController.submit(l2.Project__c, l2.Id, null, acc2.Id, svwrapperResult2 , false, '', false);
-        
-        Ex_SiteVisitFormController.getKey(apiKey);
+        Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+        //  Ex_SiteVisitForm.SVWrapper svwrapperResult = Ex_SiteVisitForm.getSVWrapper(p.Id , l1.Id , opp.Id ,acc2.Id,'test');
+        //Ex_SiteVisitForm.SVWrapper svwrapperResult = Ex_SiteVisitForm.getSVWrapper(p.Id , l1.Id , null ,acc2.Id, svwrapperResult1, 'Yes', false);
+        //List<String> resultsubmit2 = Ex_SiteVisitForm.submit(l1.Project__c, l1.Id, null, acc2.Id, svwrapperResult , false, '', false,'','');
+         // Ex_SiteVisitForm.submit(svwrapperResult1,p.id,true,true,'demo');
+  Ex_SiteVisitForm.submit(svwrapperResult1, projid, isQRUser, changeStatus, vpId);
         test.stopTest();
     }
     
-    /*
-@isTest
-//public static void TestGetLocationSuggestions(){
-test.startTest();
-String getLocationSuggestions = Ex_SiteVisitFormController.getLocationSuggestions('AIzaSyBHwqzLKYNX1Ih3Jhcz2JvM0YIkIsSaaM8', 'Thane');
-test.stopTest();
-}
-*/
     @isTest
-    public static void TestcreateChannelPartner() {
-        // Create a test project record
-        Project__c p = new Project__c();
-        p.Name = 'Test Project';
-        p.Sourcing_Manager__c = userInfo.getUserId();
-        insert p;
-        
-       //Channel_Partner__c cp = new Channel_Partner__c();
-        //cp.Name = 'New CP';
-        //cp.Mobile__c = '9372082791';
-        //insert cp;
-        CP_Document__c cpDoc = new CP_Document__c();
-        cpDoc.Name = 'Yes';
-        cpDoc.Document_Required__c = 'PAN Card,RERA Competency Certificate,GST Registration Certificate,RERA Certificate';
-        insert cpDoc;
-        
-        CP_Document__c cpDoc1 = new CP_Document__c();
-        cpDoc1.Name = 'No';
-        cpDoc1.Document_Required__c = 'PAN Card,RERA Competency Certificate';
-        insert cpDoc1;
-        
-        
-                
-        // Prepare ChannelPartnerWrapper data
-        Ex_SiteVisitFormController.ChannelPartnerWrapper cpWrapper = new Ex_SiteVisitFormController.ChannelPartnerWrapper();
-        cpWrapper.cp = new Channel_Partner__c();
-        cpWrapper.cp.Name = 'Test Channel Partner';
-        cpWrapper.cp.Mobile__c = '1234567860';
-        cpWrapper.cp.CP_Firm_Type__c = 'Individual';
-        cpWrapper.cp.PAN_No__c = 'ABCDE1234F';
-        cpWrapper.cp.RERA_Available__c = 'Yes';
-        cpWrapper.cp.MahaRERA_Registration_No__c = 'test234333321';
-        
-        Test.startTest();        
-        /*CP_Project__c createdCPProject;
-        createdCPProject = */ 
-        Ex_SiteVisitFormController.createChannelPartner(cpWrapper, p.Id);
-        Ex_SiteVisitFormController.getChannelPartnerWrapper();
-        //Ex_SiteVisitFormController.getLocationSuggestions('test345','test pune');
-        
-        Test.stopTest();
-    }
-    
-    @isTest
-    public static void TestCreateAccount(){
-        Project__c p = new Project__c();
-        p.Name = 'Test Project';
-        insert p;
-        
-        Ex_SiteVisitFormController.AccountWrapper acWrapper = new Ex_SiteVisitFormController.AccountWrapper();
-        acWrapper.ac = new Account();
-        acWrapper.ac.Name = 'Test Account';
-        acWrapper.ac.Firm_Name__c = 'Test Firm';
-        acWrapper.ac.Phone = '1234567890';
-                
-        test.startTest();
-        // Ex_SiteVisitFormController.createAccount(acWrapper, p.Id);
-        test.stopTest();
-        
-        
-    }
-    
-        @isTest
-    static void testGetPlaceInfo() {
-        // Mock API response
-        String mockResponse = '{ "result": { "name": "Test Place", "formatted_address": "123 Test St" } }';
+    static void testSubmitMethod() {
+        // Create test data for the Account and Project
+        Account testAccount = new Account(
+            FirstName = 'Test',
+            LastName = 'User',
+            PersonMobilePhone = '9999999999',
+            PersonEmail = 'testuser@example.com'
+        );
+        insert testAccount;
+
+        Project__c testProject = new Project__c(Name = 'Test Project');
+        insert testProject;
+
+        // Simulate Site Visit creation without existing Opportunity or Lead
+        Site_Visit__c testSiteVisit = new Site_Visit__c(
+            Mobile__c = '9999999999',
+            Email__c = 'testuser@example.com',
+            First_Name__c = 'Test',
+            Last_Name__c = 'User',
+            Budget_Range__c = '30-40 Lakhs',
+            Buying_Purpose__c = 'Investment',
+            Configuration_Required__c = '2 BHK',
+            Possession_Timeframe_Required__c = '6-12 Months'
+        );
+
+        // Simulate the scenario with no Opportunity or Lead found
+        //SVWrapper wrapper = new SVWrapper();
+        Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+        svwrapperResult1.sv = testSiteVisit;
 
         Test.startTest();
-        // Create a mock HTTP response
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponse(mockResponse, 200));
-
-        // Call the method
-        String result = Ex_SiteVisitFormController.getPlaceInfo('dummyApiKey', 'dummyPlaceId');
-        String result1 = Ex_SiteVisitFormController.getLocationSuggestions('dummyApiKey','Test');
-
-        // Assertions
-        System.assertNotEquals(null, result, 'Response should not be null');
-        System.assert(result.contains('Test Place'), 'Response should contain the place name');
-
+        Map<Id, String> resultMap = Ex_SiteVisitForm.submit(
+            svwrapperResult1,
+            testProject.Id,
+            true,  // isQRUser
+            false, // changeStatus
+            null   // vpId
+        );
         Test.stopTest();
-    }
+
+       
+          }
 
     @isTest
-    static void testGetResponse() {
-        // Mock API response
-        String mockResponse = '{ "status": "OK" }';
+    static void testLeadConversionScenario() {
+        // Create test Lead
+        Lead__c testLead = new Lead__c(
+            First_Name__c = 'Test',
+            Last_Name__c = 'Lead',
+            Mobile__c = '8888888888',
+            Email__c = 'testlead@example.com',
+            Lead_Stage__c = 'Incoming',
+            Project__c = null
+        );
+        insert testLead;
+
+        // Simulate Site Visit creation for a Lead
+        Site_Visit__c testSiteVisit = new Site_Visit__c(
+            Mobile__c = '8888888888',
+            Email__c = 'testlead@example.com',
+            First_Name__c = 'Test',
+            Last_Name__c = 'Lead'
+        );
+
+        
+         Ex_SiteVisitForm.SVWrapper svwrapperResult1 = new Ex_SiteVisitForm.SVWrapper();
+        svwrapperResult1.sv = testSiteVisit;
+
 
         Test.startTest();
-        // Create a mock HTTP response
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponse(mockResponse, 200));
-
-        // Call the method
-        String response = Ex_SiteVisitFormController.getResponse('https://dummyurl.com');
-
-        // Assertions
-        System.assertNotEquals(null, response, 'Response should not be null');
-        System.assert(response.contains('"status": "OK"'), 'Response should contain status OK');
-
+        Map<Id, String> resultMap = Ex_SiteVisitForm.submit(
+            svwrapperResult1,
+            null, // No project ID
+            true, // isQRUser
+            false, // changeStatus
+            null  // vpId
+        );
         Test.stopTest();
-    }
 
-    @isTest
-    static void testGetKey() {
-        // Call method
-        String result = Ex_SiteVisitFormController.getKey('dummyApiKey');
+        // Assertions for Lead conversion
+        Lead__c convertedLead = [SELECT Converted_Opportunity__c FROM Lead__c WHERE Id = :testLead.Id];
+        System.assertNotEquals(null, convertedLead.Converted_Opportunity__c, 'Lead should be converted to an Opportunity.');
 
-        // Assertion
-        System.assertEquals('&key=dummyApiKey', result, 'Key format is incorrect');
-    }
+        Opportunity__c convertedOpp = [SELECT Id, SV_Count__c FROM Opportunity__c WHERE Id = :convertedLead.Converted_Opportunity__c];
+        System.assertEquals(1, convertedOpp.SV_Count__c, 'SV Count should be updated in converted Opportunity.');
 
-    // Mock class for HTTP response
-    private class MockHttpResponse implements HttpCalloutMock {
-        private String responseBody;
-        private Integer statusCode;
-
-        MockHttpResponse(String responseBody, Integer statusCode) {
-            this.responseBody = responseBody;
-            this.statusCode = statusCode;
-        }
-
-        public HTTPResponse respond(HTTPRequest req) {
-            HttpResponse res = new HttpResponse();
-            res.setBody(responseBody);
-            res.setStatusCode(statusCode);
-            return res;
-        }
+        // Assertions for Site Visit linking
+        Site_Visit__c createdSV = [SELECT Opportunity__c FROM Site_Visit__c WHERE Opportunity__c = :convertedOpp.Id];
+        System.assertNotEquals(null, createdSV, 'Site Visit should be linked to the converted Opportunity.');
     }
 
 }

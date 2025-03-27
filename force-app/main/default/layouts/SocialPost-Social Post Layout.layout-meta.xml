@@ -7,8 +7,16 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ReplyToId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Content</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -16,33 +24,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Content</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ReplyToId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ReviewedStatus</field>
+                <field>Handle</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>MessageType</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Provider</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PostUrl</field>
+                <behavior>Required</behavior>
+                <field>Headline</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -50,11 +42,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Handle</field>
+                <field>PostUrl</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IsOutbound</field>
+                <field>WhoId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Provider</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -69,6 +65,9 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>ReplyToId</fields>
+    </miniLayout>
     <relatedLists>
         <fields>Content</fields>
         <fields>Persona</fields>

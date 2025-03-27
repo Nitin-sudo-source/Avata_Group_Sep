@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldOverrides>
+        <field>Subject</field>
+        <formula>&apos;CP Call&apos;</formula>
+    </fieldOverrides>
     <label>CP Call</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
@@ -8,7 +12,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Subject</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -17,12 +21,7 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Call_date__c</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Next_Action_Date__c</field>
+                <field>Next_Meeting_Date__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
@@ -31,7 +30,18 @@
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
-        <quickActionLayoutColumns/>
+        <quickActionLayoutColumns>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Date__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Next_Call_Date__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+        </quickActionLayoutColumns>
     </quickActionLayout>
     <targetObject>Task</targetObject>
     <targetParentField>What</targetParentField>

@@ -7,18 +7,22 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
+            <value>
+                <fullName>Aadhar Card</fullName>
+                <default>false</default>
+                <label>Aadhar Card</label>
+            </value>
             <value>
                 <fullName>Pan Card</fullName>
                 <default>false</default>
                 <label>Pan Card</label>
             </value>
             <value>
-                <fullName>RERA Competency Certificate</fullName>
+                <fullName>Passport</fullName>
                 <default>false</default>
-                <label>RERA Competency Certificate</label>
+                <label>Passport</label>
             </value>
             <value>
                 <fullName>GST Registration Certificate</fullName>
@@ -31,19 +35,14 @@
                 <label>RERA Certificate</label>
             </value>
             <value>
+                <fullName>RERA Competency Certificate</fullName>
+                <default>false</default>
+                <label>RERA Competency Certificate</label>
+            </value>
+            <value>
                 <fullName>Aadhaar Card</fullName>
                 <default>false</default>
                 <label>Aadhaar Card</label>
-            </value>
-            <value>
-                <fullName>Passport</fullName>
-                <default>false</default>
-                <label>Passport</label>
-            </value>
-            <value>
-                <fullName>Cancelled Cheque</fullName>
-                <default>false</default>
-                <label>Cancelled Cheque</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -18,19 +18,16 @@
     <customValue>
         <fullName>Dr.</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Dr.</label>
     </customValue>
     <customValue>
         <fullName>Prof.</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Prof.</label>
     </customValue>
     <customValue>
         <fullName>Mx.</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Mx.</label>
     </customValue>
     <masterLabel>Salutation</masterLabel>

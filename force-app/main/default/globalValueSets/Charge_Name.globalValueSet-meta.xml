@@ -31,9 +31,9 @@
         <label>Development Charge</label>
     </customValue>
     <customValue>
-        <fullName>Maintenance charges for parking</fullName>
+        <fullName>Maintenance Charges For Parking</fullName>
         <default>false</default>
-        <label>Maintenance charges for parking</label>
+        <label>Maintenance Charges For Parking</label>
     </customValue>
     <customValue>
         <fullName>Legal Charge</fullName>
@@ -71,82 +71,54 @@
         <label>Maintenance Charges</label>
     </customValue>
     <customValue>
-        <fullName>Club Membership</fullName>
-        <default>false</default>
-        <label>Club Membership</label>
-    </customValue>
-    <customValue>
-        <fullName>Infra Development Charges</fullName>
-        <default>false</default>
-        <label>Infra Development Charges</label>
-    </customValue>
-    <customValue>
-        <fullName>Advance Maintenance Charges for 24 months</fullName>
-        <default>false</default>
-        <label>Advance Maintenance Charges for 24 months</label>
-    </customValue>
-    <customValue>
-        <fullName>Parking Charges</fullName>
-        <default>false</default>
-        <label>Parking Charges</label>
-    </customValue>
-    <customValue>
-        <fullName>Scanning and Misc Charges</fullName>
-        <default>false</default>
-        <label>Scanning and Misc Charges</label>
-    </customValue>
-    <customValue>
-        <fullName>Clubhouse Charges</fullName>
-        <default>false</default>
-        <label>Clubhouse Charges</label>
-    </customValue>
-    <customValue>
-        <fullName>PLC	PLC</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>PLC	PLC</label>
-    </customValue>
-    <customValue>
         <fullName>Club Charges</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Club Charges</label>
     </customValue>
     <customValue>
         <fullName>West Facing</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>West Facing</label>
     </customValue>
     <customValue>
-        <fullName>Terrace Charge</fullName>
+        <fullName>Scaning charges</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Terrace Charge</label>
+        <label>Scaning charges</label>
     </customValue>
     <customValue>
-        <fullName>Township Maintenance Deposit</fullName>
+        <fullName>Other charges</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Township Maintenance Deposit</label>
+        <label>Other charges</label>
     </customValue>
     <customValue>
-        <fullName>Infrastructure Development Charge</fullName>
+        <fullName>Entrance fees and share Capital (Non Refundable)</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Infrastructure Development Charge</label>
+        <label>Entrance fees and share Capital (Non Refundable)</label>
     </customValue>
     <customValue>
-        <fullName>Township Maintenance Charges</fullName>
+        <fullName>Installation of Electricity meter, water meter and Electric sub</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Township Maintenance Charges</label>
+        <label>Installation of Electricity meter, water meter and Electric sub</label>
     </customValue>
     <customValue>
-        <fullName>Other Charge AV</fullName>
+        <fullName>station in layout</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Other Charge AV</label>
+        <label>station in layout</label>
+    </customValue>
+    <customValue>
+        <fullName>Society registration charges</fullName>
+        <default>false</default>
+        <label>Society registration charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal Charges &amp; Other charges towards formation of society</fullName>
+        <default>false</default>
+        <label>Legal Charges &amp; Other charges towards formation of society</label>
+    </customValue>
+    <customValue>
+        <fullName>Infrastructure Charges</fullName>
+        <default>false</default>
+        <label>Infrastructure Charges</label>
     </customValue>
     <masterLabel>Charge Name</masterLabel>
     <sorted>false</sorted>

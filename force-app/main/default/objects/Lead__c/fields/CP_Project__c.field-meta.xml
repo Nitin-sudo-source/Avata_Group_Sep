@@ -3,17 +3,6 @@
     <fullName>CP_Project__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <label>CP Project</label>
-    <lookupFilter>
-        <active>false</active>
-        <errorMessage>Value does not exist or does not match filter criteria.
-Please choose different CP Project</errorMessage>
-        <filterItems>
-            <field>CP_Project__c.Project__c</field>
-            <operation>equals</operation>
-            <valueField>$Source.Project__c</valueField>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
     <referenceTo>CP_Project__c</referenceTo>
     <relationshipLabel>Leads</relationshipLabel>
     <relationshipName>Leads</relationshipName>

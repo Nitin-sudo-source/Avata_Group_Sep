@@ -6,6 +6,11 @@
         <label>Pending For Approval</label>
     </customValue>
     <customValue>
+        <fullName>CRM Head Approved</fullName>
+        <default>false</default>
+        <label>CRM Head Approved</label>
+    </customValue>
+    <customValue>
         <fullName>Approved</fullName>
         <default>false</default>
         <label>Approved</label>

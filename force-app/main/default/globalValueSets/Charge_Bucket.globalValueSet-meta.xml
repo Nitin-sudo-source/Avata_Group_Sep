@@ -15,7 +15,6 @@
         <default>false</default>
         <label>Statutory Charges</label>
     </customValue>
-    <description>Charge Bucket field in PSM Object</description>
     <masterLabel>Charge Bucket</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

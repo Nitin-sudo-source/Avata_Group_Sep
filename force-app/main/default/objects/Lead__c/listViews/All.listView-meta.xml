@@ -4,15 +4,11 @@
     <columns>NAME</columns>
     <columns>Full_Name__c</columns>
     <columns>Project__c</columns>
-    <columns>IsConverted__c</columns>
+    <columns>Mobile__c</columns>
     <columns>Lead_Source__c</columns>
     <columns>Lead_Stage__c</columns>
-    <columns>OWNER.FIRST_NAME</columns>
-    <columns>OWNER.LAST_NAME</columns>
+    <columns>IsConverted__c</columns>
     <columns>CREATED_DATE</columns>
-    <columns>Presales_Next_Follow_up_Date__c</columns>
-    <columns>Is_Serviced__c</columns>
-    <columns>Latest_Enquiry_Date__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

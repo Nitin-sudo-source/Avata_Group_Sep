@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Budget less than 30 lakhs</fullName>
+        <fullName>Budget less than 20 lakhs</fullName>
         <default>false</default>
-        <label>Budget less than 30 lakhs</label>
+        <label>Budget less than 20 lakhs</label>
+    </customValue>
+    <customValue>
+        <fullName>Budget of 20 to 30 lakhs</fullName>
+        <default>false</default>
+        <label>Budget of 20 to 30 lakhs</label>
     </customValue>
     <customValue>
         <fullName>Budget of 30 to 40 lakhs</fullName>
@@ -41,84 +46,23 @@
         <label>Budget of 90 lac to 1Cr.</label>
     </customValue>
     <customValue>
-        <fullName>Budget of 1Cr to 1.25 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 1Cr to 1.25 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 1.25Cr to 1.5 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 1.25Cr to 1.5 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 1.5Cr to 1.75 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 1.5Cr to 1.75 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 1.75Cr to 2 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 1.75Cr to 2 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 2Cr to 2.5 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 2Cr to 2.5 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 2.5Cr to 3 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 2.5Cr to 3 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 3Cr to 3.5 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 3Cr to 3.5 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 3.5Cr to 4 Cr.</fullName>
-        <default>false</default>
-        <label>Budget of 3.5Cr to 4 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget more than 4 Cr.</fullName>
-        <default>false</default>
-        <label>Budget more than 4 Cr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget less than 20 lakhs</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Budget less than 20 lakhs</label>
-    </customValue>
-    <customValue>
-        <fullName>Budget of 20 to 30 lakhs</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Budget of 20 to 30 lakhs</label>
-    </customValue>
-    <customValue>
         <fullName>Budget of 1Cr to 1.5 Cr.</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Budget of 1Cr to 1.5 Cr.</label>
     </customValue>
     <customValue>
         <fullName>Budget of 1.5Cr to 2 Cr.</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Budget of 1.5Cr to 2 Cr.</label>
     </customValue>
     <customValue>
         <fullName>Budget of 2 Cr to 3 Cr.</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Budget of 2 Cr to 3 Cr.</label>
     </customValue>
     <customValue>
         <fullName>Budget 3 Cr.+</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Budget 3 Cr.+</label>
     </customValue>
     <masterLabel>Budget Range</masterLabel>

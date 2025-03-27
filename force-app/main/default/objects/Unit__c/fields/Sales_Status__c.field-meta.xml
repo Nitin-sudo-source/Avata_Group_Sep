@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Status__c</fullName>
+    <label>Sales Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Vacant</fullName>
+                <default>false</default>
+                <label>Vacant</label>
+            </value>
+            <value>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+                <label>Blocked</label>
+            </value>
+            <value>
+                <fullName>Booking-In-Process</fullName>
+                <default>false</default>
+                <label>Booking-In-Process</label>
+            </value>
+            <value>
+                <fullName>Booked</fullName>
+                <default>false</default>
+                <label>Booked</label>
+            </value>
+            <value>
+                <fullName>Not for Sale</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not for Sale</label>
+            </value>
+            <value>
+                <fullName>UnBlocked</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>UnBlocked</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -3,7 +3,7 @@
     <fullName>Buying_Purpose__c</fullName>
     <label>Buying Purpose</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

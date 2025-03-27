@@ -147,7 +147,7 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Leads_Custom_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>Lead_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -162,7 +162,7 @@
     <label>Lead</label>
     <nameField>
         <displayFormat>L-{00000}</displayFormat>
-        <label>Lead ID</label>
+        <label>Lead No</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
@@ -171,19 +171,20 @@
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>MassAssignRecordLabel</excludedStandardButtons>
         <excludedStandardButtons>Import</excludedStandardButtons>
         <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>PrintableListView</excludedStandardButtons>
-        <excludedStandardButtons>MassAssignRecordLabel</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <searchResultsAdditionalFields>Full_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>IsConverted__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Is_Serviced__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Lead_Source__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Lead_Stage__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>OWNER.FIRST_NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>OWNER.LAST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Presales_Next_Follow_Up_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Presales_Proposed_Visit_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

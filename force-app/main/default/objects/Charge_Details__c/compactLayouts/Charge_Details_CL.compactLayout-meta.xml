@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Charge_Details_CL</fullName>
+    <fields>Name</fields>
+    <fields>Quotation__c</fields>
+    <fields>Charge_Bucket__c</fields>
+    <fields>Charge_Amount__c</fields>
+    <fields>Charge_Total_Tax__c</fields>
+    <label>Charge Details CL</label>
+</CompactLayout>

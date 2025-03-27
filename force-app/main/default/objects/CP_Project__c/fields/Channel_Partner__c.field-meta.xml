@@ -3,7 +3,16 @@
     <fullName>Channel_Partner__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Channel Partner</label>
-    <referenceTo>Channel_Partner__c</referenceTo>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>Channel_Partner</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
     <relationshipLabel>CP Projects</relationshipLabel>
     <relationshipName>CP_Projects</relationshipName>
     <required>false</required>

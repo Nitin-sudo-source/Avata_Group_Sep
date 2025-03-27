@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unit_Status_Inventory__c</fullName>
+    <externalId>false</externalId>
+    <formula>Name &amp; &quot; - &quot; &amp; TEXT(Configuration_Type__c) &amp;
+IF(
+ISPICKVAL(Sales_Status__c, &apos;Booked&apos;) || ISPICKVAL(Sales_Status__c, &apos;Blocked&apos;),
+&quot;&quot;,
+&quot; - &quot; &amp; TEXT( Total_carpet_Sq_Ft__c )
+) &amp;
+IF(
+ISPICKVAL(Sales_Status__c, &apos;Booked&apos;),
+IF(
+NOT(ISBLANK(Booking__r.Primary_Applicant_Name__c)),
+&quot; - &quot; &amp; Booking__r.Primary_Applicant_Name__c,
+&quot;&quot;
+),
+IF(
+ISPICKVAL(Sales_Status__c, &apos;Blocked&apos;),
+IF(
+NOT(ISBLANK(Opportunity__r.Name)),
+&quot; - &quot; &amp; Opportunity__r.Name,
+&quot;&quot;
+),
+&quot;&quot;
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Unit Status (Inventory)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

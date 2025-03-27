@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_Cost__c</fullName>
+    <formula>IF(
+
+AND(
+
+ISPICKVAL(Charge_Type__c, &apos;PSF&apos;), ISPICKVAL(Calculation_Area_Type__c, &apos;Saleable Area&apos;)), Charge_Rate__c* Unit__r.Saleable_Area__c ,
+
+IF(
+
+AND(
+
+ISPICKVAL(Charge_Type__c, &apos;PSF&apos;), ISPICKVAL( Calculation_Area_Type__c , &apos;Carpet Area&apos;)), Charge_Rate__c*  Unit__r.Total_carpet_Sq_Ft__c ,
+
+IF(AND(ISPICKVAL(Charge_Type__c, &apos;Lumpsum&apos;)),
+   Charge_Amount__c,0)
+
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Actual Cost</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

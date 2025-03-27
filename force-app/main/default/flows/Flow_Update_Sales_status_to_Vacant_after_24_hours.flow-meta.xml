@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <decisions>
+        <name>Check_If_24_hours</name>
+        <label>Check If 24 hours</label>
+        <locationX>182</locationX>
+        <locationY>252</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_24_Hours</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UnitBlockedHours</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>24.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Sales_Status_to_Vacant</targetReference>
+            </connector>
+            <label>Check 24 Hours</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>UnitBlockedHours</name>
+        <dataType>Number</dataType>
+        <expression>(NOW()-{!$Record.Unit_Blocked_Time_Stamp__c})*24</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Flow: Update Sales status to Vacant after 24 hours {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Flow: Update Sales status to Vacant after 24 hours</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Sales_Status_to_Vacant</name>
+        <label>Update Sales Status to Vacant</label>
+        <locationX>50</locationX>
+        <locationY>360</locationY>
+        <inputAssignments>
+            <field>Sales_Status__c</field>
+            <value>
+                <stringValue>Vacant</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_If_24_hours</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Sales_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Blocked</stringValue>
+            </value>
+        </filters>
+        <object>Unit__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2024-09-30</startDate>
+            <startTime>10:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

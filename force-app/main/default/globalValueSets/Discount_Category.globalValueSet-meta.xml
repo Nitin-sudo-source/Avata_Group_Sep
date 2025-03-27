@@ -10,21 +10,6 @@
         <default>false</default>
         <label>Credit Note</label>
     </customValue>
-    <customValue>
-        <fullName>Cashback</fullName>
-        <default>false</default>
-        <label>Cashback</label>
-    </customValue>
-    <customValue>
-        <fullName>Offer</fullName>
-        <default>false</default>
-        <label>Offer</label>
-    </customValue>
-    <customValue>
-        <fullName>White-Goods</fullName>
-        <default>false</default>
-        <label>White-Goods</label>
-    </customValue>
     <masterLabel>Discount Category</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

@@ -11,7 +11,7 @@
                 <field>CreatedById</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
@@ -27,10 +27,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>GiverId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>FeedItemId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

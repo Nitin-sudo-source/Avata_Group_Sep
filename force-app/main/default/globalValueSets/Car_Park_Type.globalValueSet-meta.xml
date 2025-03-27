@@ -21,9 +21,9 @@
         <label>Stack Lower Parking</label>
     </customValue>
     <customValue>
-        <fullName>Stack Parking</fullName>
+        <fullName>Stilt covered parking</fullName>
         <default>false</default>
-        <label>Stack Parking</label>
+        <label>Stilt covered parking</label>
     </customValue>
     <masterLabel>Car Park Type</masterLabel>
     <sorted>false</sorted>

@@ -36,6 +36,21 @@
         <label>Villa</label>
     </customValue>
     <customValue>
+        <fullName>Jodi 1 BHK</fullName>
+        <default>false</default>
+        <label>Jodi 1 BHK</label>
+    </customValue>
+    <customValue>
+        <fullName>Jodi 2 BHK</fullName>
+        <default>false</default>
+        <label>Jodi 2 BHK</label>
+    </customValue>
+    <customValue>
+        <fullName>Jodi 3 BHK</fullName>
+        <default>false</default>
+        <label>Jodi 3 BHK</label>
+    </customValue>
+    <customValue>
         <fullName>Shop</fullName>
         <default>false</default>
         <label>Shop</label>
@@ -44,44 +59,6 @@
         <fullName>Office</fullName>
         <default>false</default>
         <label>Office</label>
-    </customValue>
-    <customValue>
-        <fullName>1+1 Jodi</fullName>
-        <default>false</default>
-        <label>1+1 Jodi</label>
-    </customValue>
-    <customValue>
-        <fullName>2+2 Jodi</fullName>
-        <default>false</default>
-        <label>2+2 Jodi</label>
-    </customValue>
-    <customValue>
-        <fullName>1+2 Jodi</fullName>
-        <default>false</default>
-        <label>1+2 Jodi</label>
-    </customValue>
-    <customValue>
-        <fullName>2.5 BHK</fullName>
-        <default>false</default>
-        <label>2.5 BHK</label>
-    </customValue>
-    <customValue>
-        <fullName>Jodi 1 BHK</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Jodi 1 BHK</label>
-    </customValue>
-    <customValue>
-        <fullName>Jodi 2 BHK</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Jodi 2 BHK</label>
-    </customValue>
-    <customValue>
-        <fullName>Jodi 3 BHK</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Jodi 3 BHK</label>
     </customValue>
     <masterLabel>Configuration Required</masterLabel>
     <sorted>false</sorted>

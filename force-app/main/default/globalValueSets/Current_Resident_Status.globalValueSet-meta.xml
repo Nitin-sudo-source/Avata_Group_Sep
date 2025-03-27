@@ -15,11 +15,6 @@
         <default>false</default>
         <label>Rented</label>
     </customValue>
-    <customValue>
-        <fullName>Did Not Provide</fullName>
-        <default>false</default>
-        <label>Did Not Provide</label>
-    </customValue>
     <masterLabel>Current Resident Status</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

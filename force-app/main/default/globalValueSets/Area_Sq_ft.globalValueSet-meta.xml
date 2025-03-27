@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>350-450</fullName>
+        <default>false</default>
+        <label>350-450</label>
+    </customValue>
+    <customValue>
+        <fullName>451-650</fullName>
+        <default>false</default>
+        <label>451-650</label>
+    </customValue>
+    <customValue>
+        <fullName>651-900</fullName>
+        <default>false</default>
+        <label>651-900</label>
+    </customValue>
+    <customValue>
+        <fullName>901+</fullName>
+        <default>false</default>
+        <label>901+</label>
+    </customValue>
+    <masterLabel>Area (Sq. ft.)</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -9,7 +9,7 @@
     <valueSet>
         <controllingField>Lead_Source__c</controllingField>
         <restricted>true</restricted>
-        <valueSetName>Lead_Sub_Source</valueSetName>
+        <valueSetName>Sub_Source</valueSetName>
         <valueSettings>
             <controllingFieldValue>Events</controllingFieldValue>
             <valueName>Society Activation</valueName>
@@ -43,8 +43,8 @@
             <valueName>VDNB</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Exhibition</controllingFieldValue>
-            <valueName>Exhibition</valueName>
+            <controllingFieldValue>Cold Calling</controllingFieldValue>
+            <valueName>Cold Calling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Google</controllingFieldValue>

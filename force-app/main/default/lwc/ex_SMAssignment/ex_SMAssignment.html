@@ -1,152 +1,105 @@
 <template>
-	<div class="mainDiv">
-		<div if:true={isSpinner} class="spinner-container">
-			<div class="loader"></div>
-			<div class="wait-text">Please wait...</div>
-		</div>
+    
+    <div if:true={showAssignmentDetails}>
+        <lightning-modal-header label="SM Assignment">
+        </lightning-modal-header>
+        <lightning-modal-body>
+            <template if:false={IsSMAlreadyAssign}>
 
-		<!-- Header should be outside of modal-body -->
-		<lightning-modal-header style="font-size: 18px;" label="SM Assignment"></lightning-modal-header>
+                <template if:true={showPrefferedSM}>
+                    <table class="Table1Css">
+                        <tr>
+                            <th colspan="4">
+                                Preffered Sales Manager
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>User</th>
+                            <th>Last Assignment DateTime</th>
+                            <th>Action</th>
+                        </tr>
+                        <template for:each={getPreferredSMArray} for:item="sm" for:index="index">
+                            <tr key={sm.Id}>
+                                <td>{sm.index}</td>
+                                <td>{sm.User__r.Name}</td>
+                                <td>
+                                    <lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
+                                        month="short" day="numeric" hour="2-digit" minute="2-digit"
+                                        time-zone-name="short">
+                                    </lightning-formatted-date-time>
+                                </td>
+                                <td>
+                                    <template if:true={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} title="Assign" label="Assign"
+                                            onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                    <template if:false={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} disabled="true"
+                                            title="Not Available" label="Not Available" onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
+                </template>
+                <br />
 
-		<lightning-modal-body>
-			<template if:true={IsSMAlreadyAssign}>
-				<div class="slds-align_absolute-center">
-					<p style="font-size: 18px; color:green;"> &#10003; Sales Manager is Already Assigned!</p>
-				</div>
-			</template>
+                <template if:true={getAllSMData}>
+                    <table class="Table1Css">
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>User</th>
+                            <th>Last Assignment DateTime</th>
+                            <th>Action</th>
+                        </tr>
+                        <template for:each={getAllSMData} for:item="sm" for:index="index">
+                            <tr key={sm.Id}>
+                                <td>{sm.index}</td>
+                                <td>{sm.User__r.Name}</td>
+                                <td>
+                                    <lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
+                                        month="short" day="numeric" hour="2-digit" minute="2-digit"
+                                        time-zone-name="short">
+                                    </lightning-formatted-date-time>
+                                </td>
+                                <td>
+                                    <template if:true={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} title="Assign" label="Assign"
+                                            disabled={disabledAssignButton} onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                    <template if:false={sm.Availability__c}>
+                                        <lightning-button variant="success" value={sm.Id} disabled="true"
+                                            title="Not Available" label="Not Available" onclick={handleAssign}>
+                                        </lightning-button>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
+                </template>
+            </template>
+            <template if:true={IsSMAlreadyAssign}>
+                <div class="slds-align_absolute-center">
+                    <p style="font-size: 18px; color:green;"> &#10003; Sales Manager is Already Assigned !!</p>
+                </div>
+            </template>
+            <template if:true={noSMPresent}>
+                <div class="slds-align_absolute-center">
+                    <p style="font-size: 18px;color:red;"><i>&#9888; {showMsg}</i></p>
+                </div>
+            </template>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button variant="Destructive" label="Cancel" onclick={handleCancel}></lightning-button> &nbsp;
+            <!-- <lightning-button variant="brand" label="Submit" onclick={handlesubmit}></lightning-button> -->
+        </lightning-modal-footer>
 
-			<template if:true={showReAssignToggle}>
-				<form class="slds-p-around_medium slds-card">
-					<lightning-layout multiple-rows>
-						<lightning-layout-item size="12" class="slds-p-around_xx-small">
-							<lightning-input type="toggle" label="Re-assign Sales TL" name="toggle_1"
-								value={formData.toggle_1} variant="standard" message-toggle-active="Active"
-								message-toggle-inactive="Inactive" onchange={handleSMReassign}>
-							</lightning-input>
-						</lightning-layout-item>
-					</lightning-layout>
-				</form>
-			</template>
 
-			<!-- Preferred Sales Manager Logic -->
-			<template if:false={IsSMAlreadyAssign}>
-				<template if:true={showPrefferedSM}>
-					<table class="Table1Css">
-						<tr>
-							<th colspan="4">Preferred Sales Manager</th>
-						</tr>
-						<tr>
-							<th>Sr.No</th>
-							<th>User</th>
-							<th>Last Assignment DateTime</th>
-							<th>Action</th>
-						</tr>
-						<template for:each={getPreferredSMArray} for:item="sm" for:index="index">
-							<tr key={sm.Id}>
-								<td>{sm.index}</td>
-								<td>{sm.User__r.Name}</td>
-								<td>
-									<lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
-										month="short" day="numeric" hour="2-digit" minute="2-digit"
-										time-zone-name="short">
-									</lightning-formatted-date-time>
-								</td>
-								<td>
-									<lightning-button if:true={sm.Availability__c} variant="success" value={sm.Id}
-										title="Assign" label="Assign" onclick={handleAssign}>
-									</lightning-button>
-									<lightning-button if:false={sm.Availability__c} variant="success" value={sm.Id}
-										disabled title="Not Available" label="Not Available">
-									</lightning-button>
-								</td>
-							</tr>
-						</template>
-					</table>
-				</template>
+    </div>
 
-				<!-- All Sales Manager Logic -->
-				<template if:true={getAllSMData}>
-					<table class="Table1Css">
-						<tr>
-							<th>Sr.No</th>
-							<th>User</th>
-							<th>Last Assignment DateTime</th>
-							<th>Action</th>
-						</tr>
-						<template for:each={getAllSMData} for:item="sm" for:index="index">
-							<tr key={sm.Id}>
-								<td>{sm.index}</td>
-								<td>{sm.User__r.Name}</td>
-								<td>
-									<lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
-										month="short" day="numeric" hour="2-digit" minute="2-digit"
-										time-zone-name="short">
-									</lightning-formatted-date-time>
-								</td>
-								<td>
-									<lightning-button if:true={sm.Availability__c} variant="success" value={sm.Id}
-										title="Assign" label="Assign" onclick={handleAssign}>
-									</lightning-button>
-									<lightning-button if:false={sm.Availability__c} variant="success" value={sm.Id}
-										disabled title="Not Available" label="Not Available">
-									</lightning-button>
-								</td>
-							</tr>
-						</template>
-					</table>
-				</template>
-			</template>
 
-			<!-- Re-assign Sales TL -->
-			<template if:true={IsSMTLReAssign}>
-				<template if:true={getAllSMTLData}>
-					<table class="Table1Css">
-						<tr>
-							<th>Sr.No</th>
-							<th>User</th>
-							<th>Last Assignment DateTime</th>
-							<th>Action</th>
-						</tr>
-						<template for:each={getAllSMTLData} for:item="sm" for:index="index">
-							<tr key={sm.Id}>
-								<td>{sm.index}</td>
-								<td>{sm.User__r.Name}</td>
-								<td>
-									<lightning-formatted-date-time value={sm.Last_Assignment_DateTime__c} year="2-digit"
-										month="short" day="numeric" hour="2-digit" minute="2-digit"
-										time-zone-name="short">
-									</lightning-formatted-date-time>
-								</td>
-								<td>
-									<lightning-button if:true={sm.Availability__c} variant="success" value={sm.Id}
-										title="Assign" label="Assign" onclick={handleAssign}>
-									</lightning-button>
-									<lightning-button if:false={sm.Availability__c} variant="success" value={sm.Id}
-										disabled title="Not Available" label="Not Available">
-									</lightning-button>
-								</td>
-							</tr>
-						</template>
-					</table>
-				</template>
-			</template>
-
-			<!-- No Sales Manager Present -->
-			<template if:true={noSMPresent}>
-				<div class="slds-align_absolute-center">
-					<p style="font-size: 18px;color:red;"><i>&#9888; {showMsg}</i></p>
-				</div>
-			</template>
-		</lightning-modal-body>
-
-		<!-- Footer -->
-		<lightning-modal-footer>
-			<lightning-button variant="Destructive" label="Cancel" onclick={handleCancel}></lightning-button>
-		</lightning-modal-footer>
-	</div>
-
-	<!-- Custom Toast Component -->
-	<div style="text-align: center;">
-		<c-custom-toast></c-custom-toast>
-	</div>
 </template>

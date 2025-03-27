@@ -11,14 +11,20 @@
         <label>Investment</label>
     </customValue>
     <customValue>
-        <fullName>Both</fullName>
+        <fullName>Second Home</fullName>
         <default>false</default>
-        <label>Both</label>
+        <label>Second Home</label>
     </customValue>
     <customValue>
-        <fullName>Did Not Provide</fullName>
+        <fullName>Gift</fullName>
         <default>false</default>
-        <label>Did Not Provide</label>
+        <label>Gift</label>
+    </customValue>
+    <customValue>
+        <fullName>Both</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Both</label>
     </customValue>
     <masterLabel>Buying Purpose</masterLabel>
     <sorted>false</sorted>

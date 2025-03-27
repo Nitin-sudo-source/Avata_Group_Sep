@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quotation_PDF_URL__c</fullName>
+    <externalId>false</externalId>
+    <formula>&quot;https://velocity-innovation-745--avantsb--c.sandbox.vf.force.com/apex/Ex_PrintQuotationPDF?qId=&quot; &amp; CASESAFEID(Id)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Quotation PDF URL</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

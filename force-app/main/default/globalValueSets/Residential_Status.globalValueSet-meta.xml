@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>For Company</fullName>
+        <default>false</default>
+        <label>For Company</label>
+    </customValue>
+    <customValue>
+        <fullName>Partnership Firm</fullName>
+        <default>false</default>
+        <label>Partnership Firm</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Resident Indian</fullName>
+        <default>false</default>
+        <label>Non-Resident Indian</label>
+    </customValue>
+    <customValue>
+        <fullName>Gujarat Resident</fullName>
+        <default>false</default>
+        <label>Gujarat Resident</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Gujarat Resident</fullName>
+        <default>false</default>
+        <label>Non-Gujarat Resident</label>
+    </customValue>
+    <masterLabel>Residential Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

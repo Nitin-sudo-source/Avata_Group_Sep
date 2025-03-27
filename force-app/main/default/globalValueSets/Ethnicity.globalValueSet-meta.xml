@@ -51,10 +51,9 @@
         <label>Sindhi</label>
     </customValue>
     <customValue>
-        <fullName>North Indian</fullName>
+        <fullName>Jain</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>North Indian</label>
+        <label>Jain</label>
     </customValue>
     <masterLabel>Ethnicity</masterLabel>
     <sorted>false</sorted>
