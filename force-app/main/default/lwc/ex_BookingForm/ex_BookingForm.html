@@ -2,10 +2,11 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 10-17-2024
-  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  @last modified on  : 27-03-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
+    <lightning-card>
     <div if:true={isSpinner} class="spinner-container">
         <div class="loader"></div>
         <div class="wait-text">Please wait...</div>
@@ -287,355 +288,365 @@
                     </tr>
                 </table>
                 <lightning-tabset  aria-live="polite">
-                    <template for:each={getApplicantData} for:item="applicant" for:index="index">
-                        <lightning-tab key={applicant.key} class="slds-tabs_default" label={applicant.key}
-                            icon-name="standard:client">
-                            <div style="float: right;padding:10px;">
-                                <lightning-button data-tabvalue={applicant.key} data-index={index} label={applicant.key}
-                                    variant="destructive" icon-name="utility:delete" class="slds-tabs_default"
-                                    onclick={removeTab}>
-                                </lightning-button>
-                            </div>
-                            <br /> <br />
-                            <lightning-record-edit-form object-api-name="Applicant__c">
-                                <table class="Table1Css" style="font-size:10px;">
-                                    <tr>
-                                        <th style="text-align:left;">Salutation<span style="color: red;">*</span></th>
-                                        <td style="text-align:left;">
-                                            <lightning-input-field type="picklist" variant="label-hidden"
-                                                field-name="Applicant_Title__c" data-key={applicant.key}
-                                                data-index={index} name="Applicant_Title__c"
-                                                value={applicant.ap.Applicant_Title__c} onchange={handleApplicant}
-                                                required="true"></lightning-input-field>
-                                        </td>
-                                        <th style="text-align:left;">Applicant Number :<span
-                                                style="color: red;">*</span>
-                                        </th>
-                                        <td style="text-align:left;">
-                                            <lightning-input-field data-key={applicant.key} name="Applicant_Number__c"
-                                                variant="label-hidden" value={applicant.ap.Applicant_Number__c}
-                                                field-name="Applicant_Number__c" data-id='Controlling Picklist Type'
-                                                onchange={handleApplicant} required="true"></lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">Name<span style="color: red;">*</span>
-                                        </th>
-                                        <td colspan="3" style="text-align:left;">
-                                            <lightning-input-field type="text" name="Name" data-key={applicant.key}
-                                                data-index={index} variant="label-hidden" field-name="Name"
-                                                value={applicant.ap.Name} onchange={handleApplicant} required="true">
-                                            </lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4">
-                                            <div class="main">
-                                                <center>
-                                                    <lightning-icon size="medium" icon-name="standard:avatar">
-                                                    </lightning-icon>
-                                                    <label class="head" style="font-size:16px"> Personal Details Section
-                                                        &nbsp;</label>
-                                                </center>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">Mobile Number<span style="color: red;">*</span>
-                                        </th>
-                                        <td>
-                                            <lightning-input-field style="width: 280px;" name="Mobile__c"
-                                                data-id="Mobile__c" data-key={applicant.key}
-                                                value={applicant.ap.Mobile__c} field-name="Mobile__c"
-                                                variant="label-hidden" onchange={handleApplicant} type="number">
-                                            </lightning-input-field>
-                                        </td>
-                                        <th style="text-align:left;">Email
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Email__c" data-id="Email__c"
-                                                field-name="Email__c" value={applicant.ap.Email__c}
-                                                data-key={applicant.key} variant="label-hidden"
-                                                onchange={handleApplicant}></lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">Company Name
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Company_Name__c" data-id="Company_Name__c"
-                                                data-key={applicant.key} value={applicant.ap.Company_Name__c}
-                                                field-name="Company_Name__c" variant="label-hidden"
-                                                onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                        <th style="text-align:left;">Designation
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Designation__c" data-id="Designation__c"
-                                                field-name="Designation__c" data-key={applicant.key}
-                                                value={applicant.ap.Designation__c} variant="label-hidden"
-                                                onchange={handleApplicant}></lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">Date of Birth<span style="color: red;">*</span>
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="DOB__c" data-id="DOB__c" field-name="DOB__c"
-                                                data-key={applicant.key} value={applicant.ap.DOB__c}
-                                                variant="label-hidden" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                        <th style="text-align:left;">Anniversary Date </th>
-                                        <td style="text-align:left;">
-                                            <lightning-input-field data-key={applicant.key} name="Anniversary_Date__c"
-                                                variant="label-hidden" value={applicant.ap.Anniversary_Date__c}
-                                                field-name="Anniversary_Date__c" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">Aadhar Card No<span style="color: red;">*</span>
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Aadhar_Number__c" data-id="Aadhar_Number__c"
-                                                value={applicant.ap.Aadhar_Number__c} data-key={applicant.key}
-                                                variant="label-hidden" field-name="Aadhar_Number__c"
-                                                onchange={handleApplicant}></lightning-input-field>
-                                            <div if:true={showError} class="slds-text-color_error">
-                                                {showMsg}
-                                            </div>
-                                        </td>
-
-                                        <th style="text-align:left;">PAN Number<span style="color: red;">*</span>
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="PAN_Number__c" data-id="PAN_Number__c"
-                                                value={applicant.ap.PAN_Number__c} data-key={applicant.key}
-                                                variant="label-hidden" field-name="PAN_Number__c"
-                                                onchange={handleApplicant}></lightning-input-field>
-                                            <div if:true={showErrorPan} class="slds-text-color_error">
-                                                {showMsg}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;"> Type of Applicant :<span
-                                                style="color: red;">*</span>
-                                        </th>
-                                        <td>
-                                            <lightning-input-field data-key={applicant.key} name="Type_of_Applicant__c"
-                                                variant="label-hidden" value={applicant.ap.Type_of_Applicant__c}
-                                                field-name="Type_of_Applicant__c" data-id='Controlling Picklist Type'
-                                                onchange={handleApplicant}></lightning-input-field>
-                                        </td>
-                                        <th style="text-align:left;">Residential Status<span
-                                                style="color: red;">*</span>
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Residential_Status__c"
-                                                value={applicant.ap.Residential_Status__c} data-key={applicant.key}
-                                                field-name="Residential_Status__c" variant="label-hidden"
-                                                data-id="Residential_Status__c" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">Nationality
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Nationality__c" data-id="Nationality__c"
-                                                value={applicant.ap.Nationality__c} data-key={applicant.key}
-                                                field-name="Nationality__c" variant="label-hidden"
-                                                onchange={handleApplicant}></lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4">
-
-                                            <div class="main">
-                                                <center>
-                                                    <lightning-icon size="medium" icon-name="custom:custom107">
-                                                    </lightning-icon>
-                                                    <label class="head" style="font-size:16px"> Documents Details
-                                                        &nbsp;</label>
-                                                </center>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="2" style="text-align:left;">Document Upload Required
-                                        </th>
-                                        <td colspan="2">
-                                            <lightning-input-field name="Document_Upload_Required__c"
-                                                data-id="Document_Upload_Required__c"
-                                                value={applicant.ap.Document_Upload_Required__c}
-                                                data-key={applicant.key} field-name="Document_Upload_Required__c"
-                                                variant="label-hidden" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <template if:true={applicant.documents}>
-                                        <template for:each={applicant.documents} for:item="document">
-                                            <tr key={document.Id}>
-                                                <th colspan="2">
-                                                    {document.Name}
-                                                </th>
-                                                <td colspan="2">
-                                                    <lightning-input name="fileUploader" data-id={document.index}
-                                                        data-index={index} data-applicantkey={document.key}
-                                                        onchange={openfileUpload} type="file"
-                                                        accept=".png, .doc, .docx, .pdf, .jpeg, .jpg"
-                                                        value={document.fileUploader}>
-                                                    </lightning-input>
-                                                    <p if:true={document.filename}>{document.filename}</p>
-                                                    <!-- <p  style="color:red !important;" if:true={document.filesize}>{document.filesize}</p> -->
-                                                </td>
-                                            </tr>
-                                        </template>
-                                    </template>
-                                    <tr>
-                                        <th colspan="4">
-                                            <div class="main">
-                                                <center>
-                                                    <lightning-icon size="medium" icon-name="standard:address">
-                                                    </lightning-icon>
-                                                    <label class="head" style="font-size:16px"> Address Details
-                                                        Section</label>
-                                                </center>
-                                            </div>
-
-                                        </th>
-                                    </tr>
-                                   
-                                   
-                                    <th>
-                                        Permanent Address
-                                    </th>
-                                    <td colspan="7">
-                                        <lightning-input-field name="Permanent_Address__c"
-                                            data-id="Permanent_Address__c" data-key={applicant.key}
-                                            value={applicant.ap.Permanent_Address__c} field-name="Permanent_Address__c"
-                                            variant="label-hidden" onchange={handleApplicant}>
-                                        </lightning-input-field>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Country
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="Country__c" data-id="Country__c"
-                                                data-key={applicant.key} value={applicant.ap.Country__c}
-                                                field-name="Country__c" variant="label-hidden"
-                                                onchange={handleApplicant}></lightning-input-field>
-                                        </td>
-                                        <th>
-                                            State
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="State__c" data-id="State__c"
-                                                data-key={applicant.key} value={applicant.ap.State__c}
-                                                field-name="State__c" variant="label-hidden" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            City
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="City__c" data-id="City__c"
-                                                data-key={applicant.key} value={applicant.ap.City__c}
-                                                field-name="City__c" variant="label-hidden" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                        </td>
-                                        <th>
-                                            PIN Code
-                                        </th>
-                                        <td>
-                                            <lightning-input-field name="PIN__c" data-id="PIN__c"
-                                                data-key={applicant.key} value={applicant.ap.PIN__c} field-name="PIN__c"
-                                                variant="label-hidden" onchange={handleApplicant}>
-                                            </lightning-input-field>
-                                            <div if:true={showErrorPIN} class="slds-text-color_error">
-                                                {showPINMsg}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                     <tr>
-                                        <th style="text-align:left;"> Mailing address Same as Permanent address</th>
-                                        <td colspan="7">
-                                            <lightning-input-field name="Mailing_Address_Same_as_PermanentAddress__c"
-                                                data-id="Mailing_Address_Same_as_PermanentAddress__c"
-                                                data-key={applicant.key} variant="label-hidden"
-                                                field-name="Mailing_Address_Same_as_PermanentAddress__c"
-                                                value={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}
-                                                onchange={handleApplicant} type="checkbox"></lightning-input-field>
-                                        </td>
-                                    </tr>
-                                     <template if:false={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}>
+                    <template if:true={getApplicantData}>
+                        <template for:each={getApplicantData} for:item="applicant" for:index="index">
+                            <lightning-tab key={applicant.key} class="slds-tabs_default" label={applicant.key}
+                                icon-name="standard:client">
+                                <div style="float: right;padding:10px;">
+                                    <lightning-button data-tabvalue={applicant.key} data-index={index} label={applicant.key}
+                                        variant="destructive" icon-name="utility:delete" class="slds-tabs_default"
+                                        onclick={removeTab}>
+                                    </lightning-button>
+                                </div>
+                                <br /> <br />
+                                <lightning-record-edit-form object-api-name="Applicant__c">
+                                    <table class="Table1Css" style="font-size:10px;">
                                         <tr>
-                                            <th style="text-align:left;">Mailing Address
+                                            <th style="text-align:left;">Salutation<span style="color: red;">*</span></th>
+                                            <td style="text-align:left;">
+                                                <lightning-input-field type="picklist" variant="label-hidden"
+                                                    field-name="Applicant_Title__c" data-key={applicant.key}
+                                                    data-index={index} name="Applicant_Title__c"
+                                                    value={applicant.ap.Applicant_Title__c} onchange={handleApplicant}
+                                                    required="true"></lightning-input-field>
+                                            </td>
+                                            <th style="text-align:left;">Applicant Number :<span
+                                                    style="color: red;">*</span>
                                             </th>
-                                            <td colspan="7">
-                                                <lightning-textarea name="Mailing_Address__c"
-                                                    data-id="Mailing_Address__c" data-key={applicant.key}
-                                                    variant="label-hidden" field-name="Mailing_Address__c"
-                                                    value={applicant.ap.Mailing_Address__c} onchange={handleApplicant}>
-                                                </lightning-textarea>
+                                            <td style="text-align:left;color:black !important;">
+                                                <lightning-input-field 
+                                                data-key={applicant.key} name="Applicant_Number__c"
+                                                    variant="label-hidden"
+                                                    style="color:black;"
+                                                    disabled={applicant.ap.Applicant_Number__c}
+                                                     value={applicant.ap.Applicant_Number__c}
+                                                    field-name="Applicant_Number__c"
+                                                     data-id='Controlling Picklist Type'
+                                                    onchange={handleApplicant} required="true"></lightning-input-field>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th style="text-align:left;">Mailing Country
+                                            <th style="text-align:left;">Name<span style="color: red;">*</span>
                                             </th>
-                                            <td>
-                                                <lightning-input-field name="Mailing_Country__c"
-                                                    data-id="Mailing_Country__c" data-key={applicant.key}
-                                                    variant="label-hidden" field-name="Mailing_Country__c"
-                                                    value={applicant.ap.Mailing_Country__c} onchange={handleApplicant}
-                                                    type="picklist">
-                                                </lightning-input-field>
-                                            </td>
-                                            <th style="text-align:left;">Mailing State
-                                            </th>
-                                            <td>
-                                                <lightning-input-field name="Mailing_State__c"
-                                                    data-id="Mailing_State__c" data-key={applicant.key}
-                                                    variant="label-hidden" field-name="Mailing_State__c"
-                                                    value={applicant.ap.Mailing_State__c} onchange={handleApplicant}
-                                                    type="picklist">
+                                            <td colspan="3" style="text-align:left;">
+                                                <lightning-input-field type="text" name="Name" data-key={applicant.key}
+                                                    data-index={index} variant="label-hidden" field-name="Name"
+                                                    value={applicant.ap.Name} onchange={handleApplicant} required="true">
                                                 </lightning-input-field>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th style="text-align:left;">Mailing City</th>
+                                            <th colspan="4">
+                                                <div class="main">
+                                                    <center>
+                                                        <lightning-icon size="medium" icon-name="standard:avatar">
+                                                        </lightning-icon>
+                                                        <label class="head" style="font-size:16px"> Personal Details Section
+                                                            &nbsp;</label>
+                                                    </center>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:left;">Mobile Number<span style="color: red;">*</span>
+                                            </th>
                                             <td>
-                                                <lightning-input-field name="Mailing_City__c" data-id="Mailing_City__c"
+                                                <lightning-input-field style="width: 280px;" name="Mobile__c"
+                                                    data-id="Mobile__c" data-key={applicant.key}
+                                                    value={applicant.ap.Mobile__c} field-name="Mobile__c"
+                                                    variant="label-hidden" onchange={handleApplicant} type="number">
+                                                </lightning-input-field>
+                                            </td>
+                                            <th style="text-align:left;">Email
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="Email__c" data-id="Email__c"
+                                                    field-name="Email__c" value={applicant.ap.Email__c}
                                                     data-key={applicant.key} variant="label-hidden"
-                                                    field-name="Mailing_City__c" value={applicant.ap.Mailing_City__c}
-                                                    onchange={handleApplicant} type="picklist">
-                                                </lightning-input-field>
+                                                    onchange={handleApplicant}></lightning-input-field>
                                             </td>
-                                            <th style="text-align:left;">Mailing PIN Code
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:left;">Company Name
                                             </th>
                                             <td>
-                                                <lightning-input-field name="Mailing_Pincode__c"
-                                                    data-id="Mailing_Pincode__c" data-key={applicant.key}
-                                                    variant="label-hidden" field-name="Mailing_Pincode__c"
-                                                    value={applicant.ap.Mailing_Pincode__c} onchange={handleApplicant}>
+                                                <lightning-input-field name="Company_Name__c" data-id="Company_Name__c"
+                                                    data-key={applicant.key} value={applicant.ap.Company_Name__c}
+                                                    field-name="Company_Name__c" variant="label-hidden"
+                                                    onchange={handleApplicant}>
                                                 </lightning-input-field>
-                                                <div if:true={showErrorMailingPIN} class="slds-text-color_error">
-                                                    {showMailingPINMsg}
+                                            </td>
+                                            <th style="text-align:left;">Designation
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="Designation__c" data-id="Designation__c"
+                                                    field-name="Designation__c" data-key={applicant.key}
+                                                    value={applicant.ap.Designation__c} variant="label-hidden"
+                                                    onchange={handleApplicant}></lightning-input-field>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:left;">Date of Birth<span style="color: red;">*</span>
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="DOB__c" data-id="DOB__c" field-name="DOB__c"
+                                                    data-key={applicant.key} value={applicant.ap.DOB__c}
+                                                    variant="label-hidden" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                            </td>
+                                            <th style="text-align:left;">Anniversary Date </th>
+                                            <td style="text-align:left;">
+                                                <lightning-input-field data-key={applicant.key} name="Anniversary_Date__c"
+                                                    variant="label-hidden" value={applicant.ap.Anniversary_Date__c}
+                                                    field-name="Anniversary_Date__c" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:left;">Aadhar Card No<span style="color: red;">*</span>
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="Aadhar_Number__c" data-id="Aadhar_Number__c"
+                                                    value={applicant.ap.Aadhar_Number__c} data-key={applicant.key}
+                                                    variant="label-hidden" field-name="Aadhar_Number__c"
+                                                    onchange={handleApplicant}></lightning-input-field>
+                                                <div if:true={showError} class="slds-text-color_error">
+                                                    {showMsg}
+                                                </div>
+                                            </td>
+    
+                                            <th style="text-align:left;">PAN Number<span style="color: red;">*</span>
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="PAN_Number__c" data-id="PAN_Number__c"
+                                                    value={applicant.ap.PAN_Number__c} data-key={applicant.key}
+                                                    variant="label-hidden" field-name="PAN_Number__c"
+                                                    onchange={handleApplicant}></lightning-input-field>
+                                                <div if:true={showErrorPan} class="slds-text-color_error">
+                                                    {showMsg}
                                                 </div>
                                             </td>
                                         </tr>
-                                    </template>
-                                </table>
-                            </lightning-record-edit-form>
-                        </lightning-tab>
+                                        <tr>
+                                            <th style="text-align:left;"> Type of Applicant :<span
+                                                    style="color: red;">*</span>
+                                            </th>
+                                            <td>
+                                                <lightning-input-field data-key={applicant.key} name="Type_of_Applicant__c"
+                                                    variant="label-hidden" value={applicant.ap.Type_of_Applicant__c}
+                                                    field-name="Type_of_Applicant__c" data-id='Controlling Picklist Type'
+                                                    onchange={handleApplicant}></lightning-input-field>
+                                            </td>
+                                            <th style="text-align:left;">Residential Status<span
+                                                    style="color: red;">*</span>
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="Residential_Status__c"
+                                                    value={applicant.ap.Residential_Status__c} data-key={applicant.key}
+                                                    field-name="Residential_Status__c" variant="label-hidden"
+                                                    data-id="Residential_Status__c" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:left;">Nationality
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="Nationality__c" data-id="Nationality__c"
+                                                    value={applicant.ap.Nationality__c} data-key={applicant.key}
+                                                    field-name="Nationality__c" variant="label-hidden"
+                                                    onchange={handleApplicant}></lightning-input-field>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="4">
+    
+                                                <div class="main">
+                                                    <center>
+                                                        <lightning-icon size="medium" icon-name="custom:custom107">
+                                                        </lightning-icon>
+                                                        <label class="head" style="font-size:16px"> Documents Details
+                                                            &nbsp;</label>
+                                                    </center>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" style="text-align:left;">Document Upload Required
+                                            </th>
+                                            <td colspan="2">
+                                                <lightning-input-field name="Document_Upload_Required__c"
+                                                    data-id="Document_Upload_Required__c"
+                                                    value={applicant.ap.Document_Upload_Required__c}
+                                                    data-key={applicant.key} field-name="Document_Upload_Required__c"
+                                                    variant="label-hidden" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                            </td>
+                                        </tr>
+                                        <template if:true={applicant.documents}>
+                                            <template for:each={applicant.documents} for:item="document">
+                                                <tr key={document.Id}>
+                                                    <th colspan="2">
+                                                        {document.Name}
+                                                    </th>
+                                                    <td colspan="2">
+                                                        <lightning-input name="fileUploader" data-id={document.index}
+                                                            data-index={index} data-applicantkey={document.key}
+                                                            onchange={openfileUpload} type="file"
+                                                            accept=".png, .doc, .docx, .pdf, .jpeg, .jpg"
+                                                            value={document.fileUploader}>
+                                                        </lightning-input>
+                                                        <p if:true={document.filename}>{document.filename}</p>
+                                                        <!-- <p  style="color:red !important;" if:true={document.filesize}>{document.filesize}</p> -->
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                        <tr>
+                                            <th colspan="4">
+                                                <div class="main">
+                                                    <center>
+                                                        <lightning-icon size="medium" icon-name="standard:address">
+                                                        </lightning-icon>
+                                                        <label class="head" style="font-size:16px"> Address Details
+                                                            Section</label>
+                                                    </center>
+                                                </div>
+    
+                                            </th>
+                                        </tr>
+                                       
+                                       
+                                        <th>
+                                            Permanent Address
+                                        </th>
+                                        <td colspan="7">
+                                            <lightning-input-field name="Permanent_Address__c"
+                                                data-id="Permanent_Address__c" data-key={applicant.key}
+                                                value={applicant.ap.Permanent_Address__c} field-name="Permanent_Address__c"
+                                                variant="label-hidden" onchange={handleApplicant}>
+                                            </lightning-input-field>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Country
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="Country__c" data-id="Country__c"
+                                                    data-key={applicant.key} value={applicant.ap.Country__c}
+                                                    field-name="Country__c" variant="label-hidden"
+                                                    onchange={handleApplicant}></lightning-input-field>
+                                            </td>
+                                            <th>
+                                                State
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="State__c" data-id="State__c"
+                                                    data-key={applicant.key} value={applicant.ap.State__c}
+                                                    field-name="State__c" variant="label-hidden" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                City
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="City__c" data-id="City__c"
+                                                    data-key={applicant.key} value={applicant.ap.City__c}
+                                                    field-name="City__c" variant="label-hidden" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                            </td>
+                                            <th>
+                                                PIN Code
+                                            </th>
+                                            <td>
+                                                <lightning-input-field name="PIN__c" data-id="PIN__c"
+                                                    data-key={applicant.key} value={applicant.ap.PIN__c} field-name="PIN__c"
+                                                    variant="label-hidden" onchange={handleApplicant}>
+                                                </lightning-input-field>
+                                                <div if:true={showErrorPIN} class="slds-text-color_error">
+                                                    {showPINMsg}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <th style="text-align:left;"> Mailing address Same as Permanent address</th>
+                                            <td colspan="7">
+                                                <lightning-input-field name="Mailing_Address_Same_as_PermanentAddress__c"
+                                                    data-id="Mailing_Address_Same_as_PermanentAddress__c"
+                                                    data-key={applicant.key} variant="label-hidden"
+                                                    field-name="Mailing_Address_Same_as_PermanentAddress__c"
+                                                    value={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}
+                                                    onchange={handleApplicant} type="checkbox"></lightning-input-field>
+                                            </td>
+                                        </tr>
+                                         <template if:false={applicant.ap.Mailing_Address_Same_as_PermanentAddress__c}>
+                                            <tr>
+                                                <th style="text-align:left;">Mailing Address
+                                                </th>
+                                                <td colspan="7">
+                                                    <lightning-textarea name="Mailing_Address__c"
+                                                        data-id="Mailing_Address__c" data-key={applicant.key}
+                                                        variant="label-hidden" field-name="Mailing_Address__c"
+                                                        value={applicant.ap.Mailing_Address__c} onchange={handleApplicant}>
+                                                    </lightning-textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:left;">Mailing Country
+                                                </th>
+                                                <td>
+                                                    <lightning-input-field name="Mailing_Country__c"
+                                                        data-id="Mailing_Country__c" data-key={applicant.key}
+                                                        variant="label-hidden" field-name="Mailing_Country__c"
+                                                        value={applicant.ap.Mailing_Country__c} onchange={handleApplicant}
+                                                        type="picklist">
+                                                    </lightning-input-field>
+                                                </td>
+                                                <th style="text-align:left;">Mailing State
+                                                </th>
+                                                <td>
+                                                    <lightning-input-field name="Mailing_State__c"
+                                                        data-id="Mailing_State__c" data-key={applicant.key}
+                                                        variant="label-hidden" field-name="Mailing_State__c"
+                                                        value={applicant.ap.Mailing_State__c} onchange={handleApplicant}
+                                                        type="picklist">
+                                                    </lightning-input-field>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:left;">Mailing City</th>
+                                                <td>
+                                                    <lightning-input-field name="Mailing_City__c" data-id="Mailing_City__c"
+                                                        data-key={applicant.key} variant="label-hidden"
+                                                        field-name="Mailing_City__c" value={applicant.ap.Mailing_City__c}
+                                                        onchange={handleApplicant} type="picklist">
+                                                    </lightning-input-field>
+                                                </td>
+                                                <th style="text-align:left;">Mailing PIN Code
+                                                </th>
+                                                <td>
+                                                    <lightning-input-field name="Mailing_Pincode__c"
+                                                        data-id="Mailing_Pincode__c" data-key={applicant.key}
+                                                        variant="label-hidden" field-name="Mailing_Pincode__c"
+                                                        value={applicant.ap.Mailing_Pincode__c} onchange={handleApplicant}>
+                                                    </lightning-input-field>
+                                                    <div if:true={showErrorMailingPIN} class="slds-text-color_error">
+                                                        {showMailingPINMsg}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </table>
+                                </lightning-record-edit-form>
+                            </lightning-tab>
+                        </template>
                     </template>
+
+                   
+
                 </lightning-tabset>
             </div>
 
@@ -796,4 +807,5 @@
             <!-- </template> -->
         </div>
     </div>
+    </lightning-card>
 </template>

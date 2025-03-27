@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 27-03-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 public class Ex_BookingFormController {
     public Quotation__c q {get;set;}
     public Map<String, Object> data { get; set; }
@@ -117,7 +124,7 @@ public class Ex_BookingFormController {
                    Account__r.City__c, Account__r.Pincode__c from Opportunity__c where Id=: oppId];
             if(opp != null)
             {
-                if(String.isNotBlank(tabKey) && tabKey.equalsIgnoreCase('Applicant 1'))
+                if(String.isNotBlank(tabKey) && tabKey.equalsIgnoreCase('Primary Applicant'))
                 {
                     ap.Applicant_Number__c = 'Primary Applicant';
                     if(opp[0].Name != null)

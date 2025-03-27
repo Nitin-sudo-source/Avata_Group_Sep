@@ -1,9 +1,40 @@
 .container{
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     padding: 8px;
     margin: 5px;
+    overflow-x: auto;
     
+}
+
+.slds-file-selector_files .slds-file-selector__body, .slds-file-selector--files .slds-file-selector__body {
+  display: flex
+;
+  align-items: center;
+  background: linear-gradient(222deg, rgba(238, 226, 252, 0) 50%, rgba(238, 226, 252, 1) 102.81%), linear-gradient(135deg, rgba(218, 233, 255, 1) 11%, rgba(237, 249, 247, 1) 100%);
+
+  border: 0.5px solid #393838;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.07) inset;
+
+}
+
+.slds-file-selector{
+  background: linear-gradient(222deg, rgba(238, 226, 252, 0) 50%, rgba(238, 226, 252, 1) 102.81%), linear-gradient(135deg, rgba(218, 233, 255, 1) 11%, rgba(237, 249, 247, 1) 100%);
+
+  border: 0.5px solid #393838;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.07) inset;
+
+}
+
+
+.slds-file-selector__dropzone {
+  padding: var(--slds-g-spacing-1);
+  border: var(--slds-g-sizing-border-1) dashed var(--slds-g-color-border-2);
+  border-radius: var(--slds-g-radius-border-2);
+  background: linear-gradient(222deg, rgba(238, 226, 252, 0) 50%, rgba(238, 226, 252, 1) 102.81%), linear-gradient(135deg, rgba(218, 233, 255, 1) 11%, rgba(237, 249, 247, 1) 100%);
+
+  border: 0.5px solid #393838;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.07) inset;
 }
 
 .box3 {
