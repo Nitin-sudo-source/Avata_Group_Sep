@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Zone__c</fullName>
+    <label>Sub Zone</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Zone__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Sub_Zone</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Dockyard</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>sevri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Wadala</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Elections</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Chembur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>govandi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Harbour</controllingFieldValue>
+            <valueName>Mankhurd</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Outstation</controllingFieldValue>
+            <valueName>Pune</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Outstation</controllingFieldValue>
+            <valueName>nashik</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>International Property Consultant (IPC)</controllingFieldValue>
+            <valueName>Dubai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>International Property Consultant (IPC)</controllingFieldValue>
+            <valueName>USA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>International Property Consultant (IPC)</controllingFieldValue>
+            <valueName>UK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Others</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Godrej Hill and Khadakpada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Durgadi-Kongaon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Yogidham-Shahad</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Purnima- Rambagh- Kalatalav</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Kalyan Station-Shivaji Chowk-Bazaar Peth</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Aadarwadi-Hina Garden-Vasant Gali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Kalyan East</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Dombivali-Palava-Thakurli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Ambernath–Badlapur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Shilphata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Diva</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Mumbra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Kalwa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KDMC</controllingFieldValue>
+            <valueName>Ulhasnagar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Thane East Kopri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Thane Station West</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Majiwada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Manpada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>City Centre</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Patlipada-Waghbil &amp; Anand Nagar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Kasarwadavali- Bhayandarpada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Pokharan Road No.1&amp;2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>High Street Mall, Kapurthala</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Hiranandani Estate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Ghodbunder Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Thane</controllingFieldValue>
+            <valueName>Vasant Vihar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>vashi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>Sanpada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>Juinagar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>nerul</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>Seawoods</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>Belapur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>Kharghar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navi Mumbai</controllingFieldValue>
+            <valueName>Panvel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Parel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Curry Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Chinchpokli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Worli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Mahalakshmi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Lalbaug</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Mumbai Central</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Colaba</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Byculla</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Mazgaon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Cuffe Parade</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Malabar Hills</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Kemp&apos;s Corner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Elephiston</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Lower Parel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Grant Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Charni Road</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>South Mumbai</controllingFieldValue>
+            <valueName>Marine Lines</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Thane</controllingFieldValue>
+            <valueName>Bhiwandi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Thane</controllingFieldValue>
+            <valueName>Asangaon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Thane</controllingFieldValue>
+            <valueName>Titwala</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Thane</controllingFieldValue>
+            <valueName>Karjat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Thane</controllingFieldValue>
+            <valueName>Vangani</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Thane</controllingFieldValue>
+            <valueName>Neral</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Dadar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Matunga</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Sion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Kurla</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Ghatkopar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Vikhroli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Kanjurmarg</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Bhandup</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Mulund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central Suburbs</controllingFieldValue>
+            <valueName>Nahur</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Andheri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>in Bandra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Borivali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Goregaon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>jogeshwari</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>juhu</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Kandivali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Khar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Malad</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Santacruz</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western Suburbs</controllingFieldValue>
+            <valueName>Vile Parle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Borivali</controllingFieldValue>
+            <valueName>Dahisar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Borivali</controllingFieldValue>
+            <valueName>Mira Bhayandar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Borivali</controllingFieldValue>
+            <valueName>Vasai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Borivali</controllingFieldValue>
+            <valueName>Virar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Borivali</controllingFieldValue>
+            <valueName>palghar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Trans Harbour</controllingFieldValue>
+            <valueName>Turbhe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Trans Harbour</controllingFieldValue>
+            <valueName>Koparkhairane</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Trans Harbour</controllingFieldValue>
+            <valueName>Ghasoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Trans Harbour</controllingFieldValue>
+            <valueName>Rabale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Trans Harbour</controllingFieldValue>
+            <valueName>Airoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Trans Harbour</controllingFieldValue>
+            <valueName>in the village of Digha</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Taloja</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Kalanboli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Rasayani</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Khopoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>matheran</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Uran</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Pen</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Alibaugh</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Murud-Janjira</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Roha</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Nagothane</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Sudhagad-Pali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Mangaon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Mhasla</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>shivrshan</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Mahad</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Birwadi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Beyond Panvel - Raigad</controllingFieldValue>
+            <valueName>Poladpur</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

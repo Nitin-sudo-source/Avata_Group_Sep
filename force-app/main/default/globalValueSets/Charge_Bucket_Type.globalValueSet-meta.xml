@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Amount</fullName>
+        <default>false</default>
+        <label>Amount</label>
+    </customValue>
+    <customValue>
+        <fullName>Percentage</fullName>
+        <default>false</default>
+        <label>Percentage</label>
+    </customValue>
+    <description>Charge Bucket Type field  in PSM object</description>
+    <masterLabel>Charge Bucket Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

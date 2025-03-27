@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Below Rs. 15 lakhs</fullName>
+        <default>false</default>
+        <label>Below Rs. 15 lakhs</label>
+    </customValue>
+    <customValue>
+        <fullName>Rs. 16 Lakhs to 25 Lakhs</fullName>
+        <default>false</default>
+        <label>Rs. 16 Lakhs to 25 Lakhs</label>
+    </customValue>
+    <customValue>
+        <fullName>Rs. 26 Lakhs to 35 Lakhs</fullName>
+        <default>false</default>
+        <label>Rs. 26 Lakhs to 35 Lakhs</label>
+    </customValue>
+    <customValue>
+        <fullName>Rs. 36 Lakhs to 45 Lakhs</fullName>
+        <default>false</default>
+        <label>Rs. 36 Lakhs to 45 Lakhs</label>
+    </customValue>
+    <customValue>
+        <fullName>Rs. 46 Lakhs to 55 Lakhs</fullName>
+        <default>false</default>
+        <label>Rs. 46 Lakhs to 55 Lakhs</label>
+    </customValue>
+    <customValue>
+        <fullName>Above Rs. 55 Lakhs</fullName>
+        <default>false</default>
+        <label>Above Rs. 55 Lakhs</label>
+    </customValue>
+    <masterLabel>Household Income</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

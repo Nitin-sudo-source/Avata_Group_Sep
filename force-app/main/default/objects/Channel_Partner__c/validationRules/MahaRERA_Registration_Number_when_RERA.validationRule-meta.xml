@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MahaRERA_Registration_Number_when_RERA</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(RERA_Available__c, &quot;YES&quot;),
+    ISBLANK(MahaRERA_Registration_No__c)
+)</errorConditionFormula>
+    <errorDisplayField>MahaRERA_Registration_No__c</errorDisplayField>
+    <errorMessage>You must provide a MahaRERA Registration Number when RERA is available</errorMessage>
+</ValidationRule>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Missed_Follow_up</fullName>
+    <columns>NAME</columns>
+    <columns>Project__c</columns>
+    <columns>Walkin_Source__c</columns>
+    <columns>Opportunity_Stage__c</columns>
+    <columns>Sales_Next_Follow_up_Date__c</columns>
+    <columns>Closing_Manager__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Sales_Next_Follow_up_Date__c</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>Opportunity_Stage__c</field>
+        <operation>notEqual</operation>
+        <value>Booked,Booking Cancelled,Lost</value>
+    </filters>
+    <label>Missed Follow-up</label>
+</ListView>

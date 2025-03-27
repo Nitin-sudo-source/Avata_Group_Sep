@@ -1,0 +1,29 @@
+.Table1Css {
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border: 1px solid #0e0d0d;
+  
+  }
+  .Table1Css th {
+    border: 0.5px solid #0e0d0d;
+    padding: 4px;
+    text-align: center;
+    background: #a8e1e1;
+    font-weight: bold;
+    color: #0e0d0d;
+    text-shadow: 2px 2px 3px rgb(189, 171, 171);
+    font-size: 12px;
+    
+  }
+  
+  .Table1Css td {
+    border: 0.5px solid #0e0e0e;
+    padding: 4px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 3px rgb(176, 175, 175);
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+
+  }

@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Godrej Hill and Khadakpada</fullName>
+        <default>false</default>
+        <label>Godrej Hill and Khadakpada</label>
+    </customValue>
+    <customValue>
+        <fullName>Durgadi-Kongaon</fullName>
+        <default>false</default>
+        <label>Durgadi-Kongaon</label>
+    </customValue>
+    <customValue>
+        <fullName>Yogidham-Shahad</fullName>
+        <default>false</default>
+        <label>Yogidham-Shahad</label>
+    </customValue>
+    <customValue>
+        <fullName>Purnima- Rambagh- Kalatalav</fullName>
+        <default>false</default>
+        <label>Purnima- Rambagh- Kalatalav</label>
+    </customValue>
+    <customValue>
+        <fullName>Kalyan Station-Shivaji Chowk-Bazaar Peth</fullName>
+        <default>false</default>
+        <label>Kalyan Station-Shivaji Chowk-Bazaar Peth</label>
+    </customValue>
+    <customValue>
+        <fullName>Aadarwadi-Hina Garden-Vasant Gali</fullName>
+        <default>false</default>
+        <label>Aadarwadi-Hina Garden-Vasant Gali</label>
+    </customValue>
+    <customValue>
+        <fullName>Kalyan East</fullName>
+        <default>false</default>
+        <label>Kalyan East</label>
+    </customValue>
+    <customValue>
+        <fullName>Dombivali-Palava-Thakurli</fullName>
+        <default>false</default>
+        <label>Dombivali-Palava-Thakurli</label>
+    </customValue>
+    <customValue>
+        <fullName>Ambernath–Badlapur</fullName>
+        <default>false</default>
+        <label>Ambernath–Badlapur</label>
+    </customValue>
+    <customValue>
+        <fullName>Shilphata</fullName>
+        <default>false</default>
+        <label>Shilphata</label>
+    </customValue>
+    <customValue>
+        <fullName>Diva</fullName>
+        <default>false</default>
+        <label>Diva</label>
+    </customValue>
+    <customValue>
+        <fullName>Mumbra</fullName>
+        <default>false</default>
+        <label>Mumbra</label>
+    </customValue>
+    <customValue>
+        <fullName>Kalwa</fullName>
+        <default>false</default>
+        <label>Kalwa</label>
+    </customValue>
+    <customValue>
+        <fullName>Ulhasnagar</fullName>
+        <default>false</default>
+        <label>Ulhasnagar</label>
+    </customValue>
+    <customValue>
+        <fullName>Thane East Kopri</fullName>
+        <default>false</default>
+        <label>Thane East Kopri</label>
+    </customValue>
+    <customValue>
+        <fullName>Thane Station West</fullName>
+        <default>false</default>
+        <label>Thane Station West</label>
+    </customValue>
+    <customValue>
+        <fullName>Majiwada</fullName>
+        <default>false</default>
+        <label>Majiwada</label>
+    </customValue>
+    <customValue>
+        <fullName>Manpada</fullName>
+        <default>false</default>
+        <label>Manpada</label>
+    </customValue>
+    <customValue>
+        <fullName>City Centre</fullName>
+        <default>false</default>
+        <label>City Centre</label>
+    </customValue>
+    <customValue>
+        <fullName>Patlipada-Waghbil &amp; Anand Nagar</fullName>
+        <default>false</default>
+        <label>Patlipada-Waghbil &amp; Anand Nagar</label>
+    </customValue>
+    <customValue>
+        <fullName>Kasarwadavali- Bhayandarpada</fullName>
+        <default>false</default>
+        <label>Kasarwadavali- Bhayandarpada</label>
+    </customValue>
+    <customValue>
+        <fullName>Pokharan Road No.1&amp;2</fullName>
+        <default>false</default>
+        <label>Pokharan Road No.1&amp;2</label>
+    </customValue>
+    <customValue>
+        <fullName>High Street Mall, Kapurthala</fullName>
+        <default>false</default>
+        <label>High Street Mall, Kapurthala</label>
+    </customValue>
+    <customValue>
+        <fullName>Hiranandani Estate</fullName>
+        <default>false</default>
+        <label>Hiranandani Estate</label>
+    </customValue>
+    <customValue>
+        <fullName>Ghodbunder Road</fullName>
+        <default>false</default>
+        <label>Ghodbunder Road</label>
+    </customValue>
+    <customValue>
+        <fullName>Vasant Vihar</fullName>
+        <default>false</default>
+        <label>Vasant Vihar</label>
+    </customValue>
+    <customValue>
+        <fullName>Bhiwandi</fullName>
+        <default>false</default>
+        <label>Bhiwandi</label>
+    </customValue>
+    <customValue>
+        <fullName>Asangaon</fullName>
+        <default>false</default>
+        <label>Asangaon</label>
+    </customValue>
+    <customValue>
+        <fullName>Titwala</fullName>
+        <default>false</default>
+        <label>Titwala</label>
+    </customValue>
+    <customValue>
+        <fullName>Karjat</fullName>
+        <default>false</default>
+        <label>Karjat</label>
+    </customValue>
+    <customValue>
+        <fullName>Vangani</fullName>
+        <default>false</default>
+        <label>Vangani</label>
+    </customValue>
+    <customValue>
+        <fullName>Neral</fullName>
+        <default>false</default>
+        <label>Neral</label>
+    </customValue>
+    <customValue>
+        <fullName>Dadar</fullName>
+        <default>false</default>
+        <label>Dadar</label>
+    </customValue>
+    <customValue>
+        <fullName>Matunga</fullName>
+        <default>false</default>
+        <label>Matunga</label>
+    </customValue>
+    <customValue>
+        <fullName>Sion</fullName>
+        <default>false</default>
+        <label>Sion</label>
+    </customValue>
+    <customValue>
+        <fullName>Kurla</fullName>
+        <default>false</default>
+        <label>Kurla</label>
+    </customValue>
+    <customValue>
+        <fullName>Ghatkopar</fullName>
+        <default>false</default>
+        <label>Ghatkopar</label>
+    </customValue>
+    <customValue>
+        <fullName>Vikhroli</fullName>
+        <default>false</default>
+        <label>Vikhroli</label>
+    </customValue>
+    <customValue>
+        <fullName>Kanjurmarg</fullName>
+        <default>false</default>
+        <label>Kanjurmarg</label>
+    </customValue>
+    <customValue>
+        <fullName>Bhandup</fullName>
+        <default>false</default>
+        <label>Bhandup</label>
+    </customValue>
+    <customValue>
+        <fullName>Mulund</fullName>
+        <default>false</default>
+        <label>Mulund</label>
+    </customValue>
+    <customValue>
+        <fullName>Nahur</fullName>
+        <default>false</default>
+        <label>Nahur</label>
+    </customValue>
+    <customValue>
+        <fullName>Andheri</fullName>
+        <default>false</default>
+        <label>Andheri</label>
+    </customValue>
+    <customValue>
+        <fullName>in Bandra</fullName>
+        <default>false</default>
+        <label>in Bandra</label>
+    </customValue>
+    <customValue>
+        <fullName>Borivali</fullName>
+        <default>false</default>
+        <label>Borivali</label>
+    </customValue>
+    <customValue>
+        <fullName>Goregaon</fullName>
+        <default>false</default>
+        <label>Goregaon</label>
+    </customValue>
+    <customValue>
+        <fullName>jogeshwari</fullName>
+        <default>false</default>
+        <label>jogeshwari</label>
+    </customValue>
+    <customValue>
+        <fullName>juhu</fullName>
+        <default>false</default>
+        <label>juhu</label>
+    </customValue>
+    <customValue>
+        <fullName>Kandivali</fullName>
+        <default>false</default>
+        <label>Kandivali</label>
+    </customValue>
+    <customValue>
+        <fullName>Khar</fullName>
+        <default>false</default>
+        <label>Khar</label>
+    </customValue>
+    <customValue>
+        <fullName>Malad</fullName>
+        <default>false</default>
+        <label>Malad</label>
+    </customValue>
+    <customValue>
+        <fullName>Santacruz</fullName>
+        <default>false</default>
+        <label>Santacruz</label>
+    </customValue>
+    <customValue>
+        <fullName>Vile Parle</fullName>
+        <default>false</default>
+        <label>Vile Parle</label>
+    </customValue>
+    <customValue>
+        <fullName>Dahisar</fullName>
+        <default>false</default>
+        <label>Dahisar</label>
+    </customValue>
+    <customValue>
+        <fullName>Mira Bhayandar</fullName>
+        <default>false</default>
+        <label>Mira Bhayandar</label>
+    </customValue>
+    <customValue>
+        <fullName>Vasai</fullName>
+        <default>false</default>
+        <label>Vasai</label>
+    </customValue>
+    <customValue>
+        <fullName>Virar</fullName>
+        <default>false</default>
+        <label>Virar</label>
+    </customValue>
+    <customValue>
+        <fullName>palghar</fullName>
+        <default>false</default>
+        <label>palghar</label>
+    </customValue>
+    <customValue>
+        <fullName>Turbhe</fullName>
+        <default>false</default>
+        <label>Turbhe</label>
+    </customValue>
+    <customValue>
+        <fullName>Koparkhairane</fullName>
+        <default>false</default>
+        <label>Koparkhairane</label>
+    </customValue>
+    <customValue>
+        <fullName>Ghasoli</fullName>
+        <default>false</default>
+        <label>Ghasoli</label>
+    </customValue>
+    <customValue>
+        <fullName>Rabale</fullName>
+        <default>false</default>
+        <label>Rabale</label>
+    </customValue>
+    <customValue>
+        <fullName>Airoli</fullName>
+        <default>false</default>
+        <label>Airoli</label>
+    </customValue>
+    <customValue>
+        <fullName>in the village of Digha</fullName>
+        <default>false</default>
+        <label>in the village of Digha</label>
+    </customValue>
+    <customValue>
+        <fullName>vashi</fullName>
+        <default>false</default>
+        <label>vashi</label>
+    </customValue>
+    <customValue>
+        <fullName>Sanpada</fullName>
+        <default>false</default>
+        <label>Sanpada</label>
+    </customValue>
+    <customValue>
+        <fullName>Juinagar</fullName>
+        <default>false</default>
+        <label>Juinagar</label>
+    </customValue>
+    <customValue>
+        <fullName>nerul</fullName>
+        <default>false</default>
+        <label>nerul</label>
+    </customValue>
+    <customValue>
+        <fullName>Seawoods</fullName>
+        <default>false</default>
+        <label>Seawoods</label>
+    </customValue>
+    <customValue>
+        <fullName>Belapur</fullName>
+        <default>false</default>
+        <label>Belapur</label>
+    </customValue>
+    <customValue>
+        <fullName>Kharghar</fullName>
+        <default>false</default>
+        <label>Kharghar</label>
+    </customValue>
+    <customValue>
+        <fullName>Panvel</fullName>
+        <default>false</default>
+        <label>Panvel</label>
+    </customValue>
+    <customValue>
+        <fullName>Taloja</fullName>
+        <default>false</default>
+        <label>Taloja</label>
+    </customValue>
+    <customValue>
+        <fullName>Kalanboli</fullName>
+        <default>false</default>
+        <label>Kalanboli</label>
+    </customValue>
+    <customValue>
+        <fullName>Rasayani</fullName>
+        <default>false</default>
+        <label>Rasayani</label>
+    </customValue>
+    <customValue>
+        <fullName>Khopoli</fullName>
+        <default>false</default>
+        <label>Khopoli</label>
+    </customValue>
+    <customValue>
+        <fullName>matheran</fullName>
+        <default>false</default>
+        <label>matheran</label>
+    </customValue>
+    <customValue>
+        <fullName>Uran</fullName>
+        <default>false</default>
+        <label>Uran</label>
+    </customValue>
+    <customValue>
+        <fullName>Pen</fullName>
+        <default>false</default>
+        <label>Pen</label>
+    </customValue>
+    <customValue>
+        <fullName>Alibaugh</fullName>
+        <default>false</default>
+        <label>Alibaugh</label>
+    </customValue>
+    <customValue>
+        <fullName>Murud-Janjira</fullName>
+        <default>false</default>
+        <label>Murud-Janjira</label>
+    </customValue>
+    <customValue>
+        <fullName>Roha</fullName>
+        <default>false</default>
+        <label>Roha</label>
+    </customValue>
+    <customValue>
+        <fullName>Nagothane</fullName>
+        <default>false</default>
+        <label>Nagothane</label>
+    </customValue>
+    <customValue>
+        <fullName>Sudhagad-Pali</fullName>
+        <default>false</default>
+        <label>Sudhagad-Pali</label>
+    </customValue>
+    <customValue>
+        <fullName>Mangaon</fullName>
+        <default>false</default>
+        <label>Mangaon</label>
+    </customValue>
+    <customValue>
+        <fullName>Mhasla</fullName>
+        <default>false</default>
+        <label>Mhasla</label>
+    </customValue>
+    <customValue>
+        <fullName>shivrshan</fullName>
+        <default>false</default>
+        <label>shivrshan</label>
+    </customValue>
+    <customValue>
+        <fullName>Mahad</fullName>
+        <default>false</default>
+        <label>Mahad</label>
+    </customValue>
+    <customValue>
+        <fullName>Birwadi</fullName>
+        <default>false</default>
+        <label>Birwadi</label>
+    </customValue>
+    <customValue>
+        <fullName>Poladpur</fullName>
+        <default>false</default>
+        <label>Poladpur</label>
+    </customValue>
+    <customValue>
+        <fullName>Parel</fullName>
+        <default>false</default>
+        <label>Parel</label>
+    </customValue>
+    <customValue>
+        <fullName>Curry Road</fullName>
+        <default>false</default>
+        <label>Curry Road</label>
+    </customValue>
+    <customValue>
+        <fullName>Chinchpokli</fullName>
+        <default>false</default>
+        <label>Chinchpokli</label>
+    </customValue>
+    <customValue>
+        <fullName>Worli</fullName>
+        <default>false</default>
+        <label>Worli</label>
+    </customValue>
+    <customValue>
+        <fullName>Mahalakshmi</fullName>
+        <default>false</default>
+        <label>Mahalakshmi</label>
+    </customValue>
+    <customValue>
+        <fullName>Lalbaug</fullName>
+        <default>false</default>
+        <label>Lalbaug</label>
+    </customValue>
+    <customValue>
+        <fullName>Mumbai Central</fullName>
+        <default>false</default>
+        <label>Mumbai Central</label>
+    </customValue>
+    <customValue>
+        <fullName>Colaba</fullName>
+        <default>false</default>
+        <label>Colaba</label>
+    </customValue>
+    <customValue>
+        <fullName>Byculla</fullName>
+        <default>false</default>
+        <label>Byculla</label>
+    </customValue>
+    <customValue>
+        <fullName>Mazgaon</fullName>
+        <default>false</default>
+        <label>Mazgaon</label>
+    </customValue>
+    <customValue>
+        <fullName>Cuffe Parade</fullName>
+        <default>false</default>
+        <label>Cuffe Parade</label>
+    </customValue>
+    <customValue>
+        <fullName>Malabar Hills</fullName>
+        <default>false</default>
+        <label>Malabar Hills</label>
+    </customValue>
+    <customValue>
+        <fullName>Kemp&apos;s Corner</fullName>
+        <default>false</default>
+        <label>Kemp&apos;s Corner</label>
+    </customValue>
+    <customValue>
+        <fullName>Elephiston</fullName>
+        <default>false</default>
+        <label>Elephiston</label>
+    </customValue>
+    <customValue>
+        <fullName>Lower Parel</fullName>
+        <default>false</default>
+        <label>Lower Parel</label>
+    </customValue>
+    <customValue>
+        <fullName>Grant Road</fullName>
+        <default>false</default>
+        <label>Grant Road</label>
+    </customValue>
+    <customValue>
+        <fullName>Charni Road</fullName>
+        <default>false</default>
+        <label>Charni Road</label>
+    </customValue>
+    <customValue>
+        <fullName>Marine Lines</fullName>
+        <default>false</default>
+        <label>Marine Lines</label>
+    </customValue>
+    <customValue>
+        <fullName>Dockyard</fullName>
+        <default>false</default>
+        <label>Dockyard</label>
+    </customValue>
+    <customValue>
+        <fullName>sevri</fullName>
+        <default>false</default>
+        <label>sevri</label>
+    </customValue>
+    <customValue>
+        <fullName>Wadala</fullName>
+        <default>false</default>
+        <label>Wadala</label>
+    </customValue>
+    <customValue>
+        <fullName>Elections</fullName>
+        <default>false</default>
+        <label>Elections</label>
+    </customValue>
+    <customValue>
+        <fullName>Chembur</fullName>
+        <default>false</default>
+        <label>Chembur</label>
+    </customValue>
+    <customValue>
+        <fullName>govandi</fullName>
+        <default>false</default>
+        <label>govandi</label>
+    </customValue>
+    <customValue>
+        <fullName>Mankhurd</fullName>
+        <default>false</default>
+        <label>Mankhurd</label>
+    </customValue>
+    <customValue>
+        <fullName>Pune</fullName>
+        <default>false</default>
+        <label>Pune</label>
+    </customValue>
+    <customValue>
+        <fullName>nashik</fullName>
+        <default>false</default>
+        <label>nashik</label>
+    </customValue>
+    <customValue>
+        <fullName>Dubai</fullName>
+        <default>false</default>
+        <label>Dubai</label>
+    </customValue>
+    <customValue>
+        <fullName>USA</fullName>
+        <default>false</default>
+        <label>USA</label>
+    </customValue>
+    <customValue>
+        <fullName>UK</fullName>
+        <default>false</default>
+        <label>UK</label>
+    </customValue>
+    <customValue>
+        <fullName>Others</fullName>
+        <default>false</default>
+        <label>Others</label>
+    </customValue>
+    <customValue>
+        <fullName>translations نارت</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>translations نارت</label>
+    </customValue>
+    <masterLabel>Sub Zone</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

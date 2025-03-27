@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Site_Visit_Approver__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Approver for the Site Visit. This field is auto-filled with the Site Head name from the project when the Source Conflict is checked.</description>
+    <inlineHelpText>The Approver for the Site Visit. This field is auto-filled with the Site Head name from the project when the Source Conflict is checked.</inlineHelpText>
+    <label>Site Visit Approver</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Site_Visit4</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

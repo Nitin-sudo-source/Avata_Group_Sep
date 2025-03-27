@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_OnNext_Followup_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISNEW() == FALSE,
+ISPICKVAL(Opportunity_Stage__c, &apos;In Follow-up&apos;),
+DATEVALUE(Next_Follow_up_Date__c) &lt; TODAY()
+)</errorConditionFormula>
+    <errorMessage>Next Follow Up Date should be Greater than or Equal to Today</errorMessage>
+</ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PAN_Number_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(
+    OR(
+        ISBLANK(PAN_No__c), 
+        REGEX(PAN_No__c, &quot;[A-Z]{5}[0-9]{4}[A-Z]&quot;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>PAN_No__c</errorDisplayField>
+    <errorMessage>PAN Number must be in the format: 5 alphabets, followed by 4 digits, and ending with 1 alphabet (e.g., ASDCV7485L).</errorMessage>
+</ValidationRule>

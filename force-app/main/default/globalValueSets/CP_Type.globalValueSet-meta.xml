@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ICP</fullName>
+        <default>false</default>
+        <label>ICP</label>
+    </customValue>
+    <customValue>
+        <fullName>RCP</fullName>
+        <default>false</default>
+        <label>RCP</label>
+    </customValue>
+    <customValue>
+        <fullName>IPC</fullName>
+        <default>false</default>
+        <label>IPC</label>
+    </customValue>
+    <masterLabel>CP Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

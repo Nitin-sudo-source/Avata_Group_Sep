@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>SSC</fullName>
+        <default>false</default>
+        <label>SSC</label>
+    </customValue>
+    <customValue>
+        <fullName>HSC</fullName>
+        <default>false</default>
+        <label>HSC</label>
+    </customValue>
+    <customValue>
+        <fullName>Graduate</fullName>
+        <default>false</default>
+        <label>Graduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Engineer</fullName>
+        <default>false</default>
+        <label>Engineer</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor</fullName>
+        <default>false</default>
+        <label>Doctor</label>
+    </customValue>
+    <customValue>
+        <fullName>Postgraduate</fullName>
+        <default>false</default>
+        <label>Postgraduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma</fullName>
+        <default>false</default>
+        <label>Diploma</label>
+    </customValue>
+    <masterLabel>Highest Education</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

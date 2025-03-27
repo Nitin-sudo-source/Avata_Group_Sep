@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Direct_Lead__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field tracks the creation and conversion of a Lead, Account and Opportunity into an Account and Opportunity when a customer engages in a project. It is used to mark cases where there was no prior Lead in the system, initiating a direct lead conversion process.</description>
+    <inlineHelpText>This field is automatically checked when a customer engages in a project and there is no existing Lead, Account and Opportunity, triggering the creation of a new Lead and its conversion into an Account and Opportunity.</inlineHelpText>
+    <label>Direct Lead</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

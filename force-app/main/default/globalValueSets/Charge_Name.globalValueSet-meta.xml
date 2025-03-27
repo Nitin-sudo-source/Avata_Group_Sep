@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Basic Charge</fullName>
+        <default>false</default>
+        <label>Basic Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Floor Rise</fullName>
+        <default>false</default>
+        <label>Floor Rise</label>
+    </customValue>
+    <customValue>
+        <fullName>PLC</fullName>
+        <default>false</default>
+        <label>PLC</label>
+    </customValue>
+    <customValue>
+        <fullName>Stamp Duty</fullName>
+        <default>false</default>
+        <label>Stamp Duty</label>
+    </customValue>
+    <customValue>
+        <fullName>Registration Charges</fullName>
+        <default>false</default>
+        <label>Registration Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Development Charge</fullName>
+        <default>false</default>
+        <label>Development Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance charges for parking</fullName>
+        <default>false</default>
+        <label>Maintenance charges for parking</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal Charge</fullName>
+        <default>false</default>
+        <label>Legal Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>MSEB &amp; Water Charge</fullName>
+        <default>false</default>
+        <label>MSEB &amp; Water Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal &amp; MSEB</fullName>
+        <default>false</default>
+        <label>Legal &amp; MSEB</label>
+    </customValue>
+    <customValue>
+        <fullName>Processing Fees</fullName>
+        <default>false</default>
+        <label>Processing Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Share Money</fullName>
+        <default>false</default>
+        <label>Share Money</label>
+    </customValue>
+    <customValue>
+        <fullName>Society Administration Fees</fullName>
+        <default>false</default>
+        <label>Society Administration Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance Charges</fullName>
+        <default>false</default>
+        <label>Maintenance Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Club Membership</fullName>
+        <default>false</default>
+        <label>Club Membership</label>
+    </customValue>
+    <customValue>
+        <fullName>Infra Development Charges</fullName>
+        <default>false</default>
+        <label>Infra Development Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Advance Maintenance Charges for 24 months</fullName>
+        <default>false</default>
+        <label>Advance Maintenance Charges for 24 months</label>
+    </customValue>
+    <customValue>
+        <fullName>Parking Charges</fullName>
+        <default>false</default>
+        <label>Parking Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Scanning and Misc Charges</fullName>
+        <default>false</default>
+        <label>Scanning and Misc Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Clubhouse Charges</fullName>
+        <default>false</default>
+        <label>Clubhouse Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>PLC	PLC</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PLC	PLC</label>
+    </customValue>
+    <customValue>
+        <fullName>Club Charges</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Club Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>West Facing</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>West Facing</label>
+    </customValue>
+    <customValue>
+        <fullName>Terrace Charge</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Terrace Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Township Maintenance Deposit</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Township Maintenance Deposit</label>
+    </customValue>
+    <customValue>
+        <fullName>Infrastructure Development Charge</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Infrastructure Development Charge</label>
+    </customValue>
+    <customValue>
+        <fullName>Township Maintenance Charges</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Township Maintenance Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Charge AV</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Other Charge AV</label>
+    </customValue>
+    <masterLabel>Charge Name</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

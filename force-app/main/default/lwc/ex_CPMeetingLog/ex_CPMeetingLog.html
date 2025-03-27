@@ -1,0 +1,159 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 27-03-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<template>
+    <template if:true={isLoading}>
+        <div class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-fixed">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+                <p class="slds-spinner-text">Loading...</p>
+            </div>
+        </div>
+    </template>
+
+    <lightning-card>
+        <lightning-tabset>
+
+            <!-- CP Call Tab -->
+            <lightning-tab label="CP Call" title="CP Call" icon-position="left" icon-name='standard:call'
+                alternative-text='call' size='xx-small' style="padding: 12px;" active={isCPCallActive} value="CP Call"
+                disabled="false" onactive={handleTabActive}>
+
+                <template if:true={t}>
+
+                <template if:true={t.t}>
+                    <lightning-card layout="compact">
+
+
+                        <div class="slds-p-horizontal_medium">
+                            <lightning-combobox label="Subject" class="slds-m-bottom_medium" placeholder="CP Call"
+                                required name="Subject" options={subjectCPCallOptions} onchange={handleChange}
+                                value={t.t.Subject}></lightning-combobox>
+
+                            <lightning-input type="datetime-local" name="Call_date__c" label="Call Date"
+                                value={t.t.Call_date__c} onchange={handleChange} required class="slds-m-bottom_medium">
+                            </lightning-input>
+
+                            <lightning-combobox label="Call Status" class="slds-m-bottom_medium"
+                                placeholder="Select Call Status" required name="Call_Status__c" options={cpCallStatus}
+                                onchange={handleChange} value={t.t.Call_Status__c}>
+                            </lightning-combobox>
+
+                            <!-- <lightning-combobox label="Call Type" class="slds-m-bottom_medium"
+                                placeholder="Select Call Type" required name="Call_Type__c" options={cpCallType}
+                                onchange={handleChange} value={t.t.Call_Type__c}>
+                            </lightning-combobox> -->
+
+                            <!-- <lightning-combobox label="Purpose of Call" class="slds-m-bottom_medium"
+                                placeholder="Select Purpose of Call" required name="Purpose_of_Call__c" 
+                                options={cpPurposeofCall}
+                                onchange={handleChange} value={t.t.Purpose_of_Call__c}>
+                            </lightning-combobox> -->
+
+
+                            <lightning-input type="datetime-local" name="Next_Action_Date__c" placeholder="Next Action Date"
+                                label="Next Call Action Date" value={t.t.Next_Action_Date__c}
+                                onchange={handleChange} class="slds-m-bottom_medium">
+                            </lightning-input>
+
+                            <lightning-textarea name="Description" label="Remarks" value={t.t.Description}
+                                onchange={handleChange} required class="slds-m-bottom_medium">
+                            </lightning-textarea>
+                        </div>
+                       
+                        <center>
+                            <lightning-button variant="brand" class="slds-m-around_medium" title="Save" label="Save"
+                                onclick={handleSave}></lightning-button>
+                        </center>
+                    </lightning-card>
+                </template>
+                </template>
+
+
+            </lightning-tab>
+
+            <!-- CP Meeting Tab -->
+            <lightning-tab label="CP Meeting" icon-position="left" title="CP Meeting"
+                icon-name="utility:meet_focus_presenter" alternative-text="meet_focus_presenter" variant="success"
+                value="CP Meeting" size="small" active={isCPMeetingActive} disabled="false" onactive={handleTabActive}>
+                <div class="meeting-container">
+                    <div class="meeting-card">
+                        <h1 style="color:blue">Meeting Started</h1>
+                        <button class="circle-button start-button" title="Restart Meeting Again" onclick={startMeeting}>
+                            🔁
+                        </button>
+                        <div class="meeting-status">
+                         
+        <p>{startedAt} <br/> Time: {runningTime}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <template if:true={t}>
+
+                <template if:true={t.t}>
+                    <lightning-card layout="compact">
+                        <div class="slds-p-horizontal_medium">
+                            <lightning-combobox label="Subject" class="slds-m-bottom_medium" placeholder="CP Meeting"
+                                required name="Subject" options={subjectOptions} onchange={handleChange}
+                                value={t.t.Subject}></lightning-combobox>
+
+                            <lightning-combobox label="Meeting Status" class="slds-m-bottom_medium"
+                                placeholder="Meeting Status" required name="Meeting_Status__c" options={cpMeetingStatus}
+                                onchange={handleChange} value={t.t.Meeting_Status__c}></lightning-combobox>
+
+                            <lightning-combobox label="Meeting Type" class="slds-m-bottom_medium"
+                                placeholder="Meeting Type" required name="Purpose_of_the_Meeting__c" options={cpMeetingType}
+                                onchange={handleChange} value={t.t.Purpose_of_the_Meeting__c}></lightning-combobox>
+
+                            <lightning-input type="text" name="Meeting_Purpose__c" label="Meeting Agenda"
+                                value={t.t.Meeting_Purpose__c}  required onchange={handleChange} class="slds-m-bottom_medium">
+                            </lightning-input>
+
+                            <lightning-combobox label="Purpose of Meeting Cancelled" class="slds-m-bottom_medium"
+                                placeholder="Purpose of Meeting Cancelled"  name="Purpose_of_Meeting_Cancelled__c"
+                                options={cpMeetingPurpose} onchange={handleChange} value={t.t.Purpose_of_Meeting_Cancelled__c}>
+                            </lightning-combobox>
+
+
+                            <lightning-input type="datetime-local" name="Meeting_Date__c" label="Meeting Date"
+                                value={t.t.Meeting_Date__c} onchange={handleChange} required
+                                class="slds-m-bottom_medium">
+                            </lightning-input>
+
+                            <lightning-input type="datetime-local" name="Next_Meeting_Date__c" label="Next Meeting Date"
+                                value={t.t.Next_Meeting_Date__c} onchange={handleChange} class="slds-m-bottom_medium">
+                            </lightning-input>
+
+                            <lightning-textarea name="Description" label="Remarks" value={t.t.Description}
+                                onchange={handleChange} required class="slds-m-bottom_medium">
+                            </lightning-textarea>
+                        </div>
+
+                       
+                        <!-- <template if:true={googleMapsLink}>
+                            <a href={googleMapsLink} target="_blank">Open in Google Maps</a>
+                        </template> -->
+
+                        <center>
+                            <lightning-button variant="brand" class="slds-m-around_medium" title="Save" label="Save"
+                                onclick={handleSave}></lightning-button>
+                        </center>
+
+                    </lightning-card>
+
+                </template>
+                </template>
+
+            </lightning-tab>
+
+        </lightning-tabset>
+    </lightning-card>
+
+</template>

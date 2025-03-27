@@ -1,0 +1,166 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #f4f4f4;
+}
+.company-info {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.lookup-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f4f4f4;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.highlight {
+    font-weight: bold;
+}
+
+.slds-text-color_error, .slds-text-color--error {
+    color: #ed1717;
+}
+
+.slds-spinner-text {
+    width: 320px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+.slds-spinner--small .slds-spinner-text {
+    transform: translate(-36%, -50%) rotate(-90deg);
+}
+.slds-spinner--medium .slds-spinner-text {
+    transform: translate(-32%, -50%) rotate(-90deg);
+}
+.slds-spinner--large .slds-spinner-text {
+    transform: translate(-26%, -50%) rotate(-90deg);
+}
+
+.slds-spinner_container{
+    background-color: rgba(255, 255, 255, 50%);
+  } 
+
+  .navexStandardManager .slds-template__container .slds-spinner_container, .navexStandardManager>.center .s1FixedTop{
+    z-index: 1;
+  }
+
+
+  .slds-tabs_default .slds-tabs_default__item {
+    padding: 12px;
+}
+
+.meeting-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    /* background-color: #f0f0f0; */
+}
+
+.meeting-card {
+    /* background-color: white; */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    border: 2px solid blanchedalmond;
+}
+
+.meeting-status p {
+    font-size: 1rem;
+    color: #448b36;
+    margin-top: 20px;
+}
+
+.location-section {
+    margin-top: 20px;
+}
+
+.location-button {
+    padding: 10px 15px;
+    background-color: #0070d2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.location-button:hover {
+    background-color: #005bb5;
+}
+
+a {
+    display: block;
+    margin-top: 10px;
+    color: #0070d2;
+    text-decoration: none;
+}
+
+
+.circle-button {
+    /* width: 60px;
+    height: 60px; */
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Start Button */
+/* .start-button {
+    background-color: #4CAF50;
+} */
+
+.start-button:hover {
+    background-color: #c1efc3;
+    transform: scale(1.05);
+}
+
+.start-button:active {
+    transform: scale(0.95);
+}

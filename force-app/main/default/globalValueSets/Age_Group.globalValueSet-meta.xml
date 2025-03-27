@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Less than 25 Years</fullName>
+        <default>false</default>
+        <label>Less than 25 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>25 to 30 Years</fullName>
+        <default>false</default>
+        <label>25 to 30 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>31 to 35 Years</fullName>
+        <default>false</default>
+        <label>31 to 35 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>36 to 40 Years</fullName>
+        <default>false</default>
+        <label>36 to 40 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>41 to 45 Years</fullName>
+        <default>false</default>
+        <label>41 to 45 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>46 to 50 Years</fullName>
+        <default>false</default>
+        <label>46 to 50 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>51 to 60 Years</fullName>
+        <default>false</default>
+        <label>51 to 60 Years</label>
+    </customValue>
+    <customValue>
+        <fullName>Above 60</fullName>
+        <default>false</default>
+        <label>Above 60</label>
+    </customValue>
+    <masterLabel>Age Group</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

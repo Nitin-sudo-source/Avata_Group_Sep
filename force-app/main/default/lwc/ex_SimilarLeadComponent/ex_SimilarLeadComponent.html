@@ -1,0 +1,35 @@
+<template>
+    <lightning-card icon-name="action:new_lead" icon-size="medium" title="Similar Lead Data">
+        <div style="Padding:10px;">
+            <template if:true={getLeadInfo}>
+                <table class="Table1Css"  if:true={isShow}>
+                    <tr>
+                        <th>Project</th>
+                        <th>Name</th>
+                        <th>Lead Source</th>
+                        <th>Presales Manager</th>
+                    </tr>
+                    <template for:each={getLeadInfo} for:item="sm" for:index="index">
+                        <tr key={sm.Id}>
+                            <template if:true={sm.Project__c}>
+                                <td style="color:blue !important;" if:true={sm.Project__c} data-id={sm.Project__c}
+                                onclick={viewRecord} title="">{sm.Project__r.Name} </td>
+                            </template>
+                            <template if:false={sm.Project__c}>
+                                <td></td>
+                            </template>
+                           
+                            <td style="color:blue !important;" data-id={sm.Id} if:true={sm.Last_Name__c} onclick={viewRecord}> {sm.First_Name__c} {sm.Last_Name__c}
+                            </td>
+                            <td>{sm.Lead_Source__c}</td>
+                            <td>{sm.Owner.Name}</td>
+                        </tr>
+                    </template>
+                </table>
+            </template>
+            <template if:false={isShow}>
+                <p style="text-align:center !important;">{showError}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

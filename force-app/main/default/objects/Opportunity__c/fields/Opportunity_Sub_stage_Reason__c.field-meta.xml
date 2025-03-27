@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Sub_stage_Reason__c</fullName>
+    <label>Opportunity Sub-stage Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Opportunity_Sub_stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Opportunity_Sub_stage_Reason</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Conditional sale</controllingFieldValue>
+            <valueName>Sale of existing property</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for Smaller configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for bigger configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for RTMI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for early possession</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hot</controllingFieldValue>
+            <valueName>All Good Expected Closure</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hot</controllingFieldValue>
+            <valueName>All Good Expected Revisit Planned</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hot</controllingFieldValue>
+            <valueName>All Good Revisit Planned but Date Not Confirmed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Warm</controllingFieldValue>
+            <valueName>Expected Revisit with Family/Relatives/Friend etc.Project liked</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Warm</controllingFieldValue>
+            <valueName>Will check finances / Loan Eligibility. To call again</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Warm</controllingFieldValue>
+            <valueName>Project liked. But no commitment. To follow-up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cold</controllingFieldValue>
+            <valueName>General Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cold</controllingFieldValue>
+            <valueName>Will get back if interested</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cold</controllingFieldValue>
+            <valueName>Looking at other options</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

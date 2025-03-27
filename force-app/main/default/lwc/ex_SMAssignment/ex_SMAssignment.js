@@ -1,195 +1,195 @@
-import { LightningElement, track, api, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import getSVRecord from '@salesforce/apex/Ex_SMAssignmentController.getSVRecord';
 import getAllSalesManager from '@salesforce/apex/Ex_SMAssignmentController.getAllSalesManager';
+import getAllSalesManagerTL from '@salesforce/apex/Ex_SMAssignmentController.getAllSalesManagerTL';
 import checkUserAvailability from '@salesforce/apex/Ex_SMAssignmentController.checkUserAvailability';
 import assignSalesManager from '@salesforce/apex/Ex_SMAssignmentController.assignSalesManager';
+import reAssignSalesManager from '@salesforce/apex/Ex_SMAssignmentController.reAssignSalesManager';
 import getPreferredSalesManager from '@salesforce/apex/Ex_SMAssignmentController.getPreferredSalesManager';
-import { NavigationMixin } from 'lightning/navigation';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class Ex_SMAssignment extends NavigationMixin(LightningElement) {
-
-    
-
-    @track showSourcePage = false;
-    @track showotherDetails = false;
-    @track showAssignmentDetails = false;
-    @track svWrapper = { sv: {} };
-    @track getSVWrapperList = [];
-    @track showChannelPartner = false;
-    @track showReferenceName = false;
-    @track isSourceNotEditable = false;
-
-
-    //SM Assignment Variable
-    @track disabledAssignButton = false;
+export default class Ex_SMAssignment extends LightningElement {
     @api recordId;
     @track svRecord;
     @track getAllSMData = [];
+    @track getAllSMTLData = [];
     @track getPreferredSMArray = [];
     @track userId = '';
     @track salesManager;
     @track isSMAssign;
     @track IsSMAlreadyAssign = false;
+    @track IsSMTLReAssign = false;
     @track showMsg = '';
     @track noSMPresent = false;
-    @track showPrefferedSM = false;
+    @track showPreferredSM = false;
+    @track reAssignSM = false;
+    @track showReAssignToggle = false;
     @track isSpinner = false;
+    @track formData = {};
+    @api navigateToList;
 
+    @wire(getSVRecord, { recordId: '$recordId' })
+    wiredSVRecord({ error, data }) {
+        if (data) {
+            this.svRecord = data;
+            console.log('svRecord:', JSON.stringify(this.svRecord));
 
-    connectedCallback() {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        this.recordId = urlSearchParams.get("recordId");
-        if (this.recordId != null) {
-            this.getSVData();
-            //this.getSVWrapper();
-            this.showAssignmentDetails = true;
+            this.IsSMAlreadyAssign = this.svRecord.SV_Count__c > 1 && this.svRecord.Sales_Manager__c;
+            this.showReAssignToggle = this.IsSMAlreadyAssign;
+
+            this.getALLSM();
+            this.getPreferredSM();
+        } else {
+            this.error = error;
+            console.error('Error fetching SV Record:', error);
         }
-    }
-    
-
-    getSVData() {
-        getSVRecord({ recordId: this.recordId })
-            .then((data) => {
-                if (data) {
-                    this.svRecord = data;
-                    console.log('svRecord: ' + JSON.stringify(this.svRecord));
-                    if (this.svRecord.Is_Sales_Manager_Assigned__c == true && (this.svRecord.Sales_Manager__c != null || this.svRecord.Sales_Manager__c != '')) {
-                        this.IsSMAlreadyAssign = true;
-                    }
-                    if (this.svRecord != null) {
-                        this.getALLSM();
-                        this.getPreferredSM();
-                    }
-
-                    this.error = undefined;
-                } else {
-                    this.error = error;
-                    this.svRecord = undefined;
-                }
-            })
     }
 
     getALLSM() {
         getAllSalesManager({ svRecord: this.svRecord })
             .then((result) => {
-                if (result != null) {
-                    this.getAllSMData = result.map((user, index) => {
-                        return {
-                            ...user,
-                            index: index + 1
-                        }
-                    });
-                    if (this.getAllSMData.Availability__c == false) {
-                        this.disabledAv = this.getAllSMData.Availability__c;
-                    }
+                if (result) {
+                    this.getAllSMData = result.map((user, index) => ({
+                        ...user,
+                        index: index + 1
+                    }));
 
-                    console.log('getAllSMData: ' + JSON.stringify(this.getAllSMData));
+                    console.log('getAllSMData:', JSON.stringify(this.getAllSMData));
                 }
-
-
-            }).catch(error => {
-                this.error = error;
-                console.log('error getAllSMData: ' + JSON.stringify(this.error));
             })
+            .catch(error => {
+                console.error('Error fetching Sales Managers:', error);
+                this.showErrorMessage('error', error);
+            });
+    }
+
+    handleSMReassign(event) {
+        const { name, value, checked, type } = event.target;
+        const isCheckbox = type === 'checkbox' || type === 'checkbox-button' || type === 'toggle';
+        this.formData = { ...this.formData, [name]: isCheckbox ? checked : value };
+
+        this.reAssignSM = checked;
+        this.IsSMTLReAssign = checked;
+
+        if (checked) {
+            this.getALLSMTL();
+        }
+    }
+
+    getALLSMTL() {
+        getAllSalesManagerTL({ svRecord: this.svRecord })
+            .then((result) => {
+                if (result) {
+                    this.getAllSMTLData = result.map((user, index) => ({
+                        ...user,
+                        index: index + 1
+                    }));
+
+                    console.log('getAllSMTLData:', JSON.stringify(this.getAllSMTLData));
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching Sales Manager TL:', error);
+                this.showErrorMessage('error', error);
+            });
     }
 
     getTeamMemberUserAvailability() {
         checkUserAvailability({ userId: this.userId })
             .then((result) => {
                 this.salesManager = result;
-                console.log('salesManager: ' + JSON.stringify(this.salesManager));
-                this.assignSM();
-            }).catch(error => {
-                this.error = error;
-                console.log('error salesManager: ' + JSON.stringify(this.error));
+                console.log('Sales Manager Availability:', JSON.stringify(this.salesManager));
+
+                this.reAssignSM ? this.reAssignSManager() : this.assignSM();
             })
+            .catch(error => {
+                console.error('Error checking user availability:', error);
+                this.showErrorMessage('error', error);
+            });
     }
 
     getPreferredSM() {
         getPreferredSalesManager({ svRecord: this.svRecord })
             .then((result) => {
-                if (result != null) {
-                    this.getPreferredSMArray = result.map((user, index) => {
-                        return {
-                            ...user,
-                            index: index + 1
-                        }
-                    });
-                    if (this.getPreferredSMArray.length > 0) {
-                        this.showPrefferedSM = true;
-                        if (this.getPreferredSMArray.Availability__c == false) {
-                            this.disabledAv = this.getPreferredSMArray.Availability__c;
-                        }
-                    }
-                    console.log('getPreferredSMArray: ' + JSON.stringify(this.getPreferredSMArray));
+                if (result) {
+                    this.getPreferredSMArray = result.map((user, index) => ({
+                        ...user,
+                        index: index + 1
+                    }));
+
+                    this.showPreferredSM = this.getPreferredSMArray.length > 0;
+                    console.log('getPreferredSMArray:', JSON.stringify(this.getPreferredSMArray));
                 }
-
-
-            }).catch(error => {
-                this.error = error;
-                console.log('error getPreferredSMArray: ' + JSON.stringify(this.error));
             })
+            .catch(error => {
+                console.error('Error fetching Preferred Sales Managers:', error);
+                this.showErrorMessage('error', error);
+            });
     }
-
 
     assignSM() {
         this.isSpinner = true;
         assignSalesManager({ svRecord: this.svRecord, salesManager: this.salesManager })
             .then((result) => {
                 this.isSMAssign = result;
-                console.log('isSMAssign: ' + JSON.stringify(this.isSMAssign));
-                if (this.isSMAssign == true) {
-                    const toastEvent = new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Sales Manager Assigned Successfully',
-                        variant: 'success'
-                    });
-                    this.dispatchEvent(toastEvent);
-                    window.location.href = '/' + this.recordId;
-                    this.isSpinner = false;
-                } else {
-                    const toastEvent = new ShowToastEvent({
-                        title: 'error',
-                        message: 'Something went wrong please contact System Administrator',
-                        variant: 'error'
-                    });
-                    this.dispatchEvent(toastEvent);
-                }
-                return;
-            }).catch(error => {
-                this.error = error;
-                console.log('error isSMAssign: ' + JSON.stringify(this.error));
+                console.log('Sales Manager Assigned:', result);
+
+                this.handleAssignmentResult(result, 'Sales Manager Assigned Successfully.');
             })
+            .catch(error => {
+                console.error('Error assigning Sales Manager:', error);
+                this.showErrorMessage('error', error);
+                this.isSpinner = false;
+            });
+    }
+
+    reAssignSManager() {
+        this.isSpinner = true;
+        reAssignSalesManager({ svRecord: this.svRecord, salesManager: this.salesManager, reAssign: this.reAssignSM })
+            .then((result) => {
+                this.isSMAssign = result;
+                console.log('Sales TL Re-Assigned:', result);
+
+                this.handleAssignmentResult(result, 'Sales TL Re-Assigned Successfully.');
+            })
+            .catch(error => {
+                console.error('Error reassigning Sales Manager:', error);
+                this.showErrorMessage('error', error);
+                this.isSpinner = false;
+            });
+    }
+
+    handleAssignmentResult(result, successMessage) {
+        if (result) {
+            this.showErrorMessage('success', successMessage);
+            this.navigateToList('/' + this.recordId);
+        } else {
+            this.showErrorMessage('error', 'Something went wrong, please contact the System Administrator.');
+        }
+        this.isSpinner = false;
     }
 
     handleAssign(event) {
         this.userId = event.target.value;
-        console.log('userId: ' + JSON.stringify(this.userId));
+        console.log('Selected User ID:', this.userId);
         this.getTeamMemberUserAvailability();
+    }
 
+    handleReAssign(event) {
+        this.userId = event.target.value;
+        console.log('Selected User ID for Reassignment:', this.userId);
+        this.getTeamMemberUserAvailability();
     }
 
     handleCancel() {
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.recordId,
-                actionName: 'view'
-            }
-        });
+        if (this.recordId) {
+            this.navigateToList('/' + this.recordId);
+        } else {
+            console.error('Record ID is not defined');
+        }
     }
 
-    // callRecordPage(){
-    //     const toastEvent = new ShowToastEvent({
-    //                     title: 'Success',
-    //                     message: 'Sources Details Updated Successfully',
-    //                     variant: 'success'
-    //                 });
-    //                 this.dispatchEvent(toastEvent);
-    //                 window.location.href = '/' + this.recordId;
-    //                 this.isSpinner = false;
-        
-    // }
-
+    showErrorMessage(type, message) {
+        this.isSpinner = false;
+        this.template.querySelector('c-custom-toast').showToast(type, message, 'utility:warning', 10000);
+    }
 }

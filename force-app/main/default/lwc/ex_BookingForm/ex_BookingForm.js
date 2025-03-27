@@ -1,11 +1,25 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 27-03-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 import { LightningElement, api, track, wire } from 'lwc';
 import getQuotationDetails from '@salesforce/apex/Ex_BookingFormController.getQuotationDetails';
 import getBookingWrapper from '@salesforce/apex/Ex_BookingFormController.getBookingWrapper';
 // import getReceiptWrapper from '@salesforce/apex/Ex_BookingFormController.getReceiptWrapper';
 import ApplicantdocumentDetails from '@salesforce/apex/Ex_BookingFormController.ApplicantdocumentDetails';
+import { getObjectInfo, getPicklistValues } from "lightning/uiObjectInfoApi";
+import APPLICANT_OBJECT from "@salesforce/schema/Applicant__c";
+import Applicant_Number from "@salesforce/schema/Applicant__c.Applicant_Number__c";
+
+
+
 import createBookingRecord from '@salesforce/apex/Ex_BookingFormController.createBookingRecord';
 import getReceipts from '@salesforce/apex/Ex_BookingFormController.getReceipts';
 import getLegalEntityDetails from '@salesforce/apex/Ex_BookingFormController.getLegalEntityDetails';
+
 
 export default class Ex_BookingForm extends LightningElement {
 
@@ -38,6 +52,33 @@ export default class Ex_BookingForm extends LightningElement {
     @api activeTabValue = 'defaultTabValue'; // Default value
     @track applicantCounter = 1;
     @track documentsArray = [];
+
+    @track applicantTab;
+
+
+    // @wire(getObjectInfo, { objectApiName: ACCOUNT_OBJECT })
+    // results({ error, data }) {
+    //   if (data) {
+    //     this.accountRecordTypeId = data.defaultRecordTypeId;
+    //     this.error = undefined;
+    //   } else if (error) {
+    //     this.error = error;
+    //     this.accountRecordTypeId = undefined;
+    //   }
+    // }
+  
+    @wire(getPicklistValues, { fieldApiName: Applicant_Number })
+    picklistResults({ error, data }) {
+      if (data) {
+        this.applicantTab = data.values;
+        this.error = undefined;
+        console.log('applicantTab: '+JSON.stringify(this.applicantTab));
+      } else if (error) {
+        this.error = error;
+        this.applicantTab = undefined;
+      }
+    }
+  
 
     connectedCallback() {
         const urlSearchParams = new URLSearchParams(window.location.search);

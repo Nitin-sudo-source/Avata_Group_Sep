@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_TAT__c</fullName>
+    <description>This field represents the Turnaround Time (TAT) for a project, which is used in calculating the validity date of associated opportunities to The Project</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This field represents the Turnaround Time (TAT) for a project, which is used in calculating the validity date of associated opportunities to the Project</inlineHelpText>
+    <label>Source TAT</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

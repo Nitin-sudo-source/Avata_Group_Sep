@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Follow_Up_Date_Required_Except_Lost</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISNEW() == FALSE,
+ISPICKVAL(Opportunity_Stage__c, &apos;In Follow-up&apos;),
+ISBLANK(Next_Follow_up_Date__c)
+)</errorConditionFormula>
+    <errorDisplayField>Next_Follow_up_Date__c</errorDisplayField>
+    <errorMessage>Next Follow Up Date Is Mandatory</errorMessage>
+</ValidationRule>

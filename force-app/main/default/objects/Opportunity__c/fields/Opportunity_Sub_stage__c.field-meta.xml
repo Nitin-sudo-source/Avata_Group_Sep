@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Sub_stage__c</fullName>
+    <label>Opportunity Sub-stage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Opportunity_Stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Opportunity_Sub_stage</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>In Follow-up</controllingFieldValue>
+            <valueName>Hot</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>In Follow-up</controllingFieldValue>
+            <valueName>Warm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>In Follow-up</controllingFieldValue>
+            <valueName>Cold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booked</controllingFieldValue>
+            <valueName>Spot Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booked</controllingFieldValue>
+            <valueName>Revisit Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Cancelled</controllingFieldValue>
+            <valueName>Before Registration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Cancelled</controllingFieldValue>
+            <valueName>After Registration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Cancelled</controllingFieldValue>
+            <valueName>Booking Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Did not like layout of the flat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Location Mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Booked in other project</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Booked in resale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Plan to buy home is Postponed / cancelled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Not Answering. Pre-sales to follow-up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Not Vastu compliant</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Budget does not match</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Area/Configuration Mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Possession does not match</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>General Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Loan Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Negotiation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Choice of Unit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Conditional sale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost</controllingFieldValue>
+            <valueName>Commercial Property Enquiry</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

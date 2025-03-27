@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Saleable Area</fullName>
+        <default>false</default>
+        <label>Saleable Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Carpet Area</fullName>
+        <default>false</default>
+        <label>Carpet Area</label>
+    </customValue>
+    <masterLabel>Calculation Area Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

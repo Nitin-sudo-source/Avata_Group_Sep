@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_CP_Created_by_GRE_only_for_GREs</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(
+  AND (
+      ISNEW(),
+      Is_CP_Created_by_GRE__c = true,
+      $Profile.Name != &apos;GRE&apos;
+  ),
+  true,
+  false
+)</errorConditionFormula>
+    <errorMessage>&quot;Is CP Created by GRE&quot; can only be checked by GRE</errorMessage>
+</ValidationRule>

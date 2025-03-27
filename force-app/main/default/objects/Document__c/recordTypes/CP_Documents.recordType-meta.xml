@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_Documents</fullName>
+    <active>true</active>
+    <label>CP Documents</label>
+    <picklistValues>
+        <picklist>Document_Type__c</picklist>
+        <values>
+            <fullName>Aadhaar Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GST Registration Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pan Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RERA Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RERA Competency Certificate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

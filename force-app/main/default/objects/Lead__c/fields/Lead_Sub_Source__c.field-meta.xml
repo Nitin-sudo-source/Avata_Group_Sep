@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Sub_Source__c</fullName>
+    <label>Lead Sub Source</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Lead_Source__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Lead_Sub_Source</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Events</controllingFieldValue>
+            <valueName>Society Activation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Events</controllingFieldValue>
+            <valueName>Club Activation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Events</controllingFieldValue>
+            <valueName>Mall Activation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Events</controllingFieldValue>
+            <valueName>Corporate Park Activation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel Partner</controllingFieldValue>
+            <valueName>Channel Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Direct</controllingFieldValue>
+            <valueName>Direct</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reference</controllingFieldValue>
+            <valueName>Reference</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>VDNB</controllingFieldValue>
+            <valueName>VDNB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Exhibition</controllingFieldValue>
+            <valueName>Exhibition</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Google Search</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Google Display</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>YouTube</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Google</controllingFieldValue>
+            <valueName>Discovery Ads</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Facebook</controllingFieldValue>
+            <valueName>Lead Gen Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Facebook</controllingFieldValue>
+            <valueName>Instagram</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Facebook</controllingFieldValue>
+            <valueName>Web Conversion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregators</controllingFieldValue>
+            <valueName>MagicBricks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregators</controllingFieldValue>
+            <valueName>NoBroker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregators</controllingFieldValue>
+            <valueName>Housing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aggregators</controllingFieldValue>
+            <valueName>99Acres</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organic</controllingFieldValue>
+            <valueName>Corporate Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organic</controllingFieldValue>
+            <valueName>ORM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Newspaper</controllingFieldValue>
+            <valueName>Jacket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Newspaper</controllingFieldValue>
+            <valueName>Power Jacket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Newspaper</controllingFieldValue>
+            <valueName>Full Page</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Newspaper</controllingFieldValue>
+            <valueName>Half Page</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Newspaper</controllingFieldValue>
+            <valueName>Inserts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Radio</controllingFieldValue>
+            <valueName>RJ Mentions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Radio</controllingFieldValue>
+            <valueName>Integration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Radio</controllingFieldValue>
+            <controllingFieldValue>Television</controllingFieldValue>
+            <valueName>Show Sponsorship</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Television</controllingFieldValue>
+            <valueName>Advertisement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Billboard</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Bus Shelter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Kiosk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Cantilever</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Gantry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Mobile Van</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Bus Panel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Railway Station Boards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>In Train Branding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Standee</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hoarding</controllingFieldValue>
+            <valueName>Site Branding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SMS</controllingFieldValue>
+            <valueName>Internal SMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SMS</controllingFieldValue>
+            <valueName>External SMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WhatsApp</controllingFieldValue>
+            <valueName>Internal WhatsApp</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WhatsApp</controllingFieldValue>
+            <valueName>External WhatsApp</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

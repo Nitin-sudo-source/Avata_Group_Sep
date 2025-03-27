@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Joint Family</fullName>
+        <default>false</default>
+        <label>Joint Family</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuclear Family without Elders</fullName>
+        <default>false</default>
+        <label>Nuclear Family without Elders</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuclear Family with Elders</fullName>
+        <default>false</default>
+        <label>Nuclear Family with Elders</label>
+    </customValue>
+    <customValue>
+        <fullName>Siblings Living Together</fullName>
+        <default>false</default>
+        <label>Siblings Living Together</label>
+    </customValue>
+    <customValue>
+        <fullName>Singles/Friends Living Together</fullName>
+        <default>false</default>
+        <label>Singles/Friends Living Together</label>
+    </customValue>
+    <masterLabel>Family Size</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

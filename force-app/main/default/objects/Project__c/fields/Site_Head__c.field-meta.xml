@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Site_Head__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The name of the Site Head for a project. Automatically fills the Site Visit Approver if Source Conflict is checked</description>
+    <inlineHelpText>The name of the Site Head for a project. Automatically fills the Site Visit Approver if Source Conflict is checked</inlineHelpText>
+    <label>Site Head</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Projects2</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

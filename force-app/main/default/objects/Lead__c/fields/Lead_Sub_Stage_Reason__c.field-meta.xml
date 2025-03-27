@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Sub_Stage_Reason__c</fullName>
+    <label>Lead Sub Stage Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Lead_Sub_Stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Lead_Substage_Reason</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for RTMI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Possession does not match</controllingFieldValue>
+            <valueName>Looking for early possession</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booked with someone else</controllingFieldValue>
+            <valueName>After Pitched</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booked with someone else</controllingFieldValue>
+            <valueName>Before Pitched</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not answering / responding</controllingFieldValue>
+            <valueName>Switched off, not reachable, not answering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Invalid customer contact number</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Invalid Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>False Enquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Not looking for the property</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Abusive Clients</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Channel Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Junk</controllingFieldValue>
+            <valueName>Booked Customers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for Smaller configuration/area</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Area/Configuration Mismatch</controllingFieldValue>
+            <valueName>Looking for bigger configuration/area</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

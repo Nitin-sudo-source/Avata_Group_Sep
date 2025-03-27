@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Govt. Employee</fullName>
+        <default>false</default>
+        <label>Govt. Employee</label>
+    </customValue>
+    <customValue>
+        <fullName>Business</fullName>
+        <default>false</default>
+        <label>Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Shop owner</fullName>
+        <default>false</default>
+        <label>Shop owner</label>
+    </customValue>
+    <customValue>
+        <fullName>Professionals</fullName>
+        <default>false</default>
+        <label>Professionals</label>
+    </customValue>
+    <customValue>
+        <fullName>Retired</fullName>
+        <default>false</default>
+        <label>Retired</label>
+    </customValue>
+    <customValue>
+        <fullName>Homemaker / Housewife</fullName>
+        <default>false</default>
+        <label>Homemaker / Housewife</label>
+    </customValue>
+    <customValue>
+        <fullName>Freelancer</fullName>
+        <default>false</default>
+        <label>Freelancer</label>
+    </customValue>
+    <customValue>
+        <fullName>Did not Provide</fullName>
+        <default>false</default>
+        <label>Did not Provide</label>
+    </customValue>
+    <customValue>
+        <fullName>Employed in Pvt. company</fullName>
+        <default>false</default>
+        <label>Employed in Pvt. company</label>
+    </customValue>
+    <customValue>
+        <fullName>Private Company</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Private Company</label>
+    </customValue>
+    <masterLabel>Occupation</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

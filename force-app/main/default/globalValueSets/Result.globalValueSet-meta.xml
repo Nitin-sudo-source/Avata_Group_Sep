@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>New Lead</fullName>
+        <default>false</default>
+        <label>New Lead</label>
+    </customValue>
+    <customValue>
+        <fullName>New Enquiry Against Lead</fullName>
+        <default>false</default>
+        <label>New Enquiry Against Lead</label>
+    </customValue>
+    <customValue>
+        <fullName>New Enquiry Against Account</fullName>
+        <default>false</default>
+        <label>New Enquiry Against Account</label>
+    </customValue>
+    <customValue>
+        <fullName>Error</fullName>
+        <default>false</default>
+        <label>Error</label>
+    </customValue>
+    <customValue>
+        <fullName>New Enquiry Against Opportunity</fullName>
+        <default>false</default>
+        <label>New Enquiry Against Opportunity</label>
+    </customValue>
+    <masterLabel>Result</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
