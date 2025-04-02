@@ -319,7 +319,7 @@ export default class Ex_BookingForm extends LightningElement {
                 'min-height:420px !important;' +
                 '}';
             //console.log('STYLE::' + STYLE);
-            this.template.querySelector('modern-form-container').appendChild(STYLE);
+            this.template.querySelector('lightning-card').appendChild(STYLE);
             this.isLoadedFull = true;
         } catch (error) {
             //console.log('## error in renderedCallback: ' + JSON.stringify(error));
