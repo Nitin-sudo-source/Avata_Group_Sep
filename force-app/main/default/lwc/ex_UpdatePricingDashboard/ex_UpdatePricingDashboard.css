@@ -422,3 +422,20 @@ margin: 0;
 .update-button:hover {
   background-color: #d1d2d4; /* Different hover effect for update buttons */
 }
+
+
+.calculate-button{
+  background-color: #0000005e;
+  font-size: medium;
+  font-weight: normal;
+  margin: 0;
+  padding: 14px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+}

@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 03-04-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 public class Ex_AfterBookingPriceManagementServices {
     
     public static Unit__c getUnitInfo(Id uId) {
@@ -464,14 +471,7 @@ public class Ex_AfterBookingPriceManagementServices {
                                     amount = ((Decimal)psm.get('Charge_Bucket_'+i+'_Amount__c')).setscale(0,RoundingMode.HALF_UP);
                                     percentage = (((Decimal)psm.get('Charge_Bucket_'+i+'_Amount__c') / allPriceInfoMap.get('Agreement Value')) * 100).setscale(2,RoundingMode.HALF_UP);
                                 }
-                               /* if(psm.Token_Amount__c != null && psm.Token_Amount__c != 0) {
-                                    tokenAmount = psm.Token_Amount__c;
-                                }*/
-                               /* if(psm.Deduct_Token__c && tokenAmount != 0) {
-                                    amount = amount - tokenAmount;
-                                    percentage = ((amount / allPriceInfoMap.get('Agreement Value')) * 100).setscale(2,RoundingMode.HALF_UP);
-                                    psm.put('Charge_Bucket_'+i+'__c', 'Amount');
-                                }*/
+                              
                                 if(allPriceInfoMap.get('Agreement Value') < u.Tower__r.Project__r.Threshold_Amount__c) {
                                     sgst =  (((amount / 100) * u.Tower__r.Project__r.Threshold_Percentage__c) / 2).setscale(0,RoundingMode.HALF_UP);
                                     cgst =  (((amount / 100) * u.Tower__r.Project__r.Threshold_Percentage__c) / 2).setscale(0,RoundingMode.HALF_UP);
@@ -563,94 +563,68 @@ public class Ex_AfterBookingPriceManagementServices {
         }
         
         // Update the last and second-to-last row elements in the list
-        if (allPriceInfoMap != null & paymentMilestoneWrapperList != null && !paymentMilestoneWrapperList.isEmpty()) {
-            // Retrieve the last element in the list
-            PaymentMilestoneWrapper lastRowElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 1];
-            // Retrieve the second-to-last element in the list
-            PaymentMilestoneWrapper secondToLastElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 2];
+        // if (allPriceInfoMap != null & paymentMilestoneWrapperList != null && !paymentMilestoneWrapperList.isEmpty()) {
+        //     // Retrieve the last element in the list
+        //     PaymentMilestoneWrapper lastRowElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 1];
+        //     // Retrieve the second-to-last element in the list
+        //     PaymentMilestoneWrapper secondToLastElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 2];
             
-            // Calculate differences for the last row
-            Decimal amountDiffLatest = allPriceInfoMap.get('Agreement Value') - lastRowElement.amount;
-            System.debug('amountDiffLatest: '+amountDiffLatest);
-            Decimal taxDiffLatest = allPriceInfoMap.get('Agreement Value TAX') - lastRowElement.tax;
-            System.debug('taxDiffLatest:'+ taxDiffLatest);
+        //     // Calculate differences for the last row
+        //     Decimal amountDiffLatest = allPriceInfoMap.get('Agreement Value') - lastRowElement.amount;
+        //     System.debug('amountDiffLatest: '+amountDiffLatest);
+        //     Decimal taxDiffLatest = allPriceInfoMap.get('Agreement Value TAX') - lastRowElement.tax;
+        //     System.debug('taxDiffLatest:'+ taxDiffLatest);
             
-            // Adjust percentage values dynamically to stay within the range of 0% to 100%
-           /* if (percentageDiff != 0) {
-                Decimal newLastRowPercentage = lastRowElement.percentage + percentageDiff;
-                System.debug('newLastRowPercentage: '+newLastRowPercentage);
-                // Ensure the last row percentage is within the range 0% to 100%
-                newLastRowPercentage = Math.min(Math.max(newLastRowPercentage, 0), 100);
-                lastRowElement.percentage = newLastRowPercentage;
-                lastRowElement.percentageString = String.valueOf(lastRowElement.percentage) + '%';
-                
-                Decimal newSecondToLastPercentage = secondToLastElement.percentage + percentageDiff;
-                // Ensure the second-to-last percentage is within the range 0% to 100%
-                newSecondToLastPercentage = Math.min(Math.max(newSecondToLastPercentage, 0), 100);
-                secondToLastElement.percentage = newSecondToLastPercentage;
-                secondToLastElement.percentageString = String.valueOf(secondToLastElement.percentage) + '%';
-                
-                for (Integer i = 1; i <= 5; i++) {
-                    if (String.isNotBlank((String) secondToLastElement.pm.get('Charge_Bucket_' + i + '__c'))) {
-                        if (((String) secondToLastElement.pm.get('Charge_Bucket_' + i + '__c')).equalsIgnoreCase('Agreement Value')) {
-                            secondToLastElement.pm.put('Charge_Bucket_' + i + '_Percentage__c',
-                                                       ((Decimal) secondToLastElement.pm.get('Charge_Bucket_' + i + '_Percentage__c') + percentageDiff));
-                        }
-                    }
-                }
-                
-                System.debug('secondToLastElement.percentage: ' + secondToLastElement.percentage);
-            }*/
 
             
-            // Update the last row element
-            if (amountDiffLatest != 0) {
-                lastRowElement.amount = lastRowElement.amount + amountDiffLatest;
-                lastRowElement.amountString = currencyFormat(lastRowElement.amount);
-                system.debug('Grand Total Updated Amount: ' + lastRowElement.amountString);
+        //     // Update the last row element
+        //     if (amountDiffLatest != 0) {
+        //         lastRowElement.amount = lastRowElement.amount + amountDiffLatest;
+        //         lastRowElement.amountString = currencyFormat(lastRowElement.amount);
+        //         system.debug('Grand Total Updated Amount: ' + lastRowElement.amountString);
                 
                 
-                secondToLastElement.amount = secondToLastElement.amount + amountDiffLatest;
-                secondToLastElement.amountString = currencyFormat(secondToLastElement.amount);
-                system.debug('Last Milestone Updated Amount: ' + secondToLastElement.amountString);
+        //         secondToLastElement.amount = secondToLastElement.amount + amountDiffLatest;
+        //         secondToLastElement.amountString = currencyFormat(secondToLastElement.amount);
+        //         system.debug('Last Milestone Updated Amount: ' + secondToLastElement.amountString);
                 
-                for(Integer i = 1; i <= 5; i++) {
-                    if(String.isNotBlank((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c'))) {
-                        if(((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
-                            secondToLastElement.pm.put('Charge_Bucket_'+i+'_Amount__c', ((Decimal)secondToLastElement.pm.get('Charge_Bucket_'+i+'_Amount__c') + amountDiffLatest));
-                        }
-                    }
-                }
-            }
+        //         for(Integer i = 1; i <= 5; i++) {
+        //             if(String.isNotBlank((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c'))) {
+        //                 if(((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
+        //                     secondToLastElement.pm.put('Charge_Bucket_'+i+'_Amount__c', ((Decimal)secondToLastElement.pm.get('Charge_Bucket_'+i+'_Amount__c') + amountDiffLatest));
+        //                 }
+        //             }
+        //         }
+        //     }
             
-            if (taxDiffLatest != 0) {
-                lastRowElement.tax = lastRowElement.tax + taxDiffLatest;
-                lastRowElement.taxString = currencyFormat(lastRowElement.tax);
-                system.debug('Grand Total Updated Tax: ' + lastRowElement.taxString);
+        //     if (taxDiffLatest != 0) {
+        //         lastRowElement.tax = lastRowElement.tax + taxDiffLatest;
+        //         lastRowElement.taxString = currencyFormat(lastRowElement.tax);
+        //         system.debug('Grand Total Updated Tax: ' + lastRowElement.taxString);
                 
-                secondToLastElement.tax = secondToLastElement.tax + taxDiffLatest;
-                secondToLastElement.taxString = currencyFormat(secondToLastElement.tax);
-                system.debug('Last Milestone Updated Tax: ' + secondToLastElement.taxString);
+        //         secondToLastElement.tax = secondToLastElement.tax + taxDiffLatest;
+        //         secondToLastElement.taxString = currencyFormat(secondToLastElement.tax);
+        //         system.debug('Last Milestone Updated Tax: ' + secondToLastElement.taxString);
                 
-                for(Integer i = 1; i <= 5; i++) {
-                    if(String.isNotBlank((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c'))) {
-                        if(((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
-                            secondToLastElement.pm.put('Charge_Bucket_'+i+'_Total_Tax__c', ((Decimal)secondToLastElement.pm.get('Charge_Bucket_'+i+'_Total_Tax__c') + taxDiffLatest));
-                        }
-                    }
-                }
-            }
+        //         for(Integer i = 1; i <= 5; i++) {
+        //             if(String.isNotBlank((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c'))) {
+        //                 if(((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
+        //                     secondToLastElement.pm.put('Charge_Bucket_'+i+'_Total_Tax__c', ((Decimal)secondToLastElement.pm.get('Charge_Bucket_'+i+'_Total_Tax__c') + taxDiffLatest));
+        //                 }
+        //             }
+        //         }
+        //     }
             
-            if (lastRowElement.amount != null && lastRowElement.tax != null) {
-                lastRowElement.Total = lastRowElement.amount + lastRowElement.tax;
-                lastRowElement.totalString = currencyFormat(lastRowElement.Total);
+        //     if (lastRowElement.amount != null && lastRowElement.tax != null) {
+        //         lastRowElement.Total = lastRowElement.amount + lastRowElement.tax;
+        //         lastRowElement.totalString = currencyFormat(lastRowElement.Total);
                 
-                secondToLastElement.Total = secondToLastElement.amount + secondToLastElement.tax;
-                secondToLastElement.totalString = currencyFormat(secondToLastElement.Total);
-            }
+        //         secondToLastElement.Total = secondToLastElement.amount + secondToLastElement.tax;
+        //         secondToLastElement.totalString = currencyFormat(secondToLastElement.Total);
+        //     }
             
             
-        }
+        // }
         system.debug('paymentMilestoneWrapperList: '+paymentMilestoneWrapperList);
         return paymentMilestoneWrapperList;
     }
