@@ -5,7 +5,7 @@
 //  Author: Sarjerao Deshmukh
 //-------------------------------------------//
 public class Ex_TaskHandlerServices {
-    public static void validationCheckforPresaleCall(Map<Id, List<Task>> taskMap) {
+   /* public static void validationCheckforPresaleCall(Map<Id, List<Task>> taskMap) {
         List<Lead__c> leadList = new List<Lead__c>();
         Map<Id, Lead__c> leadMap = new Map<Id, Lead__c>();
         Map<String, String> stageMap = getStagesMap();
@@ -39,6 +39,7 @@ public class Ex_TaskHandlerServices {
             }
         }
     }
+		*/
     
     public static void CallHandlerServices(Set<Id> taskId, String operation, Boolean count) {
         Map<Id, List<Task>> mapRollUpLead = new Map<Id, List<Task>>();

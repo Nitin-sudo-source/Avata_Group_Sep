@@ -459,14 +459,33 @@ export default class Ex_BookingForm extends LightningElement {
         try {
             const tabKey = event.currentTarget.dataset.key;
             const fieldApiName = event.target.fieldName;
-            const fieldValue = event.target.value;
+            let fieldValue = event.target.value;
+    
+            // Format Aadhar number as user types
+            if (fieldApiName === 'Aadhar_Number__c') {
+                // Remove all non-digit characters
+                const digitsOnly = fieldValue.replace(/\D/g, '');
+                
+                // Format with spaces (XXXX XXXX XXXX)
+                if (digitsOnly.length > 0) {
+                    let formatted = '';
+                    for (let i = 0; i < digitsOnly.length; i++) {
+                        if (i === 4 || i === 8) {
+                            formatted += ' ';
+                        }
+                        formatted += digitsOnly[i];
+                    }
+                    fieldValue = formatted.substring(0, 14); // Max length with spaces
+                }
+                
+                // Update the input field with formatted value
+                event.target.value = fieldValue;
+            }
     
             const applicantIndex = this.getApplicantData.findIndex(item => item.key === tabKey);
             if (applicantIndex !== -1) {
                 const updatedApplicant = { ...this.getApplicantData[applicantIndex] };
                 updatedApplicant.ap = { ...updatedApplicant.ap, [fieldApiName]: fieldValue };
-    
-                //console.log('updatedApplicant::', JSON.stringify(updatedApplicant));
     
                 // **Handling Mailing Address Copying**
                 if (updatedApplicant.ap.Mailing_Address_Same_as_PermanentAddress__c === true) {
@@ -482,14 +501,11 @@ export default class Ex_BookingForm extends LightningElement {
     
                 if (updatedApplicant.documents && updatedApplicant.documents.length > 0) {
                     updatedApplicant.documents.forEach(doc => {
-                        //console.log('Checking document:', doc);
                         if (doc.filename && doc.base64) {
                             isDocumentUploaded = true;
                         }
                     });
                 }
-    
-                //console.log('isDocumentUploaded:', isDocumentUploaded);
     
                 // **Clear Documents if Upload is NOT Required**
                 if (updatedApplicant.ap.Document_Upload_Required__c === 'No') {
@@ -500,7 +516,6 @@ export default class Ex_BookingForm extends LightningElement {
                         });
                     }
                     updatedApplicant.documents = [];
-                    //console.log('Documents cleared as upload is not required.');
                 }
     
                 // **Trigger Document Upload if Required and Not Uploaded**
@@ -516,11 +531,11 @@ export default class Ex_BookingForm extends LightningElement {
                     this.showMsg = this.showErrorPan ? 'Please Enter Valid PAN Number' : '';
                 }
     
-                // **Aadhar Validation**
+                // **Aadhar Validation** - now validates the digits only
                 else if (fieldApiName === 'Aadhar_Number__c') {
-                    const aadharNumber = event.detail.value;
+                    const aadharNumber = fieldValue.replace(/\s/g, ''); // Remove spaces for validation
                     this.showError = !this.validateAadharNumber(aadharNumber);
-                    this.showMsg = this.showError ? 'Please Enter Valid Aadhar Number' : '';
+                    this.showMsg = this.showError ? 'Please Enter Valid Aadhar Number (12 digits)' : '';
                 }
     
                 // **PIN Validation**
@@ -540,9 +555,6 @@ export default class Ex_BookingForm extends LightningElement {
                 // **Update Applicant Data Efficiently**
                 this.getApplicantData.splice(applicantIndex, 1, updatedApplicant);
             }
-    
-            //console.log('Applicant Data::', JSON.stringify(this.getApplicantData));
-    
         } catch (error) {
             console.error(error.message);
         }
@@ -562,8 +574,10 @@ export default class Ex_BookingForm extends LightningElement {
     }
 
     validateAadharNumber(aadharNumber) {
+        // Remove any spaces for validation
+        const digitsOnly = aadharNumber.replace(/\s/g, '');
         const aadharRegex = /^\d{12}$/;
-        return aadharRegex.test(aadharNumber);
+        return aadharRegex.test(digitsOnly);
     }
 
     validPINNumber(pinNumber) {

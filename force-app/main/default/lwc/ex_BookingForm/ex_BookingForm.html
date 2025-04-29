@@ -403,17 +403,24 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th style="text-align:left;">Aadhar Card No<span style="color: red;">*</span>
-                                            </th>
-                                            <td>
-                                                <lightning-input-field name="Aadhar_Number__c" data-id="Aadhar_Number__c"
-                                                    value={applicant.ap.Aadhar_Number__c} data-key={applicant.key}
-                                                    variant="label-hidden" field-name="Aadhar_Number__c"
-                                                    onchange={handleApplicant}></lightning-input-field>
-                                                <div if:true={showError} class="slds-text-color_error">
-                                                    {showMsg}
-                                                </div>
-                                            </td>
+                                            <th style="text-align:left;">Aadhar Card No<span style="color: red;">*</span></th>
+<td>
+    <lightning-input-field 
+        name="Aadhar_Number__c" 
+        data-id="Aadhar_Number__c"
+        value={applicant.ap.Aadhar_Number__c} 
+        data-key={applicant.key}
+        variant="label-hidden" 
+        field-name="Aadhar_Number__c"
+        maxlength="14"
+        onchange={handleApplicant}
+        type="text"  
+        pattern="\d*"  
+    ></lightning-input-field>
+    <div if:true={showError} class="slds-text-color_error">
+        {showMsg}
+    </div>
+</td>
     
                                             <th style="text-align:left;">PAN Number<span style="color: red;">*</span>
                                             </th>

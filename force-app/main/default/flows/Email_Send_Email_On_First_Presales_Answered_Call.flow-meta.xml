@@ -202,7 +202,7 @@
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173856256238187</stringValue>
+                <stringValue>1707174349646423816</stringValue>
             </value>
         </inputAssignments>
         <object>SMS__c</object>
@@ -300,8 +300,11 @@ ISPICKVAL({!$Record.Call_Status__c}, &quot;ANSWER&quot;)</filterFormula>
     <textTemplates>
         <name>SMSBodyforFirstPresalesCall</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hello {!Get_Lead.First_Name__c} {!$User.LastName},
-Thank you for giving your valuable time to Avant Group.We appreciate you connecting with us!For any further queries, simply reply to this message with Hi or visit our website for more information: www.avantinfra.com Will looking forward to assisting you.Best Regards,Team Avant</text>
+        <text>Hi {!Get_Lead.Full_Name__c}, 
+Thank you for taking the time to discuss your interest in our project, {!Get_Lead.Project__r.Name}. We are excited to assist you in finding your dream home. 
+Feel free to contact us at {!Get_Lead.Owner:User.MobilePhone} to book your site visit or for further assistance. Looking forward to connecting with you again soon! 
+Regards, 
+Team Avant.</text>
     </textTemplates>
     <textTemplates>
         <name>SMSRemarks</name>

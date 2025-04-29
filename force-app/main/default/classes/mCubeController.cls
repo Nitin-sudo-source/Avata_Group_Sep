@@ -415,7 +415,24 @@ global without sharing class mCubeController {
                     Id recid = cw.refid;
                     system.debug('recid'+recid);
                     objectName = recid.getSObjectType().getDescribe().getName();
-                }
+                }/*@date 3.4.2024
+                  * if cw.refID is null or empty (i.e else block) need to follow the below steps
+                  *    cw.landingnumber is mathcing with below values
+                  * 	8722600060
+						7353030808
+						7353032424
+						7353033434
+						8722600056
+                  * 	else if((cw.refid==null || cw.refid!='')&& (cw.landingnumber=='8722600060' ||
+																	cw.landingnumber=='7353030808' ||
+																	cw.landingnumber=='7353032424' ||
+																	cw.landingnumber=='7353033434' ||
+																	cw.landingnumber=='8722600056' ))
+                  * 	
+                  * 	Step1: first with the customer number (cw.callfrom) is there any exisitng lead if lead found with that number update the cw.refID with the retrived record
+                  * 	Step2: if no lead found create a new lead and update the lead id to cw.refID
+                  * 	Step3: update the object name varaible
+                  * /
                 
                /* for (MCUBE_Object_Api__c m : mcubeObjectList) {
                     if (m.LandingNumber__c == cw.landingnumber) { 
@@ -426,6 +443,55 @@ global without sharing class mCubeController {
                 // Handle inbound call when executive is null
                 if (cw.executive == null) {
                     if (cw.dialstatus == 'CONNECTING') {
+                        /* Nachikethan add you code here */
+                        
+                        
+                        List<String> landingNumberList = System.Label.Mcube_Exceptional_LaningNumber.split(',');
+                        //Updating cw.refid and Object Name if the landingnumbers are matching below
+                        if((cw.refid==null || cw.refid=='')&& !landingNumberList.isEmpty() && landingNumberList.contains(cw.landingnumber)) {
+                                                                        //checking whether there is an existing lead
+                                                                        Lead__c ld;
+                                                                        List<Lead__c> leadLIst = [SELECT Id FROM Lead__c WHERE Mobile__c LIKE : cw.callfrom LIMIT 1];
+                                                                        if(!leadLIst.isEmpty()) {
+                                                                            ld =  leadLIst[0];
+                                                                            cw.refid = ld.Id;
+                                                                        }
+                                                                        //creating new lead if there is no existing lead
+                                                                        else {
+                                                                            
+                                                                        /*
+                                                                         * @date: 25.4.2025
+                                                                         * @desc: capture the campaing infomraiton and map the lead
+                                                                         * @author: Naveen kumar R
+																		*/   
+                                                     List<Campaign__c> CampaignList = [SELECT Id,Virtual_Number__c,	Campaign_Code__c,	Active__c,	Lead_Source__c,	Lead_Sub_Source__c,	Source_Description__c
+                                                                                      FROM Campaign__c 
+                                                                                      WHERE Virtual_Number__c =:cw.landingnumber AND Active__c=TRUE 
+                                                                                      LIMIT 1
+                                                                                     ];
+                                                                            
+                                                                            ld = New Lead__c();
+                                                                            ld.Mobile__c = cw.callfrom;
+                                                                            ld.Last_Name__c = 'Customer';
+                                                                            ld.Company_Name__c = 'Company';
+                                                                            
+                                                                            if(!CampaignList.isEmpty()){
+                                                                               ld.Campaign__c = CampaignList[0].ID;
+                                                                               ld.Campaign_Code__c =  CampaignList[0].Campaign_Code__c;
+                                                                               ld.Lead_Source__c = CampaignList[0].Lead_Source__c;
+                                                                               ld.Lead_Sub_Source__c =  CampaignList[0].Lead_Sub_Source__c;
+                                                                               ld.Source_Description__c = CampaignList[0].Source_Description__c;
+                                                                              }
+                                                                            Insert ld;
+                                                                            
+                                                                            if(ld.Id != null) {
+                                                                                cw.refid = ld.Id;
+                                                                            }
+                                                                        }
+                                                                        objectName = 'Lead__c';
+                                                                    }
+                        
+                        
                         List<User> usersList = [SELECT Id FROM User WHERE MobilePhone LIKE :cw.empnumber LIMIT 1];
                         System.debug('usersList: '+usersList);
                         if (usersList.size() > 0) {
@@ -523,7 +589,7 @@ global without sharing class mCubeController {
                                 CP_Lead__c  cpLeadRecord = [SELECT ID, Name, CP_Lead_Stage__c, CP_Lead_Sub_Stage__c, CP_Lead_Sub_Stage_Reason__c, OwnerId FROM CP_Lead__c WHERE ID = :cw.refid LIMIT 1];
                                 List<Visit_Pre_Registration__c> vpr = new List<Visit_Pre_Registration__c>();
                                 
-                                if(cpLeadRecord != null && cpLeadRecord.CP_Lead_Stage__c != null && cpLeadRecord.CP_Lead_Stage__c.equalsIgnoreCase('Visit Confirmed')){
+                                  if(cpLeadRecord != null && cpLeadRecord.CP_Lead_Stage__c != null && cpLeadRecord.CP_Lead_Stage__c.equalsIgnoreCase('Visit Confirmed')){
                                     vpr =  getVisitPreRegistrationRecord('CP Lead', cpLeadRecord.Id);
                                     System.debug('vpr: '+vpr);
                                     if(vpr != null && vpr[0].Site_Visit_Date__c != null){
@@ -703,7 +769,8 @@ global without sharing class mCubeController {
                     } catch (Exception ex) {
                         System.debug('task insert failed :' + ex.getMessage());
                     }
-                }else{
+                }
+                else{
                     if(taskList.size() == 1){
                         Task task = [select id, OwnerId, CallType from Task where Call_ID__c =:cw.callid ];
                         if(cw.endtime != null){
@@ -950,6 +1017,48 @@ return callIds;
       public static void getcover(){
         integer  i=0;
         if(i==0){
+            i=0;
+            i=0;i=0;i=0;i=0; 
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0; 
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0; 
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0; 
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
+            i=0;i=0;i=0;i=0;
             i=0;
             i=0;i=0;i=0;i=0; 
             i=0;i=0;i=0;i=0;

@@ -219,11 +219,11 @@ public class Ex_InventoryPriceManagementServices {
                             if(priceListMap.get(priceList).Charge_Name__c.equalsIgnoreCase('Parking Charges')) {
                                 avAmount += carParkPrice;
                                 amount = carParkPrice;
-                                System.debug('carParkPrice::::::::::::: '+carParkPrice);
-                                System.debug('priceListMap::::::::::::: '+priceListMap.get('Basic Charge').GST__c);
+                               // System.debug('carParkPrice::::::::::::: '+carParkPrice);
+                               // System.debug('priceListMap::::::::::::: '+priceListMap.get('Basic Charge').GST__c);
                                 
-                                sgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
-                                cgst = (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                sgst =priceListMap.get('Basic Charge').GST__c != null && carParkPrice != null ? (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP):0;
+                                cgst = priceListMap.get('Basic Charge').GST__c != null && carParkPrice != null ? (((carParkPrice / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP):0;
                             } else {
                                 avAmount += (priceListMap.get(priceList).Actual_Cost__c ).setscale(0,RoundingMode.HALF_UP);
                                 avWithoutCarPark += (priceListMap.get(priceList).Actual_Cost__c ).setscale(0,RoundingMode.HALF_UP);

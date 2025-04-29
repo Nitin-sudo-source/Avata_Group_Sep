@@ -1,0 +1,20 @@
+<apex:page showHeader="false" sidebar="false"  >
+    <apex:includeLightning />  
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:Ex_UpdatePricingDashboardAura", function()
+                   {
+                       $Lightning.createComponent("c:ex_UpdatePricingDashboard",
+                                                  { 
+                                                      recordId: '{!$CurrentPage.parameters.recordId}'
+                                                      
+                                                  },
+                                                  "LightningComponentid",
+                                                  function(cmp) {
+                                                      
+                                                      console.log('LWC Componenet added in VF page');
+                                                      
+                                                  });
+                   });
+    </script>
+</apex:page>

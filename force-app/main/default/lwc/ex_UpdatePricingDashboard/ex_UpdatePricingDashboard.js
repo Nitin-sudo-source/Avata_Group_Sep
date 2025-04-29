@@ -16,6 +16,7 @@ import getAllPriceInfoFormattedMap from '@salesforce/apex/Ex_UpdateAVDetails.get
 import getBookingInfo from '@salesforce/apex/Ex_UpdateAVDetails.getBookingInfo';
 import getModifiedPaymentScheduleDetails from '@salesforce/apex/Ex_UpdateAVDetails.getModifiedPaymentScheduleDetails';
 import getPaymentScheduleDetails from '@salesforce/apex/Ex_UpdateAVDetails.getPaymentScheduleDetails';
+import updatedgetPaymentScheduleDetails from '@salesforce/apex/Ex_UpdateAVDetails.updatedgetPaymentScheduleDetails';
 import getPicklistValues from '@salesforce/apex/Ex_GenerateQuotation.getPicklistValues';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -31,7 +32,7 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     @track getUpdatedGST;
     @track getRemarks;
     @track getModifiedData = [];
-
+    @track isValidationError = false;
     @track allPriceInfoMap = [];
     @track allPriceOriginalInfoFormattedMap = [];
     @track allPriceInfoFormattedMap = [];
@@ -59,12 +60,13 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     @track discountVisibleCheckbox = false;
     @track actionType = '';
     @track rowIndex = null;
-    @track agSeqNumber = 0;
+    @track agSeqNumber = 1;
     @track isValidationError = false;
     @track getTotal = 0;
     @track showCalculate = true;
     @track isOrginal = false;
     @track allPriceModifiedInfoMap = [];
+    @track isSpinner = false;
 
 
     @wire(getAVDetails, { recordId: '$recordId' })
@@ -83,13 +85,17 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     connectedCallback() {
         const urlSearchParams = new URLSearchParams(window.location.search);
         this.recordId = urlSearchParams.get("recordId");
-        alert('recordId: '+this.recordId);
+        // alert('recordId: '+this.recordId);
         if (this.recordId) {
+            this.isSpinner = true;
             this.getBookingInfo();
             this.getMilestoneType();
             this.getAmountType();
            
         }
+       else{
+        this.isSpinner = false;
+       } 
     }
 
     async getBookingInfo() {
@@ -118,13 +124,13 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
             this.isQuotationModified = true;
             this.showCalculate = true;
         } else {
-            this.getUpdatedValue = 0; // Or handle the error as needed
+            this.getUpdatedValue = 0; 
         }
     }
 
     handlecalculateValues(){
+        this.isSpinner = true;
         this.getAllPriceMap();
-        this.showPaymentSchedule();
         this.isQuotationModified = false;        
     }
 
@@ -163,6 +169,7 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     }
 
     async getAllPriceMap() {
+        // this.isSpinner = true;
         // Check if both arrays are not null before proceeding
         if (this.priceListGroupMap && this.priceListMap) {
             //console.log('this.priceListGroupMap: ' + JSON.stringify(this.priceListGroupMap));
@@ -189,15 +196,15 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
                     } else {
                         this.allPriceModifiedInfoMap = data;
                         await this.getAllPriceModifiedFormattedMap();
-                        // await this.updatePaymentSchedule();
-                    }
+                        await this.updatePaymentSchedule();                  }
                    
-                    //await this.getPaymentSchedule();
+                        // this.isSpinner = false;
                    
                 }
             } catch (error) {
                 //console.log('error: ' + JSON.stringify(error));
                 console.error('Error In getAllPriceMap: ', error);
+                this.isSpinner = false;
             }
         } else {
             console.warn('priceListGroupMap or priceListMap is null. getAllPriceMap() will not be called.');
@@ -205,17 +212,19 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     }
 
     async updatePaymentSchedule(){
-        alert('called '+'Nitin');
+        this.isSpinner = true;
+        // alert('called '+'Nitin');
         console.log('check allPriceModifiedInfoMap:  '+JSON.stringify(this.allPriceModifiedInfoMap));
-        console.log('check priceListMap: '+JSON.stringify(this.priceListMap));
+        console.log('before updatedPaymentMilestoneWrapperList: '+JSON.stringify(this.updatedPaymentMilestoneWrapperList[0]));
 
-        this.paymentMilestoneWrapperList = [];
-        this.updatedPaymentMilestoneWrapperList = [];
+    //    this.paymentMilestoneWrapperList = [];
+        // this.updatedPaymentMilestoneWrapperList = [];
 
-        await getPaymentScheduleDetails({ uId: this.booking.Unit__c, qId: this.booking.Quotation__c, allPriceInfoMap: this.allPriceModifiedInfoMap, priceListMap: this.priceListMap })
+        await updatedgetPaymentScheduleDetails({agSeqNumber : parseInt(this.agSeqNumber,10), uId: this.booking.Unit__c, qId: this.booking.Quotation__c, allPriceInfoMap: this.allPriceModifiedInfoMap, priceListMap: this.priceListMap , updatedPaymentMilestoneWrapperList: this.updatedPaymentMilestoneWrapperList})
             .then(data => {
                 if (data) {
-                    console.log('paymentMilestoneWrapperList: ' + JSON.stringify(data));
+                    console.log('paymentMilestoneWrapperList: ' + JSON.stringify(data.length));
+                    this.paymentMilestoneWrapperList = []
                     this.updatedPaymentMilestoneWrapperList = data;
 
                     data.forEach(element => {
@@ -256,13 +265,20 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
                  
                    
                     this.isSpinner = false;
-                    console.log('paymentMilestoneWrapperList:' +JSON.stringify(this.paymentMilestoneWrapperList));
-                    
+                    console.log('paymentMilestoneWrapperList:' +JSON.stringify(this.paymentMilestoneWrapperList.length));
+                    console.log('priceListGroupMap:' +JSON.stringify(this.priceListGroupMap));
+                    console.log('priceListMap:' +JSON.stringify(this.priceListMap));
+                    console.log('allPriceOriginalInfoMap:' +JSON.stringify(this.allPriceOriginalInfoMap));
+                    console.log('allPriceModifiedInfoMap:' +JSON.stringify(this.allPriceModifiedInfoMap));
+
+                    this.isSpinner = false;
                    
                 } else {
+                    this.isSpinner = false;
                     console.error('Error: Data is undefined');
                 }
             }).catch(error => {
+                this.isSpinner = false;
                 console.log('error: '+JSON.stringify(error));
             });
 
@@ -419,7 +435,8 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
   
 
     async getPaymentSchedule() {
-        alert('called '+'Nitin');
+        this.isSpinner = true;
+        // alert('called '+'Nitin');
         console.log('check allPriceInfoMap:  '+JSON.stringify(this.allPriceInfoMap));
         console.log('check priceListMap: '+JSON.stringify(this.priceListMap));
 
@@ -474,9 +491,11 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
                     
                    
                 } else {
+                    this.isSpinner = false;
                     console.error('Error: Data is undefined');
                 }
             }).catch(error => {
+                this.isSpinner = false;
                 console.log('error: '+JSON.stringify(error));
             });
     }
@@ -484,7 +503,7 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     getMilestoneType() {
         getPicklistValues({ objectName: 'Payment_Milestone__c', picklistField: 'Milestone_Type__c' })
             .then(data => {
-                if (data) {
+                if (data) { 
                     //console.log('dataPM: ' + JSON.stringify(data));
                     data.forEach(element => {
                         this.milestoneType.push({ label: element, value: element });
@@ -495,16 +514,7 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
             })
     }
 
-    showErrorMessage(type, message) {
-        if (type === 'Error') {
-            this.isValidationError = true;
-        }
-        if(type === 'success'){
-            this.isValidationError = false;
-        }
-        this.isSpinner = false;
-        this.template.querySelector('c-custom-toast').showToast(type, message, 'utility:warning', 10000);
-    }
+  
 
     getAmountType() {
         getPicklistValues({ objectName: 'Payment_Milestone__c', picklistField: 'Charge_Bucket_1_Type__c' })
@@ -658,27 +668,36 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
     //     }
 
     handleSave() {
-        if (this.getRemarks == undefined) {
-            this.showToast('Error', 'Please Enter Remarks', 'error', 'dismissible');
+        this.isSpinner = true;
+        if (this.getRemarks === undefined) {
+            this.isSpinner = false;
+            this.showErrorMessage('Error', 'Please Enter Remarks.');
+          //  this.showToast('Error', 'Please Enter Remarks', 'error', 'dismissible');
             return;
         } else {
             saveAV({
                 recordId: this.recordId, updatedAVvalue: this.getModifiedData.getAvvalue,
                 gstValue: this.getUpdatedGST, stampValue: this.getUpdatedStampValue,
                 remarks: this.getRemarks, priceListGroupMap: this.priceListGroupMap, priceListMap: this.priceListMap,
-                allPriceOriginalInfoMap: this.allPriceOriginalInfoMap, allPriceInfoMap: this.allPriceInfoMap,
+                allPriceOriginalInfoMap: this.allPriceOriginalInfoMap, allPriceInfoMap: this.allPriceModifiedInfoMap,
                 paymentMilestoneWrapperList: this.updatedPaymentMilestoneWrapperList
             })
                 .then((result) => {
+                    this.isSpinner = false;
                     //console.log('result: ' + result);
                     if (result == true) {
-                        this.showToast('success', 'AV Changes Successfully', 'success', 'dismissible');
+                        this.isSpinner = false;
+                       // this.showToast('success', 'AV Changes Successfully', 'success', 'dismissible');
+                        this.showErrorMessage('success', 'AV Changes Successfully.');
                         window.location.href = '/' + this.recordId;
                     } else {
-                        this.showToast('Error', 'Something Went Wrong Please Contact System Administrator', 'error', 'sticky');
+                        this.isSpinner = false;
+                        this.showErrorMessage('Error', 'Something Went Wrong Please Contact System Administrator.');
+                     //   this.showToast('Error', 'Something Went Wrong Please Contact System Administrator', 'error', 'sticky');
                     }
                 })
                 .catch((error) => {
+                    this.isSpinner = false;
                     this.error = error;
                 });
         }
@@ -692,5 +711,16 @@ export default class Ex_UpdatePricingDashboard extends LightningElement {
             mode: mode
         });
         this.dispatchEvent(evt);
+    }
+
+    showErrorMessage(type, message) {
+        if (type === 'Error') {
+            this.isValidationError = true;
+        }
+        if(type === 'success'){
+            this.isValidationError = false;
+        }
+        this.isSpinner = false;
+        this.template.querySelector('c-custom-toast').showToast(type, message, 'utility:warning', 10000);
     }
 }

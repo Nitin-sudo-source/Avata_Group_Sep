@@ -21,8 +21,8 @@ public class Ex_TaskTriggerHandler {
                 }
             }
         }
-        if(!taskMap.isEmpty() && taskMap != null)
-            Ex_TaskHandlerServices.validationCheckforPresaleCall(taskMap);
+        //if(!taskMap.isEmpty() && taskMap != null)
+           // Ex_TaskHandlerServices.validationCheckforPresaleCall(taskMap);
     }
     
     public static void afterInsert(List<Task> taskList) {
@@ -85,8 +85,8 @@ public class Ex_TaskTriggerHandler {
                 }
             }
         }
-        if(!taskMap.isEmpty() && taskMap != null)
-            Ex_TaskHandlerServices.validationCheckforPresaleCall(taskMap);
+       // if(!taskMap.isEmpty() && taskMap != null)
+           // Ex_TaskHandlerServices.validationCheckforPresaleCall(taskMap);
     }
     
     public static void afterUpdate(Map<Id, Task> oldMap, Map<Id, Task> newMap) {

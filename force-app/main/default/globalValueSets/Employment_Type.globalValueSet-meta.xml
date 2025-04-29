@@ -26,16 +26,22 @@
         <label>Homemaker</label>
     </customValue>
     <customValue>
+        <fullName>Freelance</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Freelance</label>
+    </customValue>
+    <customValue>
         <fullName>Consultant</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Consultant</label>
     </customValue>
     <customValue>
-        <fullName>Seasonal</fullName>
+        <fullName>Full-Time</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Seasonal</label>
+        <label>Full-Time</label>
     </customValue>
     <customValue>
         <fullName>Volunteer</fullName>
@@ -50,22 +56,16 @@
         <label>Apprenticeship</label>
     </customValue>
     <customValue>
-        <fullName>Freelance</fullName>
+        <fullName>Seasonal</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Freelance</label>
+        <label>Seasonal</label>
     </customValue>
     <customValue>
-        <fullName>Internship</fullName>
+        <fullName>Part-Time</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Internship</label>
-    </customValue>
-    <customValue>
-        <fullName>Temporary</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Temporary</label>
+        <label>Part-Time</label>
     </customValue>
     <customValue>
         <fullName>Contract</fullName>
@@ -74,16 +74,16 @@
         <label>Contract</label>
     </customValue>
     <customValue>
-        <fullName>Full-Time</fullName>
+        <fullName>Temporary</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Full-Time</label>
+        <label>Temporary</label>
     </customValue>
     <customValue>
-        <fullName>Part-Time</fullName>
+        <fullName>Internship</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Part-Time</label>
+        <label>Internship</label>
     </customValue>
     <masterLabel>Employment Type</masterLabel>
     <sorted>false</sorted>

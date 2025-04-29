@@ -90,6 +90,10 @@ public class mCubeController_Test {
         mCubeController.inboundCall();
 
         
+         data = '{\"status\":\"CONNECTING\",\"endtime\":\"'+system.now()+'\",\"starttime\":\"'+system.now()+'\",\"executive\":\"111\",\"customer\":\"1111111\",\"landingnumber\":\"8722600060\"}' ;       
+        ApexPages.currentPage().getParameters().put('data',data);
+        mCubeController.inboundCall();
+        
         System.runAs(u) {
             mCubeController.clickToCall(lead.id,'1234567');
             

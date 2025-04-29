@@ -7,7 +7,7 @@
     <columns>Lead_Stage__c</columns>
     <columns>Is_Serviced__c</columns>
     <columns>CREATED_DATE</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>CREATED_DATE</field>
         <operation>equals</operation>

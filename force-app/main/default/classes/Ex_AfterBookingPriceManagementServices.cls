@@ -629,6 +629,134 @@ public class Ex_AfterBookingPriceManagementServices {
         return paymentMilestoneWrapperList;
     }
     
+    
+    public static List<PaymentMilestoneWrapper> updatedGetPaymentSummaryInfo(Integer agSeqNumber, Id uId,Id QId,Map<String, Decimal> allPriceInfoMap, Map<String, Charge_Details__c> priceListMap,List<PaymentMilestoneWrapper> updatedPaymentMilestoneWrapperList ) {
+        Unit__c u = getUnitInfo(uId);
+        List<PaymentMilestoneWrapper> paymentMilestoneWrapperList = new List<PaymentMilestoneWrapper>();
+        if(u != null){
+            if(!updatedPaymentMilestoneWrapperList.isEmpty() && updatedPaymentMilestoneWrapperList != null) {
+              updatedPaymentMilestoneWrapperList.remove(updatedPaymentMilestoneWrapperList.size()-1);
+
+                Integer count = 0;
+                Decimal tokenAmount = 0;
+                Decimal grandAmount = 0;
+                Decimal grandPercentage = 0;
+                Decimal grandSGST = 0;
+                Decimal grandCGST = 0;
+                Decimal grandTotalTax = 0;
+                Decimal grandTotal = 0;
+                for(PaymentMilestoneWrapper pmw: updatedPaymentMilestoneWrapperList) {
+                    Decimal amount = 0;
+                    Decimal percentage = 0;
+                    Decimal sgst = 0;
+                    Decimal cgst = 0;
+                    Decimal totalTax = 0;
+                    Decimal total = 0;
+                    Boolean agMilestone = false;
+                    System.debug('av:'+allPriceInfoMap.get('Agreement Value'));
+                    System.debug('pmw.pm: '+pmw.pm);
+                    if(pmw.agMilestone && pmw.pm != null) {
+                        if(((String)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'__c')) != null && ((String)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'__c')).equalsIgnoreCase('Agreement Value')) {
+                            amount = (((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Percentage__c') * allPriceInfoMap.get('Agreement Value')) / 100).setscale(0,RoundingMode.HALF_UP);
+                            percentage = ((Decimal)pmw.pm.get('Charge_Bucket_'+agSeqNumber+'_Percentage__c')).setscale(2,RoundingMode.HALF_UP);
+                         
+                            if(allPriceInfoMap.get('Agreement Value') < u.Tower__r.Project__r.Threshold_Amount__c) {
+                                sgst =  (((amount / 100) * u.Tower__r.Project__r.Threshold_Percentage__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                cgst =  (((amount / 100) * u.Tower__r.Project__r.Threshold_Percentage__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                            } else {
+                                if(priceListMap != null && priceListMap.containsKey('Basic Charge')) {
+                                    sgst = (((amount / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                    cgst = (((amount / 100) * priceListMap.get('Basic Charge').GST__c) / 2).setscale(0,RoundingMode.HALF_UP);
+                                }
+                            }
+                            
+                            System.debug('percentage: '+percentage);
+                            agMilestone = true;
+                            totalTax = sgst + cgst;
+                            total = amount + totalTax;
+                            grandAmount += amount;
+                            grandPercentage += percentage;
+                            grandSGST += sgst;
+                            grandCGST += cgst;
+                            grandTotalTax += totalTax;
+                            grandTotal += total;
+                            System.debug('grandPercentage: '+grandPercentage);
+                            
+                            pmw.pm.put('Charge_Bucket_'+1+'_Amount__c', amount);
+                            pmw.pm.put('Charge_Bucket_'+1+'_SGST__c', sgst);
+                            pmw.pm.put('Charge_Bucket_'+1+'_CGST__c', cgst);
+                            pmw.pm.put('Charge_Bucket_'+1+'_Total_Tax__c', totalTax);
+                            
+                        }
+                    }
+                    paymentMilestoneWrapperList.add(new PaymentMilestoneWrapper(pmw.pm, pmw.constructionStageList, pmw.pm.Milestone_Name__c, percentage, amount, currencyFormat(amount), totalTax, currencyFormat(totalTax), total, currencyFormat(total), false, agMilestone, pmw.pm.Milestone_Complete_At_Booking__c));
+                    count++;
+                }
+                paymentMilestoneWrapperList.add(new PaymentMilestoneWrapper(null, null, 'Total', grandPercentage, grandAmount, currencyFormat(grandAmount), grandTotalTax, currencyFormat(grandTotalTax), grandTotal, currencyFormat(grandTotal), true, true, false));
+            }
+            
+             if (allPriceInfoMap != null & paymentMilestoneWrapperList != null && !paymentMilestoneWrapperList.isEmpty()) {
+            // Retrieve the last element in the list
+            PaymentMilestoneWrapper lastRowElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 1];
+            // Retrieve the second-to-last element in the list
+            PaymentMilestoneWrapper secondToLastElement = paymentMilestoneWrapperList[paymentMilestoneWrapperList.size() - 2];
+            
+            // Calculate differences for the last row
+            Decimal amountDiffLatest = allPriceInfoMap.get('Agreement Value') - lastRowElement.amount;
+            Decimal taxDiffLatest = allPriceInfoMap.get('Agreement Value TAX') - lastRowElement.tax;
+            
+            // Update the last row element
+            if (amountDiffLatest != 0) {
+                lastRowElement.amount = lastRowElement.amount + amountDiffLatest;
+                lastRowElement.amountString = currencyFormat(lastRowElement.amount);
+                system.debug('Grand Total Updated Amount: ' + lastRowElement.amountString);
+                
+                
+                secondToLastElement.amount = secondToLastElement.amount + amountDiffLatest;
+                secondToLastElement.amountString = currencyFormat(secondToLastElement.amount);
+                system.debug('Last Milestone Updated Amount: ' + secondToLastElement.amountString);
+                
+                for(Integer i = 1; i <= 5; i++) {
+                    if(String.isNotBlank((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c'))) {
+                        if(((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
+                            secondToLastElement.pm.put('Charge_Bucket_'+i+'_Amount__c', ((Decimal)secondToLastElement.pm.get('Charge_Bucket_'+i+'_Amount__c') + amountDiffLatest));
+                        }
+                    }
+                }
+            }
+            
+            if (taxDiffLatest != 0) {
+                lastRowElement.tax = lastRowElement.tax + taxDiffLatest;
+                lastRowElement.taxString = currencyFormat(lastRowElement.tax);
+                system.debug('Grand Total Updated Tax: ' + lastRowElement.taxString);
+                
+                secondToLastElement.tax = secondToLastElement.tax + taxDiffLatest;
+                secondToLastElement.taxString = currencyFormat(secondToLastElement.tax);
+                system.debug('Last Milestone Updated Tax: ' + secondToLastElement.taxString);
+                
+                for(Integer i = 1; i <= 5; i++) {
+                    if(String.isNotBlank((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c'))) {
+                        if(((String)secondToLastElement.pm.get('Charge_Bucket_'+i+'__c')).equalsIgnoreCase('Agreement Value')) {
+                            secondToLastElement.pm.put('Charge_Bucket_'+i+'_Total_Tax__c', ((Decimal)secondToLastElement.pm.get('Charge_Bucket_'+i+'_Total_Tax__c') + taxDiffLatest));
+                        }
+                    }
+                }
+            }
+            
+            if (lastRowElement.amount != null && lastRowElement.tax != null) {
+                lastRowElement.Total = lastRowElement.amount + lastRowElement.tax;
+                lastRowElement.totalString = currencyFormat(lastRowElement.Total);
+                
+                secondToLastElement.Total = secondToLastElement.amount + secondToLastElement.tax;
+                secondToLastElement.totalString = currencyFormat(secondToLastElement.Total);
+            }
+        }
+        }
+        System.debug('paymentMilestoneWrapperList: '+paymentMilestoneWrapperList[0].pm);
+        return paymentMilestoneWrapperList ;
+    }
+    
+    
     public static List<String> validateUpdatedPaymentSchedule(Integer agSeqNumber, Map<String, Decimal> allPriceInfoMap, List<PaymentMilestoneWrapper> updatedPaymentMilestoneWrapperList) {
         List<String> validationErrorList = new List<String>();
         

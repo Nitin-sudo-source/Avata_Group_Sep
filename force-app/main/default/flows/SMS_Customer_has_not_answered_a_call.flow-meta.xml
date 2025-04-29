@@ -25,7 +25,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SMS_Creation</targetReference>
+                <targetReference>SMS_Creation_0</targetReference>
             </connector>
             <label>Customer has not answered a call</label>
         </rules>
@@ -54,7 +54,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SMS_Creation_0</targetReference>
+                <targetReference>SMS_Creation</targetReference>
             </connector>
             <label>After First Call Answered Call Status is NOAnswer</label>
         </rules>
@@ -157,6 +157,44 @@
         <object>SMS__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>SMS_Creation_0_0</name>
+        <label>SMS Creation</label>
+        <locationX>188</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>get_Lead.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>onlyNoAnswer</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>get_Lead.Mobile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Remarks__c</field>
+            <value>
+                <elementReference>SMSRemarks</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Template_Id__c</field>
+            <value>
+                <stringValue>1707173856829123602</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SMS__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>get_Lead</name>
         <label>get Lead</label>
@@ -207,9 +245,19 @@ ISPICKVAL({!$Record.Call_Status__c}, &quot;NOANSWER&quot;)</filterFormula>
         <text>Hi {!get_Lead.Full_Name__c}, Guess you were busy and missed our call. We will try calling you back between soon. Look forward to speaking with you soon. Regards, Team Avant.</text>
     </textTemplates>
     <textTemplates>
+        <name>onlyNoAnswer</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&quot;Hi {!get_Lead.Last_Name__c}, 
+
+Guess you were busy and missed our call. We will try calling you back between soon. Look forward to speaking with you soon.
+ 
+Regards, 
+Team Avant.</text>
+    </textTemplates>
+    <textTemplates>
         <name>SMSBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!get_Lead.Full_Name__c}, looks like you have been busy. We’ll try calling you later, or you can call us back on 9898989888. Look forward to speaking with you soon. Regards, Team Avant.</text>
+        <text>Hi {!get_Lead.Full_Name__c}, looks like you have been busy. We’ll try calling you later, or you can call us back on {!get_Lead.Owner:User.MobilePhone}. Look forward to speaking with you soon. Regards, Team Avant.</text>
     </textTemplates>
     <textTemplates>
         <name>SMSRemarks</name>

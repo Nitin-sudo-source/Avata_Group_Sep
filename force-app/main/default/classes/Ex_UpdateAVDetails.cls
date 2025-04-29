@@ -168,6 +168,18 @@ public with sharing class Ex_UpdateAVDetails {
         List<Ex_AfterBookingPriceManagementServices.PaymentMilestoneWrapper> paymentMilestoneWrapperList = Ex_AfterBookingPriceManagementServices.getPaymentSummaryInfo(uId, qId, allPriceInfoMap, priceListMap);
         return paymentMilestoneWrapperList;
     }
+
+     @AuraEnabled
+    public static List<Ex_AfterBookingPriceManagementServices.PaymentMilestoneWrapper> updatedgetPaymentScheduleDetails(Integer agSeqNumber,Id uId, Id qId, Map<String, Decimal> allPriceInfoMap, Map<String, Charge_Details__c> priceListMap,List<Ex_AfterBookingPriceManagementServices.PaymentMilestoneWrapper> updatedPaymentMilestoneWrapperList) {
+        System.debug('priceListMap: '+priceListMap);
+        System.debug('allPriceInfoMap: '+allPriceInfoMap);
+        System.debug('uId: '+uId);
+        System.debug('updatedPaymentMilestoneWrapperList: '+updatedPaymentMilestoneWrapperList);
+        
+        List<Ex_AfterBookingPriceManagementServices.PaymentMilestoneWrapper> paymentMilestoneWrapperList = Ex_AfterBookingPriceManagementServices.updatedGetPaymentSummaryInfo(agSeqNumber,uId, qId, allPriceInfoMap, priceListMap,updatedPaymentMilestoneWrapperList);
+        return paymentMilestoneWrapperList;
+    }
+    
     
     @AuraEnabled
     public static List<String> validateUpdatedPaymentScheduleDetails(Integer agSeqNumber, Map<String, Decimal> allPriceInfoMap, List<Ex_AfterBookingPriceManagementServices.PaymentMilestoneWrapper> updatedPaymentMilestoneWrapperList) {
@@ -286,6 +298,7 @@ public with sharing class Ex_UpdateAVDetails {
         if(bkList[0].Agreement_Value__c != null){
             bkList[0].Updated_Agreement_Value__c = bkList[0].Agreement_Value__c;
         }
+        
         List<Charge_Details__c> chargeDetailsList = new List<Charge_Details__c>();
     
         if(priceListGroupMap != null && !priceListGroupMap.isEmpty()) {
@@ -293,6 +306,7 @@ public with sharing class Ex_UpdateAVDetails {
                 for(String priceName: priceListGroupMap.get(bucket)) {
                     System.debug('priceName: '+priceName);
                     Decimal chargeAmount = allPriceInfoMap.get(priceName);
+                     System.debug('chargeAmount: '+chargeAmount);
                     if(chargeAmount > 0) {
                         Charge_Details__c chDetail = new Charge_Details__c();
                         if(String.isNotBlank(priceName) &&  priceName != null && bucket != null){
@@ -350,7 +364,7 @@ public with sharing class Ex_UpdateAVDetails {
         }
         System.debug('chargeDetailsList: '+chargeDetailsList);
         if(chargeDetailsList != null){
-            update chargeDetailsList;
+           update chargeDetailsList;
         }
         System.debug('qList: '+qList);
         if(qList != null){

@@ -267,8 +267,8 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
     <recordCreates>
         <name>SMS_Creation</name>
         <label>SMS Creation</label>
-        <locationX>289</locationX>
-        <locationY>576</locationY>
+        <locationX>273</locationX>
+        <locationY>584</locationY>
         <connector>
             <targetReference>Update_Lead_in_order_to_Send_SMS</targetReference>
         </connector>
@@ -293,7 +293,7 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173255071952011</stringValue>
+                <stringValue>1707174349632062497</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -334,7 +334,7 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
         <inputAssignments>
             <field>Template_Id__c</field>
             <value>
-                <stringValue>1707173255071952011</stringValue>
+                <stringValue>1707174349632062497</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -410,7 +410,7 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
         <object>Lead__c</object>
     </recordUpdates>
     <start>
-        <locationX>752</locationX>
+        <locationX>751</locationX>
         <locationY>50</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -463,8 +463,13 @@ VALUE(MID(TEXT( {!$Record.Presales_Proposed_Visit_Date__c}), 12, 2 )) &lt; 12,
     <textTemplates>
         <name>SMSBodyFor2hrwithVPCode</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!Get_Visit_Preregistration_Record.Customer_Name__c}
-Your site visit to Avant Heritage – IV, is today at{!Get_Visit_Preregistration_Record.Site_Visit_Date__c} . Please share code {!Get_Visit_Preregistration_Record.Visit_Pre_Registration_Code__c}at the reception. https://maps.app.goo.gl/TsDUxC6qV85gFENZ8. 
+        <text>Dear {!$Record.Full_Name__c}, 
+
+This is a gentle reminder about your site visit to {!Get_Visit_Preregistration_Record.Project__r.Name} scheduled tomorrow at {!$Record.Presales_Proposed_Visit_Date__c} Please share your visit code {!Get_Visit_Preregistration_Record.Visit_Pre_Registration_Code__c} at the reception to avoid long waiting. 
+
+We look forward to meeting you tomorrow. 
+
+Best Regards, 
 Team Avant</text>
     </textTemplates>
     <textTemplates>

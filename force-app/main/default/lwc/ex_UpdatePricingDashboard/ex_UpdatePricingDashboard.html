@@ -15,6 +15,13 @@
                 <lightning-icon size="small" icon-name="custom:custom31"></lightning-icon>
                 <label class="head" style="font-size:14px">AV Change Dashboard</label>
             </div>
+
+            
+		<div if:true={isSpinner} class="spinner-container">
+			<div class="loader"></div>
+			<div class="wait-text">Please wait...</div>
+		</div>
+
             <lightning-record-edit-form object-api-name="Booking__c">
                 <div class="box3">
                     <table class="">

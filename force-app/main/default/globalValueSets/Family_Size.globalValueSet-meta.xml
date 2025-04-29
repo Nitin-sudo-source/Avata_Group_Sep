@@ -26,6 +26,12 @@
         <label>&gt;6</label>
     </customValue>
     <customValue>
+        <fullName>Singles/Friends Living Together</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Singles/Friends Living Together</label>
+    </customValue>
+    <customValue>
         <fullName>Siblings Living Together</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -48,12 +54,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Joint Family</label>
-    </customValue>
-    <customValue>
-        <fullName>Singles/Friends Living Together</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Singles/Friends Living Together</label>
     </customValue>
     <masterLabel>Family Size</masterLabel>
     <sorted>false</sorted>

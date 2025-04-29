@@ -16,6 +16,9 @@
                             <value>CustomButton.Booking__c.Print_Booking</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>CustomButton.Booking__c.Change_AV_VF</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Booking__c.Booking_Checklist</value>
                         </valueListItems>
                         <valueListItems>
