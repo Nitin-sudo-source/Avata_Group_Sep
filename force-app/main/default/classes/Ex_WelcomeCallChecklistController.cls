@@ -1,5 +1,28 @@
 public with sharing class Ex_WelcomeCallChecklistController {
     
+    @AuraEnabled
+    public static Boolean getAllCheckList(String recId){
+        List<Booking_Checklist__c> checkListToBeReturn  = new List<Booking_Checklist__c>();
+        boolean allAccepted = false;
+        checkListToBeReturn = [SELECT Id, Section__c, Item__c, Action__c,Booking__c FROM Booking_Checklist__c 
+                               WHERE Booking__c = :recId];
+        System.debug('checkListToBeReturn:: '+checkListToBeReturn);
+        if(checkListToBeReturn != null && !checkListToBeReturn.isEmpty()){
+            System.debug('Inside 1st if::');
+            for(Booking_Checklist__c bc : checkListToBeReturn){
+                if(bc.Action__c == 'Reject'){
+                    System.debug('Inside::');
+                    allAccepted = false;
+                    break;
+                }else{
+                    System.debug('Inside true::');
+                    allAccepted = true;
+                }
+            }
+        }
+        return allAccepted;
+    }
+    
     @AuraEnabled(cacheable=true)
     public static List<Booking_Checklist__c> getRejectedChecklist(String recId) {
         Decimal agreementValue = 0;
@@ -321,18 +344,25 @@ public with sharing class Ex_WelcomeCallChecklistController {
         System.debug('documentTypeMap: '+documentTypeMap);
          System.debug('documentTypeMapKey: '+documentTypeMap.keySet());
         
-        List<ContentDocumentLink> contentLinks = [
-            SELECT ContentDocumentId, LinkedEntityId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId IN :documentTypeMap.keySet()
-        ];
-        System.debug('contentLinks: ' + contentLinks);
+        List<ContentDocumentLink> contentLinks = new List<ContentDocumentLink> ();
+         Set<Id> contentDocumentIds = new Set<Id>();
         
-        Set<Id> contentDocumentIds = new Set<Id>();
-        for (ContentDocumentLink link : contentLinks) {
-            contentDocumentIds.add(link.ContentDocumentId);
-            documentToContentDocumentMap.put(link.ContentDocumentId, link.LinkedEntityId);
+        if (!documentTypeMap.keySet().isEmpty()) {
+            contentLinks = [
+                SELECT ContentDocumentId, LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId IN :documentTypeMap.keySet()
+            ];
+            System.debug('contentLinks: ' + contentLinks);
         }
+        
+        if(contentLinks != null){
+            for (ContentDocumentLink link : contentLinks) {
+                contentDocumentIds.add(link.ContentDocumentId);
+                documentToContentDocumentMap.put(link.ContentDocumentId, link.LinkedEntityId);
+            }
+        }
+       
         
         List<ContentVersion> contentVersions = [
             SELECT Id, Title, ContentDocumentId , ContentUrl

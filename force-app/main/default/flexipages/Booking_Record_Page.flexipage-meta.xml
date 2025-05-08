@@ -43,6 +43,16 @@
                         <valueListItems>
                             <value>Booking__c.Create_Receipt</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Booking__c.Assign_to_MIS</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Assign_to_MIS__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

@@ -1,8 +1,16 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 29-04-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 import { LightningElement, api, track, wire } from 'lwc';
 import getApplicants from '@salesforce/apex/Ex_WelcomeCallChecklistController.getApplicants';
 import getApplicantDocuments from '@salesforce/apex/Ex_WelcomeCallChecklistController.getApplicantDocuments';
 import getQuotationDetails from '@salesforce/apex/Ex_WelcomeCallChecklistController.getQuotationDetails';
 import getTokenAmount from '@salesforce/apex/Ex_WelcomeCallChecklistController.getTokenAmount';
+import getAllCheckList from '@salesforce/apex/Ex_WelcomeCallChecklistController.getAllCheckList';
 import getSourceDetails from '@salesforce/apex/Ex_WelcomeCallChecklistController.getSourceDetails';
 import getRejectedChecklist from '@salesforce/apex/Ex_WelcomeCallChecklistController.getRejectedChecklist';
 import updateChecklistAction from '@salesforce/apex/Ex_WelcomeCallChecklistController.updateChecklistAction';
@@ -21,6 +29,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
     @api unit;
     @api agreementValue;
     @api unitValue;
+    @track isSpinner = false;
     @track PSId = null;
     @api showChild = false;
     @api token;
@@ -29,6 +38,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
     @api showCP = false;
     @api showConflict = false;
     @api showReference = false;
+
     @api cp1;
     @api cp2;
     @api refer;
@@ -56,6 +66,7 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
     @track totalPrice = 0;
     @track totalPriceFormatted = '';
     @track isLoaded = false;
+    @track showForChekclist = true;
 
     
     
@@ -77,6 +88,13 @@ export default class Ex_WelcomeCallChecklist extends NavigationMixin(LightningEl
         }
     }
 
+    // connectedCallback() {
+    //     this.isSpinner = true;
+    //     const urlSearchParams = new URLSearchParams(window.location.search);
+    //     this.recordId = urlSearchParams.get("recordId");
+    //     this.getAllCheckListFunction();
+    // }
+
     renderedCallback() {
         if (this.isLoaded)
             return;
@@ -93,6 +111,7 @@ min-height:480px;
     }
 
     viewDocument(event) {
+        alert('Open Document');
         const appId = event.target.dataset.id;
         const docType = event.target.dataset.docType;
     
@@ -384,6 +403,27 @@ this.carPark1 = data[0].Car_Park_Required_Count__c;
             }
         }
     }
+
+    getAllCheckListFunction() {
+        console.log('getAllCheckListFunction recordId : ', this.recordId);
+        getAllCheckList({ recId: this.recordId })
+            .then((data) => {
+                console.log('getAllCheckList data : ', JSON.stringify(data));
+                if (data === true) {
+                    this.showRejectedChecklist = false;
+                    this.showForChekclist = false;
+                }
+                if(data === false){
+                    this.showForChekclist = true;
+                    this.showRejectedChecklist = true;
+                    
+                }
+            })
+            .catch((error) => {
+                console.error('Error retrieving checklist:', error);
+            });
+    }
+
 
     @wire(getRejectedChecklist, ({ recId: '$recordId' }))
     getRejectedChecklistData({ data, error }) {

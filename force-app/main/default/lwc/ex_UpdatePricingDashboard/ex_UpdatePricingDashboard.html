@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 02-04-2025
+  @last modified on  : 08-05-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
@@ -74,6 +74,7 @@
                                     value={avDetails.getAvvalue}
                                     data-id="Updated_Agreement_Value__c"
                                     max-length="20"
+                                    disabled={isAVDisabled}
                                     onchange={handleUpdatedAv}>
                                 </lightning-input>
                             </td>

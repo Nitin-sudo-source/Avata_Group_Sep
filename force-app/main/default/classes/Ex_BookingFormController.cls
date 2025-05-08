@@ -65,14 +65,16 @@ public class Ex_BookingFormController {
     
     @AuraEnabled(cacheable=false)
     public static BookWrapper getBookingWrapper(String oppId){
-        Opportunity__c opp = [Select Id, Project__c,Project__r.CRM_Head__c, Project__r.CRM_Head__r.ManagerId from Opportunity__c Where Id =: oppId];
+        Opportunity__c opp = [Select Id, Project__c,Project__r.CRM_Head__c, Project__r.CRM_Head__r.ManagerId, Project__r.Sales_Head__c from Opportunity__c Where Id =: oppId];
         BookWrapper bk = new BookWrapper();
         bk.bk.Booking_Date__c = System.today();
         if(opp.Project__r.CRM_Head__c != null){
-           bk.bk.CRM_Head__c = opp.Project__r.CRM_Head__c;
-           bk.bk.Level_1_Approver__c = opp.Project__r.CRM_Head__c;
-           if(opp.Project__r.CRM_Head__r.ManagerId != null) 
-           bk.bk.Level_2_Approver__c = opp.Project__r.CRM_Head__r.ManagerId;  
+            bk.bk.CRM_Head__c = opp.Project__r.CRM_Head__c;
+            bk.bk.Level_1_Approver__c = opp.Project__r.CRM_Head__c;
+            if(opp.Project__r.CRM_Head__r.ManagerId != null) 
+                bk.bk.Level_2_Approver__c = opp.Project__r.CRM_Head__r.ManagerId;  
+            if(opp.Project__r.Sales_Head__c != null) 
+                 bk.bk.Sales_Head__c = opp.Project__r.Sales_Head__c;
         }
         
         return bk;
@@ -331,6 +333,9 @@ public class Ex_BookingFormController {
         if(bkWrapper.bk.CRM_Head__c != null){
             booking.CRM_Head__c = bkWrapper.bk.CRM_Head__c;
         }
+         if(bkWrapper.bk.Sales_Head__c != null){
+            booking.Sales_Head__c = bkWrapper.bk.Sales_Head__c;
+        }
         if(bkWrapper.bk.Level_1_Approver__c != null){
             booking.Level_1_Approver__c = bkWrapper.bk.Level_1_Approver__c;
         }
@@ -392,7 +397,10 @@ public class Ex_BookingFormController {
             }
             if (oppList[0].Sourcing_Manager__c != null) {
                 booking.Sourcing_Manager__c = oppList[0].Sourcing_Manager__c;
-            }                    
+            }    
+            if(oppList[0].Channel_Partner__c != null){
+                booking.Channel_Partner__c = oppList[0].Channel_Partner__c;
+            }
             if (oppList[0].Source__c != null) {
                 booking.Source__c = oppList[0].Source__c;
             }

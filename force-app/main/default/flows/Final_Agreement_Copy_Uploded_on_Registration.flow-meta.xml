@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>CRM_Head_Approval</name>
+        <label>CRM Head Approval</label>
+        <locationX>848</locationX>
+        <locationY>294</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>comment</name>
+            <value>
+                <stringValue>CRM Comments</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processDefinitionNameOrId</name>
+            <value>
+                <stringValue>CRM_Head_Approval_For_Agreement_Letter</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>submit</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <environments>Default</environments>
     <interviewLabel>Final Agreement Copy Uploded on Registration {!$Flow.CurrentDateTime}</interviewLabel>
@@ -23,11 +53,15 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordUpdates>
-        <name>Update_Record</name>
-        <label>Update Record</label>
-        <locationX>548</locationX>
-        <locationY>278</locationY>
+    <recordLookups>
+        <name>getRegistration</name>
+        <label>getRegistration</label>
+        <locationX>751</locationX>
+        <locationY>125</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Record</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -36,6 +70,38 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Registration__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Record</name>
+        <label>Update Record</label>
+        <locationX>695</locationX>
+        <locationY>329</locationY>
+        <connector>
+            <targetReference>CRM_Head_Approval</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Approval_Status__c</field>
+            <value>
+                <stringValue>Pending For Approval</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Head_Approver__c</field>
+            <value>
+                <elementReference>getRegistration.Booking__r.CRM_Head__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Final_Agreement_Date__c</field>
             <value>
@@ -59,7 +125,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Update_Record</targetReference>
+            <targetReference>getRegistration</targetReference>
         </connector>
         <fields>
             <name>Header</name>

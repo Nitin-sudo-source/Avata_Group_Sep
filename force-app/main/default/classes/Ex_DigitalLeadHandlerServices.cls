@@ -12,7 +12,7 @@ public class Ex_DigitalLeadHandlerServices {
         String details = '';
         
         List<Digital_Lead__c> dLeadList = [Select Id, Name, First_Name__c, Last_Name__c, Mobile__c, Alternate_Mobile__c, Email__c, Alternate_Email__c,
-                                           Campaign_Code__c, Location__c, Company_Name__c,
+                                           Campaign_Code__c, Location__c, Company_Name__c, Remarks__c,
                                            Platform__c, Executed__c, Result__c, Lead__c, Account__c, Opportunity__c
                                            from Digital_Lead__c
                                            where Id IN: dLeadId];
@@ -46,7 +46,8 @@ public class Ex_DigitalLeadHandlerServices {
                     +'Campaign Code: '+dLeadList[0].Campaign_Code__c+ '\n'
                     +'Location: '+dLeadList[0].Location__c+ '\n'
                     +'Company Name: '+dLeadList[0].Company_Name__c+ '\n'
-                    +'Platform:'+dLeadList[0].Platform__c;
+                    +'Platform: '+ dLeadList[0].Platform__c + '\n' 
+                    +'Remarks: ' + dLeadList[0].Remarks__c;
             }
             
             String projectId;
@@ -73,9 +74,12 @@ public class Ex_DigitalLeadHandlerServices {
             l.First_Name__c = dLeadList[0].First_Name__c;
             l.Last_Name__c = dLeadList[0].Last_Name__c;
             l.Mobile__c = mobile;
-            l.Alternate_Mobile__c = altMobile;
-            l.Email__c = dLeadList[0].Email__c;
-            l.Alternate_Email__c = dLeadList[0].Alternate_Email__c;
+            if(String.isNotBlank(altMobile) && altMobile != null)
+                l.Alternate_Mobile__c = altMobile;
+            if(dLeadList[0].Email__c != null)
+                l.Email__c = dLeadList[0].Email__c;
+            if(dLeadList[0].Alternate_Email__c != null)
+                l.Alternate_Email__c = dLeadList[0].Alternate_Email__c;
             l.Company_Name__c = dLeadList[0].Company_Name__c;
             l.Location__c = dLeadList[0].Location__c;
             l.Lead_Identifier__c = dLeadList[0].Platform__c;

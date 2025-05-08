@@ -1,0 +1,39 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 07-05-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<template>
+<lightning-card title="AV Change Approval">
+    <div class="container slds-p-around_medium">
+        <section class="section-message">
+           
+              <p class="slds-text-heading_small slds-p-vertical_small">
+                Would you like to send the AV Change for approval?
+              </p>
+        </section>
+
+       
+
+       
+
+
+        <section class="section-actions slds-m-top_medium">
+            <lightning-button 
+                label="Yes" 
+                variant="brand" 
+                onclick={handleYes}>
+            </lightning-button>
+
+            <lightning-button 
+                label="No" 
+                variant="neutral" 
+                class="slds-m-left_small" 
+                onclick={handleNo}>
+            </lightning-button>
+        </section>
+    </div>
+</lightning-card>
+</template>

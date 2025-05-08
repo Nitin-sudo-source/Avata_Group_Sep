@@ -1,10 +1,3 @@
-<!--
-  @description       : 
-  @author            : nitinSFDC@exceller.SFDoc
-  @group             : 
-  @last modified on  : 04-11-2024
-  @last modified by  : nitinSFDC@exceller.SFDoc
--->
 <template>
     <div style="border: 2px solid black;margin:15px;">
         <div if:true={isSpinner} class="spinner-container">
@@ -12,10 +5,8 @@
             <div class="wait-text">Please wait...</div>
         </div>
         <lightning-card>
-            <!-- <div class="slds-align_absolute-center" style="background-color: darkturquoise;color: black;text-shadow: 2px 2px 5px grey;font-size: 20px;padding: 5px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Booking Details</div> -->
             <lightning-record-view-form record-id={recordId} object-api-name="Booking__c">
                 <div style="Padding:10px;">
-
                     <table class="Table1Css">
                         <tr>
                             <th colspan="4"
@@ -58,14 +49,7 @@
                                 <lightning-output-field variant="label-hidden" field-name="Total_Amount_Received__c">
                                 </lightning-output-field>
                             </td>
-                            <!-- <th>Sale Value</th>
-                            <td>
-                                <lightning-output-field variant="label-hidden" field-name="Sale_Value__c">
-                                </lightning-output-field>
-                            </td> -->
                         </tr>
-                       
-
                     </table>
                 </div>
             </lightning-record-view-form>
@@ -77,20 +61,34 @@
                             <th colspan="4"
                             style="text-align:center; font-size:18px;border: 1px solid black;padding:8px; background:#4fb7b2; color: black;">
                             Cancellation Details
-                        </th>
-
+                            </th>
                         </tr>
                         <tr>
                             <th>Cancellation Type </th>
                             <td>
                                 <lightning-input-field variant="label-hidden" field-name="Cancellation_Type__c"
-                                    onchange={handleCancelChange}> </lightning-input-field>
+                                    required
+                                    onchange={handleCancelChange}> 
+                                </lightning-input-field>
+                                <template if:true={showCancelError}>
+                                    <div style="color: red; font-size: 12px;">Please select cancellation type</div>
+                                </template>
                             </td>
                             <th>Please Enter Refund Amount </th>
                             <td>
-                                <lightning-input data-formfield="Refund_Amount__c" variant="label-hidden" default="true"
-                                    placeholder="0.00" value={bookObject.Refund_Amount__c}
-                                    onchange={onchnageamount}></lightning-input>
+                                <lightning-input type="number" 
+                                    data-formfield="Refund_Amount__c" 
+                                    variant="label-hidden" 
+                                    placeholder="0.00" 
+                                    formatter="currency" 
+                                    step="0.01"
+                                    required
+                                    value={amount}
+                                    onchange={onchnageamount}>
+                                </lightning-input>
+                                <template if:true={showAmountError}>
+                                    <div style="color: red; font-size: 12px;">Please enter valid amount</div>
+                                </template>
                             </td>
                         </tr>
                         <tr>
@@ -106,21 +104,30 @@
                             </td>
                             <th>Please Enter Cancellation Remarks </th>
                             <td>
-                                <lightning-input style="margin-right: 20px;" variant="label-hidden"
-                                    data-formfield="Cancellation_Remark__c" label="Please Enter Cancellation Remark"
+                                <lightning-textarea style="margin-right: 20px;" 
+                                    variant="label-hidden"
+                                    data-formfield="Cancellation_Remark__c" 
                                     placeholder="Please Enter Cancellation Remark"
-                                    value={bookObject.Cancellation_Remark__c} onchange={handleReasonChange}
-                                    required></lightning-input>
+                                    required
+                                    value={reason} 
+                                    onchange={handleReasonChange}>
+                                </lightning-textarea>
+                                <template if:true={showReasonError}>
+                                    <div style="color: red; font-size: 12px;">Remarks are required</div>
+                                </template>
                             </td>
                         </tr>
-
                     </table>
                 </lightning-record-edit-form>
             </div>
-            <center>
-                <lightning-button variant="Success" label="Submit For Cancellation" onclick={createBookData}
-                    style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;padding:10px;"></lightning-button>
-            </center>
+            <div class="center">
+                <lightning-button variant="brand" 
+                    label="Submit For Cancellation" 
+                    onclick={createBookData}
+                    disabled={hasValidationError}
+                    style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;padding:10px;">
+                </lightning-button>
+            </div>
         </lightning-card>
     </div>
 </template>

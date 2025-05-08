@@ -20,6 +20,8 @@ global class Ex_RESTWebIntegration {
             dl.Location__c = req.location;
             dl.Campaign_Code__c = req.campaignCode;
             dl.Platform__c = req.LeadIdentifier;
+            if(String.isNotBlank(req.Remarks))
+            dl.Remarks__c = req.Remarks;
             insert dl;
             
             r.returnCode = 0;
@@ -50,5 +52,6 @@ global class Ex_RESTWebIntegration {
         webservice String location;
         webservice String campaignCode;
         webservice String LeadIdentifier;
+        webservice String Remarks;
     }
 }

@@ -2,15 +2,24 @@
 @description       : 
 @author            : ChangeMeIn@UserSettingsUnder.SFDoc
 @group             : 
-@last modified on  : 10-18-2024
-@last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+@last modified on  : 29-04-2025
+@last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
+    
     <lightning-card>
+        <div if:true={isSpinner} class="spinner-container">
+            <div class="loader"></div>
+            <div class="wait-text">Please wait...</div>
+        </div>
         <div class="mains">
             <div class="main" style="padding: 15px;">
                 <label class="head">Booking Verification Checklist</label>
             </div>
+            <template if:false={showForChekclist}>
+                <h1 style="color: green;text-align:center;font-size: x-large;">All Booking Checklists are already accepted!</h1>
+            </template>
+            <template if:true={showForChekclist}>
             <template if:true={showRejectedChecklist}>
                 <template for:each={groupedRejectedChecklist} for:item="group" for:index="ind">
                     <div key={group.sectionName}>
@@ -41,7 +50,8 @@
                     </lightning-button>
                 </div>
             </template>
-
+            </template>
+            <template if:true={showForChekclist}>
             <div if:false={showRejectedChecklist}>
                 <!-- <div class="slds-p-around_medium" style="border:1px solid black;border-radius: 5px;"> -->
                 <div class="section-div" data-section="section1">
@@ -55,7 +65,8 @@
                             <template for:each={applicants} for:item="applicant" for:index="index">
                                 <div key={applicant.Id} class="slds-grid slds-wrap slds-p-bottom_small">
                                     <div class="slds-col slds-size_1-of-2">
-                                        <p name='section1' class="item">Applicant {applicant.displayIndex} -
+                                        <p name='section1' class="item">
+                                            Applicant {applicant.displayIndex} -
                                             {applicant.Name}
                                         </p>
                                     </div>
@@ -130,9 +141,11 @@
                                     <div class="slds-col slds-size_1-of-2">
                                         <p name="section3a" class="item">
                                             <span style="font-weight: 700;">Adhaar Number : </span>
-                                            {applicant.Aadhar_Number__c} <label style="padding-left: 15%;"
-                                                class="blue-link" data-id={applicant.Id} data-doc-type="Aadhar Card"
-                                                onclick={viewDocument}>View Aadhaar Card</label>
+                                            {applicant.Aadhar_Number__c} 
+                                            <a style="padding-left: 15%;"
+                                                class="blue-link" data-id={applicant.Id}
+                                                data-doc-type="Aadhar Card"
+                                                onclick={viewDocument}>View Aadhaar Card</a>
                                         </p>
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
@@ -148,9 +161,11 @@
                                     <div class="slds-col slds-size_1-of-2">
                                         <p name="section3b" class="item">
                                             <span style="font-weight: 700;">PAN Number :
-                                            </span>{applicant.PAN_Number__c}<label style="padding-left: 22%;"
-                                                class="blue-link" data-id={applicant.Id} data-doc-type="Pan Card"
-                                                onclick={viewDocument}>View PAN Card</label>
+                                            </span> {applicant.PAN_Number__c} 
+                                            <a style="padding-left: 22%;"
+                                                class="blue-link" data-id={applicant.Id} 
+                                                data-doc-type="Pan Card"
+                                                onclick={viewDocument}> View PAN Card</a>
                                         </p>
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
@@ -589,6 +604,7 @@
                 </div>
                 <!-- </div> -->
             </div>
+            </template>
             <!-- <template if:true={showError}>
         You have already completed checklist.
     </template> -->

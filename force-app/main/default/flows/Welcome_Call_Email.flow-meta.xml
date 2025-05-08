@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_welcome</name>
+        <label>Send welcome</label>
+        <locationX>727</locationX>
+        <locationY>611</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Tower__r.Banker__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Welcome Email To Banker</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>body2</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Welcome_Email</name>
+        <label>Send Welcome Email</label>
+        <locationX>263</locationX>
+        <locationY>479</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Check_Banker_Email</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Primary_Applicant_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Welcome Call Completed</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>body</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <decisions>
+        <name>Check_Banker_Email</name>
+        <label>Check Banker Email</label>
+        <locationX>362</locationX>
+        <locationY>637</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Banker_Email_Test</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Tower__r.Banker__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_welcome</targetReference>
+            </connector>
+            <label>Check Banker Email Test</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_users_Email</name>
+        <label>Check users Email</label>
+        <locationX>527</locationX>
+        <locationY>371</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Customer_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Primary_Applicant_Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Welcome_Email</targetReference>
+            </connector>
+            <label>Check Customer Email</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Welcome Call Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Welcome Call Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>401</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Check_users_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Welcome_Call_Done__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Welcome_Call_Done__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Welcome_Call_Done__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Booking__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>body</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear Mrs. {!$Record.Primary_Applicant_Title__c} &amp; Mr.
+{!$Record.Primary_Applicant_Name__c}
+
+Greetings from Avant Group!
+We are delighted to welcome you to Avant Group. On behalf of the entire team at Avant, we would
+like to thank you for showing interest in purchasing of apartment bearing no. “” on 1st floor in wing
+“” of the project “Avant Heritage - IV”. We are thrilled to have you as a valued member of Avant
+family.
+We want to make sure that your journey towards your new home is seamless and convenient, and we
+are here to help you in every step of the way.
+Our team will soon be in touch with you regarding the process and next steps. We will provide all the
+details, including the documentation, possession date and other formalities.
+As your dedicated Relationship Manager, I will be glad to assist you through this journey. In case of
+any queries kindly feel free to contact me between 10:00 A.M to 06:30 P.M, Monday to Saturday.
+
+
+
+Once again, congratulations on taking the first step towards your dream home.
+
+
+
+Best Regards,  
+
+Nupur Khapare  
+
+Contact No.: 91360 84019  
+
+Email: - nupur.khapare@avantinfra.com / ah4.crm@avantinfra.com</text>
+    </textTemplates>
+    <textTemplates>
+        <name>body2</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear Mrs. {!$Record.Primary_Applicant_Title__c} &amp; Mr.
+{!$Record.Primary_Applicant_Name__c}
+
+Greetings from Avant Group!
+We are delighted to welcome you to Avant Group. On behalf of the entire team at Avant, we would
+like to thank you for showing interest in purchasing of apartment bearing no. “” on 1st floor in wing
+“” of the project “Avant Heritage - IV”. We are thrilled to have you as a valued member of Avant
+family.
+We want to make sure that your journey towards your new home is seamless and convenient, and we
+are here to help you in every step of the way.
+Our team will soon be in touch with you regarding the process and next steps. We will provide all the
+details, including the documentation, possession date and other formalities.
+As your dedicated Relationship Manager, I will be glad to assist you through this journey. In case of
+any queries kindly feel free to contact me between 10:00 A.M to 06:30 P.M, Monday to Saturday.
+
+
+
+Once again, congratulations on taking the first step towards your dream home.
+
+
+
+Best Regards,  
+
+Nupur Khapare  
+
+Contact No.: 91360 84019  
+
+Email: - nupur.khapare@avantinfra.com / ah4.crm@avantinfra.com</text>
+    </textTemplates>
+</Flow>
