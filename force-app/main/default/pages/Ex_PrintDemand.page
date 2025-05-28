@@ -1,0 +1,216 @@
+<!--
+  @description       : 
+  @author            : nitinSFDC@exceller.SFDoc
+  @group             : 
+  @last modified on  : 28-05-2025
+  @last modified by  : nitinSFDC@exceller.SFDoc
+-->
+<apex:page controller="Ex_PrintDemandController" applyHtmlTag="false" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0" renderAs="PDF">
+    <html>
+        
+        
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+            
+            <style type="text/css">
+                body {
+                font-size: 12px;
+                }
+                
+                @page {
+                size: A4;
+                padding: 6px;
+                
+                }
+                @page {
+                size: portrait;
+                @bottom-center {
+                //content: "Page " counter(page) ;
+                }
+                }
+                .page-break {
+                page-break-before: always;
+                counter-increment: pageCounter;
+                }
+                .no-break {
+                page-break-inside: avoid;
+                }
+                
+                .mainTable {
+                border-collapse: collapse;
+                border: 1px solid black;
+                width:100%;
+                font-size:12px;
+                }
+                
+                .mainTable th{
+                padding: 4px;
+                border: 0.5px solid black;
+                text-align:left;
+                
+                }
+                .mainTable td {
+                padding: 4px;
+                border: 0.5px solid black;
+                
+                }
+                
+                
+            </style>
+        </head>
+        <body>
+            <table width="100%;" class="mainTable">
+                <tr>
+                    <th style="text-align:left; width:50% !important;">
+                        <p>
+                            THE AVANT<br/>
+
+                            <!-- 25, Amynabad, Aga Hall<br/> -->
+                            <!-- Nesbit Road, Mazgaon,<br/> -->
+                            <!-- Mumbai 400 010<br/> -->
+                            <!-- Maharashtra- India. -->
+                        </p> 
+                    </th>
+                    <!-- <td style="text-align:center !important;">
+                        <apex:image value="{!$Resource.Logo}" style="text-align:right;" width="100px"/>
+                    </td> -->
+                </tr>
+                <tr>
+                    <th colspan="2" style="padding:10px; text-align:center !important;">Tax Invoice</th>
+                </tr>
+                <tr>
+                    <th colspan="2" >
+                            To,<br/>
+                        	{!CustomerPrimaryName} <br/>
+                            {!CustomerAddress} <br/>
+                            Contact No: {!CustomerMobile}
+                    </th>
+                </tr>
+            </table>
+            
+            <table class="mainTable">
+                <!-- <tr>
+                    <th colspan="2">Apartment No:</th>
+                    <td colspan="2">{!BookingList[0].Unit__r.Name}</td>
+                    <th colspan="2">Invoice No:</th>
+                    <td colspan="2">{!invoiceNumber}</td>
+                </tr>
+                
+                <tr>
+                    <th colspan="2">Apartment Typology:</th>
+                    <td colspan="2">{!BookingList[0].Unit__r.Configuration__c}</td>
+                    <th colspan="2">Invoice Date:</th>
+                    <td colspan="2">
+                        <apex:outPutText value="{0,date,dd-MMM-yyyy}">
+                            <apex:param value="{!invoiceDate}"/>
+                        </apex:outPutText>
+                    </td>
+                </tr> -->
+                
+                <!-- <tr>
+                    <th colspan="2">RERA No.:</th>
+                    <td colspan="2">{!BookingList[0].Unit__r.Tower__r.RERA_No__c}</td>
+                    <th colspan="2">Agreement Value:</th>
+                    <td colspan="2">{!BookingList[0].Agreement_Value__c}</td>
+                </tr> -->
+                
+                <tr>
+                    <th style="text-align:center !important;">No</th>
+                    <th style="text-align:center !important;">Milestone</th>
+                    <th style="text-align:center !important;">Principal Amount(INR)</th>
+                    <th style="text-align:center !important;">TDS Amount(INR)</th>
+                    <th style="text-align:center !important;">CGST (INR)</th>
+                    <th style="text-align:center !important;">SGST (INR)</th>
+                    <th style="text-align:center !important;">Total Amount (INR)</th>
+                </tr>
+                
+                <!-- <tr>
+                    <th></th>
+                    <th></th>
+                    <th style="text-align:center !important;">(A)</th>
+                    <th style="text-align:center !important;">(B)</th>
+                    <th style="text-align:center !important;">(C)</th>
+                    <th style="text-align:center !important;">(D)</th>
+                    <th style="text-align:center !important;">(A+B+C+D)</th>
+                </tr>
+                <tr>
+                    <td style="text-align:center !important;">1</td>
+                    <td style="text-align:left !important;">{!milestoneName}</td>
+                    <td style="text-align:right !important;">{!principleAmount}</td>
+                    <td style="text-align:right !important;">{!tdsAmount}</td>
+                    <td style="text-align:right !important;">{!cgstAmount}</td>
+                    <td style="text-align:right !important;">{!sgstAmount}</td>
+                    <td style="text-align:right !important;">{!totalAmount}</td>
+                </tr> -->
+                <!--<tr>
+                    <td style="text-align:center !important;">1</td>
+                    <td style="text-align:left !important;">Total Dues</td>
+                    <td style="text-align:right !important;">{!principleAmount}</td>
+                    <td style="text-align:right !important;">{!tdsAmount}</td>
+                    <td style="text-align:right !important;">{!cgstAmount}</td>
+                    <td style="text-align:right !important;">{!sgstAmount}</td>
+                    <td style="text-align:right !important;">{!totalAmount}</td>
+                </tr>-->
+                 <tr>
+                    <th colspan="6" style="text-align:right !important;">Total Amount</th>
+                    <td style="text-align:right !important;">{!overallAmountString}</td>
+                </tr> 
+                <tr>
+                    <th colspan="7">
+                      Amount In Words: {!overallAmountWordString}
+                    </th>
+                </tr>
+            </table>
+            <div style="border: 1px solid black;Padding:6px;text-align:left;">
+                <p style="text-align:left;">
+                    <b>Note:</b> 
+                </p>
+                <ul >
+                    <li>
+                        <p align="justify">
+                         	We request you to make the necessary payments within 15 days from the Invoice Date, failing which interest will be charged as per the interest clause mentioned in Application Form/ Agreement for Sale, on the amount due. Interest rate on delayed payment would also attract GST.
+						</p>
+                    </li>
+                    <!-- <li>
+                        <p align="justify">
+                            As per Income Tax Act, TDS @ 1%, is required to be deducted by the purchaser of immovable property and deposited with Government Treasury, where the consideration is Rs.50 lacs or more. A TDS certificate in prescribed Form 16B needs to be generated, signed and submitted with us.
+                        </p>
+                    </li> -->
+                    <!-- <li>
+                        <p align="justify">
+                            You are requested to issue two separate cheques in favor of <b>"Prince Aly Khan Hospital – The Aga Hall Estate"</b> for principal and <b>"Prince Aly Khan Hospital (Development A/c)"</b> for GST. Please mention your Name, Apartment No.,and InvoiceNo. on rear side of the Cheque.
+                        </p>
+                    </li> -->
+                    <li>
+                        <p align="justify">
+                            Alternatively, you can also make electronic transfers to the Account Details attached herewith.
+                        </p>
+                    </li>
+                    <li>
+                        <p align="justify">
+                            For any further assistance please contact your Relationship Manager – Ms. Saee Khamkar +91 98202 50447 or <a href="">saee.khamkar@pakh.net</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <p style="text-align:left; border:1px solid black;Padding:8px;">
+                <b>
+                For Prince Aly Khan Hospital – Aga Hall Estate<br/><br/><br/>
+                Authorized Signatory
+                </b>
+            </p>
+            <table class="mainTable">
+                <tr>
+                    <td> PAN No: AAATP0618F</td>
+                    <td> GSTIN: 27AAATP0618F1ZU</td>
+                    <td> SAC No: 995411</td>
+                </tr>
+            </table>
+        </body>
+          
+    </html>
+    
+   
+</apex:page>
