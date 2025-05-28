@@ -392,6 +392,28 @@
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <customButtons>Create_APF_Document</customButtons>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Document_Type__c</fields>
+        <fields>Technical_Document__c</fields>
+        <fields>Legal_Document__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>APF_Document__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>Create_Bank_Document</customButtons>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Document_Type__c</fields>
+        <fields>Technical_Document__c</fields>
+        <fields>Legal_Document__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Bank_Document__c.Project__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

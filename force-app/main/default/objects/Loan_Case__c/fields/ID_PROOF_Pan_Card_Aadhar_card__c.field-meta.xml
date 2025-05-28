@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ID_PROOF_Pan_Card_Aadhar_card__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>ID PROOF ( Pan Card , Aadhar card )</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -20,6 +20,7 @@ public class Ex_BookingTriggerHandler {
     
     public static void afterUpdate(Map<Id, Booking__c> oldMap, Map<Id, Booking__c> newMap) {
         Map<Id, Booking__c> quotationBookingMap = new Map<Id, Booking__c>();
+          Set<Id> possessionChecklistId = new Set<Id>();
         Set<Id> towerIdSet = new Set<Id>();
         Boolean isBatchReq2 = false;
         
@@ -42,7 +43,11 @@ public class Ex_BookingTriggerHandler {
                 isBatchReq2 = true;
             }
             
-            
+            if ((oldBooking.RM_Possession_Checklist__c != newBooking.RM_Possession_Checklist__c && newBooking.RM_Possession_Checklist__c) ||
+                (oldBooking.Possession_Approved_By_CRM_Head__c != newBooking.Possession_Approved_By_CRM_Head__c && newBooking.Possession_Approved_By_CRM_Head__c)) {
+                    possessionChecklistId.add(newBooking.Id);
+                }
+                                                                                                                                                                    
             
             if(oldBooking.Updated_Agreement_Value__c != newBooking.Updated_Agreement_Value__c || oldBooking.GST__c != newBooking.GST__c || oldBooking.Stamp_Duty__c != newBooking.Stamp_Duty__c) {
                 bList.add(newBooking);
@@ -51,6 +56,10 @@ public class Ex_BookingTriggerHandler {
             if(oldBooking.Booking_Date__c != newBooking.Booking_Date__c && newBooking.Quotation__c != null && newBooking.Tower__c != null) {
                 quotationBookingMap.put(newBooking.Quotation__c, newBooking);
                 towerIdSet.add(newBooking.Tower__c);
+            }
+            
+            if(!possessionChecklistId.isEmpty() && possessionChecklistId != null){
+                Ex_SendPossessionChecklist.sendPossessionEmailWithLink(possessionChecklistId);    
             }
         }
         

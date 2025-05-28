@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Send_notification_to_banker</name>
         <label>Send notification to banker</label>
-        <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationX>595</locationX>
+        <locationY>436</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>New_Loan_Case_Created</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
@@ -45,8 +48,8 @@
     <assignments>
         <name>add_banker_userId</name>
         <label>add banker userId</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>393</locationX>
+        <locationY>404</locationY>
         <assignmentItems>
             <assignToReference>OwnerId</assignToReference>
             <operator>Add</operator>
@@ -70,7 +73,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -80,11 +83,25 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>New_Loan_Case_Created</name>
+        <label>New Loan Case Created</label>
+        <locationX>879</locationX>
+        <locationY>306</locationY>
+        <inputAssignments>
+            <field>Booking__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Loan_Case__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_Records_1</name>
         <label>Get Records 1</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>145</locationX>
+        <locationY>417</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>add_banker_userId</targetReference>
@@ -102,8 +119,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>330</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Get_Records_1</targetReference>
         </connector>
@@ -122,6 +139,13 @@
                 <stringValue>Loan</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Mode_of_Funding__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>Booking__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -130,7 +154,7 @@
     <textTemplates>
         <name>Banker</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>message goes to banker</text>
+        <text>Loan Cases Has Been Created Please check</text>
     </textTemplates>
     <variables>
         <name>OwnerId</name>

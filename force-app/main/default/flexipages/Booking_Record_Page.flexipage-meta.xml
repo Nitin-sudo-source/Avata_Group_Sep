@@ -22,6 +22,9 @@
                             <value>Booking__c.Booking_Checklist</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Booking__c.Possession_Checklist</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Booking__c.Change_AV_Details</value>
                         </valueListItems>
                         <valueListItems>
@@ -52,6 +55,9 @@
                                     <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Booking__c.AV_Change_Approval</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -240,6 +246,36 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-8fc930c0-be37-420d-9d1a-b439d6151339</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Booking__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Possession_Checklists__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer10</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-11b8a4c5-96d6-46a6-b42a-4b4f7674562f</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -449,6 +485,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-11b8a4c5-96d6-46a6-b42a-4b4f7674562f</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Possession Checklist</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab10</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

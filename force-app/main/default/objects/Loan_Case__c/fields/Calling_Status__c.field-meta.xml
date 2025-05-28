@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Calling_Status__c</fullName>
+    <label>Calling Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Connected</fullName>
+                <default>false</default>
+                <label>Connected</label>
+            </value>
+            <value>
+                <fullName>Ringing</fullName>
+                <default>false</default>
+                <label>Ringing</label>
+            </value>
+            <value>
+                <fullName>Temporary disconnected</fullName>
+                <default>false</default>
+                <label>Temporary disconnected</label>
+            </value>
+            <value>
+                <fullName>Wrong No</fullName>
+                <default>false</default>
+                <label>Wrong No</label>
+            </value>
+            <value>
+                <fullName>List of document send</fullName>
+                <default>false</default>
+                <label>List of document send</label>
+            </value>
+            <value>
+                <fullName>Document received</fullName>
+                <default>false</default>
+                <label>Document received</label>
+            </value>
+            <value>
+                <fullName>Document pending from Customer Side</fullName>
+                <default>false</default>
+                <label>Document pending from Customer Side</label>
+            </value>
+            <value>
+                <fullName>Partial documents received</fullName>
+                <default>false</default>
+                <label>Partial documents received</label>
+            </value>
+            <value>
+                <fullName>deal cancel</fullName>
+                <default>false</default>
+                <label>deal cancel</label>
+            </value>
+            <value>
+                <fullName>call you letter</fullName>
+                <default>false</default>
+                <label>call you letter</label>
+            </value>
+            <value>
+                <fullName>not reachable</fullName>
+                <default>false</default>
+                <label>not reachable</label>
+            </value>
+            <value>
+                <fullName>Self Bank Loan</fullName>
+                <default>false</default>
+                <label>Self Bank Loan</label>
+            </value>
+            <value>
+                <fullName>other</fullName>
+                <default>false</default>
+                <label>other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

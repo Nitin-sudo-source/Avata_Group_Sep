@@ -29,6 +29,14 @@
         <value>8722600060,7353030808,7353032424,7353033434,8722600056</value>
     </labels>
     <labels>
+        <fullName>Possession_Checklists_Link</fullName>
+        <categories>It is Used in Ex_SendPossessionChecklist</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Possession Checklists Link</shortDescription>
+        <value>https://velocity-innovation-745--avantsb.sandbox.my.salesforce-sites.com/PossessionChecklist</value>
+    </labels>
+    <labels>
         <fullName>TransactionId</fullName>
         <language>en_US</language>
         <protected>false</protected>

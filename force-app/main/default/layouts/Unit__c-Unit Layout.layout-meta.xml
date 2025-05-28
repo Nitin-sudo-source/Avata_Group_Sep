@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Unit_Blocked_By__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Agreement_Value_Deviation__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

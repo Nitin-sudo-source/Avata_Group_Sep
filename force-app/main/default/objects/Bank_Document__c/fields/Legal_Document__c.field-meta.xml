@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Legal_Document__c</fullName>
+    <label>Legal Document</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Document_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Copy of Development agreement by which the Builder acquired the Development Rights</fullName>
+                <default>false</default>
+                <label>Copy of Development agreement by which the Builder acquired the Development Rights</label>
+            </value>
+            <value>
+                <fullName>Copy of Power of Attorney given by the Land Owner</fullName>
+                <default>false</default>
+                <label>Copy of Power of Attorney given by the Land Owner</label>
+            </value>
+            <value>
+                <fullName>All the copies of previous title chain agreements</fullName>
+                <default>false</default>
+                <label>All the copies of previous title chain agreements</label>
+            </value>
+            <value>
+                <fullName>Latest Property Card / 7/12 extract (not more than 6 months old)</fullName>
+                <default>false</default>
+                <label>Latest Property Card / 7/12 extract (not more than 6 months old)</label>
+            </value>
+            <value>
+                <fullName>Title certificate issued by the Builder&apos;s Lawyer</fullName>
+                <default>false</default>
+                <label>Title certificate issued by the Builder&apos;s Lawyer</label>
+            </value>
+            <value>
+                <fullName>ROC search if the Builder is a private limited company</fullName>
+                <default>false</default>
+                <label>ROC search if the Builder is a private limited company</label>
+            </value>
+            <value>
+                <fullName>Copy of NA order if the land is agricultural land</fullName>
+                <default>false</default>
+                <label>Copy of NA order if the land is agricultural land</label>
+            </value>
+            <value>
+                <fullName>Copy of ULC order passed by the Collector</fullName>
+                <default>false</default>
+                <label>Copy of ULC order passed by the Collector</label>
+            </value>
+            <value>
+                <fullName>Zone certificate shall be required (may be residential/commercial/industrial/IT)</fullName>
+                <default>false</default>
+                <label>Zone certificate shall be required (may be residential/commercial/industrial/IT)</label>
+            </value>
+            <value>
+                <fullName>IOD (Intimation of Disapproval)</fullName>
+                <default>false</default>
+                <label>IOD (Intimation of Disapproval)</label>
+            </value>
+            <value>
+                <fullName>Commencement Certificate</fullName>
+                <default>false</default>
+                <label>Commencement Certificate</label>
+            </value>
+            <value>
+                <fullName>Environmental clearance certificate</fullName>
+                <default>false</default>
+                <label>Environmental clearance certificate</label>
+            </value>
+            <value>
+                <fullName>The requisite NOC/permissions from MHADA, CIDCO, MMRDA, Collector as per the transaction and if the land is leasehold land of these authorities</fullName>
+                <default>false</default>
+                <label>The requisite NOC/permissions from MHADA, CIDCO, MMRDA, Collector as per the transaction and if the land is leasehold land of these authorities</label>
+            </value>
+            <value>
+                <fullName>In JVPD transactions, need to see whether the parent society has granted redevelopment permission</fullName>
+                <default>false</default>
+                <label>In JVPD transactions, need to see whether the parent society has granted redevelopment permission</label>
+            </value>
+            <value>
+                <fullName>Pollution Control Board permission</fullName>
+                <default>false</default>
+                <label>Pollution Control Board permission</label>
+            </value>
+            <value>
+                <fullName>Fire Brigade Department Permission</fullName>
+                <default>false</default>
+                <label>Fire Brigade Department Permission</label>
+            </value>
+            <value>
+                <fullName>Permission of Airport Authority of India if the height of the building exceeds prescribed limits (varies by area)</fullName>
+                <default>false</default>
+                <label>Permission of Airport Authority of India if the height of the building exceeds prescribed limits (varies by area)</label>
+            </value>
+            <value>
+                <fullName>Sanctioned plans approved by the respective Municipal Corporation</fullName>
+                <default>false</default>
+                <label>Sanctioned plans approved by the respective Municipal Corporation</label>
+            </value>
+            <value>
+                <fullName>If it is an SRA project, all the details with respect to the Rehab component and Free Sale component</fullName>
+                <default>false</default>
+                <label>If it is an SRA project, all the details with respect to the Rehab component and Free Sale component</label>
+            </value>
+            <value>
+                <fullName>All other permissions required as per the CC conditions and IOD conditions</fullName>
+                <default>false</default>
+                <label>All other permissions required as per the CC conditions and IOD conditions</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Copy of Development agreement by which the Builder acquired the Development Rights</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Copy of Power of Attorney given by the Land Owner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>All the copies of previous title chain agreements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Latest Property Card / 7/12 extract (not more than 6 months old)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Title certificate issued by the Builder&apos;s Lawyer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>ROC search if the Builder is a private limited company</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Copy of NA order if the land is agricultural land</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Copy of ULC order passed by the Collector</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Zone certificate shall be required (may be residential/commercial/industrial/IT)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>IOD (Intimation of Disapproval)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Commencement Certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Environmental clearance certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>The requisite NOC/permissions from MHADA, CIDCO, MMRDA, Collector as per the transaction and if the land is leasehold land of these authorities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>In JVPD transactions, need to see whether the parent society has granted redevelopment permission</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Pollution Control Board permission</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Fire Brigade Department Permission</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Permission of Airport Authority of India if the height of the building exceeds prescribed limits (varies by area)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>Sanctioned plans approved by the respective Municipal Corporation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>If it is an SRA project, all the details with respect to the Rehab component and Free Sale component</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Legal Document</controllingFieldValue>
+            <valueName>All other permissions required as per the CC conditions and IOD conditions</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Remark__c</fullName>
+    <label>Case Remark</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Self Loan</fullName>
+                <default>false</default>
+                <label>Self Loan</label>
+            </value>
+            <value>
+                <fullName>Initial Self funding</fullName>
+                <default>false</default>
+                <label>Initial Self funding</label>
+            </value>
+            <value>
+                <fullName>Deal Cancel</fullName>
+                <default>false</default>
+                <label>Deal Cancel</label>
+            </value>
+            <value>
+                <fullName>sanctioned by banking team</fullName>
+                <default>false</default>
+                <label>sanctioned by banking team</label>
+            </value>
+            <value>
+                <fullName>WIP</fullName>
+                <default>false</default>
+                <label>WIP</label>
+            </value>
+            <value>
+                <fullName>Document Received</fullName>
+                <default>false</default>
+                <label>Document Received</label>
+            </value>
+            <value>
+                <fullName>Clint need time to arrang Document</fullName>
+                <default>false</default>
+                <label>Clint need time to arrang Document</label>
+            </value>
+            <value>
+                <fullName>Clint out of station</fullName>
+                <default>false</default>
+                <label>Clint out of station</label>
+            </value>
+            <value>
+                <fullName>other</fullName>
+                <default>false</default>
+                <label>other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

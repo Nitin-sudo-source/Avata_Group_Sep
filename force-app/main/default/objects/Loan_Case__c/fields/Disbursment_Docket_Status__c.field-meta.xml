@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disbursment_Docket_Status__c</fullName>
+    <label>Disbursment Docket Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Docket Sign</fullName>
+                <default>false</default>
+                <label>Docket Sign</label>
+            </value>
+            <value>
+                <fullName>Docket not Sign</fullName>
+                <default>false</default>
+                <label>Docket not Sign</label>
+            </value>
+            <value>
+                <fullName>Docket submited to bank</fullName>
+                <default>false</default>
+                <label>Docket submited to bank</label>
+            </value>
+            <value>
+                <fullName>Docket not submited to bank</fullName>
+                <default>false</default>
+                <label>Docket not submited to bank</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

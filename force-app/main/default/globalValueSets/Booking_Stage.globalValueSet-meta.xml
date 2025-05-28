@@ -26,6 +26,11 @@
         <label>Booking Confirmed</label>
     </customValue>
     <customValue>
+        <fullName>Possession Done</fullName>
+        <default>false</default>
+        <label>Possession Done</label>
+    </customValue>
+    <customValue>
         <fullName>Welcome Call Done</fullName>
         <default>false</default>
         <isActive>false</isActive>

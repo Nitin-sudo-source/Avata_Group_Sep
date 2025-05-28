@@ -30,6 +30,11 @@
                 <default>false</default>
                 <label>Registration Completed</label>
             </value>
+            <value>
+                <fullName>Registration Rescheduled</fullName>
+                <default>false</default>
+                <label>Registration Rescheduled</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
