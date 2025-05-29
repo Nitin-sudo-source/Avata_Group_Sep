@@ -15,7 +15,7 @@
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .modern-header {
@@ -123,12 +123,18 @@
     padding: 1rem 1.5rem;
     background: white;
     border-bottom: 1px solid var(--modern-border);
+        overflow: visible; /* Allow dropdowns to show outside */
+    z-index: 1;         /* Make sure it's above other elements */
+    position: relative; /* Required for z-index to work */
+
 }
 
 .filter-row {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    overflow: visible;
+    
 }
 
 .modern-combobox {
@@ -215,10 +221,34 @@
 .customer-cell, .milestone-cell, .title-cell {
     max-width: 200px;
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
 }
 
+
+
+.search-button {
+    background: linear-gradient(135deg, #4b79a1, #283e51);
+    border: none;
+    color: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.search-button:hover {
+    background: linear-gradient(135deg, #283e51, #4b79a1);
+    transform: scale(1.05);
+}
+
+.search-button lightning-icon {
+    --slds-c-icon-color-foreground-default: white;
+}
 /* Modern Spinner */
 .modern-spinner {
     position: fixed;

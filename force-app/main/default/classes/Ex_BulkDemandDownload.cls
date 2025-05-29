@@ -1,10 +1,10 @@
 /**
- * @description       : 
+ * @description       :
  * @author            : nitinSFDC@exceller.SFDoc
- * @group             : 
- * @last modified on  : 28-05-2025
+ * @group             :
+ * @last modified on  : 29-05-2025
  * @last modified by  : nitinSFDC@exceller.SFDoc
-**/
+ **/
 
 public class Ex_BulkDemandDownload {
     @AuraEnabled(cacheable=true)
@@ -26,6 +26,7 @@ public class Ex_BulkDemandDownload {
         return clist;
     }
     
+    
     @AuraEnabled
     public static List<ContentDocumentLinkWrapper> fetchFiles(String objectName, String CSId, String TowerId,string Dtype) {
         List<ContentDocumentLinkWrapper> result = new List<ContentDocumentLinkWrapper>();
@@ -33,6 +34,7 @@ public class Ex_BulkDemandDownload {
         
         try {
             List<Demand__c> dList = new List<Demand__c>();
+            
             if (CSId == 'All' && Dtype == 'All Demands') {
                 dList = [
                     SELECT Id, Name, Booking__c, Milestone_Name__c,Invoice_Date__c, Customer_Name__c, Payment_Milestone__c,Is_Downloaded__c,Email_Sent__c
@@ -80,61 +82,44 @@ public class Ex_BulkDemandDownload {
                 
             }
             else if ((CSId != 'Date Linked' && CSId != 'All' && CSId != 'Registration Linked') && Dtype == 'Fresh') {
-               system.debug('TowerId:::'+TowerId  +' CSId::::'+CSId);
+                system.debug('TowerId:::'+TowerId  +' CSId::::'+CSId);
                 
                 dList = [
                     SELECT Id, Name, Booking__c, Milestone_Name__c,Invoice_Date__c, Customer_Name__c, Payment_Milestone__c,Is_Downloaded__c,Email_Sent__c
                     FROM Demand__c WHERE Payment_Milestone__r.Construction_Stage__c = :CSId AND Payment_Milestone__r.Construction_Stage__r.Tower__c  = :TowerId AND Total_Amount_Remaining__c <> 0 AND Is_Downloaded__c = FALSE ORDER BY CreatedDate DESC
                 ];
-              
+                
             }
             system.debug('dList::::: '+dList);
-            
             if (!dList.isEmpty()) {
                 Set<Id> demandIds = new Set<Id>();
                 for (Demand__c demand : dList) {
                     demandIds.add(demand.Id);
                 }
-                System.debug('demandIds: '+demandIds.size());
-                String query = 'SELECT ContentDocumentId, ContentDocument.Title, ContentDocument.FileType, ContentDocument.ContentSize, ContentDocument.LastModifiedDate, ContentDocument.CreatedDate, LinkedEntity.Type, LinkedEntity.Id FROM ContentDocumentLink WHERE LinkedEntityId IN :demandIds';
-                if (String.isNotBlank(objectName)) {
-                    query += ' AND LinkedEntity.Type = \'' + objectName + '\'';
-                }
-                List<ContentDocumentLink> contentDocumentLinks = Database.query(query);
-                for (ContentDocumentLink cdl : contentDocumentLinks) {
-                    processedContentDocumentIds.add(cdl.ContentDocumentId);
-                }
-                System.debug('processedContentDocumentIds: '+processedContentDocumentIds.size());
+                
                 
                 for (Demand__c demand : dList) {
-                    if(demandIds.contains(demand.Id)) {
-                        ContentDocumentLinkWrapper wrapper = new ContentDocumentLinkWrapper();
-                        wrapper.demandName = demand.Name;
-                        wrapper.demandId = demand.Id;
-                        wrapper.milestoneName = demand.Milestone_Name__c;
-                        wrapper.customerName = demand.Customer_Name__c;
-                        wrapper.isDownloaded = demand.Is_Downloaded__c;
-                        wrapper.invoiceDate = demand.Invoice_Date__c;
-                        wrapper.isMailSent = demand.Email_Sent__c;
-                        
-                        for (ContentDocumentLink cdl : contentDocumentLinks) {
-                            if (processedContentDocumentIds.contains(cdl.ContentDocumentId)) {
-                                if (cdl.LinkedEntityId == demand.Id) {
-                                    wrapper.contentDocumentId = cdl.ContentDocumentId;
-                                    wrapper.title = cdl.ContentDocument.Title;
-                                    wrapper.fileType = cdl.ContentDocument.FileType;
-                                    wrapper.contentSize = cdl.ContentDocument.ContentSize;
-                                    wrapper.lastModifiedDate = cdl.ContentDocument.LastModifiedDate;
-                                    wrapper.createdDate = cdl.ContentDocument.CreatedDate;
-                                    wrapper.linkedEntityType = cdl.LinkedEntity.Type;
-                                    result.add(wrapper);
-                                }
-                            }
-                        }
+                    if (demandIds.contains(demand.Id)) {
+                            ContentDocumentLinkWrapper wrapper = new ContentDocumentLinkWrapper();
+                            wrapper.demandName = demand.Name;
+                            wrapper.demandId = demand.Id;
+                            wrapper.milestoneName = demand.Milestone_Name__c;
+                            wrapper.customerName = demand.Customer_Name__c;
+                            wrapper.isDownloaded = demand.Is_Downloaded__c;
+                            wrapper.invoiceDate = demand.Invoice_Date__c;
+                            wrapper.isMailSent = demand.Email_Sent__c;
+                            // wrapper.contentDocumentId = cdl.ContentDocumentId;
+                            wrapper.pdfPreviewUrl = '/apex/Ex_DemandPrint?dId=' + demand.Id + '&isPreview=true';
+                            // wrapper.title = cdl.ContentDocument.Title;
+                            // wrapper.fileType = cdl.ContentDocument.FileType;
+                            // wrapper.contentSize = cdl.ContentDocument.ContentSize;
+                            // wrapper.lastModifiedDate = cdl.ContentDocument.LastModifiedDate;
+                            // wrapper.createdDate = cdl.ContentDocument.CreatedDate;
+                            result.add(wrapper);
                     }
                 }
             }
-            
+            System.debug('resultWrapper: '+result);
             System.debug('result: '+result.size());
         } catch (Exception ex) {
             throw new AuraHandledException(ex.getMessage());
@@ -142,6 +127,8 @@ public class Ex_BulkDemandDownload {
         
         return result;
     }
+    
+    
     
     public class ContentDocumentLinkWrapper {
         @AuraEnabled
@@ -176,6 +163,9 @@ public class Ex_BulkDemandDownload {
         
         @AuraEnabled
         public String customerName { get; set; }
+
+        @AuraEnabled
+        public String pdfPreviewUrl {get;set;}
         
         @AuraEnabled
         public Boolean isDownloaded { get; set; }
@@ -185,28 +175,142 @@ public class Ex_BulkDemandDownload {
         
         @AuraEnabled
         public Boolean isMailSent {get;set;}
-    }    
+    }
     
     @AuraEnabled
-    public static void updateIsDownloaded(List<ContentDocumentLinkWrapper> demandWrappers) {
-        Set<Id> demandIds = new Set<Id>();
+    public static void updateIsDownloaded(List<Id> demandIds) {
+        Set<Id> getDemandIds = new Set<Id>();
+        List<Demand__c> demandRecordsToUpdate = new  List<Demand__c>();
+        List<Demand__c> demandList = new  List<Demand__c>();
         
-        for (ContentDocumentLinkWrapper wrapper : demandWrappers) {
-            demandIds.add(wrapper.demandId);
+        if (demandIds != null && !demandIds.isEmpty()) {
+            getDemandIds.addAll(demandIds);
+            System.debug('getDemandIds: '+getDemandIds);
         }
+        if (getDemandIds != null && !getDemandIds.isEmpty()) {
+            demandList = [SELECT Id, Is_Downloaded__c, Name, Customer_Name__c,
+            // Booking__r.Project__r.CC_Email_ID__c, 
+            Email_sent__c,Booking__r.Primary_Applicant_Name__c,Booking__r.Project__r.Name,
+                          Booking__r.Tower__r.Name, Booking__r.Unit__r.Name, Milestone_Name__c, Customer_Email__c, Invoice_Date__c,Due_Date__c 
+                          FROM Demand__c 
+                          WHERE Id IN :getDemandIds 
+                          AND Is_Downloaded__c = false];
+            System.debug('demandList: '+demandList.size());
+            
+            if(!demandList.isEmpty() && demandList != null){
+                for (Demand__c demandRecord : demandList) {
+                    if(!demandRecord.Is_Downloaded__c){
+                        demandRecord.Is_Downloaded__c = true;
+                    }
+                    demandRecordsToUpdate.add(demandRecord);
+                }
+                
+            }
+            System.debug('demandRecordsToUpdate: '+demandRecordsToUpdate);
+            update demandRecordsToUpdate;
+        }
+    }
+
+    
+    public class DemandWrapper {
+        @AuraEnabled public String base64Pdf;
+        @AuraEnabled public String demandName;
+        @AuraEnabled public String customerName;
+        @AuraEnabled public String bookingName;
+        @AuraEnabled public String projectName;
+    }
+    
+    @AuraEnabled
+    public static List<DemandWrapper> getDemandPdf(List<Id> demandRecordIds) {
+        List<DemandWrapper> responseList = new List<DemandWrapper>();
+        Set<Id> demandIdsSet = new Set<Id>(demandRecordIds);
         
-        List<Demand__c> demandsToUpdate = [SELECT Id, Is_Downloaded__c FROM Demand__c WHERE Id IN :demandIds];
+        Map<Id, Demand__c> demandMap = new Map<Id, Demand__c>([
+            SELECT Id, Name, Is_Downloaded__c,
+            Customer_Name__c, Booking__r.Name, Booking__r.Project__r.Name
+            FROM Demand__c
+            WHERE Id IN :demandIdsSet
+        ]);
         
-        for (Demand__c demand : demandsToUpdate) {
-            for (ContentDocumentLinkWrapper wrapper : demandWrappers) {
-                if (wrapper.demandId == demand.Id) {
-                    demand.Is_Downloaded__c = wrapper.isDownloaded;
-                    break;
+        try {
+            for (Id demandId : demandIdsSet) {
+                if (demandMap.containsKey(demandId)) {
+                    Demand__c d = demandMap.get(demandId);
+                    d.Is_Downloaded__c = true;
+                    
+                    PageReference pageRef = Page.Ex_PrintDemand;
+                    pageRef.getParameters().put('dId', demandId);
+                    Blob pdfBlob = Blob.valueOf('Dummy PDF Content');
+                    if (!Test.isRunningTest()) {
+                        pdfBlob = pageRef.getContentAsPDF();
+                    }
+                    
+                    String base64EncodedPdf = EncodingUtil.base64Encode(pdfBlob);
+                    DemandWrapper dw = new DemandWrapper();
+                    dw.base64Pdf = base64EncodedPdf;
+                    dw.demandName = d.Name;
+                    dw.customerName = d.Customer_Name__c != null ? d.Customer_Name__c : '';
+                    dw.bookingName = d.Booking__r != null ? d.Booking__r.Name : '';
+                    dw.projectName = d.Booking__r.Project__r != null ? d.Booking__r.Project__r.Name : '';
+                    
+                    responseList.add(dw);
                 }
             }
+            system.debug('responseList :: ' + responseList);
+            update demandMap.values();
+            return responseList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
+    }
+    
+    
+    @AuraEnabled
+    public static DemandPdfWrapper getDemandSinglePdf(String dId) {
+        DemandPdfWrapper wrapper = new DemandPdfWrapper();
+        wrapper.base64PdfList = new List<String>();
+        wrapper.demandList = new List<Demand__c>();
         
-        update demandsToUpdate; 
+        Set<Id> demandIdsSet = new Set<Id>{dId};
+            
+            Map<Id, Demand__c> demandMap = new Map<Id, Demand__c>(
+                [
+                    SELECT Id, Name, Is_Downloaded__c,Customer_Name__c,Booking__r.Name,Booking__r.Project__r.Name
+                    FROM Demand__c
+                    WHERE Id IN :demandIdsSet 
+                ]
+            );
+        
+        system.debug('demandMap ::: ' + demandMap);
+        
+        try {
+            for (Id demandId : demandIdsSet) {
+                if (demandMap.containsKey(demandId)) {
+                    Demand__c demand = demandMap.get(demandId);
+                    demand.Is_Downloaded__c = true;
+                    
+                    PageReference pageRef = Page.Ex_PrintDemand;
+                    pageRef.getParameters().put('dId', demandId);
+                    
+                    Blob pdfBlob = Blob.valueOf('Dummy PDF Content');
+                    if (!Test.isRunningTest()) {
+                        pdfBlob = pageRef.getContentAsPDF();
+                    }
+                    
+                    String base64EncodedPdf = EncodingUtil.base64Encode(pdfBlob);
+                    wrapper.base64PdfList.add(base64EncodedPdf);
+                    wrapper.demandList.add(demand);
+                }
+            }
+            update demandMap.values();
+            return wrapper;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+    public class DemandPdfWrapper {
+        @AuraEnabled public List<String> base64PdfList { get; set; }
+        @AuraEnabled public List<Demand__c> demandList { get; set; }
     }
     
     @AuraEnabled
@@ -230,7 +334,7 @@ public class Ex_BulkDemandDownload {
                           FROM Demand__c 
                           WHERE Id IN :getDemandIds 
                           AND Customer_Email__c != null];
-            System.debug('demandList: '+demandList.size());            
+            System.debug('demandList: '+demandList.size());
             
             if(!demandList.isEmpty() && demandList != null){
                 for (Demand__c demandRecord : demandList) {
@@ -244,28 +348,28 @@ public class Ex_BulkDemandDownload {
                         String[] toAddresses = new String[]{demandRecord.Customer_Email__c};
                         mail.setToAddresses(toAddresses);
                         if(!Test.isRunningTest()){
-                        // String[] ccAddresses = new String[]{demandRecord.Booking__r.Project__r.CC_Email_ID__c};
-                        //     if(ccAddresses !=null){
-                        // mail.setCcAddresses(ccAddresses);
-                        //     }
+                            // String[] ccAddresses = new String[]{demandRecord.Booking__r.Project__r.CC_Email_ID__c};
+                            //     if(ccAddresses !=null){
+                                // mail.setCcAddresses(ccAddresses);
+                            //     }
                         }
                         String Body = 'Dear Sir <Br/><Br/> We are pleased to inform you that we have now completed Slab '+ demandRecord.Milestone_Name__c +' in '+demandRecord.Booking__r.Project__r.Name +' <br/><br/>The payment for Slab '+ demandRecord.Milestone_Name__c +'is due by '+formattedDate+'<br/><br/>We have attached the Demand Letter for Slab '+ demandRecord.Milestone_Name__c +' specifying the details of the payment along with the Architect Certificate.<br/><br/>Please write to me in case you require any further clarification or information.';
                         mail.setHtmlBody(body);
                         system.debug(body);
                         List<ContentDocumentLink>  ContentDocumentLinklist =[SELECT LinkedEntityId, ContentDocument.Title FROM ContentDocumentLink WHERE  LinkedEntityId = :demandRecord.Id];
                         List<ContentVersion> cvList = [SELECT VersionData, FileExtension FROM ContentVersion WHERE ContentDocumentId = :ContentDocumentLinklist[0].ContentDocumentId];
-                        Blob fileData = cvList[0].VersionData; 
+                        Blob fileData = cvList[0].VersionData;
                         Messaging.EmailFileAttachment emlAtt = new Messaging.EmailFileAttachment();
                         emlAtt.setFilename('Demand PDF.' + cvList[0].FileExtension);
                         emlAtt.setBody(fileData);
                         OrgWideEmailAddress owea = new OrgWideEmailAddress();
-                        owea = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE DisplayName='Aga Hall' Limit 1];
+                        owea = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE DisplayName='Avant Demand Email' Limit 1];
                         system.debug(owea);
                         if (owea != null) {
                             mail.setOrgWideEmailAddressId(owea.Id);
                         }
                         mail.setFileAttachments(new Messaging.EmailFileAttachment[] { emlAtt });
-                        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail}); 
+                        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
                         demandRecord.Email_sent__c = true;
                         msg = 'Mail Sending... for '+ demandRecord.Name +'-'+ demandRecord.Customer_Name__c;
                         showResponse.add(msg);
@@ -281,8 +385,9 @@ public class Ex_BulkDemandDownload {
         }else{
             return null;
         }
+        System.debug('demandRecordsToUpdate: '+demandRecordsToUpdate);
         if(!demandRecordsToUpdate.isEmpty() && demandRecordsToUpdate != null){
-            update demandRecordsToUpdate;  
+            update demandRecordsToUpdate;
             return showResponse;
         }else{
             return showResponse;

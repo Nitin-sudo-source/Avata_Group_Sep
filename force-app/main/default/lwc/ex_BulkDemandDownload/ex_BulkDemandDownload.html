@@ -2,7 +2,7 @@
   @description       : 
   @author            : nitinSFDC@exceller.SFDoc
   @group             : 
-  @last modified on  : 28-05-2025
+  @last modified on  : 29-05-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
@@ -18,24 +18,24 @@
             <header class="modern-header">
                 <div class="header-content">
                     <div class="header-title">
-                        <lightning-icon size="large" variant="brand" icon-name="action:email" 
+                        <lightning-icon size="large" variant="brand" icon-name="action:email"
                             class="header-icon"></lightning-icon>
                         <div>
                             <h1>Bulk Demand Dashboard</h1>
                             <p class="subtitle">Manage and track customer demand documents</p>
                         </div>
                     </div>
-                    
+
                     <div class="header-actions">
-                        <lightning-button variant="brand" label="Fetch Demands" icon-name="action:filter" 
+                        <lightning-button variant="brand" label="Fetch Demands" icon-name="action:filter"
                             icon-position="left" onclick={fetchDocumentRecords} class="action-button">
                         </lightning-button>
-                        <lightning-button variant="neutral" label="Reset" icon-name="action:reset_password" 
+                        <lightning-button variant="neutral" label="Reset" icon-name="action:reset_password"
                             icon-position="left" onclick={handleReset} class="action-button">
                         </lightning-button>
                     </div>
                 </div>
-                
+
                 <!-- Modern Filter Bar -->
                 <div class="modern-filter-bar">
                     <!-- <div class="filter-item">
@@ -48,33 +48,33 @@
                         ]} onchange={handleRecordsPerPageChange} class="modern-filter">
                         </lightning-combobox>
                     </div> -->
-                    
+
                     <div class="filter-item">
                         <label>Page</label>
                         <div class="page-indicator">{currentPage} of {totalPages}</div>
                     </div>
-                    
+
                     <div class="filter-item">
                         <label>Selected</label>
                         <div class="selection-count">{arraySize} demands</div>
                     </div>
-                    
+
                     <div class="filter-item pagination">
-                        <lightning-button-icon icon-name="utility:chevronleft" variant="border-filled" 
+                        <lightning-button-icon icon-name="utility:chevronleft" variant="border-filled"
                             disabled={isPreviousDisabled} onclick={handlePreviousPage} class="pagination-button">
                         </lightning-button-icon>
-                        <lightning-button-icon icon-name="utility:chevronright" variant="border-filled" 
+                        <lightning-button-icon icon-name="utility:chevronright" variant="border-filled"
                             disabled={isNextDisabled} onclick={handleNextPage} class="pagination-button">
                         </lightning-button-icon>
                     </div>
-                    
+
                     <template if:true={showTable}>
                         <div class="filter-item action-items">
-                            <lightning-button-icon icon-name="action:email" variant="brand" 
-                                title="Bulk Sent Mail" onclick={updateEmailSent} class="action-icon">
+                            <lightning-button-icon icon-name="action:email" variant="brand" title="Bulk Sent Mail"
+                                onclick={updateEmailSent} class="action-icon">
                             </lightning-button-icon>
-                            <lightning-button-icon icon-name="action:download" variant="brand" 
-                                title="Download All" onclick={handleDownload} class="action-icon">
+                            <lightning-button-icon icon-name="action:download" variant="brand" title="Download All"
+                                onclick={handleDownloadAllDemand} class="action-icon">
                             </lightning-button-icon>
                         </div>
                     </template>
@@ -84,19 +84,19 @@
             <!-- Modern Filter Controls -->
             <div class="modern-filters">
                 <div class="filter-row">
-                    <lightning-combobox label="Project" value={projectId} options={projectOptions} 
+                    <lightning-combobox label="Project" value={projectId} options={projectOptions}
                         onchange={handleProjectChange} class="modern-combobox">
                     </lightning-combobox>
-                    
-                    <lightning-combobox label="Tower" value={towerId} options={towerOptions} 
+
+                    <lightning-combobox label="Tower" value={towerId} options={towerOptions}
                         onchange={handleTowerChange} class="modern-combobox">
                     </lightning-combobox>
-                    
-                    <lightning-combobox label="Milestone Type" value={csId} options={csOptions} 
+
+                    <lightning-combobox label="Milestone Type" value={csId} options={csOptions}
                         onchange={handleCSChange} class="modern-combobox">
                     </lightning-combobox>
-                    
-                    <lightning-combobox label="View" value={selectedValue} options={demandOptions} 
+
+                    <lightning-combobox label="View" value={selectedValue} options={demandOptions}
                         onchange={handleViewChange} class="modern-combobox">
                     </lightning-combobox>
                 </div>
@@ -109,8 +109,15 @@
                         <thead>
                             <tr>
                                 <th class="select-column">
-                                    <lightning-input type="checkbox" onchange={handleAllSelected} 
+                                    <!-- <lightning-input type="checkbox" onchange={handleAllSelected} 
                                         checked={selectAllcheckBox} variant="label-hidden">
+                                    </lightning-input> -->
+                                    <lightning-input onchange={handleAllSelected} data-key="allCheckbox"
+                                        title="Checkbox Selection for File Download"
+                                        message-toggle-active="Selected Checkbox"
+                                        message-toggle-inactive="Please Select Checkbox" type="checkbox"
+                                        data-id="checkbox-button" checked={selectAllcheckBox} name="SelectAll"
+                                        class="custom-checkbox">
                                     </lightning-input>
                                 </th>
                                 <th>Serial No</th>
@@ -118,8 +125,9 @@
                                 <th>Demand No</th>
                                 <th>Milestone</th>
                                 <th>Invoice Date</th>
-                                <th>Title</th>
-                                <th>Size</th>
+                                <!-- <th>Title</th>
+                                <th>Size</th> -->
+                                <th>Preview</th>
                                 <th>Downloaded</th>
                                 <th>Mail Sent</th>
                                 <th>Actions</th>
@@ -129,25 +137,40 @@
                             <template for:each={currentPageData} for:item="rec" for:index="index">
                                 <tr key={rec.Id} class="data-row">
                                     <td class="select-cell">
-                                        <lightning-input type="checkbox" data-name={rec.contentDocumentId}
-                                            data-key={rec.demandId} onchange={handleChange} 
-                                            checked={rec.isSelected} variant="label-hidden">
+                                        <lightning-input type="checkbox" data-name={rec.demandId} name="headerCheckbox"
+                                            data-key={rec.demandId} onchange={handleChange} checked={rec.isSelected}
+                                            variant="label-hidden">
                                         </lightning-input>
                                     </td>
                                     <td>{rec.serialNumber}</td>
                                     <td class="customer-cell">{rec.customerName}</td>
                                     <td>
-                                        <a href="#" onclick={opendemand} data-id={rec.demandId} 
+                                        <a href="#" onclick={opendemand} data-id={rec.demandId}
                                             class="demand-link">{rec.demandName}</a>
                                     </td>
                                     <td class="milestone-cell">{rec.milestoneName}</td>
                                     <td>
-                                        <lightning-formatted-date-time value={rec.invoiceDate} 
-                                            year="2-digit" month="short" day="2-digit">
+                                        <lightning-formatted-date-time value={rec.invoiceDate} year="2-digit"
+                                            month="short" day="2-digit">
                                         </lightning-formatted-date-time>
                                     </td>
-                                    <td class="title-cell">{rec.title}</td>
-                                    <td>{rec.contentSizeKB} KB</td>
+                                    <!-- <td class="title-cell">{rec.title}</td>
+                                    <td>{rec.contentSizeKB} KB</td> -->
+                                    <td>
+                                        <a href={rec.preview} target="_blank">
+                                            <button class="search-button" label="Preview">
+
+
+
+                                                <lightning-icon icon-name='utility:preview' alternative-text='preview'
+                                                    size='xx-small' title='preview'></lightning-icon> &nbsp; &nbsp;
+
+
+                                                <span>Preview</span>
+
+                                            </button>
+                                        </a>
+                                    </td>
                                     <td class="status-cell">
                                         <template if:true={rec.isDownloaded}>
                                             <span class="status-badge success">✓</span>
@@ -162,22 +185,16 @@
                                         </template>
                                         <template if:false={rec.isMailSent}>
                                             <lightning-button-icon icon-name="utility:email" size="small"
-                                                variant="border-filled" data-key={rec.demandId} 
-                                                data-index={index} onclick={updateEmailSent}
-                                                class="action-button">
+                                                variant="border-filled" data-key={rec.demandId} data-index={index}
+                                                onclick={updateEmailSent} class="action-button">
                                             </lightning-button-icon>
                                         </template>
                                     </td>
                                     <td class="action-cell">
                                         <template if:false={rec.isDownloaded}>
-                                            <lightning-button-icon 
-                                            icon-name="utility:download" 
-                                            size="small"
-                                               
-                                                disabled={rec.isSelected} 
-                                                data-key={rec.demandId}
-                                                onclick={handledownloadcheck} data-index={index}
-                                                class="download-button">
+                                            <lightning-button-icon icon-name="utility:download" size="small"
+                                                data-key={rec.demandId} onclick={handleDownloadSingleDemand}
+                                                data-index={index} class="download-button">
                                             </lightning-button-icon>
                                         </template>
                                     </td>

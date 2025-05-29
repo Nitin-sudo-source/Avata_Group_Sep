@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nitinSFDC@exceller.SFDoc
  * @group             : 
- * @last modified on  : 28-05-2025
+ * @last modified on  : 29-05-2025
  * @last modified by  : nitinSFDC@exceller.SFDoc
 **/
 import { LightningElement, api, wire, track } from 'lwc';
@@ -11,10 +11,12 @@ import getTower from '@salesforce/apex/Ex_BulkDemandDownload.getTower';
 import getCS from '@salesforce/apex/Ex_BulkDemandDownload.getCS';
 import updateEmailSentOnDemandRecords from '@salesforce/apex/Ex_BulkDemandDownload.updateEmailSentOnDemandRecords';
 import fetchFiles from '@salesforce/apex/Ex_BulkDemandDownload.fetchFiles';
-import updateIsDownloaded from '@salesforce/apex/Ex_BulkDemandDownload.updateIsDownloaded';
 import { NavigationMixin } from 'lightning/navigation';
+import getDemandPdf from '@salesforce/apex/Ex_BulkDemandDownload.getDemandPdf';
+import getDemandSinglePdf from '@salesforce/apex/Ex_BulkDemandDownload.getDemandSinglePdf';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-// import MY_IMAGE from '@salesforce/resourceUrl/BulkDemandDownload_IsLoading';
+import { loadScript } from 'lightning/platformResourceLoader';
+import JSZip from '@salesforce/resourceUrl/JSZip';
 
 
 export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElement) {
@@ -33,7 +35,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   @track index = 0;
   @track selectedList = [];
   @track updateList = [];
-  @track finalList1 = [];
+  @track mainList = [];
   @track selectedFiles = new Set();
   @track url = [];
   @track finalurl;
@@ -46,6 +48,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   @track showTable = false;
   @track selectedFinalist = [];
   @track reminderType = '';
+  @track zipInitialized = false;
 
   @wire(getProject)
   projectResult;
@@ -110,7 +113,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   }
 
   get arraySize() {
-    return this.finalList1.length;
+    return this.mainList.length;
   }
 
 
@@ -146,42 +149,41 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
 
 
   fetchDocumentRecords(event) {
-    if(this.projectId === null){
-      this.showToast('Error !','Please select the Project', 'Error');
-      return;
-      
-    }else if(this.towerId === null){
-      this.showToast('Error !','Please select the Tower', 'Error');
+    if (this.projectId === null) {
+      this.showToast('Error !', 'Please select the Project', 'Error');
       return;
 
-
-    }else if(this.demandtype === null){
-      this.showToast('Error !','Please select the View', 'Error');
+    } else if (this.towerId === null) {
+      this.showToast('Error !', 'Please select the Tower', 'Error');
       return;
 
 
-    }else if(this.csId === null){
-      this.showToast('Error !','Please select the Milestone Type', 'Error');
+    } else if (this.demandtype === null) {
+      this.showToast('Error !', 'Please select the View', 'Error');
       return;
 
 
-    }else{
+    } else if (this.csId === null) {
+      this.showToast('Error !', 'Please select the Milestone Type', 'Error');
+      return;
+
+
+    } else {
       this.showTable = false;
       this.isSpinner = true;
       fetchFiles({ objectName: 'Demand__c', CSId: this.csId, TowerId: this.towerId, Dtype: this.demandtype })
         .then((result) => {
           this.demandData = result.map((item, index) => ({
             ...item,
-            contentSizeKB: (item.contentSize / 1024).toFixed(2) + 'KB',
             isSelected: false,
-            isDownloaded: item.isDownloaded,
-            "url": `/sfc/servlet.shepherd/document/download/${item.contentDocumentId}`,
+            isDownloaded: item.isDownloaded ? true : false,
+            preview: `/apex/Ex_PrintDemand?dId=${item.demandId}`,
             "serialNumber": index + 1
           }));
           this.showTable = true;
           this.isSpinner = false;
           this.selectedList = this.demandData;
-          //console.log('GetData:::' + JSON.stringify(this.demandData));
+          console.log('GetData:::' + JSON.stringify(this.demandData));
         })
         .catch((error) => {
           console.error(error);
@@ -205,50 +207,47 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
     this.handleChange(event);
   }
 
-
   handleChange(event) {
     const { name, checked } = event.target;
     this.checkboxesState = { ...this.checkboxesState, [name]: checked };
-    this.visible = true;
     this.demandId = event.target.dataset.key;
-    var Name = event.target.dataset.name;
-    //console.log('Name: ' + Name);
     var valueset = event.target.checked;
     //console.log('valueset: ' + valueset);
     var fieldName = event.currentTarget.name;
-    if (fieldName === undefined) {
-      for (var i = this.pageSize * this.currentPage - this.pageSize; i < this.pageSize * this.currentPage; i++) {
-        this.currentPageData[i].isSelected = false;
-      }
-    } else if (fieldName == 'SelectAll') {
+    //console.log('fieldName: ' + fieldName);
+    var Name = event.target.dataset.name;
+
+
+    //console.log('Name: ' + Name);
+    if (fieldName == 'SelectAll') {
       if (this.selectAllcheckBox == true) {
         for (var i = this.pageSize * this.currentPage - this.pageSize; i < this.pageSize * this.currentPage; i++) {
           for (var i = 0; i < this.currentPageData.length; i++) {
             const value = this.currentPageData[i].demandId;
             this.currentPageData[i].isSelected = true;
-            if (!this.finalList1.includes(value)) {
-              this.finalList1.push(value);
-              if (!this.url.includes(this.currentPageData[i].contentDocumentId)) {
-                this.url.push(this.currentPageData[i].contentDocumentId);
+            if (!this.mainList.includes(value)) {
+              this.mainList.push(value);
+              if (!this.url.includes(this.currentPageData[i].demandId)) {
+                this.url.push(this.currentPageData[i].demandId);
               }
             }
           }
           break;
         }
       } else {
-        console.log('inside else this.selectAllcheckBox: ' + this.selectAllcheckBox);
+        //console.log('inside else ');
         for (var i = this.pageSize * this.currentPage - this.pageSize; i < this.pageSize * this.currentPage; i++) {
           for (var j = 0; j < this.currentPageData.length; j++) {
             const value = this.currentPageData[j].demandId;
             this.currentPageData[j].isSelected = false;
-            if (this.finalList1.includes(value)) {
-              const index = this.finalList1.indexOf(value);
+            if (this.mainList.includes(value)) {
+              const index = this.mainList.indexOf(value);
               if (index !== -1) {
-                this.finalList1.splice(index, 1);
+                this.mainList.splice(index, 1);
               }
             }
-            if (this.url.includes(this.currentPageData[j].contentDocumentId)) {
-              const index = this.url.indexOf(this.currentPageData[j].contentDocumentId);
+            if (this.url.includes(this.currentPageData[j].demandId)) {
+              const index = this.url.indexOf(this.currentPageData[j].demandId);
               if (index !== -1) {
                 this.url.splice(index, 1);
               }
@@ -263,20 +262,10 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
         if (!this.selectedList[i].isDownloaded) {
           if (value == this.demandId) {
             if (valueset == true) {
-              this.finalList1.push(value);
+              this.mainList.push(value);
               this.url.push(Name);
             } else {
-              this.finalList1 = this.finalList1.filter(finalItem => finalItem !== this.demandId);
-              this.url = this.url.filter(finalItem => finalItem !== Name);
-            }
-          }
-        } else if (this.selectedList[i].isDownloaded && !this.selectedList[i].isMailSent) {
-          if (value == this.demandId) {
-            if (valueset == true) {
-              this.finalList1.push(value);
-              this.url.push(Name);
-            } else {
-              this.finalList1 = this.finalList1.filter(finalItem => finalItem !== this.demandId);
+              this.mainList = this.mainList.filter(finalItem => finalItem !== this.demandId);
               this.url = this.url.filter(finalItem => finalItem !== Name);
             }
           }
@@ -289,129 +278,141 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
         }
       }
     }
-    //console.log('currentPageData: ' + JSON.stringify(this.currentPageData));
-    console.log('final list to send email: ' + JSON.stringify(this.finalList1));
-    this.updateFinalUrl();
+    console.log('FinalMainList: ' + JSON.stringify(this.mainList));
+    console.log('url ' + JSON.stringify(this.url));
   }
 
 
-  updateFinalUrl() {
-    this.finalurl = '';
-    console.log('url: ' + JSON.stringify(this.url));
-    // console.log('url: ' + JSON.stringify(this.url));
-    for (let i = 0; i < this.currentPageData.length; i++) {
-      if (this.url.length != 0) {
-        var idArray = this.url.join(',').split(',');
-        this.finalurl = `/sfc/servlet.shepherd/document/download/${idArray.join('/')}`;
-      }
+  
+
+
+  async handleDownloadAllDemand(event) {
+    this.isSpinner = true;
+    const button = event.currentTarget;
+    button.disabled = true;
+
+    const selectedDemands = this.currentPageData.filter(d => d.isSelected);
+
+    if (selectedDemands.length === 0) {
+      this.isSpinner = false;
+      button.disabled = false;
+      return;
     }
-    console.log('final : ' + this.finalurl);
+
+    const demandIds = selectedDemands.map(d => d.demandId);
+
+    try {
+      await loadScript(this, JSZip);
+      const zip = new window.JSZip();
+
+      const response = await getDemandPdf({ demandRecordIds: demandIds });
+      if (response && response.length > 0) {
+        const folder = zip.folder("BulkDemands"); // Single folder
+
+        for (const re of response) {
+          const base64String = re.base64Pdf;
+          const demandName = re?.demandName || '';
+          const customerName = re?.customerName || '';
+          const bookingName = re?.bookingName || '';
+          const projectName = re?.projectName || '';
+
+          // Clean up the filename and make it unique
+          const filename = `${demandName}/${customerName}/${bookingName}/${projectName}.pdf`.replace(/[\/\\?%*:|"<>]/g, '_');
+          folder.file(filename, base64String, { base64: true });
+        }
+
+        const content = await zip.generateAsync({ type: 'blob' });
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(content);
+        downloadLink.download = "BulkDemands.zip";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        location.reload();
+      } else {
+        console.log("No PDF found in the response.");
+      }
+    } catch (error) {
+      console.error("Error during ZIP creation:", error);
+    }
+
+    this.isSpinner = false;
+    button.disabled = false;
   }
+
+  async handleDownloadSingleDemand(event) {
+    this.isSpinner = true;
+    const button = event.currentTarget;
+    button.disabled = true;
+    const dId = event.currentTarget.dataset.key;
+    console.log("dId: ", dId);
+
+    try {
+      const result = await getDemandSinglePdf({ dId: dId });
+
+      if (result && result.base64PdfList.length > 0) {
+        const base64String = result.base64PdfList[0];
+        const demandRecord = result.demandList.length > 0 ? result.demandList[0] : null;
+        const demandName = demandRecord ? demandRecord.Name : '';
+        const customerName = demandRecord ? demandRecord.Customer_Name__c : '';
+        const bookingName = demandRecord.Booking__r ? demandRecord.Booking__r.Name : '';
+        const projectName = demandRecord.Booking__r.Project__r ? demandRecord.Booking__r.Project__r.Name : '';
+
+        const byteCharacters = atob(base64String);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const pdfBlob = new Blob([byteArray], { type: "application/pdf" });
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(pdfBlob);
+        downloadLink.download = `${demandName}/${customerName}/${bookingName}/${projectName}.pdf`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        location.reload();
+      } else {
+        console.log("No PDF found in the response.");
+      }
+    } catch (error) {
+      console.error("Error downloading demand letter:", error);
+    } finally {
+      this.isSpinner = false;
+      button.disabled = false;
+    }
+  }
+
 
   updateEmailSent() {
-    if (this.finalList1.length === 0) {
-      //this.isError = true;
-      // this.errorMsg = 'Please select the checkbox before sending mail ';
-      // const toastEvent = new ShowToastEvent({
-      //   title: 'Error',
-      //   message: this.errorMsg,
-      //   variant: 'error',
-      // });
-      // this.dispatchEvent(toastEvent);
-      this.showToast('Error !','Please select the checkbox before sending mail', 'Error');
+    if (this.mainList.length === 0) {
+      this.showToast('Error !', 'Please select the checkbox before sending mail', 'Error');
       return;
-    } else if (this.finalList1.length > 0) {
+    } else if (this.mainList.length > 0) {
       this.isSpinner = true;
-      updateEmailSentOnDemandRecords({ demandIds: this.finalList1 })
+      updateEmailSentOnDemandRecords({ demandIds: this.mainList })
         .then(result => {
           console.log('Response: ' + JSON.stringify(result));
           this.isSpinner = false;
           if (result != null) {
             //alert(result.join("\n"));
-            this.showToast('Success !', result.join("\n") , 'success');
-            this.finalList1 = [];
+            this.showToast('Success !', result.join("\n"), 'success');
+            this.mainList = [];
             location.reload();
           } else {
             this.isSpinner = false;
-            this.showToast('Error !','Please check customer Email or Please Contact System Administrator', 'Error');
+            this.showToast('Error !', 'Please check customer Email or Please Contact System Administrator', 'Error');
             //alert('Error: Something went Wrong Please Contact System Administrator ');
-            return ;
+            return;
           }
         })
     }
   }
 
-  handleDownload() {
-    console.log('final url In Download' + JSON.stringify(this.finalurl));
-    console.log('finalList1' + JSON.stringify(this.finalList1));
-    if (this.finalurl == '' || this.finalurl == undefined || this.finalList1.length === 0) {
-      // const showToastEvent = new ShowToastEvent({
-      //   title: 'Error!',
-      //   message: 'Please Select File to Download',
-      //   variant: 'Error',
-      // });
-      // this.dispatchEvent(showToastEvent);
-      this.showToast('Error !','Please Select File to Download', 'Error');
-      return;
-    } else {
-      updateIsDownloaded({ demandIds: this.finalList1 })
-        .then((result) => {
-          console.log('Response: ' + JSON.stringify(result));
-          this.showSpinner = true;
-          // const showToastEvent = new ShowToastEvent({
-          //   title: 'Success!',
-          //   message: 'Attachment saved successfully. Please check your Downloads.',
-          //   variant: 'success',
-          // });
-          // this.dispatchEvent(showToastEvent);
-          this.showToast('Success !','Attachment saved successfully. Please check your Downloads.', 'success');
-          setTimeout(() => {
-            this.showSpinner = false;
-            location.reload();
-          }, 4000);
-        })
-        .catch(error => {
-          console.log('error: ', JSON.stringify(this.error));
-          console.error(error);
-        });
-    }
-  }
-
-
-
-  handledownloadcheck(event) {
-    //event.preventDefault(); // Prevent default action of <a> tag
-    //event.stopPropagation(); // Stop event bubbling
-
-    const dId = event.target.dataset.key;
-    console.log('dId' + dId);
-    if (this.finalList1.length === 0 || !this.finalList1.includes(dId)) {
-      this.showToast('Error !','Please Select File to Download', 'Error');
-      return;
-    } else if (this.finalList1.includes(dId)) {
-      console.log('this.finalList1 Inside else' + JSON.stringify(this.finalList1));
-      this.selectedFinalist = this.currentPageData.filter(record => record.isSelected);
-      this.selectedFinalist = this.selectedFinalist.filter(record => {
-        if (record.demandId === dId) {
-            record.isDownloaded = true;
-            if (this.finalList1.includes(dId)) {
-                this.finalList1.push(dId);
-                const index = this.finalList1.indexOf(dId);
-                if (index !== -1) {
-                  this.finalList1.splice(index, 1);
-                }
-            }
-            return true;
-          }
-          return false;
-      });
-      this.handleDownload();
-    }
-  }
 
   get hasFilesToDownload() {
-    return this.finalList1.length > 0;
-}
+    return this.mainList.length > 0;
+  }
 
 
   handlePreviousPage() {
@@ -456,12 +457,12 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
 
   showToast(title, message, variant) {
     const event = new ShowToastEvent({
-        title: title,
-        message: message,
-        variant: variant,
+      title: title,
+      message: message,
+      variant: variant,
     });
     this.dispatchEvent(event);
-}
+  }
 
-      
+
 }
