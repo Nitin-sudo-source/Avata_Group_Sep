@@ -2,43 +2,28 @@
   @description       : 
   @author            : nitinSFDC@exceller.SFDoc
   @group             : 
-  @last modified on  : 17-03-2025
+  @last modified on  : 30-05-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
-
-
-
-
     <lightning-card class="container2">
-
         <template if:true={isSpinner}>
             <div class="slds-spinner_container">
                 <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-fixed">
                     <span class="slds-assistive-text">Loading</span>
                     <div class="slds-spinner__dot-a"></div>
                     <div class="slds-spinner__dot-b"></div>
-
-                    <!-- additional element to show the text under the spinner -->
                     <p class="slds-spinner-text">Loading...</p>
                 </div>
             </div>
-
         </template>
 
         <h1>Bulk Registration Download </h1>
-        <!-- <div class="slds-col slds-size_1-of-3 slds-text-align_center"> -->
         <template if:true={showTable}>
             <template if:true={recordSelected}>
                 <h5>No of Records Selected: <b>{recordSelected}</b></h5>
             </template>
         </template>
-
-
-
-        <!-- </div> -->
-
-
 
         <!-- Filters and Controls -->
         <div class="slds-grid slds-gutters slds-align_absolute-center slds-m-bottom_medium">
@@ -60,12 +45,10 @@
 
             <!-- Document Type Buttons -->
             <div class="slds-col slds-size_1-of-4">
-
                 <lightning-combobox aria-label="Document Type" label="Document Type" title={docTitle}
                     value={documentType} placeholder="Select Document Type" variant="standard" required
                     class="user-input-box" icon-position="left" options={documentOptions} onchange={handleDocumentType}>
                 </lightning-combobox>
-
             </div>
         </div>
 
@@ -100,11 +83,6 @@
                 </template>
             </div>
 
-
-
-
-
-
             <div class="slds-col slds-size_1-of-3 slds-text-align_right">
                 <template if:true={showTable}>
                     <button class="search-button" title="Go To Previous Page" disabled={isPreviousDisabled}
@@ -121,8 +99,6 @@
                 </template>
             </div>
         </div>
-
-
 
         <template if:true={showTable}>
             <template if:true={currentPageData}>
@@ -170,30 +146,12 @@
                                 variant={sortIcons.UnitName.variant} data-field="UnitName" onclick={handleSort}
                                 class="colorful-icon"></lightning-icon>
                         </th>
-
-                        <th>
-                            <!-- onclick={handleSort} data-field="fileType" -->
-
-                            Document Type
-                            <!-- ({sortIcons.fileType.text}) -->
-                            <!-- <lightning-icon 
-                            icon-name={sortIcons.fileType.icon} 
-
-                            onclick={handleSort} 
-                             data-field="fileType" 
-                               alternative-text={sortIcons.fileType.text} 
-                               size={sortIcons.fileType.size}
-                                variant={sortIcons.fileType.variant}
-                                class="colorful-icon">
-                            </lightning-icon> -->
-                        </th>
-
+                        <th>Document Type</th>
+                        <th>Verified By MIS</th>
+                        <th>Verified By RM</th>
                         <th>Preview Document</th>
                         <th>Download</th>
                     </tr>
-
-
-
                     <template for:each={currentPageData} for:item="rec" for:index="index">
                         <tr key={rec.Id}>
                             <td style="text-align:center !important;">
@@ -210,20 +168,13 @@
                                         data-id={rec.bookingId} onclick={openBooking}>
                                     </lightning-formatted-text>
                                 </div>
-
-
-
-
-
                             </td>
                             <td>{rec.bookingStatus}</td>
                             <td>
                                 <template if:true={rec.registrationDate}>
-                                <lightning-formatted-date-time value={rec.registrationDate} 
-                                year="2-digit"
-                                 month="short"
-                                day="2-digit">
-                                </lightning-formatted-date-time>
+                                    <lightning-formatted-date-time value={rec.registrationDate} year="2-digit"
+                                        month="short" day="2-digit">
+                                    </lightning-formatted-date-time>
                                 </template>
                                 <template if:false={rec.registrationDate}>
                                     <span>No Date Available</span>
@@ -232,40 +183,24 @@
                             </td>
                             <td value={rec.UnitName} data-id={rec.regId}>
                                 {rec.UnitName}
-
                             </td>
                             <td>
                                 {rec.fileType}
                             </td>
+                             <td>
+                                {rec.verifiedBYMIS}
+                            </td>
+                             <td>
+                                {rec.verifiedBYRM}
+                            </td>
                             <td>
-                                <!-- <template if:true={rec.isDownloaded}>
-                                    <center><span style="font-size:20px;">&#9989; </span></center>
-                                </template>
-                                <template if:false={rec.isDownloaded}>
-                                    <span style='font-size:20px;'>&#9940;</span>
-                                </template> -->
                                 <a href={rec.previewUrl} target="_blank">
                                     <button class="search-button" label="Preview">
-
-
-
                                         <lightning-icon icon-name='utility:preview' alternative-text='preview'
                                             size='xx-small' title='preview'></lightning-icon> &nbsp; &nbsp;
-
-
                                         <span>Preview</span>
-
                                     </button>
                                 </a>
-
-                                <!-- <lightning-button-icon icon-name="action:preview" alternative-text="Preview"
-                                    size="xx-small" title="Preview" data-url={rec.previewUrl} onclick={handlePreview}>
-                                    <span>Preview</span>
-                                </lightning-button-icon>
-                                <span>Preview</span> -->
-
-
-
                             </td>
                             <td>
                                 <template if:false={rec.isSelected}>
@@ -280,11 +215,6 @@
                                             data-key={rec.regId} data-index={index}>
                                         </lightning-button-icon>
                                     </a>
-                                    <!-- <lightning-button-icon icon-name="action:download" variant="border-filled"
-                                        data-url={rec.url} data-key={rec.regId} data-index={index}
-                                        onclick={handledownloadcheck}>
-                                    </lightning-button-icon> -->
-
                                 </template>
                             </td>
                         </tr>
@@ -292,6 +222,5 @@
                 </table>
             </template>
         </template>
-
     </lightning-card>
 </template>
