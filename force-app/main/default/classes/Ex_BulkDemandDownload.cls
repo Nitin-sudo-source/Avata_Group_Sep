@@ -100,22 +100,22 @@ public class Ex_BulkDemandDownload {
                 
                 for (Demand__c demand : dList) {
                     if (demandIds.contains(demand.Id)) {
-                            ContentDocumentLinkWrapper wrapper = new ContentDocumentLinkWrapper();
-                            wrapper.demandName = demand.Name;
-                            wrapper.demandId = demand.Id;
-                            wrapper.milestoneName = demand.Milestone_Name__c;
-                            wrapper.customerName = demand.Customer_Name__c;
-                            wrapper.isDownloaded = demand.Is_Downloaded__c;
-                            wrapper.invoiceDate = demand.Invoice_Date__c;
-                            wrapper.isMailSent = demand.Email_Sent__c;
-                            // wrapper.contentDocumentId = cdl.ContentDocumentId;
-                            wrapper.pdfPreviewUrl = '/apex/Ex_DemandPrint?dId=' + demand.Id + '&isPreview=true';
-                            // wrapper.title = cdl.ContentDocument.Title;
-                            // wrapper.fileType = cdl.ContentDocument.FileType;
-                            // wrapper.contentSize = cdl.ContentDocument.ContentSize;
-                            // wrapper.lastModifiedDate = cdl.ContentDocument.LastModifiedDate;
-                            // wrapper.createdDate = cdl.ContentDocument.CreatedDate;
-                            result.add(wrapper);
+                        ContentDocumentLinkWrapper wrapper = new ContentDocumentLinkWrapper();
+                        wrapper.demandName = demand.Name;
+                        wrapper.demandId = demand.Id;
+                        wrapper.milestoneName = demand.Milestone_Name__c;
+                        wrapper.customerName = demand.Customer_Name__c;
+                        wrapper.isDownloaded = demand.Is_Downloaded__c;
+                        wrapper.invoiceDate = demand.Invoice_Date__c;
+                        wrapper.isMailSent = demand.Email_Sent__c;
+                        // wrapper.contentDocumentId = cdl.ContentDocumentId;
+                        wrapper.pdfPreviewUrl = '/apex/Ex_DemandPrint?dId=' + demand.Id + '&isPreview=true';
+                        // wrapper.title = cdl.ContentDocument.Title;
+                        // wrapper.fileType = cdl.ContentDocument.FileType;
+                        // wrapper.contentSize = cdl.ContentDocument.ContentSize;
+                        // wrapper.lastModifiedDate = cdl.ContentDocument.LastModifiedDate;
+                        // wrapper.createdDate = cdl.ContentDocument.CreatedDate;
+                        result.add(wrapper);
                     }
                 }
             }
@@ -163,7 +163,7 @@ public class Ex_BulkDemandDownload {
         
         @AuraEnabled
         public String customerName { get; set; }
-
+        
         @AuraEnabled
         public String pdfPreviewUrl {get;set;}
         
@@ -210,7 +210,7 @@ public class Ex_BulkDemandDownload {
             update demandRecordsToUpdate;
         }
     }
-
+    
     
     public class DemandWrapper {
         @AuraEnabled public String base64Pdf;
@@ -272,9 +272,9 @@ public class Ex_BulkDemandDownload {
         wrapper.demandList = new List<Demand__c>();
         
         Set<Id> demandIdsSet = new Set<Id>{dId};
-            
-            Map<Id, Demand__c> demandMap = new Map<Id, Demand__c>(
-                [
+        
+        Map<Id, Demand__c> demandMap = new Map<Id, Demand__c>(
+            [
                     SELECT Id, Name, Is_Downloaded__c,Customer_Name__c,Booking__r.Name,Booking__r.Project__r.Name
                     FROM Demand__c
                     WHERE Id IN :demandIdsSet 
@@ -313,84 +313,144 @@ public class Ex_BulkDemandDownload {
         @AuraEnabled public List<Demand__c> demandList { get; set; }
     }
     
+    public static String padLeft(String input, Integer length, String padChar) {
+        while (input.length() < length) {
+            input = padChar + input;
+        }
+        return input;
+    }
+    
+    
     @AuraEnabled
     public static List<String> updateEmailSentOnDemandRecords(List<Id> demandIds) {
-        System.debug('demandIdsSize: ' + demandIds.size());
         String msg = '';
-        List<String> showResponse = new List<String>();
-        Set<Id> getDemandIds = new Set<Id>();
-        List<Demand__c> demandRecordsToUpdate = new  List<Demand__c>();
-        List<Demand__c> demandList = new  List<Demand__c>();
         
-        if (demandIds != null && !demandIds.isEmpty()) {
-            getDemandIds.addAll(demandIds);
-            System.debug('getDemandIds: '+getDemandIds);
+        List<String> showResponse = new List<String>();
+        Set<Id> demandIdSet = new Set<Id>(demandIds);
+        List<Demand__c> recordsToUpdate = new List<Demand__c>();
+        
+        
+        if (demandIds == null || demandIds.isEmpty()) {
+            showResponse.add('No demand IDs provided.');
+            return showResponse;
         }
-        if (getDemandIds != null && !getDemandIds.isEmpty()) {
-            demandList = [SELECT Id, Name, Customer_Name__c,
-            // Booking__r.Project__r.CC_Email_ID__c, 
-            Email_sent__c,Booking__r.Primary_Applicant_Name__c,Booking__r.Project__r.Name,
-                          Booking__r.Tower__r.Name, Booking__r.Unit__r.Name, Milestone_Name__c, Customer_Email__c, Invoice_Date__c,Due_Date__c 
-                          FROM Demand__c 
-                          WHERE Id IN :getDemandIds 
-                          AND Customer_Email__c != null];
-            System.debug('demandList: '+demandList.size());
-            
-            if(!demandList.isEmpty() && demandList != null){
-                for (Demand__c demandRecord : demandList) {
-                    if(demandRecord.Email_Sent__c == false){
-                        
-                        DateTime dueDateTime = demandRecord.Due_Date__c;
-                        String formattedDate = dueDateTime.format('dd/MM/yyyy');
-                        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                        mail.setUseSignature(false);
-                        mail.setSubject(demandRecord.Booking__r.Tower__r.Name +'-' +demandRecord.Booking__r.Unit__r.Name+'-'+demandRecord.Booking__r.Project__r.Name +'-' +'Demand Letter-'+ demandRecord.Milestone_Name__c);
-                        String[] toAddresses = new String[]{demandRecord.Customer_Email__c};
-                        mail.setToAddresses(toAddresses);
-                        if(!Test.isRunningTest()){
-                            // String[] ccAddresses = new String[]{demandRecord.Booking__r.Project__r.CC_Email_ID__c};
-                            //     if(ccAddresses !=null){
-                                // mail.setCcAddresses(ccAddresses);
-                            //     }
-                        }
-                        String Body = 'Dear Sir <Br/><Br/> We are pleased to inform you that we have now completed Slab '+ demandRecord.Milestone_Name__c +' in '+demandRecord.Booking__r.Project__r.Name +' <br/><br/>The payment for Slab '+ demandRecord.Milestone_Name__c +'is due by '+formattedDate+'<br/><br/>We have attached the Demand Letter for Slab '+ demandRecord.Milestone_Name__c +' specifying the details of the payment along with the Architect Certificate.<br/><br/>Please write to me in case you require any further clarification or information.';
-                        mail.setHtmlBody(body);
-                        system.debug(body);
-                        List<ContentDocumentLink>  ContentDocumentLinklist =[SELECT LinkedEntityId, ContentDocument.Title FROM ContentDocumentLink WHERE  LinkedEntityId = :demandRecord.Id];
-                        List<ContentVersion> cvList = [SELECT VersionData, FileExtension FROM ContentVersion WHERE ContentDocumentId = :ContentDocumentLinklist[0].ContentDocumentId];
-                        Blob fileData = cvList[0].VersionData;
-                        Messaging.EmailFileAttachment emlAtt = new Messaging.EmailFileAttachment();
-                        emlAtt.setFilename('Demand PDF.' + cvList[0].FileExtension);
-                        emlAtt.setBody(fileData);
-                        OrgWideEmailAddress owea = new OrgWideEmailAddress();
-                        owea = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE DisplayName='Avant Demand Email' Limit 1];
-                        system.debug(owea);
-                        if (owea != null) {
-                            mail.setOrgWideEmailAddressId(owea.Id);
-                        }
-                        mail.setFileAttachments(new Messaging.EmailFileAttachment[] { emlAtt });
-                        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-                        demandRecord.Email_sent__c = true;
-                        msg = 'Mail Sending... for '+ demandRecord.Name +'-'+ demandRecord.Customer_Name__c;
-                        showResponse.add(msg);
-                        demandRecordsToUpdate.add(demandRecord);
-                    }else{
-                        msg = 'Mail Already Sent for '+ demandRecord.Name +'-'+ demandRecord.Customer_Name__c;
-                        showResponse.add(msg);
-                    }
+        System.debug('demandIdSet: '+  demandIdSet);
+        
+        List<Demand__c> demandList = new List<Demand__c>();
+        demandList = [SELECT Id, Name, Customer_Name__c, Email_Sent__c,
+               Booking__r.Primary_Applicant_Name__c,
+               Booking__r.Project__r.Name,
+               Booking__r.Tower__r.Name,
+               Booking__r.Unit__r.Name,
+               Milestone_Name__c, Customer_Email__c, Invoice_Date__c, Due_Date__c
+       FROM Demand__c WHERE Id IN :demandIdSet];
+        
+        
+        
+        OrgWideEmailAddress owea;
+        try {
+            owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'Avant Infra' LIMIT 1];
+        } catch (Exception e) {
+            showResponse.add('Error fetching Org-Wide Email Address: ' + e.getMessage());
+            return showResponse;
+        }
+        
+        System.debug('demandList: ' + demandList.size());
+        
+        for (Demand__c demand : demandList) {
+            try {
+                System.debug('demand: '+    demand);
+                
+                if(demand.Customer_Email__c == null){
+                    msg = 'No email found for ' + demand.Name + ' - ' + demand.Customer_Name__c;
+                    showResponse.add(msg);
+                    continue;
+                    //showResponse.add('No email found for ' + demand.Name + ' - ' + demand.Customer_Name__c);
+                    //continue;
                 }
-            }else{
-                return null;
+                
+                if(demand.Customer_Email__c  != null && demand.Email_Sent__c == false){
+                    Date dueDate = demand.Due_Date__c;
+                    String formattedDate = dueDate != null
+                        ? padLeft(String.valueOf(dueDate.day()), 2, '0') + '/' +
+                        padLeft(String.valueOf(dueDate.month()), 2, '0') + '/' +
+                        String.valueOf(dueDate.year())
+                        : 'N/A';
+                    
+                    String subject = String.join(new List<String>{
+                        demand.Booking__r.Tower__r.Name,
+                        demand.Booking__r.Unit__r.Name,
+                        demand.Booking__r.Project__r.Name,
+                        'Demand Letter',
+                        demand.Milestone_Name__c
+                    }, '-');
+                    
+                    String body = 'Dear Sir <br/><br/>We are pleased to inform you that we have now completed Slab ' +
+                        demand.Milestone_Name__c + ' in ' + demand.Booking__r.Project__r.Name +
+                        '.<br/><br/>The payment for Slab ' + demand.Milestone_Name__c +
+                        ' is due by ' + formattedDate +
+                        '.<br/><br/>We have attached the Demand Letter for Slab ' + demand.Milestone_Name__c +
+                        ' specifying the details of the payment along with the Architect Certificate.<br/><br/>' +
+                        'Please write to me in case you require any further clarification or information.';
+                    
+                    // Generate PDF
+                    PageReference pageRef = Page.Ex_PrintDemand;
+                    pageRef.getParameters().put('dId', demand.Id);
+                    Blob pdfBlob = pageRef.getContentAsPDF();
+                    
+                    // Prepare attachment
+                    Messaging.EmailFileAttachment attachment = new Messaging.EmailFileAttachment();
+                    attachment.setFilename('Demand_PDF_' + demand.Id + '.pdf');
+                    attachment.setBody(pdfBlob);
+                    
+                    // Prepare email
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.setUseSignature(false);
+                    mail.setSubject(subject);
+                    mail.setToAddresses(new String[] { demand.Customer_Email__c });
+                    mail.setHtmlBody(body);
+                    mail.setFileAttachments(new Messaging.EmailFileAttachment[] { attachment });
+                    if (owea != null) {
+                        mail.setOrgWideEmailAddressId(owea.Id);
+                    }
+                    
+                    // Send email
+                    Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+                    
+                    // Mark as sent
+                    demand.Email_Sent__c = true;
+                    msg = 'Mail Sending... for '+ demand.Name +'-'+ demand.Customer_Name__c;
+                    showResponse.add(msg);
+                    
+                    recordsToUpdate.add(demand);
+                    
+                    //showResponse.add('Email sent successfully for ' + demand.Name + ' - ' + demand.Customer_Name__c);
+                    
+                }else {
+                    msg = 'Mail Already Sent for '+ demand.Name +'-'+ demand.Customer_Name__c;
+                    showResponse.add(msg);
+                }
+                
+                
+            } catch (Exception ex) {
+                String errorMsg = 'Error sending email for ' + demand.Name + ' - ' + demand.Customer_Name__c +
+                    ': ' + ex.getMessage();
+                System.debug('Exception: ' + ex.getStackTraceString());
+                showResponse.add(errorMsg);
             }
-        }else{
-            return null;
         }
-        System.debug('demandRecordsToUpdate: '+demandRecordsToUpdate);
-        if(!demandRecordsToUpdate.isEmpty() && demandRecordsToUpdate != null){
-            update demandRecordsToUpdate;
-            return showResponse;
-        }else{
-            return showResponse;
+        
+        if (!recordsToUpdate.isEmpty()) {
+            try {
+                update recordsToUpdate;
+                
+            } catch (Exception ex) {
+                showResponse.add('Error updating demand records: ' + ex.getMessage());
+                System.debug('Update Exception: ' + ex.getStackTraceString());
+            }
         }
+        
+        return showResponse;
     }
+    
 }

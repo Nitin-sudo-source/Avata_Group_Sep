@@ -18,11 +18,12 @@
             <header class="modern-header">
                 <div class="header-content">
                     <div class="header-title">
-                        <lightning-icon size="large" variant="brand" icon-name="action:email"
+                        <lightning-icon size="large" variant="brand" icon-name="action:filter" alternative-text="Bulk Demand Dashboard"
+                            title="Bulk Demand Dashboard" onclick={handleReset}>"
                             class="header-icon"></lightning-icon>
                         <div>
                             <h1>Bulk Demand Dashboard</h1>
-                            <p class="subtitle">Manage and track customer demand documents</p>
+                            <p class="subtitle">Manage and track customer demand documents & emails</p>
                         </div>
                     </div>
 
@@ -190,11 +191,17 @@
                                             </lightning-button-icon>
                                         </template>
                                     </td>
-                                    <td class="action-cell">
+                                    <td class="status-cell">
                                         <template if:false={rec.isDownloaded}>
                                             <lightning-button-icon icon-name="utility:download" size="small"
                                                 data-key={rec.demandId} onclick={handleDownloadSingleDemand}
                                                 data-index={index} class="download-button">
+                                            </lightning-button-icon>
+                                        </template>
+                                        <template if:true={rec.isDownloaded}>
+                                            <lightning-button-icon icon-name="utility:download" size="small"
+                                            disabled="true"
+                                                class="download-button">
                                             </lightning-button-icon>
                                         </template>
                                     </td>

@@ -183,6 +183,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
           this.showTable = true;
           this.isSpinner = false;
           this.selectedList = this.demandData;
+          this.selectAllcheckBox = false;
           console.log('GetData:::' + JSON.stringify(this.demandData));
         })
         .catch((error) => {
@@ -283,7 +284,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   }
 
 
-  
+
 
 
   async handleDownloadAllDemand(event) {
@@ -296,6 +297,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
     if (selectedDemands.length === 0) {
       this.isSpinner = false;
       button.disabled = false;
+      this.showToast('Error !', 'Please select the checkbox before Downloading', 'Error');
       return;
     }
 
@@ -384,30 +386,55 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   }
 
 
-  updateEmailSent() {
-    if (this.mainList.length === 0) {
-      this.showToast('Error !', 'Please select the checkbox before sending mail', 'Error');
-      return;
-    } else if (this.mainList.length > 0) {
-      this.isSpinner = true;
-      updateEmailSentOnDemandRecords({ demandIds: this.mainList })
-        .then(result => {
-          console.log('Response: ' + JSON.stringify(result));
-          this.isSpinner = false;
-          if (result != null) {
-            //alert(result.join("\n"));
-            this.showToast('Success !', result.join("\n"), 'success');
-            this.mainList = [];
-            location.reload();
-          } else {
-            this.isSpinner = false;
-            this.showToast('Error !', 'Please check customer Email or Please Contact System Administrator', 'Error');
-            //alert('Error: Something went Wrong Please Contact System Administrator ');
-            return;
+ updateEmailSent() {
+  if (this.mainList.length === 0) {
+    this.showToast('Error !', 'Please select the checkbox before sending mail', 'Error');
+    return;
+  } else if (this.mainList.length > 0) {
+    this.isSpinner = true;
+    updateEmailSentOnDemandRecords({ demandIds: this.mainList })
+      .then(result => {
+        console.log('Response: ' + JSON.stringify(result));
+        this.isSpinner = false;
+        if (result != null && result.length > 0) {
+
+          // Separate messages
+          let mailAlreadySentList = result.filter(msg => msg.includes('Mail Already Sent'));
+          let noEmailFoundList = result.filter(msg => msg.includes('No email found'));
+          let emailSentList = result.filter(msg => msg.includes('Mail Sending'));
+
+          // Show toasts based on message type
+          if (mailAlreadySentList.length > 0) {
+            this.showToast('Info - Mail Already Sent', mailAlreadySentList.join('\n'), 'info');
           }
-        })
-    }
+
+          if (noEmailFoundList.length > 0) {
+            this.showToast('Warning - No Email Found', noEmailFoundList.join('\n'), 'warning');
+          }
+
+          if (emailSentList.length > 0) {
+            this.showToast('Success - Mail Sending', emailSentList.join('\n'), 'success');
+          }
+
+
+          // Clear selections
+          this.mainList = [];
+          this.url = [];
+          location.reload();
+
+        } else {
+          this.isSpinner = false;
+          this.showToast('Error !', 'Please check customer Email or Please Contact System Administrator', 'Error');
+        }
+      })
+      .catch(error => {
+        this.isSpinner = false;
+        console.error('Error: ', error);
+        this.showToast('Error !', 'Something went wrong. Please contact your administrator.', 'error');
+      });
   }
+}
+
 
 
   get hasFilesToDownload() {
