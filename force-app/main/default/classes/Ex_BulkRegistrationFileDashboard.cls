@@ -153,6 +153,8 @@ public with sharing class Ex_BulkRegistrationFileDashboard {
                                 wrapper.bookingStatus = reg.Booking__r.Booking_Stage__c;
                                 wrapper.registrationDate = reg.Registration_Date__c;
                                 wrapper.contentDocumentId = cdl.ContentDocumentId;
+                                wrapper.isverifiedBYMIS = reg.Verified_By_MIS__c;
+                                wrapper.isverifiedBYRM = reg.Verified_By_RM__c;
                                 if(reg.Verified_By_MIS__c){
                                     wrapper.verifiedBYMIS = 'Verified';
                                 }else{
@@ -257,6 +259,12 @@ public with sharing class Ex_BulkRegistrationFileDashboard {
 
          @AuraEnabled
         public String verifiedBYRM {get;set;}
+
+         @AuraEnabled
+        public Boolean isverifiedBYMIS {get;set;}
+
+         @AuraEnabled
+        public Boolean isverifiedBYRM {get;set;}
     }
     
     

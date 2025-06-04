@@ -2,7 +2,7 @@
   @description       : 
   @author            : nitinSFDC@exceller.SFDoc
   @group             : 
-  @last modified on  : 29-05-2025
+  @last modified on  : 02-06-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
@@ -24,6 +24,10 @@
                         <div>
                             <h1>Bulk Demand Dashboard</h1>
                             <p class="subtitle">Manage and track customer demand documents & emails</p>
+                            <p class="subtitle" style="color: red;">
+                                *Note: Only RM Profile and System Admin Profiles can use Email Sending feature.
+                                </p>
+                               
                         </div>
                     </div>
 
@@ -71,9 +75,11 @@
 
                     <template if:true={showTable}>
                         <div class="filter-item action-items">
+                            <template if:false={isButtonEnabled}>
                             <lightning-button-icon icon-name="action:email" variant="brand" title="Bulk Sent Mail"
                                 onclick={updateEmailSent} class="action-icon">
                             </lightning-button-icon>
+                            </template>
                             <lightning-button-icon icon-name="action:download" variant="brand" title="Download All"
                                 onclick={handleDownloadAllDemand} class="action-icon">
                             </lightning-button-icon>
@@ -181,14 +187,19 @@
                                         </template>
                                     </td>
                                     <td class="status-cell">
+                                        
                                         <template if:true={rec.isMailSent}>
                                             <span class="status-badge success">✓</span>
                                         </template>
                                         <template if:false={rec.isMailSent}>
+                                           
                                             <lightning-button-icon icon-name="utility:email" size="small"
-                                                variant="border-filled" data-key={rec.demandId} data-index={index}
+                                                variant="border-filled" data-key={rec.demandId}
+                                                 data-index={index} disabled={isButtondisabled}
                                                 onclick={updateEmailSent} class="action-button">
                                             </lightning-button-icon>
+                                           
+                                      
                                         </template>
                                     </td>
                                     <td class="status-cell">

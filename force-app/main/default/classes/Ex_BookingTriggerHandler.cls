@@ -65,7 +65,7 @@ public class Ex_BookingTriggerHandler {
         
         if (isBatchReq2) {
             if (!Test.isRunningTest()){
-              //  Database.executeBatch(new Ex_DemandRaiseBatch(),1);
+                Database.executeBatch(new Ex_DemandRaiseBatch(),1);
             }
         }
         

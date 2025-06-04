@@ -60,7 +60,7 @@ public class Ex_ConstructionStageUpdate {
         List<Payment_Milestone__c> pmList = new List<Payment_Milestone__c>();
         List<Payment_Milestone__c> pmListForUpdate = new List<Payment_Milestone__c>();
         
-        cs = [Select Id, Name, Actual_Completion_Date__c,CA_Certificate__c,Unit_Wise_Milestone__c,Tower__c,Tower__r.Project__c, 
+        cs = [Select Id, Name, Is_Completed__c, Actual_Completion_Date__c,CA_Certificate__c,Unit_Wise_Milestone__c,Tower__c,Tower__r.Project__c, 
               Tower__r.Project__r.CRM_Head__c,
               Expected_Completion_Date__c from Construction_Stage__c
               where Id =: recordId];
@@ -73,6 +73,7 @@ public class Ex_ConstructionStageUpdate {
                     cs.Actual_Completion_Date__c = d;
                     cs.CA_Certificate__c = true;
                     cs.Milestone_Status__c = 'Completed';
+                    cs.Is_Completed__c = true;
                 }
             }
             

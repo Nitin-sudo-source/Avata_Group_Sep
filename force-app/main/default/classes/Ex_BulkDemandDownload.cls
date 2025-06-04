@@ -2,7 +2,7 @@
  * @description       :
  * @author            : nitinSFDC@exceller.SFDoc
  * @group             :
- * @last modified on  : 29-05-2025
+ * @last modified on  : 02-06-2025
  * @last modified by  : nitinSFDC@exceller.SFDoc
  **/
 
@@ -24,6 +24,30 @@ public class Ex_BulkDemandDownload {
         List<Construction_Stage__c> clist=[select Id, Name,Tower__c FROM Construction_Stage__c WHERE Tower__r.id =: TowerId
                                            ORDER BY Sequence_Number__c];
         return clist;
+    }
+
+    @AuraEnabled
+    public static User getProfileName(){
+        try {
+            List<User> u = new List<User>();
+            u =  [SELECT ProfileId, Profile.Name FROM User
+             WHERE Id =: UserInfo.getUserId() AND (Profile.Name =: 'System Administrator'
+              OR Profile.Name =: 'RM Profile')];
+
+
+              if(u != null && !u.isEmpty()){
+                return u[0];
+              }else{
+                return null;
+              }
+           
+
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+            
+        }
+
     }
     
     

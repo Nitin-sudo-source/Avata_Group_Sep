@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nitinSFDC@exceller.SFDoc
  * @group             : 
- * @last modified on  : 29-05-2025
+ * @last modified on  : 02-06-2025
  * @last modified by  : nitinSFDC@exceller.SFDoc
 **/
 import { LightningElement, api, wire, track } from 'lwc';
@@ -14,6 +14,7 @@ import fetchFiles from '@salesforce/apex/Ex_BulkDemandDownload.fetchFiles';
 import { NavigationMixin } from 'lightning/navigation';
 import getDemandPdf from '@salesforce/apex/Ex_BulkDemandDownload.getDemandPdf';
 import getDemandSinglePdf from '@salesforce/apex/Ex_BulkDemandDownload.getDemandSinglePdf';
+import getProfileName from '@salesforce/apex/Ex_BulkDemandDownload.getProfileName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { loadScript } from 'lightning/platformResourceLoader';
 import JSZip from '@salesforce/resourceUrl/JSZip';
@@ -49,6 +50,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   @track selectedFinalist = [];
   @track reminderType = '';
   @track zipInitialized = false;
+  @track user = [];
 
   @wire(getProject)
   projectResult;
@@ -56,6 +58,8 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   towerResult;
   @wire(getCS, { TowerId: '$towerId' })
   csResult;
+
+  @track isButtondisabled = true;
 
 
   get projectOptions() {
@@ -147,6 +151,31 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
     }
   }
 
+  getMyProfileName() {
+    getProfileName({}).then(result => {
+      if(result != null){
+        this.user = result;
+        if(this.user.Profile.Name == 'System Administrator'){
+          this.isButtondisabled = false;
+
+        }else if(this.user.Profile.Name == 'RM Profile'){
+          this.isButtondisabled = false;
+
+        }else{
+          this.isButtondisabled = true;
+
+        }
+
+
+      }
+      
+      console.log('user: ', JSON.stringify(this.user));
+      console.log('isButtondisabled: ', JSON.stringify(this.isButtondisabled));
+
+    });
+  }
+
+
 
   fetchDocumentRecords(event) {
     if (this.projectId === null) {
@@ -185,6 +214,7 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
           this.selectedList = this.demandData;
           this.selectAllcheckBox = false;
           console.log('GetData:::' + JSON.stringify(this.demandData));
+          this.getMyProfileName();
         })
         .catch((error) => {
           console.error(error);
@@ -386,54 +416,54 @@ export default class Ex_BulkDemandDownload extends NavigationMixin(LightningElem
   }
 
 
- updateEmailSent() {
-  if (this.mainList.length === 0) {
-    this.showToast('Error !', 'Please select the checkbox before sending mail', 'Error');
-    return;
-  } else if (this.mainList.length > 0) {
-    this.isSpinner = true;
-    updateEmailSentOnDemandRecords({ demandIds: this.mainList })
-      .then(result => {
-        console.log('Response: ' + JSON.stringify(result));
-        this.isSpinner = false;
-        if (result != null && result.length > 0) {
-
-          // Separate messages
-          let mailAlreadySentList = result.filter(msg => msg.includes('Mail Already Sent'));
-          let noEmailFoundList = result.filter(msg => msg.includes('No email found'));
-          let emailSentList = result.filter(msg => msg.includes('Mail Sending'));
-
-          // Show toasts based on message type
-          if (mailAlreadySentList.length > 0) {
-            this.showToast('Info - Mail Already Sent', mailAlreadySentList.join('\n'), 'info');
-          }
-
-          if (noEmailFoundList.length > 0) {
-            this.showToast('Warning - No Email Found', noEmailFoundList.join('\n'), 'warning');
-          }
-
-          if (emailSentList.length > 0) {
-            this.showToast('Success - Mail Sending', emailSentList.join('\n'), 'success');
-          }
-
-
-          // Clear selections
-          this.mainList = [];
-          this.url = [];
-          location.reload();
-
-        } else {
+  updateEmailSent() {
+    if (this.mainList.length === 0) {
+      this.showToast('Error !', 'Please select the checkbox before sending mail', 'Error');
+      return;
+    } else if (this.mainList.length > 0) {
+      this.isSpinner = true;
+      updateEmailSentOnDemandRecords({ demandIds: this.mainList })
+        .then(result => {
+          console.log('Response: ' + JSON.stringify(result));
           this.isSpinner = false;
-          this.showToast('Error !', 'Please check customer Email or Please Contact System Administrator', 'Error');
-        }
-      })
-      .catch(error => {
-        this.isSpinner = false;
-        console.error('Error: ', error);
-        this.showToast('Error !', 'Something went wrong. Please contact your administrator.', 'error');
-      });
+          if (result != null && result.length > 0) {
+
+            // Separate messages
+            let mailAlreadySentList = result.filter(msg => msg.includes('Mail Already Sent'));
+            let noEmailFoundList = result.filter(msg => msg.includes('No email found'));
+            let emailSentList = result.filter(msg => msg.includes('Mail Sending'));
+
+            // Show toasts based on message type
+            if (mailAlreadySentList.length > 0) {
+              this.showToast('Info - Mail Already Sent', mailAlreadySentList.join('\n'), 'info');
+            }
+
+            if (noEmailFoundList.length > 0) {
+              this.showToast('Warning - No Email Found', noEmailFoundList.join('\n'), 'warning');
+            }
+
+            if (emailSentList.length > 0) {
+              this.showToast('Success - Mail Sending', emailSentList.join('\n'), 'success');
+            }
+
+
+            // Clear selections
+            this.mainList = [];
+            this.url = [];
+            location.reload();
+
+          } else {
+            this.isSpinner = false;
+            this.showToast('Error !', 'Please check customer Email or Please Contact System Administrator', 'Error');
+          }
+        })
+        .catch(error => {
+          this.isSpinner = false;
+          console.error('Error: ', error);
+          this.showToast('Error !', 'Something went wrong. Please contact your administrator.', 'error');
+        });
+    }
   }
-}
 
 
 

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nitinSFDC@exceller.SFDoc
  * @group             : 
- * @last modified on  : 29-05-2025
+ * @last modified on  : 03-06-2025
  * @last modified by  : nitinSFDC@exceller.SFDoc
 **/
 import { LightningElement, api, wire, track } from 'lwc';
@@ -13,7 +13,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Ex_RegistrationFilesDashboard extends NavigationMixin(LightningElement) {
-     @track selectedFinalist = [];
+    @track selectedFinalist = [];
     @track projectId = '';
     @track towerId = '';
     @track documentType = '';
@@ -293,26 +293,40 @@ export default class Ex_RegistrationFilesDashboard extends NavigationMixin(Light
         this.checkboxesState = { ...this.checkboxesState, [name]: checked };
         this.regId = event.target.dataset.key;
         var valueset = event.target.checked;
-        //console.log('valueset: ' + valueset);
+        console.log('valueset: ' + valueset);
         var fieldName = event.currentTarget.name;
         //console.log('fieldName: ' + fieldName);
         var Name = event.target.dataset.name;
         //console.log('Name: ' + Name);
-        if (fieldName === undefined) {
-            for (var i = this.pageSize * this.currentPage - this.pageSize; i < this.pageSize * this.currentPage; i++) {
-                this.currentPageData[i].isSelected = false;
-            }
-        } else if (fieldName == 'SelectAll') {
+        // if (fieldName === undefined) {
+        //     for (var i = this.pageSize * this.currentPage - this.pageSize; i < this.pageSize * this.currentPage; i++) {
+        //         this.currentPageData[i].isSelected = false;
+        //     }
+        // } else 
+        if (fieldName == 'SelectAll') {
             if (this.selectAllcheckBox == true) {
                 for (var i = this.pageSize * this.currentPage - this.pageSize; i < this.pageSize * this.currentPage; i++) {
                     for (var i = 0; i < this.currentPageData.length; i++) {
                         const value = this.currentPageData[i].regId;
-                        this.currentPageData[i].isSelected = true;
-                        if (!this.mainList.includes(value)) {
+                        let isVerifiedByMIS = this.currentPageData[i].isverifiedBYMIS;
+                        let isVerifiedBYRM = this.currentPageData[i].isverifiedBYRM;
+
+                        console.log(' value: ' + value);
+                        console.log('isVerifiedByMIS: ' + isVerifiedByMIS);
+                        console.log('isVerifiedBYRM: ' + isVerifiedBYRM);
+
+                        if (!this.mainList.includes(value) && isVerifiedByMIS == true && isVerifiedBYRM == true) {
+                            this.currentPageData[i].isSelected = true;
                             this.mainList.push(value);
                             if (!this.url.includes(this.currentPageData[i].contentDocumentId)) {
                                 this.url.push(this.currentPageData[i].contentDocumentId);
                             }
+                        } else if (isVerifiedByMIS == false && isVerifiedBYRM == false) {
+                            this.currentPageData[i].isSelected = false;
+                            this.selectAllcheckBox = false;
+                            this.showToast('Error', 'Please Verifiy with RM and MIS to Download', 'error');
+                            //this.selectAllcheckBox = false;
+                            //return;
                         }
                     }
                     break;
@@ -323,13 +337,16 @@ export default class Ex_RegistrationFilesDashboard extends NavigationMixin(Light
                     for (var j = 0; j < this.currentPageData.length; j++) {
                         const value = this.currentPageData[j].regId;
                         this.currentPageData[j].isSelected = false;
-                        if (this.mainList.includes(value)) {
+                        let isVerifiedByMIS = this.currentPageData[i].isverifiedBYMIS;
+                        let isVerifiedBYRM = this.currentPageData[i].isverifiedBYRM;
+
+                        if (this.mainList.includes(value) && isVerifiedByMIS == true && isVerifiedBYRM == true) {
                             const index = this.mainList.indexOf(value);
                             if (index !== -1) {
                                 this.mainList.splice(index, 1);
                             }
                         }
-                        if (this.url.includes(this.currentPageData[j].contentDocumentId)) {
+                        if (this.url.includes(this.currentPageData[j].contentDocumentId) && isVerifiedByMIS == true && isVerifiedBYRM == true) {
                             const index = this.url.indexOf(this.currentPageData[j].contentDocumentId);
                             if (index !== -1) {
                                 this.url.splice(index, 1);
@@ -342,21 +359,36 @@ export default class Ex_RegistrationFilesDashboard extends NavigationMixin(Light
         } else {
             for (var i = 0; i < this.selectedList.length; i++) {
                 const value = this.selectedList[i].regId;
-                if (!this.selectedList[i].isDownloaded) {
-                    if (value == this.regId) {
-                        if (valueset == true) {
-                            this.mainList.push(value);
-                            this.url.push(Name);
-                        } else {
-                            this.mainList = this.mainList.filter(finalItem => finalItem !== this.regId);
-                            this.url = this.url.filter(finalItem => finalItem !== Name);
-                        }
+                console.log(' value: ' + value);
+                if (!this.selectedList[i].isDownloaded && this.currentPageData[i].isverifiedBYMIS && this.currentPageData[i].isverifiedBYRM) {
+                    if (value == this.regId && valueset == true) {
+                        this.mainList.push(value);
+                        this.url.push(Name);
+                    } else if (value == this.regId && valueset == false) {
+                        this.mainList = this.mainList.filter(finalItem => finalItem !== this.regId);
+                        this.url = this.url.filter(finalItem => finalItem !== Name);
                     }
-                }
+                } 
             }
             for (var i = 0; i < this.currentPageData.length; i++) {
-                if (this.currentPageData[i].regId == this.regId) {
+                if (this.currentPageData[i].regId == this.regId && valueset == true && this.currentPageData[i].isverifiedBYMIS && this.currentPageData[i].isverifiedBYRM) {
+                    console.log('inside if 1 ' + this.currentPageData[i].isSelected);
                     this.currentPageData[i].isSelected = valueset;
+                    break;
+                } else if (this.currentPageData[i].regId == this.regId && valueset == false && this.currentPageData[i].isverifiedBYMIS && this.currentPageData[i].isverifiedBYRM) {
+                    this.currentPageData[i].isSelected = valueset;
+                    console.log('inside else if 2 ' + this.currentPageData[i].isSelected);
+                    break;
+                } if (this.currentPageData[i].regId == this.regId && valueset == true && !this.currentPageData[i].isverifiedBYMIS && !this.currentPageData[i].isverifiedBYRM) {
+                    console.log('inside if 3 ' + this.currentPageData[i].isSelected);
+                    this.currentPageData[i].isSelected = false;
+                    this.showToast('Error', 'Please Verifiy with RM and MIS to Download', 'error');
+                    event.target.checked = false;
+
+                    break;
+                } else if (this.currentPageData[i].regId == this.regId && valueset == false && !this.currentPageData[i].isverifiedBYMIS && !this.currentPageData[i].isverifiedBYRM) {
+                    this.currentPageData[i].isSelected = valueset;
+                    console.log('inside else if 4 ' + this.currentPageData[i].isSelected);
                     break;
                 }
             }
@@ -420,7 +452,7 @@ export default class Ex_RegistrationFilesDashboard extends NavigationMixin(Light
                 this.finalurl = `/sfc/servlet.shepherd/document/download/${idArray.join('/')}`;
             }
         }
-        const allSelected = this.currentPageData.every(record => record.isSelected);
+        const allSelected = this.currentPageData.every(record => record.isSelected && record.isDownloaded);
         console.log('allSelected : ' + allSelected);
 
         // Update selectAllcheckBox based on the current page's selection state
@@ -494,5 +526,5 @@ export default class Ex_RegistrationFilesDashboard extends NavigationMixin(Light
         });
         this.dispatchEvent(event);
     }
-   
+
 }

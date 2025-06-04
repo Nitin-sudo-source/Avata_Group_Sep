@@ -2,7 +2,7 @@
   @description       : 
   @author            : nitinSFDC@exceller.SFDoc
   @group             : 
-  @last modified on  : 30-05-2025
+  @last modified on  : 03-06-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
@@ -74,11 +74,16 @@
             <div class="slds-col slds-size_1-of-3 slds-text-align_center">
                 <template if:true={showTable}>
                     <template if:true={finalurl}>
-                        <button class="search-button" onclick={handleBulkDownload}>
-                            <lightning-icon icon-name="utility:download" size="small" title="Download All Files in Bulk"
-                                alternative-text="Download All"></lightning-icon>
-                            <span class="slds-m-left_x-small">Download All</span>
-                        </button>
+                        <!-- <template if:true={rec.isverifiedBYMIS}>
+                            <template if:true={rec.isverifiedBYRM}> -->
+                                <button class="search-button" onclick={handleBulkDownload}>
+                                    <lightning-icon icon-name="utility:download" size="small"
+                                        title="Download All Files in Bulk"
+                                        alternative-text="Download All"></lightning-icon>
+                                    <span class="slds-m-left_x-small">Download All</span>
+                                </button>
+                            <!-- </template>
+                        </template> -->
                     </template>
                 </template>
             </div>
@@ -114,37 +119,37 @@
                         </th>
                         <th>Serial No</th>
 
-                        <th onclick={handleSort} data-field="bookingNo">
-                            Booking No ({sortIcons.bookingNo.text})
-                            <lightning-icon icon-name={sortIcons.bookingNo.icon} onclick={handleSort}
+                        <th  data-field="bookingNo">
+                            Booking No 
+                            <!-- ({sortIcons.bookingNo.text}) onclick={handleSort} <lightning-icon icon-name={sortIcons.bookingNo.icon} onclick={handleSort}
                                 data-field="bookingNo" alternative-text={sortIcons.bookingNo.text}
                                 variant={sortIcons.bookingNo.variant} size={sortIcons.bookingNo.size}>
-                            </lightning-icon>
+                            </lightning-icon> -->
                         </th>
 
-                        <th onclick={handleSort} data-field="bookingStatus">
-                            Booking Status ({sortIcons.bookingStatus.text})
-                            <lightning-icon icon-name={sortIcons.bookingStatus.icon} onclick={handleSort}
+                        <th  data-field="bookingStatus">
+                            Booking Status 
+                            <!-- ({sortIcons.bookingStatus.text}) onclick={handleSort} <lightning-icon icon-name={sortIcons.bookingStatus.icon} onclick={handleSort}
                                 data-field="bookingStatus" alternative-text={sortIcons.bookingNo.text}
                                 size={sortIcons.bookingStatus.size} variant={sortIcons.bookingStatus.variant}
-                                class="colorful-icon"></lightning-icon>
+                                class="colorful-icon"></lightning-icon> -->
                         </th>
 
-                        <th onclick={handleSort} data-field="registrationDate">
-                            Registration Date ({sortIcons.registrationDate.text})
-                            <lightning-icon onclick={handleSort} data-field="registrationDate"
+                        <th  data-field="registrationDate">
+                            Registration Date 
+                            <!-- <lightning-icon onclick={handleSort} ({sortIcons.registrationDate.text})  onclick={handleSort} data-field="registrationDate"
                                 icon-name={sortIcons.registrationDate.icon}
                                 alternative-text={sortIcons.registrationDate.text}
                                 size={sortIcons.registrationDate.size} variant={sortIcons.registrationDate.variant}
-                                class="colorful-icon"></lightning-icon>
+                                class="colorful-icon"></lightning-icon> -->
                         </th>
 
-                        <th onclick={handleSort} data-field="UnitName">
-                            Unit No ({sortIcons.UnitName.text})
-                            <lightning-icon icon-name={sortIcons.UnitName.icon}
+                        <th  data-field="UnitName">
+                            Unit No 
+                            <!-- <lightning-icon onclick={handleSort} ({sortIcons.UnitName.text})  icon-name={sortIcons.UnitName.icon}
                                 alternative-text={sortIcons.UnitName.text} size={sortIcons.UnitName.size}
                                 variant={sortIcons.UnitName.variant} data-field="UnitName" onclick={handleSort}
-                                class="colorful-icon"></lightning-icon>
+                                class="colorful-icon"></lightning-icon> -->
                         </th>
                         <th>Document Type</th>
                         <th>Verified By MIS</th>
@@ -187,10 +192,10 @@
                             <td>
                                 {rec.fileType}
                             </td>
-                             <td>
+                            <td>
                                 {rec.verifiedBYMIS}
                             </td>
-                             <td>
+                            <td>
                                 {rec.verifiedBYRM}
                             </td>
                             <td>
@@ -210,11 +215,15 @@
 
                                 </template>
                                 <template if:true={rec.isSelected}>
-                                    <a href={rec.url} download>
-                                        <lightning-button-icon icon-name="action:download" variant="border-filled"
-                                            data-key={rec.regId} data-index={index}>
-                                        </lightning-button-icon>
-                                    </a>
+                                    <!-- <template if:true={rec.isverifiedBYMIS}>
+                                        <template if:true={rec.isverifiedBYRM}> -->
+                                            <a href={rec.url} download>
+                                                <lightning-button-icon icon-name="action:download"
+                                                    variant="border-filled" data-key={rec.regId} data-index={index}>
+                                                </lightning-button-icon>
+                                            </a>
+                                        <!-- </template>
+                                    </template> -->
                                 </template>
                             </td>
                         </tr>
