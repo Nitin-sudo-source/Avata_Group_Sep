@@ -625,6 +625,21 @@ export default class Ex_BookingForm extends LightningElement {
         return allValid;
     }
 
+    isApplicantAddress(){
+        const allApplicants = this.getApplicantData;
+        let allValid = true;
+        for (const applicant of allApplicants) {
+            const { ap } = applicant;
+            const isValid = !!ap.Permanent_Address__c;
+            if (!isValid) {
+                allValid = false;
+                break;
+            }
+        }
+        return allValid;
+       
+    }
+
     ismobilenumberValid() {
         const allApplicants = this.getApplicantData;
         let allValid = true;
@@ -797,11 +812,10 @@ export default class Ex_BookingForm extends LightningElement {
         } else if (!this.ismobilenumberValid()) {
             this.showCustomToast('error', 'Please Enter Mobile Number');
             return;
-        } //else if (!this.isDOBValid()) {
-        // this.showCustomToast('error', 'Please Enter Date of Birth');
-        //return;
-        //} 
-        else if (!this.isTypeOfApplicantValid()) {
+        }else if (!this.isApplicantAddress()) {
+         this.showCustomToast('error', 'Please Enter Applicant Permanent Address');
+         return;
+        } else if (!this.isTypeOfApplicantValid()) {
             this.showCustomToast('error', 'Please Enter Type of Applicant');
             return;
         } else if (!this.isaadharValid()) {

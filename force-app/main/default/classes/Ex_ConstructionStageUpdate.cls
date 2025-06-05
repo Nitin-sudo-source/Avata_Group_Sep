@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nitinSFDC@exceller.SFDoc
+ * @group             : 
+ * @last modified on  : 05-06-2025
+ * @last modified by  : nitinSFDC@exceller.SFDoc
+**/
 public class Ex_ConstructionStageUpdate {
  
     @AuraEnabled(cacheable= true)
@@ -6,7 +13,7 @@ public class Ex_ConstructionStageUpdate {
         list<Construction_Stage__c> listget2 = [SELECT id, Name,Unit_Wise_Milestone__c,Tower__r.Name,Is_Completed__c,Actual_Completion_Date__c,
                                                 Expected_Completion_Date__c,Stage_Description__c,Tower__r.Project__r.Name from Construction_Stage__c
                                                 WHERE Tower__c =: recordID AND Is_Completed__c = false
-                                                ORDER BY Sequence_Number__c ASC LIMIT 1];
+                                                ORDER BY Sequence_Number__c ASC];
         
         //System.debug('listget2 is::'+listget2);
         return listget2;

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nitinSFDC@exceller.SFDoc
  * @group             : 
- * @last modified on  : 30-05-2025
+ * @last modified on  : 05-06-2025
  * @last modified by  : nitinSFDC@exceller.SFDoc
 **/
 import { LightningElement, api, wire, track } from 'lwc';
@@ -26,7 +26,7 @@ export default class Ex_ConstructionStageUpdate extends NavigationMixin(Lightnin
     @api Name;
     @api projectName;
     @api ActualDate;
-    @api ExpectedDate;
+    @api ExpectedDate = undefined;
 
     @track SelectPhase = '';
     @track selectedOption;
@@ -116,15 +116,26 @@ export default class Ex_ConstructionStageUpdate extends NavigationMixin(Lightnin
     @wire(getFloor, { recordID: '$recordId' })
     floorData;
 
+    // get floorOptions() {
+    //     let options = [{ label: '', value: '' }];
+    //     if (this.floorData.data) {
+    //         for (let floorNum in this.floorData.data) {
+    //             options.push({ label: '' + floorNum, value: floorNum });
+    //         }
+    //     }
+    //     return options;
+    // }
+
     get floorOptions() {
-        let options = [{ label: '--Select a floor--', value: '' }];
-        if (this.floorData.data) {
-            for (let floorNum in this.floorData.data) {
-                options.push({ label: '' + floorNum, value: floorNum });
-            }
+    let options = [];
+    if (this.floorData?.data) {
+        for (let floorNum in this.floorData.data) {
+            options.push({ label: floorNum.toString(), value: floorNum });
         }
-        return options;
     }
+    return options;
+}
+
 
     get selected() {
         return this._selected.length ? this._selected : 'None';
@@ -229,9 +240,9 @@ export default class Ex_ConstructionStageUpdate extends NavigationMixin(Lightnin
             this.dispatchEvent(toastEvent);
             return;
 
-        } else if (this.isActualDateSelected == true && this.isFileSelected == false) {
+        }else if(this.isActualDateSelected == true && (this.showFileName == '' || this.showFileName === '')){
             this.isError = true;
-            const toastEvent = new ShowToastEvent({
+           const toastEvent = new ShowToastEvent({
                 title: 'Error',
                 message: 'Please select file to upload .',
                 variant: 'error'
@@ -281,6 +292,7 @@ export default class Ex_ConstructionStageUpdate extends NavigationMixin(Lightnin
                         filename: this.fileData.filename
                     })
                         .then(result => {
+                            this.isSpinner = false;
 
                             // Handle success
                             console.log('Fields updated successfully.' + result);

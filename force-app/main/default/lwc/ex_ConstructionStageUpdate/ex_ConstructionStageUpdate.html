@@ -2,11 +2,168 @@
   @description       : 
   @author            : nitinSFDC@exceller.SFDoc
   @group             : 
-  @last modified on  : 08-11-2024
+  @last modified on  : 05-06-2025
   @last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <template>
-    <lightning-card>
+    <div if:true={isSpinner} class="spinner-container">
+        <div class="loader"></div>
+        <div class="wait-text">Please wait...</div>
+    </div>
+
+    <div class="form-container">
+        <lightning-record-edit-form object-api-name={objectApi}>
+            <div class="section-header">
+                <lightning-icon icon-name="utility:summary" size="small" class="header-icon"></lightning-icon>
+                <h2>Update Completion Date</h2>
+            </div>
+
+            <div class="section-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label class="info-label">Project Name</label>
+                        <div class="info-value">
+                            <lightning-formatted-text value={projectName}
+                                variant="label-hidden"></lightning-formatted-text>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <label class="info-label">Tower Name</label>
+                        <div class="info-value">
+                            <lightning-formatted-text value={Name} variant="label-hidden"></lightning-formatted-text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-content">
+                <div class="info-grid" style="">
+                    <div class="info-item">
+                        <label class="info-label">Select Construction Stage <span class="required">*</span></label>
+                        <div class="info-value">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12">
+
+                                    <lightning-combobox options={cstage} value={csfetch} class="custom-dropdown"
+                                        placeholder="--Select Construction Stage--" onchange={handlePhaseChange}>
+                                        <template for:option>
+                                            {option.label}
+                                        </template>
+                                    </lightning-combobox>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <template if:true={showFloorOption}>
+                <div class="form-container">
+                <div class="section-content">
+                    <div class="info-grid" style="grid-template-columns: repeat(1, 1fr) !important;">
+                        <div class="info-item">
+                            <label class="info-label"> Select Floor </label>
+                            <div class="info-value">
+                                <lightning-dual-listbox name="Floor" source-label="Available Floor"
+                                    selected-label="Selected Floor" field-level-help="Select your floor "
+                                    options={floorOptions} onchange={handleChange}>
+                                </lightning-dual-listbox><br>
+                                <strong>Selected Floor</strong><br />
+                                <span class="slds-form-element__static">{selected}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </template>
+
+            <div class="section-content">
+                <template if:true={isConstructionStageSelected}>
+                    <div class="radio-group-container" style="margin-left:25%;">
+                        <template for:each={options} for:item="option">
+                            <div key={option.value}>
+                                <b> <label>
+                                        <input type="radio" name="options" value={option.value}
+                                            onchange={handleRadioChange} />
+                                        {option.label}
+                                    </label> </b>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <template if:true={isExpectedDateSelected}>
+                <div class="section-content">
+                    <label class="info-label">Expected Completion Date</label>
+                    <div class="info-value">
+                        <lightning-input-field field-name="Expected_Completion_Date__c" variant="label-hidden"
+                            style="font-weight: bold;" onchange={handleexpectedcompletion}>
+                        </lightning-input-field>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={isActualDateSelected}>
+                <div class="section-content">
+                    <div class="info-grid">
+
+                        <div class="info-item">
+                            <label class="info-label">Actual Completion Date <span class="required">*</span> </label>
+                            <div class="info-value"> <lightning-input-field field-name="Actual_Completion_Date__c"
+                                    variant="label-hidden" style="font-weight: bold;" onchange={handleactualcompletion}>
+                                </lightning-input-field>
+                            </div>
+                        </div>
+
+
+                        <div class="info-item">
+                            <label class="info-label">Upload Architect Letter <span class="required">*</span> </label>
+                            <div class="info-value"> <lightning-input type="file" variant="label-hidden"
+                                    onchange={handleFileChange}>
+                                </lightning-input>
+                                <p if:true={showFileName}>{showFileName}</p>
+                                <template if:true={showSpinner}>
+                                    <lightning-spinner alternative-text="Uploading file..."
+                                        size="medium"></lightning-spinner>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </lightning-record-edit-form><br /><br />
+        <center>
+            <lightning-button variant="success" label="Submit" title="Submit"
+                onclick={handleSaveNew}></lightning-button>
+        </center>
+    </div>
+</template>
+
+
+
+<!-- <tr>
+                        <th>Actual Completion Date </th>
+                        <td>
+                            <lightning-input-field field-name="Actual_Completion_Date__c" variant="label-hidden"
+                                style="font-weight: bold;" onchange={handleactualcompletion}>
+                            </lightning-input-field>
+                        </td>
+                        <th>Upload Architect Letter</th>
+                        <td>
+                            <lightning-input type="file" variant="label-hidden" onchange={handleFileChange}>
+                            </lightning-input>
+                            <p if:true={showFileName}>{showFileName}</p>
+                            <template if:true={showSpinner}>
+                                <lightning-spinner alternative-text="Uploading file..."
+                                    size="medium"></lightning-spinner>
+                            </template>
+                        </td>
+                    </tr> -->
+
+
+
+<!-- <lightning-card>
         <div if:true={isSpinner} class="spinner-container">
             <div class="loader"></div>
             <div class="wait-text">Please wait...</div>
@@ -106,5 +263,4 @@
                 </center>
             </div>
         </lightning-record-edit-form>
-    </lightning-card>
-  </template>
+    </lightning-card> -->
