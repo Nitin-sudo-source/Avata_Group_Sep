@@ -11,6 +11,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Quotation__c.Book_Now</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Quotation_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Approved</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Quotation__c.Print_Quotation</value>

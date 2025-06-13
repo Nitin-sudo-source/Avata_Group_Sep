@@ -20,7 +20,7 @@ public class Ex_InventoryPriceManagementServices {
                 }
             }
         }
-        String soqlQuery = 'Select ' + queryFields  + ', Tower__r.Project__c, Tower__r.Project__r.Name, Tower__r.Name,Tower__r.Project__r.Threshold_Amount__c, Tower__r.Project__r.Threshold_Percentage__c from Unit__c Where Id = \''+uId+'\''; 
+        String soqlQuery = 'Select ' + queryFields  + ',Tower__r.Project__r.CRM_Head__c, Tower__r.Project__c, Tower__r.Project__r.Name, Tower__r.Name,Tower__r.Project__r.Threshold_Amount__c, Tower__r.Project__r.Threshold_Percentage__c from Unit__c Where Id = \''+uId+'\''; 
         system.debug(soqlQuery);
         unitList = Database.query(soqlQuery);
         if (unitList.size() > 0) {
@@ -494,7 +494,7 @@ public class Ex_InventoryPriceManagementServices {
                         if(cStage.Actual_Completion_Date__c != null && cStage.Actual_Completion_Date__c > System.today()) {
                             completionDate = cStage.Actual_Completion_Date__c;
                         } else if(cStage.Actual_Completion_Date__c != null && cStage.Actual_Completion_Date__c <= System.today()) {
-                            completionDate = system.today().addDays(60);
+                            completionDate = system.today();
                             IsMilestoneAchieved = True;
                         } else if(cStage.Expected_Completion_Date__c != null && cStage.Expected_Completion_Date__c > System.today()) {
                             completionDate = cStage.Expected_Completion_Date__c;
@@ -818,7 +818,7 @@ public class Ex_InventoryPriceManagementServices {
                                 if(cStage.Actual_Completion_Date__c != null && cStage.Actual_Completion_Date__c > System.today()) {
                                     completionDate = cStage.Actual_Completion_Date__c;
                                 } else if(cStage.Actual_Completion_Date__c != null && cStage.Actual_Completion_Date__c <= System.today()) {
-                                    completionDate = system.today().addDays(60);
+                                    completionDate = system.today();
                                     IsMilestoneAchieved = True;
                                 } else if(cStage.Expected_Completion_Date__c != null && cStage.Expected_Completion_Date__c > System.today()) {
                                     completionDate = cStage.Expected_Completion_Date__c;

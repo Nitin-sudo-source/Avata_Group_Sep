@@ -109,6 +109,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Final_Agreement_Uploded_FileName__c</field>
+            <value>
+                <elementReference>FinalAgreementDocument</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Is_Final_Agreement_uploaded__c</field>
             <value>
                 <booleanValue>true</booleanValue>
@@ -191,6 +197,12 @@
                             <elementReference>recordId</elementReference>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>fileNames</name>
+                        <value>
+                            <elementReference>Final_Agreement_Upload.fileNames</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -218,6 +230,11 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>FinalAgreementDocument</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!Final_Agreement_Upload.fileNames} # AFS</text>
+    </textTemplates>
     <variables>
         <name>ContentDocumentId</name>
         <dataType>String</dataType>

@@ -332,7 +332,7 @@
             <inputParameters>
                 <name>accept</name>
                 <value>
-                    <stringValue>.png, .jpg, .jpeg</stringValue>
+                    <stringValue>.png, .jpg, .jpeg, .pdf</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

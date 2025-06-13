@@ -12,6 +12,9 @@
                         <valueListItems>
                             <value>Demand__c.Demand_Action</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Demand__c.Demand_Letter</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

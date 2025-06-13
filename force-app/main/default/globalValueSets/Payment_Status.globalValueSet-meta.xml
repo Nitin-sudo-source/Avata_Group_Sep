@@ -15,6 +15,11 @@
         <default>false</default>
         <label>Completed</label>
     </customValue>
+    <customValue>
+        <fullName>Payment Successful</fullName>
+        <default>false</default>
+        <label>Payment Successful</label>
+    </customValue>
     <masterLabel>Payment Status</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

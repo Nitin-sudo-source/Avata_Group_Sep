@@ -31,6 +31,11 @@
         <label>Possession Done</label>
     </customValue>
     <customValue>
+        <fullName>Resale</fullName>
+        <default>false</default>
+        <label>Resale</label>
+    </customValue>
+    <customValue>
         <fullName>Welcome Call Done</fullName>
         <default>false</default>
         <isActive>false</isActive>

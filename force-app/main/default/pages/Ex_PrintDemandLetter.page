@@ -1,0 +1,165 @@
+<apex:page controller="Ex_PrintDemandLetter" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0" renderAs="PDF">
+    <head>     
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />    
+        <style type="text/css">
+            
+             @page {
+            size: A4;
+            margin: 1cm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            line-height: 1.2;
+        }
+            
+        </style>
+    </head>
+    
+    <apex:form >
+        <body>  
+            
+             <div style="text-align: left; margin-bottom: 15px;">
+                 <div style="font-size: 12px; font-weight: bold; margin-bottom: 20px;">{!ProjectName}/{!FlatNo}/{!Tower}</div>
+        
+    </div>
+
+   
+
+    <div style="margin-bottom: 15px; font-size:12px;">
+        Date: {!DateOfInvoice}<br/>
+        To,<br/>
+        {!CustomerNameTitle} {!CustomerName}<br/>
+        {!Address}<br/>
+        MOBILE: {!ContactNumber}<br/>
+        EMAIL: {!EmailAddress}
+    </div>
+
+    <div style="margin-bottom: 20px; font-size:12px;">
+        <div>Sub: Demand of Payment due as per status of construction work of <Strong>Flat No. {!FlatNo}</Strong> in Project <Strong>"{!ProjectName}"</Strong> in phase <Strong>{!Tower}</Strong> earing <Strong>{!ProjectAddress}</Strong></div>
+        
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        Resp. Sir / Madam,
+        With respect to subject mentioned above, we hereby request you to make the payment as described in the table below <Strong>within 7 days</Strong> from the receipt of this letter.
+            </div>
+          
+            <table border="1" style="width: 100%; border-collapse: collapse; font-size:12px; line-height:20px;">
+  <tr>
+    <td style="width: 40%; text-align:center; font-weight:bold;">GST NO – {!GSTIN}</td>
+    <td colspan="3" style="width: 60%; text-align:center; font-weight:bold;">{!Tower} – {!FlatNo}</td>
+  </tr>
+  <tr>
+    <td style="width: 40%; text-align:center; font-weight:bold;">PARTICULARS:</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">AMOUNT DEMANDED</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">AMOUNT RECEIVED</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">BALANCE PAYABLE</td>
+  </tr>
+  <tr>
+    <td style="text-align:center;">PRINCIPLE AMOUNT : NA (Latest Demanded Milestone)</td>
+    <td style="text-align:center;">{!amountDemandStr}</td>
+    <td style="text-align:center;">{!amountPaidDemandStr}</td>
+    <td style="text-align:center;">{!amountRemainingDemandStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;">GST PAYABLE</td>
+    <td style="text-align:center;">{!amountDemandTaxStr}</td>
+    <td style="text-align:center;">{!amountPaidDemandTaxStr}</td>
+    <td style="text-align:center;">{!amountRemainingDemandTaxStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;">NET AMOUNT PAYABLE - (A)</td>
+    <td style="text-align:center; font-weight:bold;">{!totalamountDemandStr}</td>
+    <td style="text-align:center; font-weight:bold;">{!totalamountPaidDemandStr}</td>
+    <td style="text-align:center; font-weight:bold;">{!totalamountRemainingDemandStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;" colspan="4">{!totalAmountRemainingDemandInWords}</td>
+  </tr>
+            </table><br/>
+            
+                <table border="1" style="width: 100%; border-collapse: collapse; font-size:12px; line-height:20px;">
+ 
+  <tr>
+    <td style="width: 40%; text-align:center; font-weight:bold;">PARTICULARS:</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">AMOUNT</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">RECEIVED</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">BALANCE</td>
+  </tr>
+  <tr>
+    <td style="text-align:center;">DELAYED PAYMENT CHARGES</td>
+    <td style="text-align:center;">{!InterestamountDemandStr}</td>
+    <td style="text-align:center;">{!InterestamountPaidDemandStr}</td>
+    <td style="text-align:center;">{!InterestamountRemainingDemandStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;">GST ON DELAYED PAYMENT CHARGES</td>
+    <td style="text-align:center;">{!InterestamountDemandTaxStr}</td>
+    <td style="text-align:center;">{!InterestamountPaidDemandTaxStr}</td>
+    <td style="text-align:center;">{!InterestamountRemainingDemandTaxStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;">NET DELAY PAYMENT CHARGES - (B)</td>
+    <td style="text-align:center; font-weight:bold;">{!totalInterestAmountDemandStr}</td>
+    <td style="text-align:center; font-weight:bold;">{!totalInterestAmountPaidDemandStr}</td>
+    <td style="text-align:center; font-weight:bold;">{!totalInterestAmountRemainingDemandStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;" colspan="4">{!totalInterestAmountRemainingDemandInWords}</td>
+  </tr>
+            </table><br/>
+            
+                  <table border="1" style="width: 100%; border-collapse: collapse; font-size:12px; line-height:20px;">
+ 
+  <tr>
+    <td style="width: 40%; text-align:center; font-weight:bold;">FINAL NET AMT PAYABLE BY YOU - (A+B)</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">{!closedemandStr}</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">{!closedemandPaidStr}</td>
+    <td style="width: 20%; text-align:center; font-weight:bold;">{!closedemandRemainingStr}</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; font-weight:bold;" colspan="4">{!closedAmountRemainingDemandInWords}</td>
+  </tr>
+            </table>
+            
+            
+            <div style="margin-top: 15px; font-size:12px;">
+            <h4>Important Notes:</h4>
+            <p>1. If the due payment is not made within 7 days, then interest will be charged upon you. Interest, if applicable, will be adjusted from your first installment payment.</p>
+            <p>2. As per Government directives and Goods and Services Tax Rules, the point of taxation has been fixed on the due date,
+                  i.e., the Date of Slab. The amount of GST is to be paid within 7 days from the date of the demand letter. 
+                  sIf the GST amount is not paid within this period, then Interest @ 18% will be levied.</p>
+             </div>
+            
+            <h5>RTGS Details is mentioned below: -</h5>	
+            
+            <table border="1" style="width: 100%; border-collapse: collapse; font-size:12px; line-height:20px;">
+  <tr>
+    <td style="width: 50%; text-align:left; font-weight:bold;"><strong>COMPANY</strong></td>
+    <td style="width: 50%; text-align:center; font-weight:bold;">Avant group</td>
+  </tr>
+  <tr>
+    <td style="text-align:left; font-weight:bold;"><strong>PROJECT</strong></td>
+    <td style="text-align:center; font-weight:bold;">{!ProjectName}	</td>
+  </tr>
+  <tr>
+    <td style="text-align:left; font-weight:bold;"><strong> COLLECTION A/C</strong></td>
+    <td style="text-align:center; font-weight:bold;">{!AccountNumber}</td>
+  </tr>
+  <tr>
+    <td style="text-align:left; font-weight:bold;"><strong> GST A/C</strong></td>
+    <td style="text-align:center; font-weight:bold;">{!GSTACNo}</td>
+  </tr>            
+  <tr>
+    <td style="text-align:left; font-weight:bold;"><strong> Bank Name</strong></td>
+    <td style="text-align:center; font-weight:bold;">{!BankName}</td>
+  </tr>
+  <tr>
+    <td style="text-align:left; font-weight:bold;"><strong> RTGS Code / IFSC Code</strong></td>
+    <td style="text-align:center; font-weight:bold;">{!IFSCCode}</td>
+  </tr>
+</table>
+        </body> 
+    </apex:form>
+</apex:page>

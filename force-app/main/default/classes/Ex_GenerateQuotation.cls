@@ -215,6 +215,9 @@ discountList = Ex_InventoryPriceManagementServices.getProjectLevelDiscountInfo(p
             Quotation__c q = new Quotation__c();
             q.Unit__c = u.Id;
             q.Project__c = u.Tower__r.Project__c;
+            if(u.Tower__r.Project__r.CRM_Head__c != null){
+                q.CRM_Head__c = u.Tower__r.Project__r.CRM_Head__c;
+            }
             q.Tower__c = u.Tower__c;
             q.Opportunity__c = oppId;
             q.Payment_Scheme__c = selectedSchemeId;

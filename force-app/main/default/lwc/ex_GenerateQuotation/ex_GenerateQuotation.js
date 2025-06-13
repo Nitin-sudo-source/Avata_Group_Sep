@@ -107,7 +107,7 @@ export default class Ex_GenerateQuotation extends LightningElement {
                     if (this.unit.Saleable_Area__c != null) {
                         this.unit.Saleable_Area__c = parseFloat(this.unit.Saleable_Area__c).toFixed(2);
                     }
-                    if ((this.unit.Sales_Status__c !== 'Vacant') && ((this.unit.Opportunity__c !== this.oppId) && this.unit.Sales_Status__c !== 'Blocked')) {
+                    if ((this.unit.Sales_Status__c !== 'Vacant') && (this.unit.Sales_Status__c !== 'Resale') && ((this.unit.Opportunity__c !== this.oppId) && this.unit.Sales_Status__c !== 'Blocked')) {
                         this.isError = true;
                         this.errorMsg = 'Unit Not Available For Sale';
                     } else if (this.opp.Project__c != this.unit.Tower__r.Project__c) {

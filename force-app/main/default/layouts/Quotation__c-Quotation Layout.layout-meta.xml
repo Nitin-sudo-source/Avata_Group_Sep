@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>Car_Park_Amount__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CRM_Head__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

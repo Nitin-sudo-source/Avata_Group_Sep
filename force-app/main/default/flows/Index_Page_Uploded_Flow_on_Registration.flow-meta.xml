@@ -26,8 +26,8 @@
     <recordUpdates>
         <name>Update_Record</name>
         <label>Update Record</label>
-        <locationX>548</locationX>
-        <locationY>278</locationY>
+        <locationX>622</locationX>
+        <locationY>267</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -36,6 +36,12 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Index_Page_Uploded_File_Name__c</field>
+            <value>
+                <elementReference>IndexPageDocument</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Is_Index_Page_Uploded__c</field>
             <value>
@@ -125,6 +131,12 @@
                             <elementReference>recordId</elementReference>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>fileNames</name>
+                        <value>
+                            <elementReference>Upload_Index_Page.fileNames</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -152,6 +164,11 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>IndexPageDocument</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!Upload_Index_Page.fileNames} # index</text>
+    </textTemplates>
     <variables>
         <name>ContentDocumentId</name>
         <dataType>String</dataType>
@@ -160,10 +177,24 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
+        <name>indexpagefilename</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>storename</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

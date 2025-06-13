@@ -30,6 +30,11 @@
                 <label>Booked</label>
             </value>
             <value>
+                <fullName>Resale</fullName>
+                <default>false</default>
+                <label>Resale</label>
+            </value>
+            <value>
                 <fullName>Not for Sale</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

@@ -10,5 +10,5 @@
     <openType>sidebar</openType>
     <protected>false</protected>
     <requireRowSelection>true</requireRowSelection>
-    <url>/flow/Create_Bank_Document_Record</url>
+    <url>/flow/Create_Bank_Document_Record?projectId={!Project__c.Id}</url>
 </WebLink>

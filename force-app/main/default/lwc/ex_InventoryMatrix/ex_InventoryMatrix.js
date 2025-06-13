@@ -500,8 +500,8 @@ export default class Ex_InventoryMatrix extends LightningElement {
                     ...unit,
                     isUnitBooked: unit.Sales_Status__c === 'Booked',
                     isUnitBlocked: unit.Sales_Status__c === 'Blocked',
-                    isQuotationVisible: unit.Sales_Status__c === 'Vacant',
-                    isBlockVisible: unit.Sales_Status__c === 'Vacant',
+                    isQuotationVisible: unit.Sales_Status__c === 'Vacant' || unit.Sales_Status__c ==='Resale',
+                    isBlockVisible: unit.Sales_Status__c === 'Vacant' || unit.Sales_Status__c === 'Resale',
                     isUnblockVisible: (unit.Sales_Status__c === 'Blocked') &&
                         (unit.Opportunity__c && unit.Opportunity__c.slice(0, unit.Opportunity__c.length - 3) === this.oppId),
                     primaryApplicantName: unit.Sales_Status__c === 'Booked' && unit.Booking__r ? unit.Booking__r.Primary_Applicant_Name__c : ''

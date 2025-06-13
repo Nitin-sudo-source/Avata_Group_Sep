@@ -40,6 +40,11 @@
                 <default>false</default>
                 <label>Booked</label>
             </value>
+            <value>
+                <fullName>Resale</fullName>
+                <default>false</default>
+                <label>Resale</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,9 +1,9 @@
 <!--
-  @description       : 
-  @author            : nitinSFDC@exceller.SFDoc
-  @group             : 
-  @last modified on  : 28-05-2025
-  @last modified by  : nitinSFDC@exceller.SFDoc
+@description       : 
+@author            : nitinSFDC@exceller.SFDoc
+@group             : 
+@last modified on  : 28-05-2025
+@last modified by  : nitinSFDC@exceller.SFDoc
 -->
 <apex:page controller="Ex_PrintDemandController" applyHtmlTag="false" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0" renderAs="PDF">
     <html>
@@ -16,7 +16,7 @@
             
             <style type="text/css">
                 body {
-                font-size: 12px;
+                font-size: 14px;
                 }
                 
                 @page {
@@ -61,156 +61,128 @@
             </style>
         </head>
         <body>
+            <p style="text-align:center;">
+                <u>Demand Letter</u>
+            </p>
+            <p style="text-align:right;">
+                Date :- <apex:outputText value="{0, date, MM-dd-yyyy}">
+                <apex:param value="{!invoiceDate}" /> 
+                </apex:outputText>
+                
+            </p>
+            <p style="text-align:left;font-weight:bold;">
+                To,<br/>
+                {!bk.Primary_Applicant_Name__c}<br/>
+                Address: {!bk.Primary_Applicant_Address__c}<br/>
+                Cell No: {!bk.Primary_Applicant_Mobile__c}<br/>
+                E-mail id :- {!bk.Primary_Applicant_Email__c}
+                
+            </p>
+            <p style="font-weight:bold;">
+               <u> Ref:  Flat No {!unitName}  Wing {!towerName}, Project {!projectName}, Located at {!projectAddress} Agreement for Sale executed on <apex:outputText value="{0, date, dd-MM-yyyy}">
+                <apex:param value="{!bk.Booking_Date__c}" /> 
+                </apex:outputText> and duly registered with the Sub-Registrar of Assurances under No. NA (Flat).<br/><br/>
+                   </u>
+                <u>Sub: Demand Letter for the Payment due against RERA AGREEMENT  </u><br/>  <br/>
+                
+            </p>
+            <p>
+                Dear Sir/Madam,<br/><br/>
+                Greetings from Avant Group,<br/><br/>
+                This letter bears reference to your Agreement for Sale for the above mentioned flat. As per the payment schedule, an amount of <b>Rs. {!avValueStr}</b> is due and payable by you against RERA Agreement  as per the details mentioned below:
+            </p>
             <table width="100%;" class="mainTable">
                 <tr>
-                    <th style="text-align:left; width:50% !important;">
-                        <p>
-                            THE AVANT<br/>
-
-                            <!-- 25, Amynabad, Aga Hall<br/> -->
-                            <!-- Nesbit Road, Mazgaon,<br/> -->
-                            <!-- Mumbai 400 010<br/> -->
-                            <!-- Maharashtra- India. -->
-                        </p> 
+                    <th>
+                        The statement of your Flat :
                     </th>
-                    <!-- <td style="text-align:center !important;">
-                        <apex:image value="{!$Resource.Logo}" style="text-align:right;" width="100px"/>
-                    </td> -->
-                </tr>
-                <tr>
-                    <th colspan="2" style="padding:10px; text-align:center !important;">Tax Invoice</th>
-                </tr>
-                <tr>
-                    <th colspan="2" >
-                            To,<br/>
-                        	{!CustomerPrimaryName} <br/>
-                            {!CustomerAddress} <br/>
-                            Contact No: {!CustomerMobile}
+                    <th>
+                        Agreement Amount
+                    </th>
+                    <th>
+                        GST Amount
                     </th>
                 </tr>
-            </table>
-            
-            <table class="mainTable">
-                <!-- <tr>
-                    <th colspan="2">Apartment No:</th>
-                    <td colspan="2">{!BookingList[0].Unit__r.Name}</td>
-                    <th colspan="2">Invoice No:</th>
-                    <td colspan="2">{!invoiceNumber}</td>
-                </tr>
-                
                 <tr>
-                    <th colspan="2">Apartment Typology:</th>
-                    <td colspan="2">{!BookingList[0].Unit__r.Configuration__c}</td>
-                    <th colspan="2">Invoice Date:</th>
-                    <td colspan="2">
-                        <apex:outPutText value="{0,date,dd-MMM-yyyy}">
-                            <apex:param value="{!invoiceDate}"/>
-                        </apex:outPutText>
+                    <td>
+                        Agreement Value
+                        
                     </td>
-                </tr> -->
-                
-                <!-- <tr>
-                    <th colspan="2">RERA No.:</th>
-                    <td colspan="2">{!BookingList[0].Unit__r.Tower__r.RERA_No__c}</td>
-                    <th colspan="2">Agreement Value:</th>
-                    <td colspan="2">{!BookingList[0].Agreement_Value__c}</td>
-                </tr> -->
-                
-                <tr>
-                    <th style="text-align:center !important;">No</th>
-                    <th style="text-align:center !important;">Milestone</th>
-                    <th style="text-align:center !important;">Principal Amount(INR)</th>
-                    <th style="text-align:center !important;">TDS Amount(INR)</th>
-                    <th style="text-align:center !important;">CGST (INR)</th>
-                    <th style="text-align:center !important;">SGST (INR)</th>
-                    <th style="text-align:center !important;">Total Amount (INR)</th>
-                </tr>
-                
-                <!-- <tr>
-                    <th></th>
-                    <th></th>
-                    <th style="text-align:center !important;">(A)</th>
-                    <th style="text-align:center !important;">(B)</th>
-                    <th style="text-align:center !important;">(C)</th>
-                    <th style="text-align:center !important;">(D)</th>
-                    <th style="text-align:center !important;">(A+B+C+D)</th>
+                    <td>
+                        Rs. {!avValueStr}    
+                    </td>
+                    <td>
+                        Rs. {!avValueTaxStr} 
+                    </td>
                 </tr>
                 <tr>
-                    <td style="text-align:center !important;">1</td>
-                    <td style="text-align:left !important;">{!milestoneName}</td>
-                    <td style="text-align:right !important;">{!principleAmount}</td>
-                    <td style="text-align:right !important;">{!tdsAmount}</td>
-                    <td style="text-align:right !important;">{!cgstAmount}</td>
-                    <td style="text-align:right !important;">{!sgstAmount}</td>
-                    <td style="text-align:right !important;">{!totalAmount}</td>
-                </tr> -->
-                <!--<tr>
-                    <td style="text-align:center !important;">1</td>
-                    <td style="text-align:left !important;">Total Dues</td>
-                    <td style="text-align:right !important;">{!principleAmount}</td>
-                    <td style="text-align:right !important;">{!tdsAmount}</td>
-                    <td style="text-align:right !important;">{!cgstAmount}</td>
-                    <td style="text-align:right !important;">{!sgstAmount}</td>
-                    <td style="text-align:right !important;">{!totalAmount}</td>
-                </tr>-->
-                 <tr>
-                    <th colspan="6" style="text-align:right !important;">Total Amount</th>
-                    <td style="text-align:right !important;">{!overallAmountString}</td>
-                </tr> 
-                <tr>
-                    <th colspan="7">
-                      Amount In Words: {!overallAmountWordString}
-                    </th>
+                    <td>
+                        Amount Due as on date as per Agreement for Sale
+                        
+                    </td>
+                    <td>
+                        Rs. {!AmountDemand}    
+                    </td>
+                    <td>
+                        Rs. {!AmountDemandTax} 
+                    </td>
                 </tr>
-            </table>
-            <div style="border: 1px solid black;Padding:6px;text-align:left;">
-                <p style="text-align:left;">
-                    <b>Note:</b> 
-                </p>
-                <ul >
-                    <li>
-                        <p align="justify">
-                         	We request you to make the necessary payments within 15 days from the Invoice Date, failing which interest will be charged as per the interest clause mentioned in Application Form/ Agreement for Sale, on the amount due. Interest rate on delayed payment would also attract GST.
-						</p>
-                    </li>
-                    <!-- <li>
-                        <p align="justify">
-                            As per Income Tax Act, TDS @ 1%, is required to be deducted by the purchaser of immovable property and deposited with Government Treasury, where the consideration is Rs.50 lacs or more. A TDS certificate in prescribed Form 16B needs to be generated, signed and submitted with us.
-                        </p>
-                    </li> -->
-                    <!-- <li>
-                        <p align="justify">
-                            You are requested to issue two separate cheques in favor of <b>"Prince Aly Khan Hospital – The Aga Hall Estate"</b> for principal and <b>"Prince Aly Khan Hospital (Development A/c)"</b> for GST. Please mention your Name, Apartment No.,and InvoiceNo. on rear side of the Cheque.
-                        </p>
-                    </li> -->
-                    <li>
-                        <p align="justify">
-                            Alternatively, you can also make electronic transfers to the Account Details attached herewith.
-                        </p>
-                    </li>
-                    <li>
-                        <p align="justify">
-                            For any further assistance please contact your Relationship Manager – Ms. Saee Khamkar +91 98202 50447 or <a href="">saee.khamkar@pakh.net</a>
-                        </p>
-                    </li>
-                </ul>
-            </div>
-            <p style="text-align:left; border:1px solid black;Padding:8px;">
-                <b>
-                For Prince Aly Khan Hospital – Aga Hall Estate<br/><br/><br/>
-                Authorized Signatory
-                </b>
+                <tr>
+                    <td>
+                        Less : Payment Received till date
+                        
+                    </td>
+                    <td>
+                        Rs. {!paidedDemandAmountTillDate}    
+                    </td>
+                    <td>
+                        Rs. {!paidedDemandAmountTaxTillDate} 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Net Amount Payable as on date
+                        
+                    </td>
+                    <td>
+                        Rs. {!remainingDemandAmountTillDate}    
+                    </td>
+                    <td>
+                        Rs. {!remainingDemandAmountTaxTillDate} 
+                    </td>
+                </tr>
+                
+                
+            </table><br/>
+            <p>
+                
+                
+                Kindly send us the Cheque /Demand Draft for the above mentioned amount OR you can remit the same vide RTGS /NEFT to the below mentioned
+                <br/><br/>
+                
+                Account detail against <b>Rs. {!avValueStr}</b><br/>
+                Company Name :- {!bk.Account_Name_Flat_Cost__c}<br/>
+                Bank Name :- {!bk.Bank_Name_Flat_Cost__c}<br/>
+                Branch Name :- {!bk.Branch_Name_Flat_Cost__c}<br/>
+                Account No. :- {!bk.Account_Number_Flat_Cost__c}<br/>
+                IFSC Code:- {!bk.IFSC_Code_Flat_Cost__c}<br/><br/>
+                
+                Account detail against GST <b>Rs. {!avValueTaxStr} </b><br/>
+                Company Name/Account Name - {!bk.Account_Name_Tax__c}<br/>
+                Bank Name :- {!bk.Bank_Name_Tax__c}<br/>
+                Branch Name :- {!bk.Branch_Name_Tax__c}<br/>
+                Account No. :- {!bk.Account_Number_Tax__c}<br/>
+                IFSC Code:- {!bk.IFSC_Code_Tax__c}<br/>
             </p>
-            <table class="mainTable">
-                <tr>
-                    <td> PAN No: AAATP0618F</td>
-                    <td> GSTIN: 27AAATP0618F1ZU</td>
-                    <td> SAC No: 995411</td>
-                </tr>
-            </table>
+            <p>
+                We request you to kindly deposit the due amount of <b>Rs. {!AmountDemand}  Within 7 Day’s </b> from the date of this letter failing which, applicable interest will be charged for all the delayed payments. Please note: The Company reserves its rights to charge interest on all delayed payments at any time. The charges for delayed payment will not be deemed to be waived off unless explicitly mentioned in writing by the company.
+                For any further clarification please feel free to contact<br/><br/>
+                
+                T: +91 26934133/4 <br/>
+                Email ID: crm@avantinfra.com<br/>
+                This is system generated demand letter and no signature or stamp is required thereof.
+                
+            </p>
         </body>
-          
     </html>
-    
-   
 </apex:page>

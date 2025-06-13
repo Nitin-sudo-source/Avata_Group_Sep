@@ -4,8 +4,8 @@
     <decisions>
         <name>Check_Booking_Status</name>
         <label>Check Booking Status</label>
-        <locationX>226</locationX>
-        <locationY>647</locationY>
+        <locationX>500</locationX>
+        <locationY>695</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_Approved</name>
@@ -26,8 +26,8 @@
     <decisions>
         <name>Check_Checklist_Status</name>
         <label>Check Checklist Status</label>
-        <locationX>182</locationX>
-        <locationY>323</locationY>
+        <locationX>456</locationX>
+        <locationY>371</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_Approved_by_RM</name>
@@ -45,21 +45,22 @@
             <label>If Approved by RM</label>
         </rules>
     </decisions>
+    <description>Updated By Nitin on 30/05/2025 Update unit Sales Status and Opportunity Status</description>
     <environments>Default</environments>
     <interviewLabel>Update Booking Stage Booking Confirmed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Booking Stage Booking Confirmed</label>
     <loops>
         <name>Loop_Over_Booking_checklist_records</name>
         <label>Loop Over Booking checklist records</label>
-        <locationX>50</locationX>
-        <locationY>539</locationY>
+        <locationX>324</locationX>
+        <locationY>587</locationY>
         <collectionReference>get_checklist_records</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Check_Booking_Status</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>update_booking_to_booking_confirmed</targetReference>
+            <targetReference>update_unit</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -71,7 +72,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -84,8 +85,8 @@
     <recordLookups>
         <name>get_checklist_records</name>
         <label>get checklist records</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationX>324</locationX>
+        <locationY>479</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_Over_Booking_checklist_records</targetReference>
@@ -103,10 +104,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>get_Opportunity_Record</name>
+        <label>get Opportunity Record</label>
+        <locationX>513</locationX>
+        <locationY>895</locationY>
+        <connector>
+            <targetReference>update_booking_to_booking_confirmed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Booking__r.Opportunity__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Stage__c</field>
+            <value>
+                <stringValue>Booked</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity__c</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>update_booking_to_booking_confirmed</name>
         <label>update booking to booking confirmed</label>
-        <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationX>838</locationX>
+        <locationY>981</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -123,9 +148,33 @@
         </inputAssignments>
         <object>Booking__c</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>update_unit</name>
+        <label>update unit</label>
+        <locationX>104</locationX>
+        <locationY>830</locationY>
+        <connector>
+            <targetReference>get_Opportunity_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Booking__r.Unit__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Sales_Status__c</field>
+            <value>
+                <stringValue>Booked</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Unit__c</object>
+    </recordUpdates>
     <start>
-        <locationX>56</locationX>
-        <locationY>0</locationY>
+        <locationX>330</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Check_Checklist_Status</targetReference>
         </connector>

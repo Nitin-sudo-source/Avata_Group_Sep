@@ -10,5 +10,5 @@
     <openType>sidebar</openType>
     <protected>false</protected>
     <requireRowSelection>true</requireRowSelection>
-    <url>/flow/Create_APF_Document_Record?projecId={!APF_Document__c.ProjectId__c}</url>
+    <url>/flow/Create_APF_Document_Record?projectId={!Project__c.Id}</url>
 </WebLink>
